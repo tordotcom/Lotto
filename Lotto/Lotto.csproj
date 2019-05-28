@@ -196,8 +196,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -208,6 +211,51 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\cs-skin-elastic.css" />
+    <Content Include="Assets\css\lib\chosen\chosen-sprite%402x.png" />
+    <Content Include="Assets\css\lib\chosen\chosen-sprite.png" />
+    <Content Include="Assets\css\lib\chosen\chosen.css" />
+    <Content Include="Assets\css\lib\chosen\chosen.min.css" />
+    <Content Include="Assets\css\lib\datatable\buttons.bootstrap.min.css" />
+    <Content Include="Assets\css\lib\datatable\buttons.dataTables.min.css" />
+    <Content Include="Assets\css\lib\datatable\dataTables.bootstrap.min.css" />
+    <Content Include="Assets\css\lib\vector-map\jqvmap.min.css" />
+    <Content Include="Assets\css\style.css" />
+    <Content Include="Assets\fonts\icomoon\icomoon.svg" />
+    <Content Include="Assets\fonts\icomoon\index.html" />
+    <Content Include="Assets\js\dashboard.js" />
+    <Content Include="Assets\js\init\chartjs-init.js" />
+    <Content Include="Assets\js\init\datatables-init.js" />
+    <Content Include="Assets\js\init\flot-chart-init.js" />
+    <Content Include="Assets\js\init\fullcalendar-init.js" />
+    <Content Include="Assets\js\init\gmap-init.js" />
+    <Content Include="Assets\js\init\peitychart-init.js" />
+    <Content Include="Assets\js\init\vector-init.js" />
+    <Content Include="Assets\js\init\weather-init.js" />
+    <Content Include="Assets\js\lib\chosen\chosen.jquery.js" />
+    <Content Include="Assets\js\lib\chosen\chosen.jquery.min.js" />
+    <Content Include="Assets\js\lib\chosen\chosen.proto.js" />
+    <Content Include="Assets\js\lib\chosen\chosen.proto.min.js" />
+    <Content Include="Assets\js\lib\data-table\buttons.bootstrap.min.js" />
+    <Content Include="Assets\js\lib\data-table\buttons.colVis.min.js" />
+    <Content Include="Assets\js\lib\data-table\buttons.flash.min.js" />
+    <Content Include="Assets\js\lib\data-table\buttons.html5.min.js" />
+    <Content Include="Assets\js\lib\data-table\buttons.print.min.js" />
+    <Content Include="Assets\js\lib\data-table\dataTables.bootstrap.min.js" />
+    <Content Include="Assets\js\lib\data-table\dataTables.buttons.min.js" />
+    <Content Include="Assets\js\lib\data-table\datatables.min.js" />
+    <Content Include="Assets\js\lib\data-table\jquery-1.12.4.js" />
+    <Content Include="Assets\js\lib\data-table\jquery.dataTables.min.js" />
+    <Content Include="Assets\js\lib\data-table\jszip.min.js" />
+    <Content Include="Assets\js\lib\data-table\pdfmake.min.js" />
+    <Content Include="Assets\js\lib\data-table\vfs_fonts.js" />
+    <Content Include="Assets\js\lib\gmap\gmapApi.js" />
+    <Content Include="Assets\js\lib\gmap\gmaps.js" />
+    <Content Include="Assets\js\lib\gmap\gmaps.min.js" />
+    <Content Include="Assets\js\main.js" />
+    <Content Include="Assets\js\vmap.sampledata.js" />
+    <Content Include="Assets\js\widgets.js" />
+    <Content Include="Assets\scss\style.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -217,6 +265,20 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\admin.jpg" />
+    <Content Include="Images\avatar\1.jpg" />
+    <Content Include="Images\avatar\2.jpg" />
+    <Content Include="Images\avatar\3.jpg" />
+    <Content Include="Images\avatar\4.jpg" />
+    <Content Include="Images\avatar\5.jpg" />
+    <Content Include="Images\avatar\6.jpg" />
+    <Content Include="Images\avatar\64-1.jpg" />
+    <Content Include="Images\avatar\64-2.jpg" />
+    <Content Include="Images\favicon.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logo2.png" />
+    <Content Include="Images\lotto.png" />
+    <Content Include="Images\overlay-banner_original.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -240,6 +302,14 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Assets\css\style.css.map" />
+    <Content Include="Assets\fonts\icomoon\icomoon.eot" />
+    <Content Include="Assets\fonts\icomoon\icomoon.ttf" />
+    <Content Include="Assets\fonts\icomoon\icomoon.woff" />
+    <Content Include="Assets\scss\style.css.map" />
+    <Content Include="Assets\scss\style.scss" />
+    <Content Include="Images\logo.psd" />
+    <Content Include="Images\_gitignore" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -312,6 +382,12 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_Admin.cshtml" />
+    <Content Include="Views\Shared\_User.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
