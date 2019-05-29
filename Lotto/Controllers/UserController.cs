@@ -13,5 +13,9 @@ namespace Lotto.Controllers
         {
             return View();
         }
+        public ActionResult AddPoll()
+        {
+            return View();
+        }
     }
 }
