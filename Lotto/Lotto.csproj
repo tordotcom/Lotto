@@ -390,10 +390,31 @@
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\User\AddPoll.cshtml" />
+    <Content Include="Views\Admin\AllBet.cshtml" />
+    <Content Include="Views\Admin\List.cshtml" />
+    <Content Include="Views\Admin\Bet.cshtml" />
+    <Content Include="Views\Admin\BetTotal.cshtml" />
+    <Content Include="Views\Admin\Out.cshtml" />
+    <Content Include="Views\Admin\Cut.cshtml" />
+    <Content Include="Views\Admin\OutTotal.cshtml" />
+    <Content Include="Views\Admin\BetBackward.cshtml" />
+    <Content Include="Views\Admin\LottoBackward.cshtml" />
+    <Content Include="Views\Admin\Setting.cshtml" />
+    <Content Include="Views\Admin\Member.cshtml" />
+    <Content Include="Views\Admin\MemberPrice.cshtml" />
+    <Content Include="Views\Admin\DealerInfo.cshtml" />
+    <Content Include="Views\Admin\Close.cshtml" />
+    <Content Include="Views\User\Bet.cshtml" />
+    <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\User\Return.cshtml" />
+    <Content Include="Views\User\Result.cshtml" />
+    <Content Include="Views\User\Password.cshtml" />
+    <Content Include="Views\User\Howto.cshtml" />
+    <Content Include="Views\User\Contact.cshtml" />
+>>>>>>> 10f6587b3c250a60fb9f0b26e49fa1d40dfe725f
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

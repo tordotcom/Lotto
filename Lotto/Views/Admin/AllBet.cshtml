@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "AllBet";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>ดูเลขทั้งหมด</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card lotto-status">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        หวยรัฐบาล : <b><span id="todayDate"></span></b>
+                    </div>
+                    <div class="col-md-4">
+                        สถานะ : <b><span id="lottoStatus"></span></b>
+                    </div>
+                    <div class="col-md-4">
+                        ยอดรวม : <b><span id="allLotto"></span></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /# column -->
+    <div class="col-md-12">
+        <div class="card" id="ipContent">
+            <div class="card-body">
+                <table class="tg" width="100%">
+                    <tr>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                        <th class="tg-0lax"></th>
+                    </tr>
+                    <tr>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                    </tr>
+                    <tr>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                        <td class="tg-0lax"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        var d = new Date();
+        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+        $('#todayDate').html(strDate);
+        $('#lottoStatus').html("ปิดรับแล้ว");
+        $('#allLotto').html('18675');
+    })(jQuery);
+</script>
