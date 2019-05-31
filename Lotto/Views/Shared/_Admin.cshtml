@@ -115,7 +115,7 @@
                         </div>
 
                         <div class="dropdown for-price">
-                            <button class="btn btn-default" type="button" data-toggle="modal" data-target="#priceModal">
+                            <button class="btn btn-default" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal">
                                 ราคาจ่าย
                             </button>
                         </div>
@@ -218,58 +218,64 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <table class="table table-bordered" style="text-align:center;">
+                    <div class="modal-body" align="center">
+                        <table class="table table-bordered table-sm" style="text-align:center;width:70%;">
                             <thead>
                                 <tr style="color:white;background-color:blue;">
                                     <th nowrap>ชนิด</th>
-                                    <th nowrap>จ่าย</th>
-                                    <th nowrap>ลด(%)</th>
+                                    <th nowrap>ราคาจ่าย</th>
+                                    <th nowrap>ส่วนลด(%)</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr style="height:1px">
                                     <td>3 บน</td>
-                                    <td>500.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" style="width:100%" id="ThreeUp" /></td>
+                                    <td><input class="small" type="text" style="width:100%" id="ThreeUp_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>3 โต๊ด</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" id="ThreeOod" style="width:100%" /></td>
+                                    <td><input class="small" type="text" style="width:100%" id="ThreeOod_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>2 บน</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" id="TwoUp" style="width:100%" /></td>
+                                    <td><input class="small" type="text" id="TwoUp_discount" style="width:100%" /></td>
                                 </tr>
                                 <tr>
                                     <td>2 โต๊ด</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" id="TwoOod" style="width:100%" /></td>
+                                    <td><input class="small" type="text" id="TwoOod_discount" style="width:100%" /></td>
                                 </tr>
                                 <tr>
                                     <td>วิ่ง บน</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" id="Up" style="width:100%" /></td>
+                                    <td><input class="small" type="text" id="Up_discount" style="width:100%" /></td>
                                 </tr>
                                 <tr>
                                     <td>3 ล่าง</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" id="ThreeDown" style="width:100%" /></td>
+                                    <td><input class="small" type="text" id="ThreeDown_discount" style="width:100%" /></td>
                                 </tr>
                                 <tr>
                                     <td>2 ล่าง</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" id="TwoDown" style="width:100%" /></td>
+                                    <td><input class="small" type="text" id="TwoDown_discount" style="width:100%" /></td>
                                 </tr>
                                 <tr>
                                     <td>วิ่ง ล่าง</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
+                                    <td><input class="small" type="text" id="Down" style="width:100%" /></td>
+                                    <td><input class="small" type="text" id="Down_discount" style="width:100%" /></td>
+                                </tr>
+                                <tr>
+                                    <td>3 หน้า</td>
+                                    <td><input class="small" type="text" id="FirstThree" style="width:100%" /></td>
+                                    <td><input class="small" type="text" id="FirstThree_discount" style="width:100%" /></td>
                                 </tr>
                             </tbody>
                         </table>
+                        <button class="btn btn-success">บันทึก</button>
                     </div>
                 </div>
             </div>
@@ -323,6 +329,9 @@
     <script src="~/Assets/js/lib/data-table/buttons.print.min.js"></script>
     <script src="~/Assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="~/Assets/js/init/datatables-init.js"></script>
-
+    <script src="~/Assets/js/rate.js"></script>
+    <script type="text/javascript">
+        getRate = '@Url.Action("getRate", "Admin")';
+    </script>
 </body>
 </html>
