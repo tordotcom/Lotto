@@ -23,10 +23,941 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">สมาชิก</strong>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>รหัสสมาชิก</th>
+                            <th>ชื่อ</th>
+                            <th>จำนวนโพย</th>
+                            <th>สถานะ</th>
+                            <th>หมายเหตุ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#betModal">แทงโพย</button></td>
+                            <td>3434</td>
+                            <td>Arm</td>
+                            <td>1</td>
+                            <td>ใช้งาน</td>
+                            <td>sdasdsadsads</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="betModal" tabindex="-1" role="dialog" aria-labelledby="betModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:90%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="betModalLabel">แทง</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="received" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดคืนงวดนี้</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดแทงงวดนี้</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดจ่ายงวดนี้</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-sm" width="100%">
+                                <tbody class="form-group">
+                                    <tr>
+                                        <td>
+                                            <div class="row form-group">
+                                                <div class="col-1">1</div>
+                                                <div class="col-2"><input id="t1" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n1" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b1" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">2</div>
+                                                <div class="col-2"><input id="t2" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n2" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b2" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">3</div>
+                                                <div class="col-2"><input id="t3" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n3" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b3" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">4</div>
+                                                <div class="col-2"><input id="t4" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n4" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b4" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">5</div>
+                                                <div class="col-2"><input id="t5" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n5" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b5" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">6</div>
+                                                <div class="col-2"><input id="t6" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n6" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b6" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">7</div>
+                                                <div class="col-2"><input id="t7" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n7" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b7" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">8</div>
+                                                <div class="col-2"><input id="t8" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n8" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b8" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">9</div>
+                                                <div class="col-2"><input id="t9" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n9" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b9" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">10</div>
+                                                <div class="col-2"><input id="t10" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n10" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b10" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">11</div>
+                                                <div class="col-2"><input id="t11" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n11" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b11" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">12</div>
+                                                <div class="col-2"><input id="t12" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n12" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b12" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">13</div>
+                                                <div class="col-2"><input id="t13" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n13" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b13" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">14</div>
+                                                <div class="col-2"><input id="t14" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n14" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b14" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">15</div>
+                                                <div class="col-2"><input id="t15" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n15" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b15" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">16</div>
+                                                <div class="col-2"><input id="t16" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n16" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b16" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">17</div>
+                                                <div class="col-2"><input id="t17" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n17" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b17" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">18</div>
+                                                <div class="col-2"><input id="t18" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n18" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b18" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">19</div>
+                                                <div class="col-2"><input id="t19" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n19" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b19" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">20</div>
+                                                <div class="col-2"><input id="t20" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n20" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b20" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">21</div>
+                                                <div class="col-2"><input id="t21" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n21" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b21" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">22</div>
+                                                <div class="col-2"><input id="t22" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n22" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b22" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">23</div>
+                                                <div class="col-2"><input id="t23" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n23" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b23" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">24</div>
+                                                <div class="col-2"><input id="t24" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n24" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b24" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">25</div>
+                                                <div class="col-2"><input id="t25" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n25" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b25" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">26</div>
+                                                <div class="col-2"><input id="t26" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n26" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b26" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">27</div>
+                                                <div class="col-2"><input id="t27" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n27" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b27" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">28</div>
+                                                <div class="col-2"><input id="t28" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n28" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b28" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">29</div>
+                                                <div class="col-2"><input id="t29" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n29" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b29" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">30</div>
+                                                <div class="col-2"><input id="t30" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n30" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b30" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="row form-group">
+                                                <div class="col-1">31</div>
+                                                <div class="col-2"><input id="t31" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n31" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b31" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">32</div>
+                                                <div class="col-2"><input id="t32" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n32" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b32" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">33</div>
+                                                <div class="col-2"><input id="t33" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n33" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b33" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">34</div>
+                                                <div class="col-2"><input id="t34" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n34" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b34" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">35</div>
+                                                <div class="col-2"><input id="t35" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n35" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b35" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">36</div>
+                                                <div class="col-2"><input id="t36" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n36" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b36" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">37</div>
+                                                <div class="col-2"><input id="t37" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n37" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b37" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">38</div>
+                                                <div class="col-2"><input id="t38" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n38" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b38" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">39</div>
+                                                <div class="col-2"><input id="t39" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n39" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b39" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">40</div>
+                                                <div class="col-2"><input id="t40" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n40" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b40" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">41</div>
+                                                <div class="col-2"><input id="t41" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n41" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b41" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">42</div>
+                                                <div class="col-2"><input id="t42" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n42" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b42" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">43</div>
+                                                <div class="col-2"><input id="t43" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n43" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b43" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">44</div>
+                                                <div class="col-2"><input id="t44" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n44" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b44" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">45</div>
+                                                <div class="col-2"><input id="t45" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n45" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b45" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">46</div>
+                                                <div class="col-2"><input id="t46" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n46" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b46" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">47</div>
+                                                <div class="col-2"><input id="t47" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n47" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b47" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">48</div>
+                                                <div class="col-2"><input id="t48" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n48" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b48" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">49</div>
+                                                <div class="col-2"><input id="t49" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n49" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b49" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">50</div>
+                                                <div class="col-2"><input id="t50" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n50" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b50" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">51</div>
+                                                <div class="col-2"><input id="t51" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n51" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b51" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">52</div>
+                                                <div class="col-2"><input id="t52" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n52" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b52" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">53</div>
+                                                <div class="col-2"><input id="t53" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n53" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b53" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">54</div>
+                                                <div class="col-2"><input id="t54" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n54" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b54" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">55</div>
+                                                <div class="col-2"><input id="t55" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n55" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b55" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">56</div>
+                                                <div class="col-2"><input id="t56" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n56" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b56" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">57</div>
+                                                <div class="col-2"><input id="t57" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n57" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b57" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">58</div>
+                                                <div class="col-2"><input id="t58" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n58" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b58" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">59</div>
+                                                <div class="col-2"><input id="t59" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n59" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b59" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">60</div>
+                                                <div class="col-2"><input id="t60" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n60" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b60" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="row form-group">
+                                                <div class="col-1">61</div>
+                                                <div class="col-2"><input id="t61" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n61" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b61" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">62</div>
+                                                <div class="col-2"><input id="t62" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n62" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b62" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">63</div>
+                                                <div class="col-2"><input id="t63" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n63" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b63" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">64</div>
+                                                <div class="col-2"><input id="t64" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n64" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b64" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">65</div>
+                                                <div class="col-2"><input id="t65" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n65" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b65" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">66</div>
+                                                <div class="col-2"><input id="t66" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n66" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b66" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">67</div>
+                                                <div class="col-2"><input id="t67" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n67" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b67" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">68</div>
+                                                <div class="col-2"><input id="t68" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n68" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b68" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">69</div>
+                                                <div class="col-2"><input id="t69" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n69" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b69" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">70</div>
+                                                <div class="col-2"><input id="t70" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n70" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b70" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">71</div>
+                                                <div class="col-2"><input id="t71" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n71" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b71" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">72</div>
+                                                <div class="col-2"><input id="t72" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n72" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b72" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">73</div>
+                                                <div class="col-2"><input id="t73" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n73" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b73" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">74</div>
+                                                <div class="col-2"><input id="t74" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n74" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b74" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">75</div>
+                                                <div class="col-2"><input id="t75" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n75" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b75" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">76</div>
+                                                <div class="col-2"><input id="t76" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n76" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b76" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">77</div>
+                                                <div class="col-2"><input id="t77" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n77" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b77" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">78</div>
+                                                <div class="col-2"><input id="t78" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n78" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b78" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">79</div>
+                                                <div class="col-2"><input id="t79" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n79" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b79" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">80</div>
+                                                <div class="col-2"><input id="t80" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n80" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b80" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">81</div>
+                                                <div class="col-2"><input id="t81" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n81" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b81" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">82</div>
+                                                <div class="col-2"><input id="t82" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n82" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b82" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">83</div>
+                                                <div class="col-2"><input id="t83" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n83" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b83" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">84</div>
+                                                <div class="col-2"><input id="t84" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n84" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b84" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">85</div>
+                                                <div class="col-2"><input id="t85" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n85" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b85" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">86</div>
+                                                <div class="col-2"><input id="t86" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n86" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b86" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">87</div>
+                                                <div class="col-2"><input id="t87" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n87" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b87" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">88</div>
+                                                <div class="col-2"><input id="t88" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n88" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b88" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">89</div>
+                                                <div class="col-2"><input id="t89" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n89" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b89" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-1">90</div>
+                                                <div class="col-2"><input id="t90" type="text" value="บ" class="form-control form-control-sm"></div>
+                                                <div class="col-3"><input id="n90" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
+                                                <div class="col-6"><input id="b90" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="sendLotto">ส่ง</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     (function ($) {
+        $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        });
 
+        var bet = {
+            betNo: $('#betNo').val(),
+            thisTotal: $('#thisTotal').val(),
+            listCount: $('#listCount').val(),
+            received: $('#received').val(),
+            returnTotal: $('#returnTotal').val(),
+            betTotal: $('#betTotal').val(),
+            betPrice: $('#betPrice').val(),
+            t1: $('#t1').val(),
+            n1: $('#n1').val(),
+            b1: $('#b1').val(),
+            t2: $('#t2').val(),
+            n2: $('#n2').val(),
+            b2: $('#b2').val(),
+            t3: $('#t3').val(),
+            n3: $('#n3').val(),
+            b3: $('#b3').val(),
+            t4: $('#t4').val(),
+            n4: $('#n4').val(),
+            b4: $('#b4').val(),
+            t5: $('#t5').val(),
+            n5: $('#n5').val(),
+            b5: $('#b5').val(),
+            t6: $('#t6').val(),
+            n6: $('#n6').val(),
+            b6: $('#b6').val(),
+            t7: $('#t7').val(),
+            n7: $('#n7').val(),
+            b7: $('#b7').val(),
+            t8: $('#t8').val(),
+            n8: $('#n8').val(),
+            b8: $('#b8').val(),
+            t9: $('#t9').val(),
+            n9: $('#n9').val(),
+            b9: $('#b9').val(),
+            t10: $('#t10').val(),
+            n10: $('#n10').val(),
+            b10: $('#b10').val(),
+            t11: $('#t11').val(),
+            n11: $('#n11').val(),
+            b11: $('#b11').val(),
+            t12: $('#t12').val(),
+            n12: $('#n12').val(),
+            b12: $('#b12').val(),
+            t13: $('#t13').val(),
+            n13: $('#n13').val(),
+            b13: $('#b13').val(),
+            t14: $('#t14').val(),
+            n14: $('#n14').val(),
+            b14: $('#b14').val(),
+            t15: $('#t15').val(),
+            n15: $('#n15').val(),
+            b15: $('#b15').val(),
+            t16: $('#t16').val(),
+            n16: $('#n16').val(),
+            b16: $('#b16').val(),
+            t17: $('#t17').val(),
+            n17: $('#n17').val(),
+            b17: $('#b17').val(),
+            t18: $('#t18').val(),
+            n18: $('#n18').val(),
+            b18: $('#b18').val(),
+            t19: $('#t19').val(),
+            n19: $('#n19').val(),
+            b19: $('#b19').val(),
+            t20: $('#t20').val(),
+            n20: $('#n20').val(),
+            b20: $('#b20').val(),
+            t21: $('#t21').val(),
+            n21: $('#n21').val(),
+            b21: $('#b21').val(),
+            t22: $('#t22').val(),
+            n22: $('#n22').val(),
+            b22: $('#b22').val(),
+            t23: $('#t23').val(),
+            n23: $('#n23').val(),
+            b23: $('#b23').val(),
+            t24: $('#t24').val(),
+            n24: $('#n24').val(),
+            b24: $('#b24').val(),
+            t25: $('#t25').val(),
+            n25: $('#n25').val(),
+            b25: $('#b25').val(),
+            t26: $('#t26').val(),
+            n26: $('#n26').val(),
+            b26: $('#b26').val(),
+            t27: $('#t27').val(),
+            n27: $('#n27').val(),
+            b27: $('#b27').val(),
+            t28: $('#t28').val(),
+            n28: $('#n28').val(),
+            b28: $('#b28').val(),
+            t29: $('#t29').val(),
+            n29: $('#n29').val(),
+            b29: $('#b29').val(),
+            t30: $('#t30').val(),
+            n30: $('#n30').val(),
+            b30: $('#b30').val(),
+            t31: $('#t31').val(),
+            n31: $('#n31').val(),
+            b31: $('#b31').val(),
+            t32: $('#t32').val(),
+            n32: $('#n32').val(),
+            b32: $('#b32').val(),
+            t33: $('#t33').val(),
+            n33: $('#n33').val(),
+            b33: $('#b33').val(),
+            t34: $('#t34').val(),
+            n34: $('#n34').val(),
+            b34: $('#b34').val(),
+            t35: $('#t35').val(),
+            n35: $('#n35').val(),
+            b35: $('#b35').val(),
+            t36: $('#t36').val(),
+            n36: $('#n36').val(),
+            b36: $('#b36').val(),
+            t37: $('#t37').val(),
+            n37: $('#n37').val(),
+            b37: $('#b37').val(),
+            t38: $('#t38').val(),
+            n38: $('#n38').val(),
+            b38: $('#b38').val(),
+            t39: $('#t39').val(),
+            n39: $('#n39').val(),
+            b39: $('#b39').val(),
+            t40: $('#t40').val(),
+            n40: $('#n40').val(),
+            b40: $('#b40').val(),
+            t41: $('#t41').val(),
+            n41: $('#n41').val(),
+            b41: $('#b41').val(),
+            t42: $('#t42').val(),
+            n42: $('#n42').val(),
+            b42: $('#b42').val(),
+            t43: $('#t43').val(),
+            n43: $('#n43').val(),
+            b43: $('#b43').val(),
+            t44: $('#t44').val(),
+            n44: $('#n44').val(),
+            b44: $('#b44').val(),
+            t45: $('#t45').val(),
+            n45: $('#n45').val(),
+            b45: $('#b45').val(),
+            t46: $('#t46').val(),
+            n46: $('#n46').val(),
+            b46: $('#b46').val(),
+            t47: $('#t47').val(),
+            n47: $('#n47').val(),
+            b47: $('#b47').val(),
+            t48: $('#t48').val(),
+            n48: $('#n48').val(),
+            b48: $('#b48').val(),
+            t49: $('#t49').val(),
+            n49: $('#n49').val(),
+            b49: $('#b49').val(),
+            t50: $('#t50').val(),
+            n50: $('#n50').val(),
+            b50: $('#b50').val(),
+            t51: $('#t51').val(),
+            n51: $('#n51').val(),
+            b51: $('#b51').val(),
+            t52: $('#t52').val(),
+            n52: $('#n52').val(),
+            b52: $('#b52').val(),
+            t53: $('#t53').val(),
+            n53: $('#n53').val(),
+            b53: $('#b53').val(),
+            t54: $('#t54').val(),
+            n54: $('#n54').val(),
+            b54: $('#b54').val(),
+            t55: $('#t55').val(),
+            n55: $('#n55').val(),
+            b55: $('#b55').val(),
+            t56: $('#t56').val(),
+            n56: $('#n56').val(),
+            b56: $('#b56').val(),
+            t57: $('#t57').val(),
+            n57: $('#n57').val(),
+            b57: $('#b57').val(),
+            t58: $('#t58').val(),
+            n58: $('#n58').val(),
+            b58: $('#b58').val(),
+            t59: $('#t59').val(),
+            n59: $('#n59').val(),
+            b59: $('#b59').val(),
+            t60: $('#t60').val(),
+            n60: $('#n60').val(),
+            b60: $('#b60').val(),
+            t60: $('#t60').val(),
+            n60: $('#n60').val(),
+            b60: $('#b60').val(),
+            t61: $('#t61').val(),
+            n61: $('#n61').val(),
+            b61: $('#b61').val(),
+            t62: $('#t62').val(),
+            n62: $('#n62').val(),
+            b62: $('#b62').val(),
+            t63: $('#t63').val(),
+            n63: $('#n63').val(),
+            b63: $('#b63').val(),
+            t64: $('#t64').val(),
+            n64: $('#n64').val(),
+            b64: $('#b64').val(),
+            t65: $('#t65').val(),
+            n65: $('#n65').val(),
+            b65: $('#b65').val(),
+            t66: $('#t66').val(),
+            n66: $('#n66').val(),
+            b66: $('#b66').val(),
+            t67: $('#t67').val(),
+            n67: $('#n67').val(),
+            b67: $('#b67').val(),
+            t68: $('#t68').val(),
+            n68: $('#n68').val(),
+            b68: $('#b68').val(),
+            t69: $('#t69').val(),
+            n69: $('#n69').val(),
+            b69: $('#b69').val(),
+            t70: $('#t70').val(),
+            n70: $('#n70').val(),
+            b70: $('#b70').val(),
+            t71: $('#t71').val(),
+            n71: $('#n71').val(),
+            b71: $('#b71').val(),
+            t72: $('#t72').val(),
+            n72: $('#n72').val(),
+            b72: $('#b72').val(),
+            t73: $('#t73').val(),
+            n73: $('#n73').val(),
+            b73: $('#b73').val(),
+            t74: $('#t74').val(),
+            n74: $('#n74').val(),
+            b74: $('#b74').val(),
+            t75: $('#t75').val(),
+            n75: $('#n75').val(),
+            b75: $('#b75').val(),
+            t76: $('#t76').val(),
+            n76: $('#n76').val(),
+            b76: $('#b76').val(),
+            t77: $('#t77').val(),
+            n77: $('#n77').val(),
+            b77: $('#b77').val(),
+            t78: $('#t78').val(),
+            n78: $('#n78').val(),
+            b78: $('#b78').val(),
+            t79: $('#t79').val(),
+            n79: $('#n79').val(),
+            b79: $('#b79').val(),
+            t70: $('#t70').val(),
+            n70: $('#n70').val(),
+            b70: $('#b70').val(),
+            t81: $('#t81').val(),
+            n81: $('#n81').val(),
+            b81: $('#b81').val(),
+            t82: $('#t82').val(),
+            n82: $('#n82').val(),
+            b82: $('#b82').val(),
+            t83: $('#t83').val(),
+            n83: $('#n83').val(),
+            b83: $('#b83').val(),
+            t84: $('#t84').val(),
+            n84: $('#n84').val(),
+            b84: $('#b84').val(),
+            t85: $('#t85').val(),
+            n85: $('#n85').val(),
+            b85: $('#b85').val(),
+            t86: $('#t86').val(),
+            n86: $('#n86').val(),
+            b86: $('#b86').val(),
+            t87: $('#t87').val(),
+            n87: $('#n87').val(),
+            b87: $('#b87').val(),
+            t88: $('#t88').val(),
+            n88: $('#n88').val(),
+            b88: $('#b88').val(),
+            t89: $('#t89').val(),
+            n89: $('#n89').val(),
+            b89: $('#b89').val(),
+            t90: $('#t90').val(),
+            n90: $('#n90').val(),
+            b90: $('#b90').val()
+        };
+
+        $("#sendLotto").click(function () {
+            alert(JSON.stringify(bet));
+        });
     })(jQuery);
 </script>
 
