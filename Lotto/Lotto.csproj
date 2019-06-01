@@ -136,6 +136,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -204,10 +206,58 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Account_Role.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Discount.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Lotto.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LottoEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LottoEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LottoEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LottoEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LottoEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LottoSub.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Main_Discount.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Main_Rate.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Period.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Poll.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rate.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Rate_Discount.cs" />
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -256,6 +306,7 @@
     <Content Include="Assets\js\lib\gmap\gmaps.min.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\rate.js" />
+    <Content Include="Assets\js\sweetalert2.all.min.js" />
     <Content Include="Assets\js\vmap.sampledata.js" />
     <Content Include="Assets\js\widgets.js" />
     <Content Include="Assets\scss\style.css" />
@@ -282,6 +333,16 @@
     <Content Include="Images\logo2.png" />
     <Content Include="Images\lotto.png" />
     <Content Include="Images\overlay-banner_original.png" />
+    <Content Include="Models\LottoEntity.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LottoEntity.edmx</DependentUpon>
+      <LastGenOutput>LottoEntity.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\LottoEntity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LottoEntity.edmx</DependentUpon>
+      <LastGenOutput>LottoEntity.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -313,6 +374,13 @@
     <Content Include="Assets\scss\style.scss" />
     <Content Include="Images\logo.psd" />
     <Content Include="Images\_gitignore" />
+    <EntityDeploy Include="Models\LottoEntity.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LottoEntity.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\LottoEntity.edmx.diagram">
+      <DependentUpon>LottoEntity.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -425,6 +493,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

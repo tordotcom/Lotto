@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="34a0076c030f4d698ec952d35c0ab547" Name="Diagram1">
+        <EntityTypeShape EntityType="ltfomModel.Account" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Discount" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Lotto" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Main_Discount" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Main_Rate" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Period" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Poll" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Rate" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Role" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.Account_Role" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ltfomModel.LottoSub" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="ltfomModel.FK_Discount_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="ltfomModel.FK_Poll_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="ltfomModel.FK_Rate_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="ltfomModel.FK_Lotto_Poll" ManuallyRouted="false" />
+        <AssociationConnector Association="ltfomModel.FK_LottoSub_Lotto" ManuallyRouted="false" />
+        <AssociationConnector Association="ltfomModel.FK_Poll_Period" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

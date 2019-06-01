@@ -1,0 +1,802 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ltfomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Create_By_UID" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_Login" Type="datetime" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ltfom.dbo.Account_Role' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Account_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="Role_ID" Type="int" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="three_up" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_down" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="2" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="2" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
+          <Property Name="up" Type="nvarchar" MaxLength="1" />
+          <Property Name="down" Type="nvarchar" MaxLength="1" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Lotto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Poll_ID" Type="int" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="balance_first" Type="nvarchar" MaxLength="50" />
+          <Property Name="balance_second" Type="nvarchar" MaxLength="50" />
+          <Property Name="balance_total" Type="nvarchar" MaxLength="50" />
+          <Property Name="balance_discount" Type="nvarchar" MaxLength="50" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LottoSub">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Lotto_ID" Type="int" />
+          <Property Name="Number" Type="nvarchar" MaxLength="50" />
+          <Property Name="Balance" Type="nvarchar" MaxLength="50" />
+          <Property Name="three_up" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_down" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="2" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="2" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
+          <Property Name="up" Type="nvarchar" MaxLength="1" />
+          <Property Name="down" Type="nvarchar" MaxLength="1" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Main_Discount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="three_up" Type="nvarchar" MaxLength="5" />
+          <Property Name="three_ood" Type="nvarchar" MaxLength="5" />
+          <Property Name="three_down" Type="nvarchar" MaxLength="5" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="5" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="5" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="5" />
+          <Property Name="up" Type="nvarchar" MaxLength="5" />
+          <Property Name="down" Type="nvarchar" MaxLength="5" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="5" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Main_Rate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="three_up" Type="nvarchar" MaxLength="5" />
+          <Property Name="three_ood" Type="nvarchar" MaxLength="5" />
+          <Property Name="three_down" Type="nvarchar" MaxLength="5" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="5" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="5" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="5" />
+          <Property Name="up" Type="nvarchar" MaxLength="5" />
+          <Property Name="down" Type="nvarchar" MaxLength="5" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="5" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Period">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Poll">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="Period_ID" Type="int" />
+          <Property Name="Receive" Type="nvarchar" MaxLength="50" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Rate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
+          <Property Name="three_up" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_down" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="2" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="2" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
+          <Property Name="up" Type="nvarchar" MaxLength="1" />
+          <Property Name="down" Type="nvarchar" MaxLength="1" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="100" />
+          <Property Name="Descript" Type="nvarchar" MaxLength="50" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'ltfom.dbo.Setting' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Setting">
+          <Property Name="Open" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+        <Association Name="FK_Discount_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lotto_Poll">
+          <End Role="Poll" Type="Self.Poll" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Lotto" Type="Self.Lotto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lotto">
+              <PropertyRef Name="Poll_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LottoSub_Lotto">
+          <End Role="Lotto" Type="Self.Lotto" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LottoSub" Type="Self.LottoSub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lotto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LottoSub">
+              <PropertyRef Name="Lotto_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poll_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Poll" Type="Self.Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Poll">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poll_Period">
+          <End Role="Period" Type="Self.Period" Multiplicity="0..1" />
+          <End Role="Poll" Type="Self.Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Poll">
+              <PropertyRef Name="Period_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rate" Type="Self.Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ltfomModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lotto" EntityType="Self.Lotto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Main_Discount" EntityType="Self.Main_Discount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Main_Rate" EntityType="Self.Main_Rate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Account_Role].[ID] AS [ID], 
+    [Account_Role].[UID] AS [UID], 
+    [Account_Role].[Role_ID] AS [Role_ID], 
+    [Account_Role].[create_date] AS [create_date], 
+    [Account_Role].[update_date] AS [update_date]
+    FROM [dbo].[Account_Role] AS [Account_Role]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="LottoSub" EntityType="Self.LottoSub" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LottoSub].[ID] AS [ID], 
+    [LottoSub].[Lotto_ID] AS [Lotto_ID], 
+    [LottoSub].[Number] AS [Number], 
+    [LottoSub].[Balance] AS [Balance], 
+    [LottoSub].[three_up] AS [three_up], 
+    [LottoSub].[three_ood] AS [three_ood], 
+    [LottoSub].[three_down] AS [three_down], 
+    [LottoSub].[two_up] AS [two_up], 
+    [LottoSub].[two_ood] AS [two_ood], 
+    [LottoSub].[two_down] AS [two_down], 
+    [LottoSub].[up] AS [up], 
+    [LottoSub].[down] AS [down], 
+    [LottoSub].[create_date] AS [create_date], 
+    [LottoSub].[update_date] AS [update_date]
+    FROM [dbo].[LottoSub] AS [LottoSub]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Discount" EntitySet="Discount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lotto_Poll" Association="Self.FK_Lotto_Poll">
+            <End Role="Poll" EntitySet="Poll" />
+            <End Role="Lotto" EntitySet="Lotto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LottoSub_Lotto" Association="Self.FK_LottoSub_Lotto">
+            <End Role="Lotto" EntitySet="Lotto" />
+            <End Role="LottoSub" EntitySet="LottoSub" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poll_Account" Association="Self.FK_Poll_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Poll" EntitySet="Poll" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poll_Period" Association="Self.FK_Poll_Period">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="Poll" EntitySet="Poll" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Account" Association="Self.FK_Rate_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Rate" EntitySet="Rate" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ltfomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Create_By_UID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Login" Type="DateTime" Precision="3" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Discounts" Relationship="Self.FK_Discount_Account" FromRole="Account" ToRole="Discount" />
+          <NavigationProperty Name="Polls" Relationship="Self.FK_Poll_Account" FromRole="Account" ToRole="Poll" />
+          <NavigationProperty Name="Rates" Relationship="Self.FK_Rate_Account" FromRole="Account" ToRole="Rate" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="three_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Discount_Account" FromRole="Discount" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Lotto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Poll_ID" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="balance_first" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="balance_second" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="balance_total" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="balance_discount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Poll" Relationship="Self.FK_Lotto_Poll" FromRole="Lotto" ToRole="Poll" />
+          <NavigationProperty Name="LottoSubs" Relationship="Self.FK_LottoSub_Lotto" FromRole="Lotto" ToRole="LottoSub" />
+        </EntityType>
+        <EntityType Name="Main_Discount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="three_up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="three_down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="first_three" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Main_Rate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="three_up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="three_down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="first_three" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Period">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Polls" Relationship="Self.FK_Poll_Period" FromRole="Period" ToRole="Poll" />
+        </EntityType>
+        <EntityType Name="Poll">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="Period_ID" Type="Int32" />
+          <Property Name="Receive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Poll_Account" FromRole="Poll" ToRole="Account" />
+          <NavigationProperty Name="Lottoes" Relationship="Self.FK_Lotto_Poll" FromRole="Poll" ToRole="Lotto" />
+          <NavigationProperty Name="Period" Relationship="Self.FK_Poll_Period" FromRole="Poll" ToRole="Period" />
+        </EntityType>
+        <EntityType Name="Rate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="three_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Rate_Account" FromRole="Rate" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Descript" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Account_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="Role_ID" Type="Int32" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LottoSub">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lotto_ID" Type="Int32" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Balance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="three_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Lotto" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoSub" ToRole="Lotto" />
+        </EntityType>
+        <Association Name="FK_Discount_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poll_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Poll" Type="Self.Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Poll">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rate" Type="Self.Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lotto_Poll">
+          <End Role="Poll" Type="Self.Poll" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Lotto" Type="Self.Lotto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Lotto">
+              <PropertyRef Name="Poll_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LottoSub_Lotto">
+          <End Role="Lotto" Type="Self.Lotto" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LottoSub" Type="Self.LottoSub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lotto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="LottoSub">
+              <PropertyRef Name="Lotto_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poll_Period">
+          <End Role="Period" Type="Self.Period" Multiplicity="0..1" />
+          <End Role="Poll" Type="Self.Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Poll">
+              <PropertyRef Name="Period_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ltfomEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Discounts" EntityType="Self.Discount" />
+          <EntitySet Name="Lottoes" EntityType="Self.Lotto" />
+          <EntitySet Name="Main_Discount" EntityType="Self.Main_Discount" />
+          <EntitySet Name="Main_Rate" EntityType="Self.Main_Rate" />
+          <EntitySet Name="Periods" EntityType="Self.Period" />
+          <EntitySet Name="Polls" EntityType="Self.Poll" />
+          <EntitySet Name="Rates" EntityType="Self.Rate" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" />
+          <EntitySet Name="LottoSubs" EntityType="Self.LottoSub" />
+          <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poll_Account" Association="Self.FK_Poll_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Poll" EntitySet="Polls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Account" Association="Self.FK_Rate_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Rate" EntitySet="Rates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lotto_Poll" Association="Self.FK_Lotto_Poll">
+            <End Role="Poll" EntitySet="Polls" />
+            <End Role="Lotto" EntitySet="Lottoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LottoSub_Lotto" Association="Self.FK_LottoSub_Lotto">
+            <End Role="Lotto" EntitySet="Lottoes" />
+            <End Role="LottoSub" EntitySet="LottoSubs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poll_Period" Association="Self.FK_Poll_Period">
+            <End Role="Period" EntitySet="Periods" />
+            <End Role="Poll" EntitySet="Polls" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ltfomModelStoreContainer" CdmEntityContainer="ltfomEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="ltfomModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Create_By_UID" ColumnName="Create_By_UID" />
+                <ScalarProperty Name="Last_Login" ColumnName="Last_Login" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discounts">
+            <EntityTypeMapping TypeName="ltfomModel.Discount">
+              <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lottoes">
+            <EntityTypeMapping TypeName="ltfomModel.Lotto">
+              <MappingFragment StoreEntitySet="Lotto">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Poll_ID" ColumnName="Poll_ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="balance_first" ColumnName="balance_first" />
+                <ScalarProperty Name="balance_second" ColumnName="balance_second" />
+                <ScalarProperty Name="balance_total" ColumnName="balance_total" />
+                <ScalarProperty Name="balance_discount" ColumnName="balance_discount" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Main_Discount">
+            <EntityTypeMapping TypeName="ltfomModel.Main_Discount">
+              <MappingFragment StoreEntitySet="Main_Discount">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Main_Rate">
+            <EntityTypeMapping TypeName="ltfomModel.Main_Rate">
+              <MappingFragment StoreEntitySet="Main_Rate">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Periods">
+            <EntityTypeMapping TypeName="ltfomModel.Period">
+              <MappingFragment StoreEntitySet="Period">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Polls">
+            <EntityTypeMapping TypeName="ltfomModel.Poll">
+              <MappingFragment StoreEntitySet="Poll">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Period_ID" ColumnName="Period_ID" />
+                <ScalarProperty Name="Receive" ColumnName="Receive" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rates">
+            <EntityTypeMapping TypeName="ltfomModel.Rate">
+              <MappingFragment StoreEntitySet="Rate">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ltfomModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+                <ScalarProperty Name="Descript" ColumnName="Descript" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Account_Role">
+            <EntityTypeMapping TypeName="ltfomModel.Account_Role">
+              <MappingFragment StoreEntitySet="Account_Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LottoSubs">
+            <EntityTypeMapping TypeName="ltfomModel.LottoSub">
+              <MappingFragment StoreEntitySet="LottoSub">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Lotto_ID" ColumnName="Lotto_ID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

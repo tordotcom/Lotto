@@ -275,7 +275,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-success">บันทึก</button>
+                        <button class="btn btn-success" id="btnUpdateRate">บันทึก</button>
                     </div>
                 </div>
             </div>
@@ -330,8 +330,10 @@
     <script src="~/Assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="~/Assets/js/init/datatables-init.js"></script>
     <script src="~/Assets/js/rate.js"></script>
+    <script src="~/Assets/js/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
         getRate = '@Url.Action("getRate", "Admin")';
+        UpdateRateDiscount = '@Url.Action("UpdateRateDiscount", "Admin")';
     </script>
 
     <script>

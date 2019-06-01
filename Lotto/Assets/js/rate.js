@@ -1,4 +1,5 @@
-﻿$("#btnRate").click(function () {
+﻿//------------------------get rate and discount------------------------------------------------//
+$("#btnRate").click(function () {
     $.ajax({
         url: getRate,
         type: "POST",
@@ -23,6 +24,48 @@
             $("#TwoDown_discount").val(data[0].TwoDown_discount);
             $("#Up_discount").val(data[0].Up_discount);
             $("#Down_discount").val(data[0].Down_discount);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("error");
+        }
+    });
+});
+//------------------------------------------------------------------------------------------//
+//----------------------------------update rate and discount--------------------------------//
+$("#btnUpdateRate").click(function () {
+    var RateDiscount = {
+        ThreeUp: $("#ThreeUp").val(),
+        ThreeDown: $("#ThreeDown").val(),
+        FirstThree: $("#FirstThree").val(),
+        ThreeOod: $("#ThreeOod").val(),
+        TwoUp: $("#TwoUp").val(),
+        TwoOod: $("#TwoOod").val(),
+        TwoDown: $("#TwoDown").val(),
+        Up: $("#Up").val(),
+        Down: $("#Down").val(),
+        ThreeUp_discount: $("#ThreeUp_discount").val(),
+        ThreeDown_discount: $("#ThreeDown_discount").val(),
+        FirstThree_discount: $("#FirstThree_discount").val(),
+        ThreeOod_discount: $("#ThreeOod_discount").val(),
+        TwoUp_discount: $("#TwoUp_discount").val(),
+        TwoOod_discount: $("#TwoOod_discount").val(),
+        TwoDown_discount: $("#TwoDown_discount").val(),
+        Up_discount: $("#Up_discount").val(),
+        Down_discount: $("#Down_discount").val()
+    };
+    $.ajax({
+        url: UpdateRateDiscount,
+        data: { RateDiscountArr: RateDiscount },
+        type: "POST",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            Swal.fire({               
+                type: 'success',
+                title: 'บันทึกเรียบร้อย',
+                showConfirmButton: false,
+                timer: 1500
+            })
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert("error");

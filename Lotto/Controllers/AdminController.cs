@@ -11,6 +11,7 @@ namespace Lotto.Controllers
 {
     public class AdminController : Controller
     {
+        ltfomEntities db = new ltfomEntities();
         // GET: Admin
         public ActionResult Index() //หน้าแรก
         {
@@ -76,8 +77,11 @@ namespace Lotto.Controllers
             return View();
         }
 
-        //------------------------------------------ function------------------------------------------------//
+        //---------------------------------------------------------------------------------------------------//
+        //-------------------------------------------function------------------------------------------------//
+        //---------------------------------------------------------------------------------------------------//
 
+        //------------------------------------get rate and discount------------------------------------------//
         [HttpPost]
         public ActionResult getRate()
         {
@@ -130,6 +134,47 @@ namespace Lotto.Controllers
 
             }            
             return Json(data);
+        }
+
+        //-------------------------------------update rate and discount--------------------------------//
+        [HttpPost]
+        public ActionResult UpdateRateDiscount(Rate_Discount RateDiscountArr)
+        {
+            Main_Rate MR = db.Main_Rate.Where(s => s.ID == 1).FirstOrDefault<Main_Rate>();
+            Main_Discount MD = db.Main_Discount.Where(s => s.ID == 1).FirstOrDefault<Main_Discount>();
+            if (MR != null && MD != null)
+            {
+                MR.update_date = DateTime.Now;
+                MR.three_up = RateDiscountArr.ThreeUP;
+                MR.three_ood = RateDiscountArr.ThreeOod;
+                MR.three_down = RateDiscountArr.ThreeDown;
+                MR.two_up = RateDiscountArr.TwoUp;
+                MR.two_ood = RateDiscountArr.TwoOod;
+                MR.two_down = RateDiscountArr.TwoDown;
+                MR.up = RateDiscountArr.Up;
+                MR.down = RateDiscountArr.Down;
+                MR.first_three = RateDiscountArr.FirstThree;
+                db.Entry(MR).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+
+                MD.update_date = DateTime.Now;
+                MD.three_up = RateDiscountArr.ThreeUP_discount;
+                MD.three_ood = RateDiscountArr.ThreeOod_discount;
+                MD.three_down = RateDiscountArr.ThreeDown_discount;
+                MD.two_up = RateDiscountArr.TwoUp_discount;
+                MD.two_ood = RateDiscountArr.TwoOod_discount;
+                MD.two_down = RateDiscountArr.TwoDown_discount;
+                MD.up = RateDiscountArr.Up_discount;
+                MD.down = RateDiscountArr.Down_discount;
+                MD.first_three = RateDiscountArr.FirstThree_discount;
+                db.Entry(MD).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
         }
     }
 }
