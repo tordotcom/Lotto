@@ -24,9 +24,53 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">หวยรัฐบาล</strong>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>หวย</th>
+                            <th>งวดวันที่</th>
+                            <th>สถานะ</th>
+                            <th>ปิดเมื่อ</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>หวยรัฐบาล</td>
+                            <td>16-04-2019</td>
+                            <td>ปิดรับแล้ว</td>
+                            <td>16-04-2019 23:00</td>
+                            <td><button type="button" class="btn btn-primary">ดูหวย</button></td>
+                            <td><button type="button" class="btn btn-warning">ย้อนกลับ</button></td>
+                        </tr>
+                        <tr>
+                            <td>หวยรัฐบาล</td>
+                            <td>01-04-2019</td>
+                            <td>ปิดรับแล้ว</td>
+                            <td>01-04-2019 23:00</td>
+                            <td><button type="button" class="btn btn-primary">ดูหวย</button></td>
+                            <td><button type="button" class="btn btn-warning">ย้อนกลับ</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     (function ($) {
-
+        $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        });
     })(jQuery);
 </script>
 

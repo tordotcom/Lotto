@@ -23,10 +23,53 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">โพย</strong>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>สมาชิก</th>
+                            <th>โพยทั้งหมด</th>
+                            <th>รับแล้ว</th>
+                            <th>ยอดแทง</th>
+                            <th>ยอดรับ</th>
+                            <th>ยอดหัก%</th>
+                            <th>ยอดถูก</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Arm</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>15000</td>
+                            <td>15000</td>
+                            <td>14.20</td>
+                            <td>0</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-primary">สรุปยอด</button>
+                                <button type="button" class="btn btn-sm btn-success">ใบแจ้งยอด</button>
+                                <button type="button" class="btn btn-sm btn-warning">ดูโพย</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     (function ($) {
-
+        $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        });
     })(jQuery);
 </script>
 
