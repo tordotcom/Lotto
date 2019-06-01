@@ -230,48 +230,48 @@
                             <tbody>
                                 <tr style="height:1px">
                                     <td>3 บน</td>
-                                    <td><input class="small" type="text" style="width:100%" id="ThreeUp" /></td>
-                                    <td><input class="small" type="text" style="width:100%" id="ThreeUp_discount" /></td>
+                                    <td><input class="form-control-sm" type="text" id="ThreeUp" /></td>
+                                    <td><input class="form-control-sm" type="text" id="ThreeUp_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>3 โต๊ด</td>
-                                    <td><input class="small" type="text" id="ThreeOod" style="width:100%" /></td>
-                                    <td><input class="small" type="text" style="width:100%" id="ThreeOod_discount" /></td>
+                                    <td><input class="form-control-sm" type="text" id="ThreeOod" /></td>
+                                    <td><input class="form-control-sm" type="text" id="ThreeOod_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>2 บน</td>
-                                    <td><input class="small" type="text" id="TwoUp" style="width:100%" /></td>
-                                    <td><input class="small" type="text" id="TwoUp_discount" style="width:100%" /></td>
+                                    <td><input class="form-control-sm" type="text" id="TwoUp" /></td>
+                                    <td><input class="form-control-sm" type="text" id="TwoUp_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>2 โต๊ด</td>
-                                    <td><input class="small" type="text" id="TwoOod" style="width:100%" /></td>
-                                    <td><input class="small" type="text" id="TwoOod_discount" style="width:100%" /></td>
+                                    <td><input class="form-control-sm" type="text" id="TwoOod" /></td>
+                                    <td><input class="form-control-sm" type="text" id="TwoOod_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>วิ่ง บน</td>
-                                    <td><input class="small" type="text" id="Up" style="width:100%" /></td>
-                                    <td><input class="small" type="text" id="Up_discount" style="width:100%" /></td>
+                                    <td><input class="form-control-sm" type="text" id="Up" /></td>
+                                    <td><input class="form-control-sm" type="text" id="Up_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>3 ล่าง</td>
-                                    <td><input class="small" type="text" id="ThreeDown" style="width:100%" /></td>
-                                    <td><input class="small" type="text" id="ThreeDown_discount" style="width:100%" /></td>
+                                    <td><input class="form-control-sm" type="text" id="ThreeDown" /></td>
+                                    <td><input class="form-control-sm" type="text" id="ThreeDown_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>2 ล่าง</td>
-                                    <td><input class="small" type="text" id="TwoDown" style="width:100%" /></td>
-                                    <td><input class="small" type="text" id="TwoDown_discount" style="width:100%" /></td>
+                                    <td><input class="form-control-sm" type="text" id="TwoDown" /></td>
+                                    <td><input class="form-control-sm" type="text" id="TwoDown_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>วิ่ง ล่าง</td>
-                                    <td><input class="small" type="text" id="Down" style="width:100%" /></td>
-                                    <td><input class="small" type="text" id="Down_discount" style="width:100%" /></td>
+                                    <td><input class="form-control-sm" type="text" id="Down" /></td>
+                                    <td><input class="form-control-sm" type="text" id="Down_discount" /></td>
                                 </tr>
                                 <tr>
                                     <td>3 หน้า</td>
-                                    <td><input class="small" type="text" id="FirstThree" style="width:100%" /></td>
-                                    <td><input class="small" type="text" id="FirstThree_discount" style="width:100%" /></td>
+                                    <td><input class="form-control-sm" type="text" id="FirstThree" /></td>
+                                    <td><input class="form-control-sm" type="text" id="FirstThree_discount" /></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -332,6 +332,15 @@
     <script src="~/Assets/js/rate.js"></script>
     <script type="text/javascript">
         getRate = '@Url.Action("getRate", "Admin")';
+    </script>
+
+    <script>
+        (function ($) {
+            var d = new Date();
+            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            $('#todayDate').html(strDate);
+            $('#lottoStatus').html("ปิดรับแล้ว");
+        })(jQuery);
     </script>
 </body>
 </html>

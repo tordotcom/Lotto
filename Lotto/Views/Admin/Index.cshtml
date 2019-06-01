@@ -33,10 +33,6 @@
 
 <script>
     (function ($) {
-        var d = new Date();
-        var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-        $('#todayDate').html(strDate);
-        $('#lottoStatus').html("ปิดรับแล้ว");
         $.getJSON("http://jsonip.com?callback=?", function (data) {
             $("#ip").text(data.ip);
             $("#lastIp").text(data.ip);
