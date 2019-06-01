@@ -24,8 +24,157 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">สมาชิก</strong>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>รหัสสมาชิก</th>
+                            <th>รหัสผ่าน</th>
+                            <th>ชื่อ</th>
+                            <th>สถานะ</th>
+                            <th>หมายเหตุ</th>
+                            <th>สมาชิก</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M3434</td>
+                            <td>#z#WREXSEXSxw</td>
+                            <td>Arm</td>
+                            <td>ใช้งาน</td>
+                            <td>sdasdsadsads</td>
+                            <td>2018-08-17 22:33:14</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editMemberModal">แก้ไข</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteMemberModal">ลบ</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editMemberModal" tabindex="-1" role="dialog" aria-labelledby="editMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editMemberModalLabel">แก้ไขข้อมูลสมาชิก</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">รหัสสมาชิก</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">รหัสผ่าน</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อสมาชิก</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">สถานะ</label></div>
+                        <div class="col col-md-7">
+                            <select name="select" id="select" class="form-control-sm form-control">
+                                <option value="0">Please select</option>
+                                <option value="1">Option #1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label class=" form-control-label">รับโพยอัตโนมัติ</label></div>
+                        <div class="col col-md-7">
+                            <div class="form-check-inline form-check">
+                                <label for="inline-checkbox1" class="form-check-label ">
+                                    <input type="checkbox" id="" name="" value="" class="form-check-input">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">หมายเหตุ</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนครั้งที่ใส่รหัสผิด</label></div>
+                        <div class="col col-md-7"><center><input type="text" id="text-input" name="text-input" class="form-control form-control-sm" placeholder="ใส่รหัสผ่านผิดสะสมได้ไม่เกิน 50 ครั้ง"></center></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดเครดิต</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">สร้างเมื่อ</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">สร้างโดย</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">แก้ไขเมื่อ</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">แก้ไขโดย</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">เข้าใช้งานล่าสุด</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">IP ที่เข้าใช้งานล่าสุด</label></div>
+                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">ยืนยัน</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="deleteMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteMemberModalLabel">ลบข้อมูล</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ต้องการลบข้อมูลสมาชิก "" ใช้หรือไม่?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">ยืนยัน</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     (function ($) {
-
+        $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        });
     })(jQuery);
 </script>
