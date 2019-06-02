@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -66,7 +68,58 @@ namespace Lotto.Controllers
         }
         public ActionResult Member() //สมาชิก
         {
-            return View();
+            string connetionString = null;
+            var user = new List<User_Role>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        user.Add(new User_Role
+                        {
+                            ID = Reader["ID"].ToString(),
+                            Username = Reader["Username"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Description = Reader["Description"].ToString(),
+                            Status = Reader["Status"].ToString(),
+                            create_date = Reader["create_date"].ToString(),
+                            update_date = Reader["update_date"].ToString(),
+                            Create_By_UID = Reader["Create_By_UID"].ToString(),
+                            Last_Login = Reader["Last_Login"].ToString(),
+                            Role = Reader["Role"].ToString()
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            if (user.Count > 0)
+            {
+                for(int i=0;i<user.Count;i++)
+                {
+                    bool role = Check_Role("user", user[i].Role);
+                    if(!role)
+                    {
+                        user.RemoveAt(i);
+                    }
+                }
+            }                
+            return View(user);
         }
         public ActionResult MemberPrice() //ราคาสมาชิก
         {
@@ -80,7 +133,84 @@ namespace Lotto.Controllers
         //---------------------------------------------------------------------------------------------------//
         //-------------------------------------------function------------------------------------------------//
         //---------------------------------------------------------------------------------------------------//
+        //----------------------------------------check role-------------------------------------------------//
+        public bool Check_Role(string plainText, string hashValue)
+        {
+            bool verify = VerifyHash(plainText, hashValue);
+            return verify;
+        }
+        //------------------------------------------compute hash---------------------------------------------//
+        public string ComputeHash(string plainText, byte[] saltBytes)
+        {
+            if (saltBytes == null)
+            {
+                int minSaltSize = 4;
+                int maxSaltSize = 8;
+                Random random = new Random();
+                int saltSize = random.Next(minSaltSize, maxSaltSize);
+                saltBytes = new byte[saltSize];
+                RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+                rng.GetNonZeroBytes(saltBytes);
+            }
 
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+
+            byte[] plainTextWithSaltBytes = new byte[plainTextBytes.Length + saltBytes.Length];
+
+            for (int i = 0; i < plainTextBytes.Length; i++)
+            {
+                plainTextWithSaltBytes[i] = plainTextBytes[i];
+            }
+
+            for (int i = 0; i < saltBytes.Length; i++)
+            {
+                plainTextWithSaltBytes[plainTextBytes.Length + i] = saltBytes[i];
+            }
+
+            HashAlgorithm hash;
+            hash = new SHA256Managed();
+
+            byte[] hashBytes = hash.ComputeHash(plainTextWithSaltBytes);
+
+            byte[] hashWithSaltBytes = new byte[hashBytes.Length + saltBytes.Length];
+
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                hashWithSaltBytes[i] = hashBytes[i];
+            }
+
+            for (int i = 0; i < saltBytes.Length; i++)
+            {
+                hashWithSaltBytes[hashBytes.Length + i] = saltBytes[i];
+            }
+
+            string hashValue = Convert.ToBase64String(hashWithSaltBytes);
+            return hashValue;
+        }
+        //-----------------------------------------verify role-----------------------------------------------//
+        public bool VerifyHash(string plainText, string hashValue)
+        {
+            byte[] hashWithSaltBytes = Convert.FromBase64String(hashValue);
+            int hashSizeInBits, hashSizeInBytes;
+            hashSizeInBits = 256;
+            hashSizeInBytes = hashSizeInBits / 8;
+
+            if (hashWithSaltBytes.Length < hashSizeInBytes)
+            {
+                return false;
+            }
+
+            byte[] saltBytes = new byte[hashWithSaltBytes.Length - hashSizeInBytes];
+
+            for (int i = 0; i < saltBytes.Length; i++)
+            {
+                saltBytes[i] = hashWithSaltBytes[hashSizeInBytes + i];
+            }
+
+            string expectedHashString = ComputeHash(plainText, saltBytes);
+
+            return (hashValue == expectedHashString);
+        }
         //------------------------------------get rate and discount------------------------------------------//
         [HttpPost]
         public ActionResult getRate()

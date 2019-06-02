@@ -13,6 +13,7 @@ namespace Lotto.Controllers
 {
     public class LoginController : Controller
     {
+        ltfomEntities db = new ltfomEntities();
         // GET: Login
         public ActionResult Login()
         {
@@ -41,6 +42,7 @@ namespace Lotto.Controllers
                         {
                             user.Add(new UserLogin
                             {
+                                ID = Reader["ID"].ToString(),
                                 Username = Reader["Username"].ToString(),
                                 Password = Reader["Password"].ToString(),
                                 Role = Reader["Role"].ToString(),
@@ -72,6 +74,14 @@ namespace Lotto.Controllers
                             role = Check_Role("user", user[0].Role);
                             if (role)
                             {
+                                int id = Int32.Parse(user[0].ID);
+                                Account A = db.Account.Where(s => s.ID == id).FirstOrDefault<Account>();
+                                if (A != null)
+                                {
+                                    A.Last_Login = DateTime.Now;                                   
+                                    db.Entry(A).State = System.Data.Entity.EntityState.Modified;
+                                    db.SaveChanges();
+                                }
                                 return RedirectToAction("Index", "User");
                             }
                         }
