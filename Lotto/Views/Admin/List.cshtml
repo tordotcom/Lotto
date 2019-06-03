@@ -42,7 +42,7 @@
                             <th>ยอดหัก%</th>
                             <th>ยอดถูก</th>
                             <th>วันที่รับ</th>
-                            <th><button type="button" class="btn btn-primary">พิมพ์โพย</button></th>
+                            <th><button type="button" class="btn btn-sm btn-secondary">พิมพ์โพย</button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,9 +56,23 @@
                             <td>14250</td>
                             <td>0</td>
                             <td>01-01-2019 13:00</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkModal">ดูโพย</button></td>
+                            <td><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkModal">ดูโพย</button></td>
                         </tr>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>รวม</th>
+                            <th>1 ใบ</th>
+                            <th></th>
+                            <th></th>
+                            <th>15000</th>
+                            <th>15000</th>
+                            <th>14250</th>
+                            <th>0</th>
+                            <th>สรุป</th>
+                            <th>14250</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -804,6 +818,9 @@
     (function ($) {
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+             fixedHeader: {
+                footer: true
+            }
         });
     })(jQuery);
 </script>

@@ -24,13 +24,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="~/Assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="~/Assets/css/style.css">
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-    <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
-
     <link rel="stylesheet" href="~/Assets/css/lib/datatable/dataTables.bootstrap.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
@@ -41,7 +34,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
 
     <script src="~/Assets/js/lib/data-table/datatables.min.js"></script>
     <script src="~/Assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
@@ -57,6 +49,7 @@
     <style>
         body {
             background-color: #eee;
+            font-size: 12px;
         }
 
         .content {
@@ -112,6 +105,10 @@
 
         .input-color {
             background-color : rgba(255, 0, 0, 0.1); 
+        }
+
+        .digital-clock {
+            padding-right: 5px;
         }
     </style>
 </head>
@@ -179,8 +176,12 @@
                             </form>
                         </div>
 
+                        <div class="dropdown for-clock-live">
+                            <div class="digital-clock">00:00:00</div>
+                        </div>
+
                         <div class="dropdown for-price">
-                            <button class="btn btn-default" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal">
+                            <button class="btn btn-sm btn-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal">
                                 ราคาจ่าย
                             </button>
                         </div>
@@ -373,11 +374,25 @@
 
     <script>
         (function ($) {
+            clock();
             var d = new Date();
             var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
             $('#todayDate').html(strDate);
             $('#lottoStatus').html("ปิดรับแล้ว");
         })(jQuery);
+
+        function clock(){
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+             if(s<10){
+                 s = "0"+s;
+             }
+
+            $(".digital-clock").text(h+" : "+m+" : "+s);
+             setTimeout(function(){clock()}, 500);
+        }
     </script>
 </body>
 </html>
