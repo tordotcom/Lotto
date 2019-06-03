@@ -306,5 +306,29 @@ namespace Lotto.Controllers
                 return Json("fail");
             }
         }
+        //-------------------------------------update User data --------------------------------//
+        [HttpPost]
+        public ActionResult UpdateUser(Account User)
+        {
+            Account A = db.Account.Where(s => s.ID == User.ID).FirstOrDefault<Account>();
+            if (A != null)
+            {
+                if (User.Password != null)
+                {                   
+                    A.Password = ComputeHash(User.Password, null);
+                }
+                A.update_date = DateTime.Now;
+                A.Name = User.Name;
+                A.Description = User.Description;
+                A.Status = User.Status;
+                db.Entry(A).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
     }
 }

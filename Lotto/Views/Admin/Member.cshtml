@@ -84,11 +84,11 @@
                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">รหัสสมาชิก</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUsername" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="text" id="txtUsername" name="text-input" class="form-control form-control-sm" disabled></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">รหัสผ่าน</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtPassword" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="password" id="txtPassword" name="text-input" class="form-control form-control-sm"></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อสมาชิก</label></div>
@@ -123,23 +123,23 @@
                     </div>*@
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">สร้างเมื่อ</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtCreateDate" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="text" id="txtCreateDate" name="text-input" class="form-control form-control-sm" disabled></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">สร้างโดย</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtCreateBy" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="text" id="txtCreateBy" name="text-input" class="form-control form-control-sm" disabled></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">แก้ไขเมื่อ</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUpdateDate" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="text" id="txtUpdateDate" name="text-input" class="form-control form-control-sm" disabled></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">แก้ไขโดย</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUpdateBy" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="text" id="txtUpdateBy" name="text-input" class="form-control form-control-sm" disabled></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เข้าใช้งานล่าสุด</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtLastLogin" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="text" id="txtLastLogin" name="text-input" class="form-control form-control-sm" disabled></div>
                     </div>
                     @*<div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">IP ที่เข้าใช้งานล่าสุด</label></div>
@@ -148,7 +148,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnEdit">ยืนยัน</button>
+                <button type="button" class="btn btn-primary" data-id="0" id="btnEdit">ยืนยัน</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -175,7 +175,9 @@
     </div>
 </div>
 <script src="~/Assets/js/member.js"></script>
+<script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
+    updateUser = '@Url.Action("UpdateUser", "Admin")';
     var o = new Object();
     o = @Html.Raw(Json.Encode(Model));
     (function ($) {
@@ -184,12 +186,13 @@
         });
     })(jQuery);
     $(".edit").click(function () {       
-        var id = $(this).attr("data-id");
+        var id = $(this).attr("data-id");       
         for (var i = 0; i < o.length;i++) {
             if (id == o[i].ID) {
+                document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
                 $("#txtUsername").val(o[i].Username);
                 $("#txtName").val(o[i].Name);
-                $("#txtUsername").val(o[i].Username);
+                $("#select").val(o[i].Status);
                 $("#txtDescription").val(o[i].Description);
                 $("#txtCreateDate").val(o[i].create_date);
                 $("#txtCreateBy").val("Admin");
