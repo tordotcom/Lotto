@@ -4,6 +4,810 @@
     Layout = "~/Views/Shared/_User.cshtml";
 }
 
-    <h2>เลขคืน</h2>
+<h2>เลขคืน</h2>
 <hr />
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="card lotto-status">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        หวยรัฐบาล : <b><span id="todayDate"></span></b>
+                    </div>
+                    <div class="col-md-3">
+                        ปิดเวลา : <b><span id="closeTime"></span></b>
+                    </div>
+                    <div class="col-md-3">
+                        สถานะ : <b><span id="lottoStatus"></span></b>
+                    </div>
+                    <div class="col-md-3">
+                        ยอดแทง : <b><span id="totalBetCount"></span></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">โพยทั้งหมด</strong>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>โพยใบที่</th>
+                            <th>สถานะ</th>
+                            <th>ยอดแทง</th>
+                            <th>ยอดรับ</th>
+                            <th>ยอดหัก%</th>
+                            <th>ยอดถูก</th>
+                            <th>วันที่ส่ง</th>
+                            <th>วันที่รับ</th>
+                            <th>วันที่แก้ไข</th>
+                            <th><button type="button" class="btn btn-sm btn-primary">พิมพ์โพย</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>รับแล้ว</td>
+                            <td>15000</td>
+                            <td>15000</td>
+                            <td>1.00</td>
+                            <td>15000</td>
+                            <td>01-01-2019 13:00</td>
+                            <td>01-01-2019 13:00</td>
+                            <td>01-01-2019 13:00</td>
+                            <td><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkModal">ดูโพย</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="checkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:90%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkModalLabel">ตรวจเลข</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">สถานะ</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทงใบนี้</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดรับใบนี้</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดหัก%ใบนี้</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">วันที่แทง</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">แทงโดย</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">แทงจาก</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">วันที่รับ</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยหมายเลข</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืนงวดนี้</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดรับงวดนี้</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดหัก%งวดนี้</label></div>
+                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="bet-cell">
+                                    <div class="bet-no">1</div>
+                                    <div class="bet-type"><div id="t1" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n1" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b1" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">2</div>
+                                    <div class="bet-type"><div id="t2" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n2" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b2" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">3</div>
+                                    <div class="bet-type"><div id="t3" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n3" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b3" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">4</div>
+                                    <div class="bet-type"><div id="t4" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n4" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b4" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">5</div>
+                                    <div class="bet-type"><div id="t5" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n5" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b5" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">6</div>
+                                    <div class="bet-type"><div id="t6" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n6" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b6" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">7</div>
+                                    <div class="bet-type"><div id="t7" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n7" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b7" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">8</div>
+                                    <div class="bet-type"><div id="t8" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n8" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b8" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">9</div>
+                                    <div class="bet-type"><div id="t9" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n9" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b9" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">10</div>
+                                    <div class="bet-type"><div id="t10" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n10" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b10" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">11</div>
+                                    <div class="bet-type"><div id="t11" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n11" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b11" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">12</div>
+                                    <div class="bet-type"><div id="t12" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n12" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b12" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">13</div>
+                                    <div class="bet-type"><div id="t13" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n13" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b13" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">14</div>
+                                    <div class="bet-type"><div id="t14" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n14" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b14" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">15</div>
+                                    <div class="bet-type"><div id="t15" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n15" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b15" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">16</div>
+                                    <div class="bet-type"><div id="t16" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n16" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b16" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">17</div>
+                                    <div class="bet-type"><div id="t17" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n17" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b17" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">18</div>
+                                    <div class="bet-type"><div id="t18" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n18" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b18" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">19</div>
+                                    <div class="bet-type"><div id="t19" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n19" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b19" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">20</div>
+                                    <div class="bet-type"><div id="t20" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n20" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b20" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">21</div>
+                                    <div class="bet-type"><div id="t21" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n21" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b21" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">22</div>
+                                    <div class="bet-type"><div id="t22" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n22" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b22" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">23</div>
+                                    <div class="bet-type"><div id="t23" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n23" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b23" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">24</div>
+                                    <div class="bet-type"><div id="t24" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n24" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b24" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">25</div>
+                                    <div class="bet-type"><div id="t25" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n25" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b25" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">26</div>
+                                    <div class="bet-type"><div id="t26" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n26" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b26" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">27</div>
+                                    <div class="bet-type"><div id="t27" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n27" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b27" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">28</div>
+                                    <div class="bet-type"><div id="t28" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n28" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b28" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">29</div>
+                                    <div class="bet-type"><div id="t29" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n29" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b29" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">30</div>
+                                    <div class="bet-type"><div id="t30" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n30" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b30" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="bet-cell">
+                                    <div class="bet-no">31</div>
+                                    <div class="bet-type"><div id="t31" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n31" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b31" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">32</div>
+                                    <div class="bet-type"><div id="t32" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n32" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b32" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">33</div>
+                                    <div class="bet-type"><div id="t33" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n33" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b33" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">34</div>
+                                    <div class="bet-type"><div id="t34" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n34" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b34" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">35</div>
+                                    <div class="bet-type"><div id="t35" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n35" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b35" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">36</div>
+                                    <div class="bet-type"><div id="t36" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n36" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b36" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">37</div>
+                                    <div class="bet-type"><div id="t37" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n37" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b37" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">38</div>
+                                    <div class="bet-type"><div id="t38" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n38" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b38" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">39</div>
+                                    <div class="bet-type"><div id="t39" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n39" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b39" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">40</div>
+                                    <div class="bet-type"><div id="t40" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n40" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b40" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">41</div>
+                                    <div class="bet-type"><div id="t41" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n41" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b41" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">42</div>
+                                    <div class="bet-type"><div id="t42" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n42" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b42" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">43</div>
+                                    <div class="bet-type"><div id="t43" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n43" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b43" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">44</div>
+                                    <div class="bet-type"><div id="t44" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n44" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b44" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">45</div>
+                                    <div class="bet-type"><div id="t45" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n45" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b45" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">46</div>
+                                    <div class="bet-type"><div id="t46" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n46" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b46" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">47</div>
+                                    <div class="bet-type"><div id="t47" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n47" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b47" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">48</div>
+                                    <div class="bet-type"><div id="t48" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n48" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b48" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">49</div>
+                                    <div class="bet-type"><div id="t49" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n49" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b49" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">50</div>
+                                    <div class="bet-type"><div id="t50" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n50" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b50" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">51</div>
+                                    <div class="bet-type"><div id="t51" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n51" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b51" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">52</div>
+                                    <div class="bet-type"><div id="t52" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n52" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b52" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">53</div>
+                                    <div class="bet-type"><div id="t53" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n53" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b53" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">54</div>
+                                    <div class="bet-type"><div id="t54" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n54" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b54" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">55</div>
+                                    <div class="bet-type"><div id="t55" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n55" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b55" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">56</div>
+                                    <div class="bet-type"><div id="t56" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n56" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b56" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">57</div>
+                                    <div class="bet-type"><div id="t57" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n57" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b57" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">58</div>
+                                    <div class="bet-type"><div id="t58" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n58" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b58" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">59</div>
+                                    <div class="bet-type"><div id="t59" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n59" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b59" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">60</div>
+                                    <div class="bet-type"><div id="t60" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n60" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b60" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="bet-cell">
+                                    <div class="bet-no">61</div>
+                                    <div class="bet-type"><div id="t61" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n61" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b61" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">62</div>
+                                    <div class="bet-type"><div id="t62" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n62" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b62" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">63</div>
+                                    <div class="bet-type"><div id="t63" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n63" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b63" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">64</div>
+                                    <div class="bet-type"><div id="t64" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n64" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b64" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">65</div>
+                                    <div class="bet-type"><div id="t65" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n65" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b65" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">66</div>
+                                    <div class="bet-type"><div id="t66" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n66" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b66" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">67</div>
+                                    <div class="bet-type"><div id="t67" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n67" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b67" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">68</div>
+                                    <div class="bet-type"><div id="t68" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n68" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b68" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">69</div>
+                                    <div class="bet-type"><div id="t69" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n69" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b69" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">70</div>
+                                    <div class="bet-type"><div id="t70" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n70" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b70" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">71</div>
+                                    <div class="bet-type"><div id="t71" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n71" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b71" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">72</div>
+                                    <div class="bet-type"><div id="t72" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n72" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b72" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">73</div>
+                                    <div class="bet-type"><div id="t73" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n73" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b73" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">74</div>
+                                    <div class="bet-type"><div id="t74" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n74" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b74" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">75</div>
+                                    <div class="bet-type"><div id="t75" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n75" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b75" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">76</div>
+                                    <div class="bet-type"><div id="t76" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n76" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b76" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">77</div>
+                                    <div class="bet-type"><div id="t77" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n77" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b77" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">78</div>
+                                    <div class="bet-type"><div id="t78" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n78" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b78" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">79</div>
+                                    <div class="bet-type"><div id="t79" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n79" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b79" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">80</div>
+                                    <div class="bet-type"><div id="t80" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n80" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b80" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">81</div>
+                                    <div class="bet-type"><div id="t81" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n81" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b81" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">82</div>
+                                    <div class="bet-type"><div id="t82" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n82" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b82" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">83</div>
+                                    <div class="bet-type"><div id="t83" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n83" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b83" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">84</div>
+                                    <div class="bet-type"><div id="t84" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n84" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b84" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">85</div>
+                                    <div class="bet-type"><div id="t85" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n85" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b85" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">86</div>
+                                    <div class="bet-type"><div id="t86" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n86" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b86" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">87</div>
+                                    <div class="bet-type"><div id="t87" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n87" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b87" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">88</div>
+                                    <div class="bet-type"><div id="t88" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n88" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b88" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">89</div>
+                                    <div class="bet-type"><div id="t89" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n89" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b89" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                                <div class="bet-cell">
+                                    <div class="bet-no">90</div>
+                                    <div class="bet-type"><div id="t90" class="form-control form-control-sm input-bet-type">บ</div></div>
+                                    <div class="bet-lotto"><input id="n90" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                    <div class="bet-equal">=</div>
+                                    <div class="bet-price"><input id="b90" type="text" class="form-control form-control-sm input-color" placeholder=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">ตรวจ</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]]
+        });
+    })(jQuery);
+</script>
