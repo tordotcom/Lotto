@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ltfomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ltfomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="ID" />
@@ -41,11 +41,12 @@ warning 6002: The table/view 'ltfom.dbo.Account_Role' does not have a primary ke
           <Property Name="three_up" Type="nvarchar" MaxLength="3" />
           <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
           <Property Name="three_down" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_up" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_ood" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
-          <Property Name="up" Type="nvarchar" MaxLength="1" />
-          <Property Name="down" Type="nvarchar" MaxLength="1" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="3" />
+          <Property Name="up" Type="nvarchar" MaxLength="3" />
+          <Property Name="down" Type="nvarchar" MaxLength="3" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="3" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -148,9 +149,10 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="three_down" Type="nvarchar" MaxLength="3" />
           <Property Name="two_up" Type="nvarchar" MaxLength="2" />
           <Property Name="two_ood" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
-          <Property Name="up" Type="nvarchar" MaxLength="1" />
-          <Property Name="down" Type="nvarchar" MaxLength="1" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="3" />
+          <Property Name="up" Type="nvarchar" MaxLength="3" />
+          <Property Name="down" Type="nvarchar" MaxLength="3" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="3" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -164,11 +166,6 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'ltfom.dbo.Setting' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Setting">
-          <Property Name="Open" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -313,8 +310,7 @@ warning 6013: The table/view 'ltfom.dbo.Setting' does not have a primary key def
             <End Role="Rate" EntitySet="Rate" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ltfomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -345,14 +341,15 @@ warning 6013: The table/view 'ltfom.dbo.Setting' does not have a primary key def
           <Property Name="three_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="up" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="down" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Discount_Account" FromRole="Discount" ToRole="Account" />
+          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Lotto">
           <Key>
@@ -438,12 +435,13 @@ warning 6013: The table/view 'ltfom.dbo.Setting' does not have a primary key def
           <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="two_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="up" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="down" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Rate_Account" FromRole="Rate" ToRole="Account" />
+          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -629,6 +627,7 @@ warning 6013: The table/view 'ltfom.dbo.Setting' does not have a primary key def
           <EntitySetMapping Name="Discounts">
             <EntityTypeMapping TypeName="ltfomModel.Discount">
               <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="three_up" ColumnName="three_up" />
@@ -719,6 +718,7 @@ warning 6013: The table/view 'ltfom.dbo.Setting' does not have a primary key def
           <EntitySetMapping Name="Rates">
             <EntityTypeMapping TypeName="ltfomModel.Rate">
               <MappingFragment StoreEntitySet="Rate">
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="three_up" ColumnName="three_up" />

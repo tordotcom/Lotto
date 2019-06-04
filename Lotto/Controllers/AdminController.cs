@@ -123,7 +123,121 @@ namespace Lotto.Controllers
         }
         public ActionResult MemberPrice() //ราคาสมาชิก
         {
-            return View();
+            string connetionString = null;
+            var user = new List<User_Rate_Discount>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Discount]) d on a.ID = d.UID where ra.UID is not null";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        user.Add(new User_Rate_Discount
+                        {
+                            ID = Reader["ID"].ToString(),
+                            rateID = Reader["rateID"].ToString(),
+                            discountID = Reader["discountID"].ToString(),
+                            Username = Reader["Username"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Role = Reader["Role"].ToString(),
+                            ThreeUP = Reader["three_up"].ToString(),
+                            ThreeDown = Reader["three_down"].ToString(),
+                            ThreeOod = Reader["three_ood"].ToString(),
+                            FirstThree = Reader["first_three"].ToString(),
+                            TwoUp = Reader["two_up"].ToString(),
+                            TwoOod = Reader["two_ood"].ToString(),
+                            TwoDown = Reader["two_down"].ToString(),
+                            Up = Reader["up"].ToString(),
+                            Down = Reader["down"].ToString(),
+                            ThreeUP_discount = Reader["three_up_d"].ToString(),
+                            ThreeDown_discount = Reader["three_down_d"].ToString(),
+                            ThreeOod_discount = Reader["three_ood_d"].ToString(),
+                            FirstThree_discount = Reader["first_three_d"].ToString(),
+                            TwoUp_discount = Reader["two_up_d"].ToString(),
+                            TwoOod_discount = Reader["two_ood_d"].ToString(),
+                            TwoDown_discount = Reader["two_down_d"].ToString(),
+                            Up_discount = Reader["up_d"].ToString(),
+                            Down_discount = Reader["down_d"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where rate.UID is null";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        user.Add(new User_Rate_Discount
+                        {
+                            ID = Reader["ID"].ToString(),
+                            Username = Reader["Username"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Role = Reader["Role"].ToString(),
+                            ThreeUP = Reader["three_up"].ToString(),
+                            ThreeDown = Reader["three_down"].ToString(),
+                            ThreeOod = Reader["three_ood"].ToString(),
+                            FirstThree = Reader["first_three"].ToString(),
+                            TwoUp = Reader["two_up"].ToString(),
+                            TwoOod = Reader["two_ood"].ToString(),
+                            TwoDown = Reader["two_down"].ToString(),
+                            Up = Reader["up"].ToString(),
+                            Down = Reader["down"].ToString(),
+                            ThreeUP_discount = Reader["three_up_d"].ToString(),
+                            ThreeDown_discount = Reader["three_down_d"].ToString(),
+                            ThreeOod_discount = Reader["three_ood_d"].ToString(),
+                            FirstThree_discount = Reader["first_three_d"].ToString(),
+                            TwoUp_discount = Reader["two_up_d"].ToString(),
+                            TwoOod_discount = Reader["two_ood_d"].ToString(),
+                            TwoDown_discount = Reader["two_down_d"].ToString(),
+                            Up_discount = Reader["up_d"].ToString(),
+                            Down_discount = Reader["down_d"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            if (user.Count > 0)
+            {
+                for (int i = 0; i < user.Count; i++)
+                {
+                    bool role = Check_Role("user", user[i].Role);
+                    if (!role)
+                    {
+                        user.RemoveAt(i);
+                    }
+                }
+            }
+            return View(user);
         }
         public ActionResult DealerInfo() //ข้อมูลเจ้ามือ
         {
@@ -304,6 +418,87 @@ namespace Lotto.Controllers
             else
             {
                 return Json("fail");
+            }
+        }
+        //-------------------------------------update user rate and discount--------------------------------//
+        [HttpPost]
+        public ActionResult UpdateUserRateDiscount(User_Rate_Discount User_Rate_Discount)
+        {
+            if(User_Rate_Discount.rateID != "null")
+            {
+                int rateID = Int32.Parse(User_Rate_Discount.rateID);
+                int discountID = Int32.Parse(User_Rate_Discount.discountID);
+                Rate R = db.Rate.Where(s => s.ID == rateID).FirstOrDefault<Rate>();
+                Discount D = db.Discount.Where(s => s.ID == discountID).FirstOrDefault<Discount>();
+                if (R != null && D != null)
+                {
+                    R.update_date = DateTime.Now;
+                    R.three_up = User_Rate_Discount.ThreeUP;
+                    R.three_ood = User_Rate_Discount.ThreeOod;
+                    R.three_down = User_Rate_Discount.ThreeDown;
+                    R.two_up = User_Rate_Discount.TwoUp;
+                    R.two_ood = User_Rate_Discount.TwoOod;
+                    R.two_down = User_Rate_Discount.TwoDown;
+                    R.up = User_Rate_Discount.Up;
+                    R.down = User_Rate_Discount.Down;
+                    R.first_three = User_Rate_Discount.FirstThree;
+                    db.Entry(R).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+
+                    D.update_date = DateTime.Now;
+                    D.three_up = User_Rate_Discount.ThreeUP_discount;
+                    D.three_ood = User_Rate_Discount.ThreeOod_discount;
+                    D.three_down = User_Rate_Discount.ThreeDown_discount;
+                    D.two_up = User_Rate_Discount.TwoUp_discount;
+                    D.two_ood = User_Rate_Discount.TwoOod_discount;
+                    D.two_down = User_Rate_Discount.TwoDown_discount;
+                    D.up = User_Rate_Discount.Up_discount;
+                    D.down = User_Rate_Discount.Down_discount;
+                    D.first_three = User_Rate_Discount.FirstThree_discount;
+                    db.Entry(D).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return Json("ss");
+                }
+                else
+                {
+                    return Json("fail");
+                }
+            }
+            else
+            {
+                int ID = Int32.Parse(User_Rate_Discount.ID);
+                Rate R = new Rate();
+                R.UID = ID;
+                R.update_date = DateTime.Now;
+                R.create_date = DateTime.Now;
+                R.three_up = User_Rate_Discount.ThreeUP;
+                R.three_ood = User_Rate_Discount.ThreeOod;
+                R.three_down = User_Rate_Discount.ThreeDown;
+                R.two_up = User_Rate_Discount.TwoUp;
+                R.two_ood = User_Rate_Discount.TwoOod;
+                R.two_down = User_Rate_Discount.TwoDown;
+                R.up = User_Rate_Discount.Up;
+                R.down = User_Rate_Discount.Down;
+                R.first_three = User_Rate_Discount.FirstThree;
+                db.Rate.Add(R);
+                db.SaveChanges();
+
+                Discount D = new Discount();
+                D.UID = ID;
+                D.update_date = DateTime.Now;
+                D.create_date = DateTime.Now;
+                D.three_up = User_Rate_Discount.ThreeUP_discount;
+                D.three_ood = User_Rate_Discount.ThreeOod_discount;
+                D.three_down = User_Rate_Discount.ThreeDown_discount;
+                D.two_up = User_Rate_Discount.TwoUp_discount;
+                D.two_ood = User_Rate_Discount.TwoOod_discount;
+                D.two_down = User_Rate_Discount.TwoDown_discount;
+                D.up = User_Rate_Discount.Up_discount;
+                D.down = User_Rate_Discount.Down_discount;
+                D.first_three = User_Rate_Discount.FirstThree_discount;
+                db.Discount.Add(D);
+                db.SaveChanges();
+                return Json("ss");
             }
         }
         //-------------------------------------update User data --------------------------------//

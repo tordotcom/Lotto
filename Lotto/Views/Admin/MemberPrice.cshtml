@@ -1,9 +1,14 @@
-﻿
+﻿@model IList<Lotto.Models.User_Rate_Discount>
 @{
     ViewBag.Title = "MemberPrice";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-
+<style>
+    table.no-spacing {
+        border-spacing: 0; /* Removes the cell spacing via CSS */
+        border-collapse: collapse; /* Optional - if you don't want to have double border where cells touch */
+    }
+</style>
 <h2>ราคาสมาชิก</h2>
 <hr />
 
@@ -31,65 +36,73 @@
                 <strong class="card-title">สมาชิก</strong>
             </div>
             <div class="card-body">
-                <table id="bootstrap-data-table" class="table table-bordered">
+                <table id="bootstrap-data-table" class="table table-bordered no-spacing" cellspacing="0">
                     <thead>
-                        <tr style="text-align:center;">
+                        <tr style="text-align:center">
                             <th rowspan="2">รหัสสมาชิก</th>
                             <th rowspan="2">ชื่อ</th>
                             <th colspan="2">3 บน</th>
                             <th colspan="2">3 โต๊ด</th>
                             <th colspan="2">2 บน</th>
                             <th colspan="2">2 โต๊ด</th>
-                            <th colspan="2">วิ่ง บน</th>
+                            <th colspan="2">วิ่งบน</th>
                             <th colspan="2">3 ล่าง</th>
                             <th colspan="2">2 ล่าง</th>
-                            <th colspan="2">วิ่ง ล่าง</th>
+                            <th colspan="2">วิ่งล่าง</th>
+                            <th colspan="2">3 หน้า</th>
                             <th rowspan="2"></th>
                         </tr>
-                        <tr>
+                        <tr style="text-align:center">
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
-                            <th>ลด %</th>
+                            <th>ลด%</th>
+                            <th>ราคา</th>
+                            <th>ลด%</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>M3434</td>
-                            <td>#z#WREXSEXSxw</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>900</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPriceModal">แก้ไข</button>
-                                <button type="button" class="btn btn-warning">Copy</button>
-                            </td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr style="text-align:center">
+                                <td>@item.Username</td>
+                                <td>@item.Name</td>
+                                <td>@item.ThreeUP</td>
+                                <td>@item.ThreeUP_discount</td>
+                                <td>@item.ThreeOod</td>
+                                <td>@item.ThreeOod_discount</td>
+                                <td>@item.TwoUp</td>
+                                <td>@item.TwoUp_discount</td>
+                                <td>@item.TwoOod</td>
+                                <td>@item.TwoOod_discount</td>
+                                <td>@item.Up</td>
+                                <td>@item.Up_discount</td>
+                                <td>@item.ThreeDown</td>
+                                <td>@item.ThreeDown_discount</td>
+                                <td>@item.TwoDown</td>
+                                <td>@item.TwoDown_discount</td>
+                                <td>@item.Down</td>
+                                <td>@item.Down_discount</td>
+                                <td>@item.FirstThree</td>
+                                <td>@item.FirstThree_discount</td>
+                                <td nowrap>
+                                    <button type="button" class="btn-sm btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editPriceModal">แก้ไข</button>
+                                    <button type="button" class="btn-sm btn-warning">Copy</button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -101,7 +114,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editPriceModalLabel">M8999</h5>
+                <h5 class="modal-title" id="editPriceModalLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -118,65 +131,109 @@
                     <tbody>
                         <tr>
                             <td>3 บน</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="ThreeUp_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="ThreeUp_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="ThreeOod_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="ThreeOod_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="TwoUp_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="TwoUp_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="TwoOod_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="TwoOod_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>วิ่ง บน</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="Up_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="Up_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="ThreeDown_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="ThreeDown_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="TwoDown_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="TwoDown_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>วิ่ง ล่าง</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="Down_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="Down_discount_edit" /></td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
-                            <td><input class="form-control form-control-sm" type="text" id="" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="FirstThree_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="FirstThree_discount_edit" /></td>
                         </tr>
                     </tbody>
                 </table>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">บันทึก</button>
+                <button type="button" class="btn btn-primary" id="btnEdit">บันทึก</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
     </div>
 </div>
-
+<script src="~/Assets/js/member_price.js"></script>
+<script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
-    (function ($) {
+    UpdateUserRateDiscount = '@Url.Action("UpdateUserRateDiscount", "Admin")';
+    $(document).ready(function () {
         $('#bootstrap-data-table').DataTable({
+            aoColumnDefs: [
+                { "bSortable": false, "aTargets": ["_all"] }
+            ],
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
-    })(jQuery);
+    });
+    //(function ($) {
+    //    $('#bootstrap-data-table').DataTable({
+    //        lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+    //        columnDefs: [
+    //            { "orderable": false, "targets": 0 }
+    //        ]
+    //    });
+    //})(jQuery);
+    var o = new Object();
+    o = @Html.Raw(Json.Encode(Model));
+    $(".edit").click(function () {
+        var id = $(this).attr("data-id");
+        for (var i = 0; i < o.length; i++) {
+            if (id == o[i].ID) {
+                document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
+                document.getElementById('btnEdit').setAttribute('data-rateID', o[i].rateID);
+                document.getElementById('btnEdit').setAttribute('data-discountID', o[i].discountID);
+                $("#editPriceModalLabel").html(o[i].Name);
+                $("#ThreeUp_edit").val(o[i].ThreeUP);
+                $("#ThreeDown_edit").val(o[i].ThreeDown);
+                $("#FirstThree_edit").val(o[i].FirstThree);
+                $("#ThreeOod_edit").val(o[i].ThreeOod);
+                $("#TwoUp_edit").val(o[i].TwoUp);
+                $("#TwoOod_edit").val(o[i].TwoOod);
+                $("#TwoDown_edit").val(o[i].TwoDown);
+                $("#Up_edit").val(o[i].Up);
+                $("#Down_edit").val(o[i].Down);
+                $("#ThreeUp_discount_edit").val(o[i].ThreeUP_discount);
+                $("#ThreeDown_discount_edit").val(o[i].ThreeDown_discount);
+                $("#FirstThree_discount_edit").val(o[i].FirstThree_discount);
+                $("#ThreeOod_discount_edit").val(o[i].ThreeOod_discount);
+                $("#TwoUp_discount_edit").val(o[i].TwoUp_discount);
+                $("#TwoOod_discount_edit").val(o[i].TwoOod_discount);
+                $("#TwoDown_discount_edit").val(o[i].TwoDown_discount);
+                $("#Up_discount_edit").val(o[i].Up_discount);
+                $("#Down_discount_edit").val(o[i].Down_discount);
+            }
+        }
+    });
 </script>

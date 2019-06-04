@@ -26,6 +26,7 @@ namespace Lotto.Models
         public string down { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
+        public string first_three { get; set; }
     
         public virtual Account Account { get; set; }
     }
