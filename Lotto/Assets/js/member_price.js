@@ -42,15 +42,17 @@
                     type: 'success',
                     title: 'บันทึกเรียบร้อย',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500,
+                    onClose: () => {
+                        location.reload();
+                    }
                 });
             }
             else {
                 Swal.fire({
-                    type: 'success',
-                    title: 'บันทึกเรียบร้อย',
-                    showConfirmButton: false,
-                    timer: 1500
+                    type: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    showConfirmButton: true
                 });
             }
         },

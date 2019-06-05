@@ -4,50 +4,376 @@
 
         var text = $(this).text();
         if (text == 'บ') {
-            $(this).text('ล').fadeIn();
+            $(this).html('ล').fadeIn();
+            document.getElementById(this.id).setAttribute('data-type', "b");
         }
         if (text == 'ล') {
-            $(this).text('บ+ล').fadeIn();
+            $(this).html('บ+ล').fadeIn();
+            document.getElementById(this.id).setAttribute('data-type', "tb");
         }
         if (text == 'บ+ล') {
-            $(this).text('ห').fadeIn();
+            $(this).html('ห').fadeIn();
+            document.getElementById(this.id).setAttribute('data-type', "f");
         }
         if (text == 'ห') {
-            $(this).text('ห+ท').fadeIn();
+            $(this).html('ห+ท').fadeIn();
+            document.getElementById(this.id).setAttribute('data-type', "fb");
         }
         if (text == 'ห+ท') {
-            $(this).text('บ').fadeIn();
+            $(this).html('บ').fadeIn();
+            document.getElementById(this.id).setAttribute('data-type', "t");
         }
     })
 });
+function keyPress2(obj, id, evt) {
+    evt = evt || window.event;
+    var code = evt.keyCode || evt.which;
+    // enter = 13, tab = 9
+    // space = 32,  + = 43
 
+    if (code == 13 || code == 9) { // press enter or tab
+        nextNode(obj, id);
+    } else if (code == 32 || code == 43) { // press + or space
+        updateType(id);
+    }
+
+    if (code >= 48 && code <= 57) return true;  // Number 0-9
+    else if (code == 8 || code == 46 || code == 9) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+    else if (code >= 37 && code <= 40) return true;  // left, up, right, down
+    else return false;
+}
+function keyPress(obj, id, evt) {
+
+    evt = evt || window.event;
+    var code = evt.keyCode || evt.which;
+    // enter = 13, tab = 9
+    // space = 32,  + = 43
+
+    if (code == 13 || code == 9) { // press enter or tab
+        nextNode(obj, id);
+    } else if (code == 32 || code == 43) { // press + or space
+        updateType(id);
+    }
+
+    if (code >= 48 && code <= 57) return true;  // Number 0-9
+    else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+    else if (code >= 37 && code <= 40) return true;  // left, up, right, down
+    else return false;
+}
+function updateType(id) {
+    $("#t"+id).click();
+}
+function checkNumber(id) {
+
+    var sNum = $('#n' + id).val();
+    var sType = $('#t' + id).val();
+
+    var iLen = sNum.length;
+
+    // If it is empty, no need to check.
+    if (iLen == 0) {
+        return true;
+    }
+
+    // Change * or X to x
+    sNum = sNum.replace("*", "x");
+    sNum = sNum.replace("X", "x");
+
+    $('#n' + id).val(sNum);
+
+    // Check format
+    var numFormat = /^\d{1,3}?$/;
+    if (!numFormat.test(sNum)) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + i + ' โปรดตรวจสอบเลขที่แทง  ต้องเป็นตัวเลข 1 - 3 ตัวเท่านั้น',
+            showConfirmButton: true
+        });
+        setTimeout(function () { document.getElementById('n' + id).focus(); }, 10);
+        return false;
+    }
+
+    // Check if this is a 3 back or 6 back
+    var iPosA = sNum.indexOf('x');
+    //if (iPosA >= 0) {
+    //    if (iPosA != 3) {
+    //        Swal.fire({
+    //            type: 'error',
+    //            title: 'ช่องที่ ' + i + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องเป็นตัวเลข หรือ x เท่านั้น',
+    //            showConfirmButton: true
+    //        });
+    //        alert('ช่องที่ ' + (id + 1) + ': โปรดตรวจสอบเลขที่แทง  ใส่ * ได้ที่ตำแหน่งสุดท้ายของเลข 3 ตัว สำหรับ 3 กลับ 6 กลับเท่านั้น');
+    //        setTimeout(function () { document.getElementById('n_' + id).focus(); }, 10);
+    //        return false;
+    //    } else {
+    //        iLen = 3;
+    //    }
+    //}
+    if (iLen > 3) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + i + ' โปรดตรวจสอบเลขที่แทง  ใส่เลขได้ไม่เกิน 3 ตัวเท่านั้น',
+            showConfirmButton: true
+        });
+        setTimeout(function () { document.getElementById('n' + id).focus(); }, 10);
+        return false;
+    }
+    return true;
+}
+function checkAmount(id) {
+
+    var sTyp = $('#t' + id).attr("data-type");
+    var sNum = $('#n' + id).val();
+    var sAmt = $('#b' + id).val();
+    console.log(sTyp);
+    var iNumLen = sNum.length;  // Get number length
+    var iAmtLen = sAmt.length;  // Get amount length
+    // If it is empty, no need to check.
+    if (iAmtLen == 0) {
+        return true;
+    }
+
+    // Change * or X to x
+    sNum = sNum.replace("X", "x");
+    sNum = sNum.replace("*", "x");
+    sAmt = sAmt.replace("X", "x");
+    sAmt = sAmt.replace("*", "x");
+
+    $('#n' + id).val(sNum);
+    $('#b' + id).val(sAmt);
+
+    // Check amount format
+    var amtFormat = /^ *[0-9\/x]+ *$/;
+    if (!amtFormat.test(sAmt)) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องเป็นตัวเลข หรือ x เท่านั้น',
+            showConfirmButton: true
+        });
+        setTimeout(function () { document.getElementById('b' + id).focus(); }, 10);
+        return false;
+    }
+
+    var iAmtCountA = sAmt.split("x").length - 1
+    if (iAmtCountA > 1) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องมี x ได้ 1 ตัวเท่านั้น',
+            showConfirmButton: true
+        });
+        setTimeout(function () { document.getElementById('b' + id).focus(); }, 10);
+        return false;
+    }
+
+    // Check number
+    if (iNumLen == 0) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + id + ' กรุณากรอกเลขที่ต้องการแทง',
+            showConfirmButton: true
+        });
+        setTimeout(function () { document.getElementById('n' + id).focus(); }, 10);
+        return false;
+    }
+
+    var iAmtPosA = sAmt.indexOf('x');  // Check x
+    var iAmtPosS = sAmt.indexOf('/');  // Check /
+    var iNumPosA = sNum.indexOf('x');  // Check x
+    var bValid = false;
+
+    // วิ่งบน
+    if ((sTyp == 't') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;        
+    }
+    // 19 หาง บน
+    //else if ((sTyp == 't') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == 2) && (sAmt.substr(0, 3) == '19x') && (iAmtPosS == -1)) {
+    //    bValid = true; 
+    //}
+        // 2 บน
+    else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 2 โต๊ด
+    } else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 2 บน และ ตัวกลับ
+    } else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 3 บน
+    } else if ((sTyp == 't') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 3 โต๊ด
+    } else if ((sTyp == 't') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 3 บน  3 โต๊ด
+    } else if ((sTyp == 't') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
+        bValid = true;    
+    }
+        // 3 บน  3 กลับ และ 6 กลับ
+    //else if ((sTyp == 't') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+    //    bValid = true;   
+    //}
+        // วิ่งล่าง
+    else if ((sTyp == 'b') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;      
+    }
+        // 19 หาง ล่าง
+    //else if ((sTyp == 'b') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == 2) && (iAmtPosS == -1) && (sAmt.substr(0, 3) == '19x')) {
+    //    bValid = true;    
+    //}
+        // 2 ล่าง
+    else if ((sTyp == 'b') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 2 ล่าง และ ตัวกลับ
+    } else if ((sTyp == 'b') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 3 ล่าง
+    } else if ((sTyp == 'b') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;    
+    }
+        // 3 ล่าง  3 กลับ และ 6 กลับ
+    //else if ((sTyp == 'b') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+    //    bValid = true;    
+    //}
+        // วิ่งบน + วิ่งล่าง
+    else if ((sTyp == 'tb') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 2บน + 2ล่าง
+    } else if ((sTyp == 'tb') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 2บน + 2ล่าง และ ตัวกลับ  (71 = 10x10)
+    } else if ((sTyp == 'tb') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 2บน + 2ล่าง (71 = 10/10)
+    } else if ((sTyp == 'tb') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS > 0) && (iAmtPosS < iAmtLen - 1)) {
+        bValid = true;
+
+        // 3บน + 3ล่าง (124 = 100)
+    } else if ((sTyp == 'tb') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 3บน + 3ล่าง (124 = 100/50)
+    } else if ((sTyp == 'tb') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS > 0) && (iAmtPosS < iAmtLen - 1)) {
+        bValid = true;
+
+        // 3บน  3โต๊ด 3ล่าง (123 = 10x20/30)
+    } else if ((sTyp == 'tb') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 2) && (iAmtPosS > iAmtPosA) && (iAmtPosS < iAmtLen - 1)) {
+        bValid = true;   
+    }
+        // 3 บน  3 ล่าง  3 กลับ และ 6 กลับ
+    //else if ((sTyp == 'tb') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+    //    bValid = true;
+    //}
+        // 3 หน้า
+    else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 3 หน้าโต๊ด
+    } else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
+        bValid = true;
+
+        // 3 หน้า  3 หน้าโต๊ด
+    } else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
+        bValid = true;
+    }
+        // 3 หน้า  3 ท้าย
+    else if ((sTyp == 'fb') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+    }
+        // 3 หน้า  3 หน้าโต๊ด 3 หลัง 3 หลังโต๊ด
+    else if ((sTyp == 'fb') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
+        bValid = true;
+    }
+    else {}
+
+    if (!bValid) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + id + ' รูปแบบการแทงไม่ถูกต้อง',
+            showConfirmButton: true
+        });
+        setTimeout(function () { document.getElementById('b' + id).focus(); }, 10);
+        return false;
+    }
+
+    // Check full bet
+    //var betcode = "";
+
+    //if (sTyp == 't' || sTyp == 'tb') {
+    //    betcode = "top" + iNumLen;
+    //    if (!checkFullbet(sNum, betcode)) {
+    //        alert('ช่องที่ ' + (id + 1) + ': เลขเต็ม  กรุณาเปลี่ยนเลขที่ต้องการแทง');
+    //        setTimeout(function () { document.getElementById('n_' + id).focus(); }, 10);
+    //        return false;
+    //    }
+    //}
+
+    //if (sTyp == 'b' || sTyp == 'tb') {
+    //    betcode = "bot" + iNumLen;
+    //    if (!checkFullbet(sNum, betcode)) {
+    //        alert('ช่องที่ ' + (id + 1) + ': เลขเต็ม  กรุณาเปลี่ยนเลขที่ต้องการแทง');
+    //        setTimeout(function () { document.getElementById('n_' + id).focus(); }, 10);
+    //        return false;
+    //    }
+    //}
+
+    //if (runSumTotal == true) {
+    //    sumTotal();
+    //}
+
+    return true;
+}
 $("#sendLotto").click(function () {
-    var bet = new Array(3);
+    var state = true;
+    var bet = new Array();
     for (var i = 1; i <= 90; i++) {
         var n = $('#n' + i).val();
         var b = $('#b' + i).val();
-        if (n != "" && b == "") {
+        if (n.length > 0 && b.length == 0) {
             Swal.fire({
                 type: 'error',
-                title: 'ช่องที่ ' + i + ' กรอกข้อมูลไม่ถูกต้อง',
+                title: 'ช่องที่ ' + i + ' กรุณากรอกจำนวนเงิน',
                 showConfirmButton: true
             });
+            state = false;
             break;
         }
-        else if (b != "" && n == "") {
+        else if (b.length > 0 && n.length == 0) {
             Swal.fire({
                 type: 'error',
-                title: 'ช่องที่ ' + i + ' กรอกข้อมูลไม่ถูกต้อง',
+                title: 'ช่องที่ ' + i + ' กรุณากรอกเลขที่จะแทง',
                 showConfirmButton: true
             });
+            state = false;
             break;
         }
-        else { }
-        bet[i] = new Array(3)
-        bet[i]["t" + i] = $('#t' + i).text();
-        bet[i]["n" + i] = n;
-        bet[i]["b" + i] = b;
+        else if (n.length > 0 && b.length > 0)
+        {
+            if (!checkNumber(i)) {
+                return false;
+            } else if (!checkAmount(i)) {
+                return false;
+            }
+            else {
+                bet[i] = new Array();
+                bet[i]["t" + i] = $('#t' + i).text();
+                bet[i]["n" + i] = n;
+                bet[i]["b" + i] = b;
+            }           
+        }
+        else { }       
     }
     console.log(bet);
-    //alert(JSON.stringify(bet));
+    if (state) {
+
+    }
 });

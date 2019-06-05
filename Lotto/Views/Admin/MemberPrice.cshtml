@@ -50,9 +50,12 @@
                             <th colspan="2">2 ล่าง</th>
                             <th colspan="2">วิ่งล่าง</th>
                             <th colspan="2">3 หน้า</th>
+                            <th colspan="2">3 หน้าโต๊ด</th>
                             <th rowspan="2"></th>
                         </tr>
                         <tr style="text-align:center">
+                            <th>ราคา</th>
+                            <th>ลด%</th>
                             <th>ราคา</th>
                             <th>ลด%</th>
                             <th>ราคา</th>
@@ -97,6 +100,8 @@
                                 <td>@item.Down_discount</td>
                                 <td>@item.FirstThree</td>
                                 <td>@item.FirstThree_discount</td>
+                                <td>@item.FirstThreeOod</td>
+                                <td>@item.FirstThreeOod_discount</td>
                                 <td nowrap>
                                     <button type="button" class="btn-sm btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editPriceModal">แก้ไข</button>
                                     <button type="button" class="btn-sm btn-warning">Copy</button>
@@ -174,6 +179,11 @@
                             <td><input class="form-control form-control-sm" type="text" id="FirstThree_edit" /></td>
                             <td><input class="form-control form-control-sm" type="text" id="FirstThree_discount_edit" /></td>
                         </tr>
+                        <tr>
+                            <td>3 หน้าโต๊ด</td>
+                            <td><input class="form-control form-control-sm" type="text" id="FirstThreeOod_edit" /></td>
+                            <td><input class="form-control form-control-sm" type="text" id="FirstThreeOod_discount_edit" /></td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -218,6 +228,7 @@
                 $("#ThreeUp_edit").val(o[i].ThreeUP);
                 $("#ThreeDown_edit").val(o[i].ThreeDown);
                 $("#FirstThree_edit").val(o[i].FirstThree);
+                $("#FirstThreeOod_edit").val(o[i].FirstThreeOod);
                 $("#ThreeOod_edit").val(o[i].ThreeOod);
                 $("#TwoUp_edit").val(o[i].TwoUp);
                 $("#TwoOod_edit").val(o[i].TwoOod);
@@ -227,6 +238,7 @@
                 $("#ThreeUp_discount_edit").val(o[i].ThreeUP_discount);
                 $("#ThreeDown_discount_edit").val(o[i].ThreeDown_discount);
                 $("#FirstThree_discount_edit").val(o[i].FirstThree_discount);
+                $("#FirstThreeOod_discount_edit").val(o[i].FirstThreeOod_discount);
                 $("#ThreeOod_discount_edit").val(o[i].ThreeOod_discount);
                 $("#TwoUp_discount_edit").val(o[i].TwoUp_discount);
                 $("#TwoOod_discount_edit").val(o[i].TwoOod_discount);

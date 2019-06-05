@@ -87,10 +87,10 @@
                                         }
                                         <div class="bet-cell">
                                             <div class="bet-no">@i</div>
-                                            <div class="bet-type"><div id="@type_id" class="form-control form-control-sm input-bet-type">บ</div></div>
-                                            <div class="bet-lotto"><input id="@lotto_id" type="number" min="0" class="form-control form-control-sm input-color" placeholder=""></div>
+                                            <div class="bet-type"><div id="@type_id" class="form-control form-control-sm input-bet-type" data-type="t">บ</div></div>
+                                            @{<div class="bet-lotto"><input id="@lotto_id" type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" onchange="checkNumber('@i')" onkeypress="return keyPress2(this,'@i' , event);"></div>}
                                             <div class="bet-equal">=</div>
-                                            <div class="bet-price"><input id="@price_id" type="number" min="0" class="form-control form-control-sm input-color" placeholder=""></div>
+                                            <div class="bet-price"><input id="@price_id" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" onchange="checkAmount('@i')" onkeypress="return keyPress(this, '@i', event)"></div>
                                         </div>
                                         if (i == 30 || i == 60 || i == 90)
                                         {
