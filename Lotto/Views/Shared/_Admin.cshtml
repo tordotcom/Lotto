@@ -110,6 +110,14 @@
         .digital-clock {
             padding-right: 5px;
         }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -181,7 +189,7 @@
                         </div>
 
                         <div class="dropdown for-price">
-                            <button class="btn btn-sm btn-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal">
+                            <button class="btn btn-sm btn-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal" data-backdrop="static" data-keyboard="false">
                                 ราคาจ่าย
                             </button>
                         </div>
@@ -372,7 +380,7 @@
         UpdateRateDiscount = '@Url.Action("UpdateRateDiscount", "Admin")';
     </script>
 
-    <script>
+    <script type="text/javascript">
         (function ($) {
             clock();
             var d = new Date();
@@ -391,7 +399,7 @@
              }
 
             $(".digital-clock").text(h+" : "+m+" : "+s);
-             setTimeout(function(){clock()}, 500);
+            setTimeout(function(){clock()}, 500);
         }
     </script>
 </body>
