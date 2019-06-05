@@ -130,7 +130,7 @@ namespace Lotto.Controllers
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Discount]) d on a.ID = d.UID where ra.UID is not null";
+                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.[first_three_ood],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.[first_three_ood] as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Discount]) d on a.ID = d.UID where ra.UID is not null";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 SqlDataReader Reader = cmd.ExecuteReader();
                 Console.Write(Reader);
@@ -150,6 +150,7 @@ namespace Lotto.Controllers
                             ThreeDown = Reader["three_down"].ToString(),
                             ThreeOod = Reader["three_ood"].ToString(),
                             FirstThree = Reader["first_three"].ToString(),
+                            FirstThreeOod = Reader["first_three_ood"].ToString(),
                             TwoUp = Reader["two_up"].ToString(),
                             TwoOod = Reader["two_ood"].ToString(),
                             TwoDown = Reader["two_down"].ToString(),
@@ -159,6 +160,7 @@ namespace Lotto.Controllers
                             ThreeDown_discount = Reader["three_down_d"].ToString(),
                             ThreeOod_discount = Reader["three_ood_d"].ToString(),
                             FirstThree_discount = Reader["first_three_d"].ToString(),
+                            FirstThreeOod_discount = Reader["first_three_ood_d"].ToString(),
                             TwoUp_discount = Reader["two_up_d"].ToString(),
                             TwoOod_discount = Reader["two_ood_d"].ToString(),
                             TwoDown_discount = Reader["two_down_d"].ToString(),
@@ -181,7 +183,7 @@ namespace Lotto.Controllers
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where rate.UID is null";
+                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where rate.UID is null";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 SqlDataReader Reader = cmd.ExecuteReader();
                 Console.Write(Reader);
@@ -199,6 +201,7 @@ namespace Lotto.Controllers
                             ThreeDown = Reader["three_down"].ToString(),
                             ThreeOod = Reader["three_ood"].ToString(),
                             FirstThree = Reader["first_three"].ToString(),
+                            FirstThreeOod = Reader["first_three_ood"].ToString(),
                             TwoUp = Reader["two_up"].ToString(),
                             TwoOod = Reader["two_ood"].ToString(),
                             TwoDown = Reader["two_down"].ToString(),
@@ -208,6 +211,7 @@ namespace Lotto.Controllers
                             ThreeDown_discount = Reader["three_down_d"].ToString(),
                             ThreeOod_discount = Reader["three_ood_d"].ToString(),
                             FirstThree_discount = Reader["first_three_d"].ToString(),
+                            FirstThreeOod_discount = Reader["first_three_ood_d"].ToString(),
                             TwoUp_discount = Reader["two_up_d"].ToString(),
                             TwoOod_discount = Reader["two_ood_d"].ToString(),
                             TwoDown_discount = Reader["two_down_d"].ToString(),
@@ -336,7 +340,7 @@ namespace Lotto.Controllers
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount FROM[dbo].[Main_Rate] mr join(SELECT[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount FROM[dbo].[Main_Discount]) md on 1 = 1";
+                string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr join(SELECT[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on 1 = 1";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 SqlDataReader Reader = cmd.ExecuteReader();
                 Console.Write(Reader);
@@ -349,6 +353,7 @@ namespace Lotto.Controllers
                             ThreeUP = Reader["three_up"].ToString(),
                             ThreeDown = Reader["three_down"].ToString(),
                             FirstThree = Reader["first_three"].ToString(),
+                            FirstThreeOod = Reader["first_three_ood"].ToString(),
                             ThreeOod = Reader["three_ood"].ToString(),
                             TwoUp = Reader["two_up"].ToString(),
                             TwoOod = Reader["two_ood"].ToString(),
@@ -359,6 +364,7 @@ namespace Lotto.Controllers
                             ThreeDown_discount = Reader["three_down_discount"].ToString(),
                             FirstThree_discount = Reader["first_three_discount"].ToString(),
                             ThreeOod_discount = Reader["three_ood_discount"].ToString(),
+                            FirstThreeOod_discount = Reader["first_three_ood_discount"].ToString(),
                             TwoUp_discount = Reader["two_up_discount"].ToString(),
                             TwoOod_discount = Reader["two_ood_discount"].ToString(),
                             TwoDown_discount = Reader["two_down_discount"].ToString(),
@@ -398,6 +404,7 @@ namespace Lotto.Controllers
                 MR.up = RateDiscountArr.Up;
                 MR.down = RateDiscountArr.Down;
                 MR.first_three = RateDiscountArr.FirstThree;
+                MR.first_three_ood = RateDiscountArr.FirstThreeOod;
                 db.Entry(MR).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
 
@@ -411,6 +418,7 @@ namespace Lotto.Controllers
                 MD.up = RateDiscountArr.Up_discount;
                 MD.down = RateDiscountArr.Down_discount;
                 MD.first_three = RateDiscountArr.FirstThree_discount;
+                MD.first_three_ood = RateDiscountArr.FirstThreeOod_discount;
                 db.Entry(MD).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return Json("ss");
@@ -442,6 +450,7 @@ namespace Lotto.Controllers
                     R.up = User_Rate_Discount.Up;
                     R.down = User_Rate_Discount.Down;
                     R.first_three = User_Rate_Discount.FirstThree;
+                    R.first_three_ood = User_Rate_Discount.FirstThreeOod;
                     db.Entry(R).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
@@ -455,6 +464,7 @@ namespace Lotto.Controllers
                     D.up = User_Rate_Discount.Up_discount;
                     D.down = User_Rate_Discount.Down_discount;
                     D.first_three = User_Rate_Discount.FirstThree_discount;
+                    D.first_three_ood = User_Rate_Discount.FirstThreeOod_discount;
                     db.Entry(D).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return Json("ss");
@@ -480,6 +490,7 @@ namespace Lotto.Controllers
                 R.up = User_Rate_Discount.Up;
                 R.down = User_Rate_Discount.Down;
                 R.first_three = User_Rate_Discount.FirstThree;
+                R.first_three_ood = User_Rate_Discount.FirstThreeOod;
                 db.Rate.Add(R);
                 db.SaveChanges();
 
@@ -496,6 +507,7 @@ namespace Lotto.Controllers
                 D.up = User_Rate_Discount.Up_discount;
                 D.down = User_Rate_Discount.Down_discount;
                 D.first_three = User_Rate_Discount.FirstThree_discount;
+                D.first_three_ood = User_Rate_Discount.FirstThreeOod_discount;
                 db.Discount.Add(D);
                 db.SaveChanges();
                 return Json("ss");

@@ -27,7 +27,7 @@ namespace Lotto.Models
     
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Discount> Discount { get; set; }
-        public virtual DbSet<Lotto> Lotto { get; set; }
+        public virtual DbSet<Lotto> Lottoe { get; set; }
         public virtual DbSet<Main_Discount> Main_Discount { get; set; }
         public virtual DbSet<Main_Rate> Main_Rate { get; set; }
         public virtual DbSet<Period> Period { get; set; }

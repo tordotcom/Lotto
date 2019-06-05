@@ -11,6 +11,7 @@ namespace Lotto.Models
         public string ThreeDown { get; set; }
         public string ThreeOod { get; set; }
         public string FirstThree { get; set; }
+        public string FirstThreeOod { get; set; }
         public string TwoUp { get; set; }
         public string TwoOod { get; set; }
         public string TwoDown { get; set; }
@@ -20,6 +21,7 @@ namespace Lotto.Models
         public string ThreeDown_discount { get; set; }
         public string ThreeOod_discount { get; set; }
         public string FirstThree_discount { get; set; }
+        public string FirstThreeOod_discount { get; set; }
         public string TwoUp_discount { get; set; }
         public string TwoOod_discount { get; set; }
         public string TwoDown_discount { get; set; }
