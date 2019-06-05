@@ -4,7 +4,14 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
-<h2>สมาชิก</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h2>สมาชิก</h2>
+    </div>
+    <div class="col-md-6 right">
+        <button type="button" class="btn btn-dark add-member" data-toggle="modal" data-target="#editMemberModal" data-backdrop="static" data-keyboard="false">เพิ่มสมาชิก</button>
+    </div>
+</div>
 <hr />
 
 <div class="row">
@@ -31,41 +38,43 @@
                 <strong class="card-title">สมาชิก</strong>
             </div>
             <div class="card-body">
-                <table id="bootstrap-data-table" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>รหัสสมาชิก</th>
-                            <th>ชื่อ</th>
-                            <th>สถานะ</th>
-                            <th>หมายเหตุ</th>
-                            <th>สร้างเมื่อ</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                        <tr>
-                            <td>@item.Username</td>
-                            <td>@item.Name</td>
-                            @if (item.Status == "1")
+                <div class="col-md-12">
+                    <table id="bootstrap-data-table" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>รหัสสมาชิก</th>
+                                <th>ชื่อ</th>
+                                <th>สถานะ</th>
+                                <th>หมายเหตุ</th>
+                                <th>สร้างเมื่อ</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
                             {
-                                <td>ใช้งาน</td>
+                                <tr>
+                                    <td>@item.Username</td>
+                                    <td>@item.Name</td>
+                                    @if (item.Status == "1")
+                                    {
+                                        <td>ใช้งาน</td>
+                                    }
+                                    else
+                                    {
+                                        <td>ปิดใช้งาน</td>
+                                    }
+                                    <td>@item.Description</td>
+                                    <td>@item.create_date</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editMemberModal" data-backdrop="static" data-keyboard="false">แก้ไข</button>
+                                        <button type="button" class="btn btn-danger" data-id="@item.ID" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                    </td>
+                                </tr>
                             }
-                            else
-                            {
-                                <td>ปิดใช้งาน</td>
-                            }
-                            <td>@item.Description</td>
-                            <td>@item.create_date</td>
-                            <td>
-                                <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editMemberModal">แก้ไข</button>
-                                <button type="button" class="btn btn-danger" data-id="@item.ID" data-toggle="modal" data-target="#deleteMemberModal">ลบ</button>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -83,73 +92,73 @@
             <div class="modal-body">
                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                     <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">รหัสสมาชิก</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUsername" name="text-input" class="form-control form-control-sm" disabled></div>
+                        <div class="col col-md-5"><label class="form-control-label">รหัสสมาชิก</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtUsername" name="txtUsernameName" class="form-control form-control-sm" disabled></div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">รหัสผ่าน</label></div>
-                        <div class="col col-md-7"><input type="password" id="txtPassword" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-5"><label class="form-control-label">รหัสผ่าน</label></div>
+                        <div class="col col-md-7"><input type="password" id="txtPassword" name="txtPasswordName" class="form-control form-control-sm"></div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อสมาชิก</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtName" name="text-input" class="form-control form-control-sm"></div>
+                        <div class="col col-md-5"><label class="form-control-label">ชื่อสมาชิก</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtName" name="txtNameName" class="form-control form-control-sm"></div>
                     </div>
                     <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">สถานะ</label></div>
+                        <div class="col col-md-5"><label class="form-control-label">สถานะ</label></div>
                         <div class="col col-md-7">
-                            <select name="select" id="select" class="form-control-sm form-control">
+                            <select name="select" id="txtStatusSelect" name="txtStatusSelectName" class="form-control-sm form-control">
                                 <option value="1">ใช้งาน</option>
                                 <option value="0">ปิดใช้งาน</option>
                             </select>
                         </div>
                     </div>
                     @*<div class="row form-group">
-                        <div class="col col-md-5"><label class=" form-control-label">รับโพยอัตโนมัติ</label></div>
-                        <div class="col col-md-7">
-                            <div class="form-check-inline form-check">
-                                <label for="inline-checkbox1" class="form-check-label ">
-                                    <input type="checkbox" id="" name="" value="" class="form-check-input">
-                                </label>
+                            <div class="col col-md-5"><label class=" form-control-label">รับโพยอัตโนมัติ</label></div>
+                            <div class="col col-md-7">
+                                <div class="form-check-inline form-check">
+                                    <label for="inline-checkbox1" class="form-check-label ">
+                                        <input type="checkbox" id="txtAutoRecieved" name="txtAutoRecievedName" value="" class="form-check-input">
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                    </div>*@
+                        </div>*@
                     <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">หมายเหตุ</label></div>
-                        <div class="col col-md-7"><textarea id="txtDescription" name="text-input" class="form-control form-control-sm"></textarea></div>
+                        <div class="col col-md-5"><label class="form-control-label">หมายเหตุ</label></div>
+                        <div class="col col-md-7"><textarea id="txtDescription" name="txtDescriptionName" class="form-control form-control-sm"></textarea></div>
                     </div>
                     @*<div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนครั้งที่ใส่รหัสผิด</label></div>
-                        <div class="col col-md-7"><center><input type="text" id="text-input" name="text-input" class="form-control form-control-sm" placeholder="ใส่รหัสผ่านผิดสะสมได้ไม่เกิน 50 ครั้ง"></center></div>
-                    </div>*@
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">สร้างเมื่อ</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtCreateDate" name="text-input" class="form-control form-control-sm" disabled></div>
+                            <div class="col col-md-5"><label class="form-control-label">จำนวนครั้งที่ใส่รหัสผิด</label></div>
+                            <div class="col col-md-7"><center><input type="text" id="txtErrorCount" name="txtErrorCountName" class="form-control form-control-sm" placeholder="ใส่รหัสผ่านผิดสะสมได้ไม่เกิน 50 ครั้ง"></center></div>
+                        </div>*@
+                    <div class="row form-group" id="txtCreateDateArea">
+                        <div class="col col-md-5"><label class="form-control-label">สร้างเมื่อ</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtCreateDate" name="txtCreateDateName" class="form-control form-control-sm" disabled></div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">สร้างโดย</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtCreateBy" name="text-input" class="form-control form-control-sm" disabled></div>
+                    <div class="row form-group" id="txtCreateByArea">
+                        <div class="col col-md-5"><label class="form-control-label">สร้างโดย</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtCreateBy" name="txtCreateByName" class="form-control form-control-sm" disabled></div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">แก้ไขเมื่อ</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUpdateDate" name="text-input" class="form-control form-control-sm" disabled></div>
+                    <div class="row form-group" id="txtUpdateDateArea">
+                        <div class="col col-md-5"><label class="form-control-label">แก้ไขเมื่อ</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtUpdateDate" name="txtUpdateDateName" class="form-control form-control-sm" disabled></div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">แก้ไขโดย</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUpdateBy" name="text-input" class="form-control form-control-sm" disabled></div>
+                    <div class="row form-group" id="txtUpdateByArea">
+                        <div class="col col-md-5"><label class="form-control-label">แก้ไขโดย</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtUpdateBy" name="txtUpdateByName" class="form-control form-control-sm" disabled></div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">เข้าใช้งานล่าสุด</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtLastLogin" name="text-input" class="form-control form-control-sm" disabled></div>
+                    <div class="row form-group" id="txtLastLoginArea">
+                        <div class="col col-md-5"><label class="form-control-label">เข้าใช้งานล่าสุด</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtLastLogin" name="txtLastLoginName" class="form-control form-control-sm" disabled></div>
                     </div>
                     @*<div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">IP ที่เข้าใช้งานล่าสุด</label></div>
-                        <div class="col col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>*@
+                            <div class="col col-md-5"><label class="form-control-label">IP ที่เข้าใช้งานล่าสุด</label></div>
+                            <div class="col col-md-7"><input type="text" id="txtLastIP" name="txtLastIPName" class="form-control form-control-sm"></div>
+                        </div>*@
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-id="0" id="btnEdit">ยืนยัน</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancelEdit">ยกเลิก</button>
             </div>
         </div>
     </div>
@@ -177,22 +186,50 @@
 <script src="~/Assets/js/member.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
+    addUser = '@Url.Action("AddUser", "Admin")';
     updateUser = '@Url.Action("UpdateUser", "Admin")';
     var o = new Object();
     o = @Html.Raw(Json.Encode(Model));
-    (function ($) {
-        $('#bootstrap-data-table').DataTable({
-            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
-        });
-    })(jQuery);
-    $(".edit").click(function () {       
-        var id = $(this).attr("data-id");       
+
+    $('#bootstrap-data-table').DataTable({
+        lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+    });
+
+    $(".add-member").click(function () {
+        $("btnEdit").val(0);
+        $("#editMemberModalLabel").html("เพิ่มข้อมูลสมาชิก");
+        $("#txtUsername").prop("disabled", false);
+
+        $("#txtUsername").val('');
+        $("#txtPassword").val('');
+        $("#txtName").val('');
+        $("#txtStatusSelect").val($("#txtStatusSelect option:first").val());
+        $("#txtDescription").val('');
+
+        $("#txtCreateDateArea").hide();
+        $("#txtCreateByArea").hide();
+        $("#txtUpdateDateArea").hide();
+        $("#txtUpdateByArea").hide();
+        $("#txtLastLoginArea").hide();
+    });
+
+    $(".edit").click(function () {
+        $("btnEdit").val(1);
+        $("#editMemberModalLabel").html("แก้ไขข้อมูลสมาชิก");
+        $("#txtUsername").prop("disabled", true);
+        $("#txtCreateDateArea").show();
+        $("#txtCreateByArea").show();
+        $("#txtUpdateDateArea").show();
+        $("#txtUpdateByArea").show();
+        $("#txtLastLoginArea").show();
+
+        var id = $(this).attr("data-id");
         for (var i = 0; i < o.length;i++) {
             if (id == o[i].ID) {
                 document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
                 $("#txtUsername").val(o[i].Username);
                 $("#txtName").val(o[i].Name);
-                $("#select").val(o[i].Status);
+                $("#txtStatusSelect option[value="+o[i].Status+"]").prop('selected', true);
                 $("#txtDescription").val(o[i].Description);
                 $("#txtCreateDate").val(o[i].create_date);
                 $("#txtCreateBy").val("Admin");

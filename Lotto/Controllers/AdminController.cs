@@ -513,6 +513,43 @@ namespace Lotto.Controllers
                 return Json("ss");
             }
         }
+
+         //-------------------------------------Add User data --------------------------------//
+        [HttpPost]
+        public ActionResult AddUser(Account User)
+        {
+            if (User != null)
+            {
+                var A = new Account();
+              
+                A.Username = User.Username;
+                A.Name = User.Name;
+                A.Password = ComputeHash(User.Password, null);
+                A.Status = User.Status;
+                A.Description = User.Description;        
+                A.Last_Login = DateTime.Now; 
+                A.create_date = DateTime.Now;
+                A.update_date = DateTime.Now;
+                db.Account.Add(A);
+                db.SaveChanges();
+
+                var R = new Account_Role();
+                int lastAccount = db.Account.Max(item => item.ID);
+                R.UID = lastAccount;
+                R.Role_ID = 2;
+                R.create_date = DateTime.Now;
+                R.update_date = DateTime.Now;
+                db.Account_Role.Add(R);
+                db.SaveChanges();
+
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+
         //-------------------------------------update User data --------------------------------//
         [HttpPost]
         public ActionResult UpdateUser(Account User)
