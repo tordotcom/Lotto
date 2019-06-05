@@ -47,6 +47,7 @@ warning 6002: The table/view 'ltfom.dbo.Account_Role' does not have a primary ke
           <Property Name="up" Type="nvarchar" MaxLength="3" />
           <Property Name="down" Type="nvarchar" MaxLength="3" />
           <Property Name="first_three" Type="nvarchar" MaxLength="3" />
+          <Property Name="first_three_ood" Type="nvarchar" MaxLength="3" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -79,10 +80,12 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
           <Property Name="three_down" Type="nvarchar" MaxLength="3" />
           <Property Name="two_up" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_ood" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
-          <Property Name="up" Type="nvarchar" MaxLength="1" />
-          <Property Name="down" Type="nvarchar" MaxLength="1" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="3" />
+          <Property Name="up" Type="nvarchar" MaxLength="3" />
+          <Property Name="down" Type="nvarchar" MaxLength="3" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="3" />
+          <Property Name="first_three_ood" Type="nvarchar" MaxLength="3" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -100,6 +103,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="up" Type="nvarchar" MaxLength="5" />
           <Property Name="down" Type="nvarchar" MaxLength="5" />
           <Property Name="first_three" Type="nvarchar" MaxLength="5" />
+          <Property Name="first_three_ood" Type="nvarchar" MaxLength="5" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -117,6 +121,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="up" Type="nvarchar" MaxLength="5" />
           <Property Name="down" Type="nvarchar" MaxLength="5" />
           <Property Name="first_three" Type="nvarchar" MaxLength="5" />
+          <Property Name="first_three_ood" Type="nvarchar" MaxLength="5" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -153,6 +158,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="up" Type="nvarchar" MaxLength="3" />
           <Property Name="down" Type="nvarchar" MaxLength="3" />
           <Property Name="first_three" Type="nvarchar" MaxLength="3" />
+          <Property Name="first_three_ood" Type="nvarchar" MaxLength="3" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -281,6 +287,8 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
     [LottoSub].[two_down] AS [two_down], 
     [LottoSub].[up] AS [up], 
     [LottoSub].[down] AS [down], 
+    [LottoSub].[first_three] AS [first_three], 
+    [LottoSub].[first_three_ood] AS [first_three_ood], 
     [LottoSub].[create_date] AS [create_date], 
     [LottoSub].[update_date] AS [update_date]
     FROM [dbo].[LottoSub] AS [LottoSub]</DefiningQuery>
@@ -350,6 +358,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Discount_Account" FromRole="Discount" ToRole="Account" />
           <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Lotto">
           <Key>
@@ -384,6 +393,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="first_three" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="first_three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Main_Rate">
           <Key>
@@ -401,6 +411,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="first_three" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="first_three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Period">
           <Key>
@@ -442,6 +453,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Rate_Account" FromRole="Rate" ToRole="Account" />
           <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -475,13 +487,15 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="up" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="down" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Lotto" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoSub" ToRole="Lotto" />
+          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
@@ -627,6 +641,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <EntitySetMapping Name="Discounts">
             <EntityTypeMapping TypeName="ltfomModel.Discount">
               <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
                 <ScalarProperty Name="first_three" ColumnName="first_three" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
@@ -662,6 +677,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <EntitySetMapping Name="Main_Discount">
             <EntityTypeMapping TypeName="ltfomModel.Main_Discount">
               <MappingFragment StoreEntitySet="Main_Discount">
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="three_up" ColumnName="three_up" />
                 <ScalarProperty Name="three_ood" ColumnName="three_ood" />
@@ -680,6 +696,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <EntitySetMapping Name="Main_Rate">
             <EntityTypeMapping TypeName="ltfomModel.Main_Rate">
               <MappingFragment StoreEntitySet="Main_Rate">
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="three_up" ColumnName="three_up" />
                 <ScalarProperty Name="three_ood" ColumnName="three_ood" />
@@ -718,6 +735,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <EntitySetMapping Name="Rates">
             <EntityTypeMapping TypeName="ltfomModel.Rate">
               <MappingFragment StoreEntitySet="Rate">
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
                 <ScalarProperty Name="first_three" ColumnName="first_three" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
@@ -759,6 +777,8 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <EntitySetMapping Name="LottoSubs">
             <EntityTypeMapping TypeName="ltfomModel.LottoSub">
               <MappingFragment StoreEntitySet="LottoSub">
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Lotto_ID" ColumnName="Lotto_ID" />
                 <ScalarProperty Name="Number" ColumnName="Number" />

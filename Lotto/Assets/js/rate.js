@@ -9,6 +9,7 @@ $("#btnRate").click(function () {
             $("#ThreeUp").val(data[0].ThreeUP);
             $("#ThreeDown").val(data[0].ThreeDown);
             $("#FirstThree").val(data[0].FirstThree);
+            $("#FirstThreeOod").val(data[0].FirstThreeOod);
             $("#ThreeOod").val(data[0].ThreeOod);
             $("#TwoUp").val(data[0].TwoUp);
             $("#TwoOod").val(data[0].TwoOod);
@@ -18,6 +19,7 @@ $("#btnRate").click(function () {
             $("#ThreeUp_discount").val(data[0].ThreeUP_discount);
             $("#ThreeDown_discount").val(data[0].ThreeDown_discount);
             $("#FirstThree_discount").val(data[0].FirstThree_discount);
+            $("#FirstThreeOod_discount").val(data[0].FirstThreeOod_discount);
             $("#ThreeOod_discount").val(data[0].ThreeOod_discount);
             $("#TwoUp_discount").val(data[0].TwoUp_discount);
             $("#TwoOod_discount").val(data[0].TwoOod_discount);
@@ -37,6 +39,7 @@ $("#btnUpdateRate").click(function () {
         ThreeUp: $("#ThreeUp").val(),
         ThreeDown: $("#ThreeDown").val(),
         FirstThree: $("#FirstThree").val(),
+        FirstThreeOod: $("#FirstThreeOod").val(),
         ThreeOod: $("#ThreeOod").val(),
         TwoUp: $("#TwoUp").val(),
         TwoOod: $("#TwoOod").val(),
@@ -46,6 +49,7 @@ $("#btnUpdateRate").click(function () {
         ThreeUp_discount: $("#ThreeUp_discount").val(),
         ThreeDown_discount: $("#ThreeDown_discount").val(),
         FirstThree_discount: $("#FirstThree_discount").val(),
+        FirstThreeOod_discount: $("#FirstThreeOod_discount").val(),
         ThreeOod_discount: $("#ThreeOod_discount").val(),
         TwoUp_discount: $("#TwoUp_discount").val(),
         TwoOod_discount: $("#TwoOod_discount").val(),
