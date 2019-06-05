@@ -311,6 +311,7 @@
     <Content Include="Assets\js\member_price.js" />
     <Content Include="Assets\js\rate.js" />
     <Content Include="Assets\js\sweetalert2.all.min.js" />
+    <Content Include="Assets\js\user_bet.js" />
     <Content Include="Assets\js\vmap.sampledata.js" />
     <Content Include="Assets\js\widgets.js" />
     <Content Include="Assets\scss\style.css" />
