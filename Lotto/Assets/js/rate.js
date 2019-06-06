@@ -64,12 +64,17 @@ $("#btnUpdateRate").click(function () {
         dataType: "json",
         success: function (data) {
             console.log(data);
-            Swal.fire({               
-                type: 'success',
-                title: 'บันทึกเรียบร้อย',
-                showConfirmButton: false,
-                timer: 1500
-            })
+			Swal.fire({
+				type: 'success',
+				title: 'บันทึกเรียบร้อย',
+				showConfirmButton: false,
+				timer: 1500
+			});
+			$('.modal-backdrop').remove();
+			$(".close").trigger('click');
+			setTimeout(function () {
+				location.reload(true);
+			}, 2000);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert("error");

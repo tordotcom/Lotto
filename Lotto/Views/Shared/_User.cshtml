@@ -109,6 +109,10 @@
         .digital-clock {
             padding-right: 5px;
         }
+
+        .for-username {
+            padding-left: 15px;
+        }
     </style>
 </head>
 <body>
@@ -160,7 +164,7 @@
                         </div>
 
                         <div class="dropdown for-price">
-                            <button class="btn btn-sm btn-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal">
+                            <button class="btn btn-sm btn-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal" data-backdrop="static" data-keyboard="false">
                                 ราคาจ่าย
                             </button>
                         </div>
@@ -228,6 +232,10 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="dropdown for-username">
+                        <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
                     </div>
 
                     <div class="user-area dropdown float-right">

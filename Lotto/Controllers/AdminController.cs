@@ -521,12 +521,12 @@ namespace Lotto.Controllers
             if (User != null)
             {
                 var A = new Account();
-              
                 A.Username = User.Username;
                 A.Name = User.Name;
                 A.Password = ComputeHash(User.Password, null);
                 A.Status = User.Status;
-                A.Description = User.Description;        
+                A.Description = User.Description; 
+                A.Create_By_UID = Convert.ToString(Session["ID"]); 
                 A.Last_Login = DateTime.Now; 
                 A.create_date = DateTime.Now;
                 A.update_date = DateTime.Now;

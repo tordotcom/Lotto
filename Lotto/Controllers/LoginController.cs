@@ -64,6 +64,9 @@ namespace Lotto.Controllers
                     bool verify = VerifyHash(objUser.Password, user[0].Password);
                     if (verify)
                     {
+                        Session["ID"] = user[0].ID;
+                        Session["Username"] = user[0].Username;
+                        Session["Role"] = user[0].Role;
                         bool role = Check_Role("admin", user[0].Role);
                         if (role)
                         {
@@ -82,6 +85,7 @@ namespace Lotto.Controllers
                                     db.Entry(A).State = System.Data.Entity.EntityState.Modified;
                                     db.SaveChanges();
                                 }
+
                                 return RedirectToAction("Index", "User");
                             }
                         }

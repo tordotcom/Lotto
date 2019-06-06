@@ -90,7 +90,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal" id="editUserForm">
                     <div class="row form-group">
                         <div class="col col-md-5"><label class="form-control-label">รหัสสมาชิก</label></div>
                         <div class="col col-md-7"><input type="text" id="txtUsername" name="txtUsernameName" class="form-control form-control-sm" disabled></div>
@@ -106,7 +106,7 @@
                     <div class="row form-group">
                         <div class="col col-md-5"><label class="form-control-label">สถานะ</label></div>
                         <div class="col col-md-7">
-                            <select name="select" id="txtStatusSelect" name="txtStatusSelectName" class="form-control-sm form-control">
+                            <select id="txtStatusSelect" name="txtStatusSelectName" class="form-control-sm form-control">
                                 <option value="1">ใช้งาน</option>
                                 <option value="0">ปิดใช้งาน</option>
                             </select>
@@ -198,6 +198,22 @@
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
     });
 
+    /*$("#editUserForm").validate({
+        rules: {
+            txtUsernameName: {
+                required: true,
+                minlength: 5
+            },
+            txtPasswordName: {
+                required: true,
+                minlength: 5
+            },
+            txtNameName: {
+                required: true
+            }
+        }
+    });*/
+
     $(".add-member").click(function () {
         $("btnEdit").val(0);
         $("#editMemberModalLabel").html("เพิ่มข้อมูลสมาชิก");
@@ -232,6 +248,7 @@
                 document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
                 $("#txtUsername").val(o[i].Username);
                 $("#txtName").val(o[i].Name);
+                //$("#txtPassword").val(o[i].Password);
                 $("#txtStatusSelect option[value="+o[i].Status+"]").prop('selected', true);
                 $("#txtDescription").val(o[i].Description);
                 $("#txtCreateDate").val(o[i].create_date);
