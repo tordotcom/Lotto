@@ -31,7 +31,7 @@
 
     if($(this).val() == 0){
         var UserData = {
-			Username: $("#txtUser").val(),
+			Username: $("#txtUsername").val(),
             Name: $("#txtName").val(),
             Password: $("#txtPassword").val(),
             Status: $("#txtStatusSelect").val(),
