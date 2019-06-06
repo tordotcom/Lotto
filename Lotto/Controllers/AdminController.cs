@@ -550,7 +550,7 @@ namespace Lotto.Controllers
             }
         }
 
-        //-------------------------------------update User data --------------------------------//
+        //-------------------------------------Update User data --------------------------------//
         [HttpPost]
         public ActionResult UpdateUser(Account User)
         {
@@ -566,6 +566,28 @@ namespace Lotto.Controllers
                 A.Description = User.Description;
                 A.Status = User.Status;
                 db.Entry(A).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+
+        //-------------------------------------Delete User data --------------------------------//
+        [HttpPost]
+        public ActionResult DeleteUser(Account User)
+        {
+            Account A = db.Account.Where(s => s.ID == User.ID).FirstOrDefault<Account>();
+            Account_Role AR = db.Account_Role.Where(s => s.UID == User.ID).First();
+            if (A != null)
+            {
+                if (AR != null) {
+                    db.Account_Role.Remove(AR);
+                    db.SaveChanges();
+                }
+                db.Account.Remove(A);
                 db.SaveChanges();
                 return Json("ss");
             }

@@ -20,8 +20,6 @@
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ltfom.dbo.Account_Role' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Account_Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -256,6 +254,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
         </Association>
         <EntityContainer Name="ltfomModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lotto" EntityType="Self.Lotto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Main_Discount" EntityType="Self.Main_Discount" Schema="dbo" store:Type="Tables" />
@@ -264,15 +263,6 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Account_Role].[ID] AS [ID], 
-    [Account_Role].[UID] AS [UID], 
-    [Account_Role].[Role_ID] AS [Role_ID], 
-    [Account_Role].[create_date] AS [create_date], 
-    [Account_Role].[update_date] AS [update_date]
-    FROM [dbo].[Account_Role] AS [Account_Role]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="LottoSub" EntityType="Self.LottoSub" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [LottoSub].[ID] AS [ID], 

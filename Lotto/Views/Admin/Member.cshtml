@@ -68,7 +68,7 @@
                                     <td>@item.create_date</td>
                                     <td>
                                         <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editMemberModal" data-backdrop="static" data-keyboard="false">แก้ไข</button>
-                                        <button type="button" class="btn btn-danger" data-id="@item.ID" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                        <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Username" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" data-keyboard="false">ลบ</button>
                                     </td>
                                 </tr>
                             }
@@ -174,10 +174,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                ต้องการลบข้อมูลสมาชิก "" ใช้หรือไม่?
+                ต้องการลบข้อมูลสมาชิก "<b id="deleteUsername"></b>" ใช้หรือไม่?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">ยืนยัน</button>
+                <button type="button" class="btn btn-primary" data-id="0" id="btnDelete">ยืนยัน</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -186,12 +186,15 @@
 <script src="~/Assets/js/member.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
+    // URL 
     addUser = '@Url.Action("AddUser", "Admin")';
     updateUser = '@Url.Action("UpdateUser", "Admin")';
+    deleteUser = '@Url.Action("DeleteUser", "Admin")';
+
     var o = new Object();
     o = @Html.Raw(Json.Encode(Model));
 
-    $('#bootstrap-data-table').DataTable({
+    var dataTable = $('#bootstrap-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
     });
 
@@ -238,5 +241,11 @@
                 $("#txtLastLogin").val(o[i].Last_Login);
             }
         }
+    });
+
+    $(".delete").click(function () {
+        var id = $(this).attr("data-id");
+        document.getElementById('btnDelete').setAttribute('data-id', id);
+        $('#deleteUsername').html($(this).attr("data-username"));
     });
 </script>
