@@ -62,6 +62,10 @@ namespace Lotto.Controllers
         {
             return View();
         }
+        public ActionResult Result() //ดูเลขหวย
+        {
+            return View();
+        }
         public ActionResult Setting() //ตั้งค่า
         {
             return View();

@@ -255,6 +255,9 @@
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rate_Discount.cs" />
+    <Compile Include="Models\Result.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
@@ -485,6 +488,7 @@
     <Content Include="Views\User\Password.cshtml" />
     <Content Include="Views\User\Howto.cshtml" />
     <Content Include="Views\User\Contact.cshtml" />
+    <Content Include="Views\Admin\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

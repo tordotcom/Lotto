@@ -113,6 +113,14 @@
         .for-username {
             padding-left: 15px;
         }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -235,6 +243,7 @@
                     </div>
 
                     <div class="dropdown for-username">
+                        <!-- ถ้าติดตรงนี้ Login ก่อน -->
                         <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
                     </div>
 

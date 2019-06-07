@@ -143,12 +143,13 @@
                     <li class=""><a href="@Url.Action("Out", "Admin")"><i class="menu-icon fa fa-sign-out"></i>แทงออก</a></li>
                     <li class=""><a href="@Url.Action("Cut", "Admin")"><i class="menu-icon fa fa-scissors"></i>ตัดเลข</a></li>
                     @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-chevron-circle-up"></i>สู้บน</a></li>
-                        <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-chevron-circle-down"></i>สู้ล่าง</a></li>*@
+        <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-chevron-circle-down"></i>สู้ล่าง</a></li>*@
                     <li class=""><a href="@Url.Action("OutTotal", "Admin")"><i class="menu-icon fa fa-tasks"></i>ยอดแทงออก</a></li>
 
                     <li class="menu-title">รายงาน</li><!-- /.menu-title -->
                     <li class=""><a href="@Url.Action("BetBackward", "Admin")"><i class="menu-icon fa fa-clock-o"></i>ดูโพยย้อนหลัง</a></li>
-                    <li class=""><a href="@Url.Action("LottoBackward", "Admin")"><i class="menu-icon fa fa-spinner"></i>ดูหวยย้อนหลัง</a></li>
+                    <li class=""><a href="@Url.Action("LottoBackward", "Admin")"><i class="menu-icon fa fa-spinner"></i>ดูสรุปหวยย้อนหลัง</a></li>
+                    <li class=""><a href="@Url.Action("Result", "Admin")"><i class="menu-icon fa fa-star-o"></i>ดูผลหวยย้อนหลัง</a></li>
                     @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-bar-chart-o"></i>รายงาน</a></li>*@
 
                     <li class="menu-title">ตั้งค่า</li><!-- /.menu-title -->
@@ -263,6 +264,7 @@
                         </div>
                     </div>
                     <div class="dropdown for-username">
+                        <!-- ถ้าติดตรงนี้ Login ก่อน -->
                         <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
                     </div>
 
