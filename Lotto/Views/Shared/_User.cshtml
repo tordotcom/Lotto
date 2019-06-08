@@ -109,6 +109,18 @@
         .digital-clock {
             padding-right: 5px;
         }
+
+        .for-username {
+            padding-left: 15px;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -139,8 +151,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><!-- <img src="~/Images/overlay-banner_original.png" alt="Logo"> -->Lotto_</a>
-                    <a class="navbar-brand hidden" href="./"><img src="~/Images/logo2.png" alt="Logo"></a>
+                    <a class="navbar-brand" href="@Url.Action("Index", "User")"><!-- <img src="~/Images/overlay-banner_original.png" alt="Logo"> -->Lotto_</a>
+                    <a class="navbar-brand hidden" href="@Url.Action("Index", "User")"><img src="~/Images/logo2.png" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
@@ -160,7 +172,7 @@
                         </div>
 
                         <div class="dropdown for-price">
-                            <button class="btn btn-sm btn-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal">
+                            <button class="btn btn-sm btn-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal" data-backdrop="static" data-keyboard="false">
                                 ราคาจ่าย
                             </button>
                         </div>
@@ -227,6 +239,19 @@
                                     </div>
                                 </a>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown for-username">
+                        <div class="dropdown for-username">
+                            @if (Session["Username"] != null)
+                            {
+                                <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
+                            }
+                            else
+                            {
+                                <b>Unknown</b>
+                            }
                         </div>
                     </div>
 

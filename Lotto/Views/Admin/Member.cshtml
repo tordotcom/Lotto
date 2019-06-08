@@ -68,7 +68,7 @@
                                     <td>@item.create_date</td>
                                     <td>
                                         <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editMemberModal" data-backdrop="static" data-keyboard="false">แก้ไข</button>
-                                        <button type="button" class="btn btn-danger" data-id="@item.ID" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                        <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Username" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" data-keyboard="false">ลบ</button>
                                     </td>
                                 </tr>
                             }
@@ -90,7 +90,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal" id="editUserForm">
                     <div class="row form-group">
                         <div class="col col-md-5"><label class="form-control-label">รหัสสมาชิก</label></div>
                         <div class="col col-md-7"><input type="text" id="txtUsername" name="txtUsernameName" class="form-control form-control-sm" disabled></div>
@@ -106,7 +106,7 @@
                     <div class="row form-group">
                         <div class="col col-md-5"><label class="form-control-label">สถานะ</label></div>
                         <div class="col col-md-7">
-                            <select name="select" id="txtStatusSelect" name="txtStatusSelectName" class="form-control-sm form-control">
+                            <select id="txtStatusSelect" name="txtStatusSelectName" class="form-control-sm form-control">
                                 <option value="1">ใช้งาน</option>
                                 <option value="0">ปิดใช้งาน</option>
                             </select>
@@ -174,10 +174,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                ต้องการลบข้อมูลสมาชิก "" ใช้หรือไม่?
+                ต้องการลบข้อมูลสมาชิก "<b id="deleteUsername"></b>" ใช้หรือไม่?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">ยืนยัน</button>
+                <button type="button" class="btn btn-primary" data-id="0" id="btnDelete">ยืนยัน</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -186,14 +186,33 @@
 <script src="~/Assets/js/member.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
+    // URL 
     addUser = '@Url.Action("AddUser", "Admin")';
     updateUser = '@Url.Action("UpdateUser", "Admin")';
+    deleteUser = '@Url.Action("DeleteUser", "Admin")';
+
     var o = new Object();
     o = @Html.Raw(Json.Encode(Model));
 
-    $('#bootstrap-data-table').DataTable({
+    var dataTable = $('#bootstrap-data-table').DataTable({
         lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
     });
+
+    /*$("#editUserForm").validate({
+        rules: {
+            txtUsernameName: {
+                required: true,
+                minlength: 5
+            },
+            txtPasswordName: {
+                required: true,
+                minlength: 5
+            },
+            txtNameName: {
+                required: true
+            }
+        }
+    });*/
 
     $(".add-member").click(function () {
         $("btnEdit").val(0);
@@ -229,6 +248,7 @@
                 document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
                 $("#txtUsername").val(o[i].Username);
                 $("#txtName").val(o[i].Name);
+                //$("#txtPassword").val(o[i].Password);
                 $("#txtStatusSelect option[value="+o[i].Status+"]").prop('selected', true);
                 $("#txtDescription").val(o[i].Description);
                 $("#txtCreateDate").val(o[i].create_date);
@@ -238,5 +258,11 @@
                 $("#txtLastLogin").val(o[i].Last_Login);
             }
         }
+    });
+
+    $(".delete").click(function () {
+        var id = $(this).attr("data-id");
+        document.getElementById('btnDelete').setAttribute('data-id', id);
+        $('#deleteUsername').html($(this).attr("data-username"));
     });
 </script>

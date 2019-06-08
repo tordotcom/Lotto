@@ -314,6 +314,7 @@
     <Content Include="Assets\js\member.js" />
     <Content Include="Assets\js\member_price.js" />
     <Content Include="Assets\js\rate.js" />
+    <Content Include="Assets\js\result.js" />
     <Content Include="Assets\js\sweetalert2.all.min.js" />
     <Content Include="Assets\js\user_bet.js" />
     <Content Include="Assets\js\vmap.sampledata.js" />
@@ -489,6 +490,7 @@
     <Content Include="Views\User\Password.cshtml" />
     <Content Include="Views\User\Howto.cshtml" />
     <Content Include="Views\User\Contact.cshtml" />
+    <Content Include="Views\Admin\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

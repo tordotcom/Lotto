@@ -62,6 +62,10 @@ namespace Lotto.Controllers
         {
             return View();
         }
+        public ActionResult Result() //ดูเลขหวย
+        {
+            return View();
+        }
         public ActionResult Setting() //ตั้งค่า
         {
             return View();
@@ -522,12 +526,12 @@ namespace Lotto.Controllers
             {
                 
                 var A = new Account();
-              
                 A.Username = User.Username;
                 A.Name = User.Name;
                 A.Password = ComputeHash(User.Password, null);
                 A.Status = User.Status;
-                A.Description = User.Description;        
+                A.Description = User.Description; 
+                A.Create_By_UID = Convert.ToString(Session["ID"]); 
                 A.Last_Login = DateTime.Now; 
                 A.create_date = DateTime.Now;
                 A.update_date = DateTime.Now;
@@ -551,7 +555,7 @@ namespace Lotto.Controllers
             }
         }
 
-        //-------------------------------------update User data --------------------------------//
+        //-------------------------------------Update User data --------------------------------//
         [HttpPost]
         public ActionResult UpdateUser(Account User)
         {
@@ -568,6 +572,57 @@ namespace Lotto.Controllers
                 A.Status = User.Status;
                 db.Entry(A).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+
+        //-------------------------------------Delete User data --------------------------------//
+        [HttpPost]
+        public ActionResult DeleteUser(Account User)
+        {
+            Account A = db.Account.Where(s => s.ID == User.ID).FirstOrDefault<Account>();
+            Account_Role AR = db.Account_Role.Where(s => s.UID == User.ID).First();
+            if (A != null)
+            {
+                if (AR != null) {
+                    db.Account_Role.Remove(AR);
+                    db.SaveChanges();
+                }
+                db.Account.Remove(A);
+                db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+
+        //-------------------------------------Add Result data --------------------------------//
+        [HttpPost]
+        public ActionResult AddResult(Result Lotto)
+        {
+            if (Lotto != null)
+            {
+
+                var R = new Result();
+                R.Name = Lotto.Name;
+                R.first_three = Lotto.first_three;
+                R.last_three = Lotto.last_three;
+                R.three_down_1 = Lotto.three_down_1;
+                R.three_down_2 = Lotto.three_down_2;
+                R.three_down_3 = Lotto.three_down_3;
+                R.three_down_4 = Lotto.three_down_4;
+                R.two_down = Lotto.two_down;
+                R.create_date = DateTime.Now;
+                R.update_date = DateTime.Now;
+                db.Result.Add(R);
+                db.SaveChanges();
+
                 return Json("ss");
             }
             else

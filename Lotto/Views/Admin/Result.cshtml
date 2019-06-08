@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "Result";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>ดูผลหวยย้อนหลัง</h2>
+    </div>
+    <div class="col-md-6 right">
+        <button type="button" class="btn btn-dark add-result" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">เพิ่มผลหวย</button>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card lotto-status">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        หวยรัฐบาล : <b><span id="todayDate"></span></b>
+                    </div>
+                    <div class="col-md-3">
+                        ปิดเวลา : <b><span id="closeTime"></span></b>
+                    </div>
+                    <div class="col-md-3">
+                        สถานะ : <b><span id="lottoStatus"></span></b>
+                    </div>
+                    <div class="col-md-3">
+                        ยอดแทง : <b><span id="totalBetCount"></span></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col-md-1"><label for="select" class="form-control-label">วันที่</label></div>
+                        <div class="col-md-4">
+                            <input type="text" id="start_datepicker" name="text-input" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-1"><label for="select" class="form-control-label">ถึงวันที่</label></div>
+                        <div class="col-md-4">
+                            <input type="text" id="end_datepicker" name="text-input" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">แสดง</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">สมาชิก</strong>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>วันที่</th>
+                            <th>หวย</th>
+                            <th>3 บน</th>
+                            <th>3 ล่าง</th>
+                            <th>2 ล่าง</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2019-05-16</td>
+                            <td>หวยรัฐบาล</td>
+                            <td>526</td>
+                            <td>949 669 239 323</td>
+                            <td>71</td>
+                            <td>
+                                <button type="button" class="btn btn-primary edit" data-id="" data-toggle="modal" data-target="#checkLastedLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
+                                <button type="button" class="btn btn-danger delete" data-id="" data-date="" data-toggle="modal" data-target="#deleteLastedModal" data-backdrop="static" data-keyboard="false">ลบ</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="checkResultLotto" tabindex="-1" role="dialog" aria-labelledby="checkResultLottoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkResultLottoLabel">ผลหวย</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal" id="editResultForm">
+                    <table class="table table-bordered" style="text-align:center;">
+                        <thead>
+                            <tr>
+                                <th colspan="5" style="color:white;background-color:blue;">เลขที่ออก</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="width:30%">งวดวันที่</td>
+                                <td style="width:70%" colspan="4"><input type="text" id="insert_datepicker" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>หวย</td>
+                                <td colspan="4"><input type="text" id="lotto_name" name="lotto_name_name" class="form-control form-control-sm" value="หวยรัฐบาล"></td>
+                            </tr>
+                            <tr>
+                                <td>3 หน้า</td>
+                                <td colspan="4"><input type="text" id="first_three" name="first_three_name" class="form-control form-control-sm" minlength="3" maxlength="3"></td>
+                            </tr>
+                            <tr>
+                                <td>3 บน</td>
+                                <td colspan="4"><input type="text" id="last_three" name="last_three_name" class="form-control form-control-sm" minlength="3" maxlength="3"></td>
+                            </tr>
+                            <tr>
+                                <td>3 ล่าง</td>
+                                <td><input type="text" id="three_down_1" name="three_down_1_name" class="form-control form-control-sm" minlength="3" maxlength="3"></td>
+                                <td><input type="text" id="three_down_2" name="three_down_2_name" class="form-control form-control-sm" minlength="3" maxlength="3"></td>
+                                <td><input type="text" id="three_down_3" name="three_down_3_name" class="form-control form-control-sm" minlength="3" maxlength="3"></td>
+                                <td><input type="text" id="three_down_4" name="three_down_4_name" class="form-control form-control-sm" minlength="3" maxlength="3"></td>
+                            </tr>
+                            <tr>
+                                <td>2 ล่าง</td>
+                                <td colspan="4"><input type="text" id="two_down" name="two_down_name" class="form-control form-control-sm" minlength="2" maxlength="2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnEdit">ยืนยัน</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Assets/js/result.js"></script>
+
+<script>
+
+     // URL 
+    addResult = '@Url.Action("AddResult", "Admin")';
+    updateResult = '@Url.Action("UpdateResult", "Admin")';
+    deleteResult = '@Url.Action("DeleteResult", "Admin")';
+
+    (function ($) {
+        $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        });
+    })(jQuery);
+
+     $( function() {
+         $("#start_datepicker").datepicker(
+             { dateFormat: 'yy-mm-dd' }
+         ).datepicker("setDate", new Date());
+         $("#end_datepicker").datepicker(
+             { dateFormat: 'yy-mm-dd' }
+         ).datepicker("setDate", new Date());
+         $("#insert_datepicker").datepicker(
+             { dateFormat: 'yy-mm-dd' }
+         ).datepicker("setDate", new Date());
+     });
+
+    $(".add-result").click(function () {
+        $("btnEdit").val(0);
+    });
+</script>
+
+
