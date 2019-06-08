@@ -217,9 +217,6 @@
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Lotto.cs">
-      <DependentUpon>LottoEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\LottoEntity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -234,6 +231,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LottoEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LottoMain.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LottoSub.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
@@ -251,10 +251,14 @@
     <Compile Include="Models\Poll.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PollData.cs" />
     <Compile Include="Models\Rate.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rate_Discount.cs" />
+    <Compile Include="Models\Result.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>

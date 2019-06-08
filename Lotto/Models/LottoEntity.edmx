@@ -20,8 +20,6 @@
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ltfom.dbo.Account_Role' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Account_Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -51,7 +49,7 @@ warning 6002: The table/view 'ltfom.dbo.Account_Role' does not have a primary ke
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <EntityType Name="Lotto">
+        <EntityType Name="LottoMain">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -59,33 +57,20 @@ warning 6002: The table/view 'ltfom.dbo.Account_Role' does not have a primary ke
           <Property Name="Poll_ID" Type="int" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
           <Property Name="Number" Type="nvarchar" MaxLength="50" />
-          <Property Name="balance_first" Type="nvarchar" MaxLength="50" />
-          <Property Name="balance_second" Type="nvarchar" MaxLength="50" />
-          <Property Name="balance_total" Type="nvarchar" MaxLength="50" />
-          <Property Name="balance_discount" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="nvarchar" MaxLength="50" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LottoSub">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Lotto_ID" Type="int" />
+          <Property Name="Type" Type="nvarchar" MaxLength="2" />
           <Property Name="Number" Type="nvarchar" MaxLength="50" />
-          <Property Name="Balance" Type="nvarchar" MaxLength="50" />
-          <Property Name="three_up" Type="nvarchar" MaxLength="3" />
-          <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
-          <Property Name="three_down" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_up" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_ood" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_down" Type="nvarchar" MaxLength="3" />
-          <Property Name="up" Type="nvarchar" MaxLength="3" />
-          <Property Name="down" Type="nvarchar" MaxLength="3" />
-          <Property Name="first_three" Type="nvarchar" MaxLength="3" />
-          <Property Name="first_three_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="Amount" Type="nvarchar" MaxLength="50" />
+          <Property Name="AmountDiscount" Type="nvarchar" MaxLength="3" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -130,7 +115,11 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
           <Property Name="Date" Type="datetime" />
+          <Property Name="Status" Type="nvarchar" MaxLength="1" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
         </EntityType>
         <EntityType Name="Poll">
           <Key>
@@ -140,6 +129,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="UID" Type="int" />
           <Property Name="Period_ID" Type="int" />
           <Property Name="Receive" Type="nvarchar" MaxLength="50" />
+          <Property Name="Create_By" Type="nvarchar" MaxLength="50" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -159,6 +149,24 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="down" Type="nvarchar" MaxLength="3" />
           <Property Name="first_three" Type="nvarchar" MaxLength="3" />
           <Property Name="first_three_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="3" />
+          <Property Name="last_three" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_down_1" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_down_2" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_down_3" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_down_4" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -190,23 +198,23 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <End Role="Poll" Type="Self.Poll" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Lotto" Type="Self.Lotto" Multiplicity="*" />
+          <End Role="LottoMain" Type="Self.LottoMain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poll">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Lotto">
+            <Dependent Role="LottoMain">
               <PropertyRef Name="Poll_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LottoSub_Lotto">
-          <End Role="Lotto" Type="Self.Lotto" Multiplicity="0..1">
+          <End Role="LottoMain" Type="Self.LottoMain" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="LottoSub" Type="Self.LottoSub" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Lotto">
+            <Principal Role="LottoMain">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="LottoSub">
@@ -256,42 +264,30 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
         </Association>
         <EntityContainer Name="ltfomModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Lotto" EntityType="Self.Lotto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LottoMain" EntityType="Self.LottoMain" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LottoSub" EntityType="Self.LottoSub" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Main_Discount" EntityType="Self.Main_Discount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Main_Rate" EntityType="Self.Main_Rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="Result" EntityType="Self.Result" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Account_Role].[ID] AS [ID], 
-    [Account_Role].[UID] AS [UID], 
-    [Account_Role].[Role_ID] AS [Role_ID], 
-    [Account_Role].[create_date] AS [create_date], 
-    [Account_Role].[update_date] AS [update_date]
-    FROM [dbo].[Account_Role] AS [Account_Role]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="LottoSub" EntityType="Self.LottoSub" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [LottoSub].[ID] AS [ID], 
-    [LottoSub].[Lotto_ID] AS [Lotto_ID], 
-    [LottoSub].[Number] AS [Number], 
-    [LottoSub].[Balance] AS [Balance], 
-    [LottoSub].[three_up] AS [three_up], 
-    [LottoSub].[three_ood] AS [three_ood], 
-    [LottoSub].[three_down] AS [three_down], 
-    [LottoSub].[two_up] AS [two_up], 
-    [LottoSub].[two_ood] AS [two_ood], 
-    [LottoSub].[two_down] AS [two_down], 
-    [LottoSub].[up] AS [up], 
-    [LottoSub].[down] AS [down], 
-    [LottoSub].[first_three] AS [first_three], 
-    [LottoSub].[first_three_ood] AS [first_three_ood], 
-    [LottoSub].[create_date] AS [create_date], 
-    [LottoSub].[update_date] AS [update_date]
-    FROM [dbo].[LottoSub] AS [LottoSub]</DefiningQuery>
+    [Result].[ID] AS [ID], 
+    [Result].[Name] AS [Name], 
+    [Result].[first_three] AS [first_three], 
+    [Result].[last_three] AS [last_three], 
+    [Result].[three_down_1] AS [three_down_1], 
+    [Result].[three_down_2] AS [three_down_2], 
+    [Result].[three_down_3] AS [three_down_3], 
+    [Result].[three_down_4] AS [three_down_4], 
+    [Result].[two_down] AS [two_down], 
+    [Result].[create_date] AS [create_date], 
+    [Result].[update_date] AS [update_date]
+    FROM [dbo].[Result] AS [Result]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
             <End Role="Account" EntitySet="Account" />
@@ -299,10 +295,10 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           </AssociationSet>
           <AssociationSet Name="FK_Lotto_Poll" Association="Self.FK_Lotto_Poll">
             <End Role="Poll" EntitySet="Poll" />
-            <End Role="Lotto" EntitySet="Lotto" />
+            <End Role="LottoMain" EntitySet="LottoMain" />
           </AssociationSet>
           <AssociationSet Name="FK_LottoSub_Lotto" Association="Self.FK_LottoSub_Lotto">
-            <End Role="Lotto" EntitySet="Lotto" />
+            <End Role="LottoMain" EntitySet="LottoMain" />
             <End Role="LottoSub" EntitySet="LottoSub" />
           </AssociationSet>
           <AssociationSet Name="FK_Poll_Account" Association="Self.FK_Poll_Account">
@@ -336,9 +332,19 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="Last_Login" Type="DateTime" Precision="3" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Discounts" Relationship="Self.FK_Discount_Account" FromRole="Account" ToRole="Discount" />
-          <NavigationProperty Name="Polls" Relationship="Self.FK_Poll_Account" FromRole="Account" ToRole="Poll" />
-          <NavigationProperty Name="Rates" Relationship="Self.FK_Rate_Account" FromRole="Account" ToRole="Rate" />
+          <NavigationProperty Name="Discount" Relationship="Self.FK_Discount_Account" FromRole="Account" ToRole="Discount" />
+          <NavigationProperty Name="Poll" Relationship="Self.FK_Poll_Account" FromRole="Account" ToRole="Poll" />
+          <NavigationProperty Name="Rate" Relationship="Self.FK_Rate_Account" FromRole="Account" ToRole="Rate" />
+        </EntityType>
+        <EntityType Name="Account_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
+          <Property Name="Role_ID" Type="Int32" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Discount">
           <Key>
@@ -354,13 +360,13 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Discount_Account" FromRole="Discount" ToRole="Account" />
-          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Lotto">
+        <EntityType Name="LottoMain">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -368,14 +374,11 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="Poll_ID" Type="Int32" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="balance_first" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="balance_second" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="balance_total" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="balance_discount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Poll" Relationship="Self.FK_Lotto_Poll" FromRole="Lotto" ToRole="Poll" />
-          <NavigationProperty Name="LottoSubs" Relationship="Self.FK_LottoSub_Lotto" FromRole="Lotto" ToRole="LottoSub" />
+          <NavigationProperty Name="Poll" Relationship="Self.FK_Lotto_Poll" FromRole="LottoMain" ToRole="Poll" />
+          <NavigationProperty Name="LottoSub" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoMain" ToRole="LottoSub" />
         </EntityType>
         <EntityType Name="Main_Discount">
           <Key>
@@ -391,9 +394,9 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="first_three" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
-          <Property Name="first_three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Main_Rate">
           <Key>
@@ -409,17 +412,21 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="up" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="down" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="first_three" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
-          <Property Name="first_three_ood" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Period">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" />
           <Property Name="Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Polls" Relationship="Self.FK_Poll_Period" FromRole="Period" ToRole="Poll" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Poll" Relationship="Self.FK_Poll_Period" FromRole="Period" ToRole="Poll" />
         </EntityType>
         <EntityType Name="Poll">
           <Key>
@@ -429,10 +436,11 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="UID" Type="Int32" />
           <Property Name="Period_ID" Type="Int32" />
           <Property Name="Receive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Create_By" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Poll_Account" FromRole="Poll" ToRole="Account" />
-          <NavigationProperty Name="Lottoes" Relationship="Self.FK_Lotto_Poll" FromRole="Poll" ToRole="Lotto" />
+          <NavigationProperty Name="LottoMain" Relationship="Self.FK_Lotto_Poll" FromRole="Poll" ToRole="LottoMain" />
           <NavigationProperty Name="Period" Relationship="Self.FK_Poll_Period" FromRole="Poll" ToRole="Period" />
         </EntityType>
         <EntityType Name="Rate">
@@ -449,11 +457,11 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Rate_Account" FromRole="Rate" ToRole="Account" />
-          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -465,37 +473,35 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="Account_Role">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UID" Type="Int32" />
-          <Property Name="Role_ID" Type="Int32" />
-          <Property Name="create_date" Type="DateTime" Precision="3" />
-          <Property Name="update_date" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="LottoSub">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Lotto_ID" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Balance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="three_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AmountDiscount" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Lotto" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoSub" ToRole="Lotto" />
+          <NavigationProperty Name="LottoMain" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoSub" ToRole="LottoMain" />
+        </EntityType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
@@ -543,23 +549,23 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           <End Role="Poll" Type="Self.Poll" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Lotto" Type="Self.Lotto" Multiplicity="*" />
+          <End Role="LottoMain" Type="Self.LottoMain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Poll">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Lotto">
+            <Dependent Role="LottoMain">
               <PropertyRef Name="Poll_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_LottoSub_Lotto">
-          <End Role="Lotto" Type="Self.Lotto" Multiplicity="0..1">
+          <End Role="LottoMain" Type="Self.LottoMain" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="LottoSub" Type="Self.LottoSub" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Lotto">
+            <Principal Role="LottoMain">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="LottoSub">
@@ -580,40 +586,41 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ltfomEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
-          <EntitySet Name="Discounts" EntityType="Self.Discount" />
-          <EntitySet Name="Lottoes" EntityType="Self.Lotto" />
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" />
+          <EntitySet Name="LottoMain" EntityType="Self.LottoMain" />
           <EntitySet Name="Main_Discount" EntityType="Self.Main_Discount" />
           <EntitySet Name="Main_Rate" EntityType="Self.Main_Rate" />
-          <EntitySet Name="Periods" EntityType="Self.Period" />
-          <EntitySet Name="Polls" EntityType="Self.Poll" />
-          <EntitySet Name="Rates" EntityType="Self.Rate" />
-          <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="Account_Role" EntityType="Self.Account_Role" />
-          <EntitySet Name="LottoSubs" EntityType="Self.LottoSub" />
+          <EntitySet Name="Period" EntityType="Self.Period" />
+          <EntitySet Name="Poll" EntityType="Self.Poll" />
+          <EntitySet Name="Rate" EntityType="Self.Rate" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="LottoSub" EntityType="Self.LottoSub" />
+          <EntitySet Name="Result" EntityType="Self.Result" />
           <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Discount" EntitySet="Discounts" />
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Discount" EntitySet="Discount" />
           </AssociationSet>
           <AssociationSet Name="FK_Poll_Account" Association="Self.FK_Poll_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Poll" EntitySet="Polls" />
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Poll" EntitySet="Poll" />
           </AssociationSet>
           <AssociationSet Name="FK_Rate_Account" Association="Self.FK_Rate_Account">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Rate" EntitySet="Rates" />
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Rate" EntitySet="Rate" />
           </AssociationSet>
           <AssociationSet Name="FK_Lotto_Poll" Association="Self.FK_Lotto_Poll">
-            <End Role="Poll" EntitySet="Polls" />
-            <End Role="Lotto" EntitySet="Lottoes" />
+            <End Role="Poll" EntitySet="Poll" />
+            <End Role="LottoMain" EntitySet="LottoMain" />
           </AssociationSet>
           <AssociationSet Name="FK_LottoSub_Lotto" Association="Self.FK_LottoSub_Lotto">
-            <End Role="Lotto" EntitySet="Lottoes" />
-            <End Role="LottoSub" EntitySet="LottoSubs" />
+            <End Role="LottoMain" EntitySet="LottoMain" />
+            <End Role="LottoSub" EntitySet="LottoSub" />
           </AssociationSet>
           <AssociationSet Name="FK_Poll_Period" Association="Self.FK_Poll_Period">
-            <End Role="Period" EntitySet="Periods" />
-            <End Role="Poll" EntitySet="Polls" />
+            <End Role="Period" EntitySet="Period" />
+            <End Role="Poll" EntitySet="Poll" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -622,7 +629,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ltfomModelStoreContainer" CdmEntityContainer="ltfomEntities">
-          <EntitySetMapping Name="Accounts">
+          <EntitySetMapping Name="Account">
             <EntityTypeMapping TypeName="ltfomModel.Account">
               <MappingFragment StoreEntitySet="Account">
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -633,131 +640,6 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Create_By_UID" ColumnName="Create_By_UID" />
                 <ScalarProperty Name="Last_Login" ColumnName="Last_Login" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Discounts">
-            <EntityTypeMapping TypeName="ltfomModel.Discount">
-              <MappingFragment StoreEntitySet="Discount">
-                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
-                <ScalarProperty Name="first_three" ColumnName="first_three" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UID" ColumnName="UID" />
-                <ScalarProperty Name="three_up" ColumnName="three_up" />
-                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
-                <ScalarProperty Name="three_down" ColumnName="three_down" />
-                <ScalarProperty Name="two_up" ColumnName="two_up" />
-                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
-                <ScalarProperty Name="two_down" ColumnName="two_down" />
-                <ScalarProperty Name="up" ColumnName="up" />
-                <ScalarProperty Name="down" ColumnName="down" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Lottoes">
-            <EntityTypeMapping TypeName="ltfomModel.Lotto">
-              <MappingFragment StoreEntitySet="Lotto">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Poll_ID" ColumnName="Poll_ID" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="balance_first" ColumnName="balance_first" />
-                <ScalarProperty Name="balance_second" ColumnName="balance_second" />
-                <ScalarProperty Name="balance_total" ColumnName="balance_total" />
-                <ScalarProperty Name="balance_discount" ColumnName="balance_discount" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Main_Discount">
-            <EntityTypeMapping TypeName="ltfomModel.Main_Discount">
-              <MappingFragment StoreEntitySet="Main_Discount">
-                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="three_up" ColumnName="three_up" />
-                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
-                <ScalarProperty Name="three_down" ColumnName="three_down" />
-                <ScalarProperty Name="two_up" ColumnName="two_up" />
-                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
-                <ScalarProperty Name="two_down" ColumnName="two_down" />
-                <ScalarProperty Name="up" ColumnName="up" />
-                <ScalarProperty Name="down" ColumnName="down" />
-                <ScalarProperty Name="first_three" ColumnName="first_three" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Main_Rate">
-            <EntityTypeMapping TypeName="ltfomModel.Main_Rate">
-              <MappingFragment StoreEntitySet="Main_Rate">
-                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="three_up" ColumnName="three_up" />
-                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
-                <ScalarProperty Name="three_down" ColumnName="three_down" />
-                <ScalarProperty Name="two_up" ColumnName="two_up" />
-                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
-                <ScalarProperty Name="two_down" ColumnName="two_down" />
-                <ScalarProperty Name="up" ColumnName="up" />
-                <ScalarProperty Name="down" ColumnName="down" />
-                <ScalarProperty Name="first_three" ColumnName="first_three" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Periods">
-            <EntityTypeMapping TypeName="ltfomModel.Period">
-              <MappingFragment StoreEntitySet="Period">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Polls">
-            <EntityTypeMapping TypeName="ltfomModel.Poll">
-              <MappingFragment StoreEntitySet="Poll">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UID" ColumnName="UID" />
-                <ScalarProperty Name="Period_ID" ColumnName="Period_ID" />
-                <ScalarProperty Name="Receive" ColumnName="Receive" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Rates">
-            <EntityTypeMapping TypeName="ltfomModel.Rate">
-              <MappingFragment StoreEntitySet="Rate">
-                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
-                <ScalarProperty Name="first_three" ColumnName="first_three" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UID" ColumnName="UID" />
-                <ScalarProperty Name="three_up" ColumnName="three_up" />
-                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
-                <ScalarProperty Name="three_down" ColumnName="three_down" />
-                <ScalarProperty Name="two_up" ColumnName="two_up" />
-                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
-                <ScalarProperty Name="two_down" ColumnName="two_down" />
-                <ScalarProperty Name="up" ColumnName="up" />
-                <ScalarProperty Name="down" ColumnName="down" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="ltfomModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Role1" ColumnName="Role" />
-                <ScalarProperty Name="Descript" ColumnName="Descript" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="update_date" ColumnName="update_date" />
               </MappingFragment>
@@ -774,15 +656,11 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LottoSubs">
-            <EntityTypeMapping TypeName="ltfomModel.LottoSub">
-              <MappingFragment StoreEntitySet="LottoSub">
-                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
-                <ScalarProperty Name="first_three" ColumnName="first_three" />
+          <EntitySetMapping Name="Discount">
+            <EntityTypeMapping TypeName="ltfomModel.Discount">
+              <MappingFragment StoreEntitySet="Discount">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Lotto_ID" ColumnName="Lotto_ID" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="three_up" ColumnName="three_up" />
                 <ScalarProperty Name="three_ood" ColumnName="three_ood" />
                 <ScalarProperty Name="three_down" ColumnName="three_down" />
@@ -791,6 +669,146 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
                 <ScalarProperty Name="two_down" ColumnName="two_down" />
                 <ScalarProperty Name="up" ColumnName="up" />
                 <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LottoMain">
+            <EntityTypeMapping TypeName="ltfomModel.LottoMain">
+              <MappingFragment StoreEntitySet="LottoMain">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Poll_ID" ColumnName="Poll_ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Main_Discount">
+            <EntityTypeMapping TypeName="ltfomModel.Main_Discount">
+              <MappingFragment StoreEntitySet="Main_Discount">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Main_Rate">
+            <EntityTypeMapping TypeName="ltfomModel.Main_Rate">
+              <MappingFragment StoreEntitySet="Main_Rate">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Period">
+            <EntityTypeMapping TypeName="ltfomModel.Period">
+              <MappingFragment StoreEntitySet="Period">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Poll">
+            <EntityTypeMapping TypeName="ltfomModel.Poll">
+              <MappingFragment StoreEntitySet="Poll">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Period_ID" ColumnName="Period_ID" />
+                <ScalarProperty Name="Receive" ColumnName="Receive" />
+                <ScalarProperty Name="Create_By" ColumnName="Create_By" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rate">
+            <EntityTypeMapping TypeName="ltfomModel.Rate">
+              <MappingFragment StoreEntitySet="Rate">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="three_up" ColumnName="three_up" />
+                <ScalarProperty Name="three_ood" ColumnName="three_ood" />
+                <ScalarProperty Name="three_down" ColumnName="three_down" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="two_ood" ColumnName="two_ood" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="up" ColumnName="up" />
+                <ScalarProperty Name="down" ColumnName="down" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="first_three_ood" ColumnName="first_three_ood" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="ltfomModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+                <ScalarProperty Name="Descript" ColumnName="Descript" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LottoSub">
+            <EntityTypeMapping TypeName="ltfomModel.LottoSub">
+              <MappingFragment StoreEntitySet="LottoSub">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Lotto_ID" ColumnName="Lotto_ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AmountDiscount" ColumnName="AmountDiscount" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Result">
+            <EntityTypeMapping TypeName="ltfomModel.Result">
+              <MappingFragment StoreEntitySet="Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="last_three" ColumnName="last_three" />
+                <ScalarProperty Name="three_down_1" ColumnName="three_down_1" />
+                <ScalarProperty Name="three_down_2" ColumnName="three_down_2" />
+                <ScalarProperty Name="three_down_3" ColumnName="three_down_3" />
+                <ScalarProperty Name="three_down_4" ColumnName="three_down_4" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="update_date" ColumnName="update_date" />
               </MappingFragment>
@@ -810,7 +828,7 @@ warning 6002: The table/view 'ltfom.dbo.LottoSub' does not have a primary key de
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

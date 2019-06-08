@@ -17,9 +17,9 @@ namespace Lotto.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Account()
         {
-            this.Discounts = new HashSet<Discount>();
-            this.Polls = new HashSet<Poll>();
-            this.Rates = new HashSet<Rate>();
+            this.Discount = new HashSet<Discount>();
+            this.Poll = new HashSet<Poll>();
+            this.Rate = new HashSet<Rate>();
         }
     
         public int ID { get; set; }
@@ -34,10 +34,10 @@ namespace Lotto.Models
         public Nullable<System.DateTime> update_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Discount> Discounts { get; set; }
+        public virtual ICollection<Discount> Discount { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Poll> Polls { get; set; }
+        public virtual ICollection<Poll> Poll { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rate> Rates { get; set; }
+        public virtual ICollection<Rate> Rate { get; set; }
     }
 }

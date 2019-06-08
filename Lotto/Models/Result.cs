@@ -12,23 +12,18 @@ namespace Lotto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Discount
+    public partial class Result
     {
         public int ID { get; set; }
-        public Nullable<int> UID { get; set; }
-        public string three_up { get; set; }
-        public string three_ood { get; set; }
-        public string three_down { get; set; }
-        public string two_up { get; set; }
-        public string two_ood { get; set; }
-        public string two_down { get; set; }
-        public string up { get; set; }
-        public string down { get; set; }
+        public string Name { get; set; }
         public string first_three { get; set; }
-        public string first_three_ood { get; set; }
+        public string last_three { get; set; }
+        public string three_down_1 { get; set; }
+        public string three_down_2 { get; set; }
+        public string three_down_3 { get; set; }
+        public string three_down_4 { get; set; }
+        public string two_down { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
-    
-        public virtual Account Account { get; set; }
     }
 }

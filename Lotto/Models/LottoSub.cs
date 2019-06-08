@@ -16,21 +16,13 @@ namespace Lotto.Models
     {
         public int ID { get; set; }
         public Nullable<int> Lotto_ID { get; set; }
+        public string Type { get; set; }
         public string Number { get; set; }
-        public string Balance { get; set; }
-        public string three_up { get; set; }
-        public string three_ood { get; set; }
-        public string three_down { get; set; }
-        public string two_up { get; set; }
-        public string two_ood { get; set; }
-        public string two_down { get; set; }
-        public string up { get; set; }
-        public string down { get; set; }
+        public string Amount { get; set; }
+        public string AmountDiscount { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
-        public string first_three { get; set; }
-        public string first_three_ood { get; set; }
     
-        public virtual Lotto Lotto { get; set; }
+        public virtual LottoMain LottoMain { get; set; }
     }
 }

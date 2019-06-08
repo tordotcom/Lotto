@@ -12,27 +12,24 @@ namespace Lotto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Lotto
+    public partial class LottoMain
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Lotto()
+        public LottoMain()
         {
-            this.LottoSubs = new HashSet<LottoSub>();
+            this.LottoSub = new HashSet<LottoSub>();
         }
     
         public int ID { get; set; }
         public Nullable<int> Poll_ID { get; set; }
         public string Type { get; set; }
         public string Number { get; set; }
-        public string balance_first { get; set; }
-        public string balance_second { get; set; }
-        public string balance_total { get; set; }
-        public string balance_discount { get; set; }
+        public string Amount { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
     
         public virtual Poll Poll { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LottoSub> LottoSubs { get; set; }
+        public virtual ICollection<LottoSub> LottoSub { get; set; }
     }
 }

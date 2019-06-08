@@ -520,6 +520,7 @@ namespace Lotto.Controllers
         {
             if (User != null)
             {
+                
                 var A = new Account();
               
                 A.Username = User.Username;

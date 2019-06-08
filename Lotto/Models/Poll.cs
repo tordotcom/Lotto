@@ -17,19 +17,20 @@ namespace Lotto.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Poll()
         {
-            this.Lottoes = new HashSet<Lotto>();
+            this.LottoMain = new HashSet<LottoMain>();
         }
     
         public int ID { get; set; }
         public Nullable<int> UID { get; set; }
         public Nullable<int> Period_ID { get; set; }
         public string Receive { get; set; }
+        public string Create_By { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
     
         public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Lotto> Lottoes { get; set; }
+        public virtual ICollection<LottoMain> LottoMain { get; set; }
         public virtual Period Period { get; set; }
     }
 }

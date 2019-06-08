@@ -42,7 +42,7 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm" disabled value="0 ฿" style="text-align:right"></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
@@ -109,6 +109,7 @@
 <script src="~/Assets/js/user_bet.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
+    addPoll = '@Url.Action("AddPoll", "User")';
     (function ($) {
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],

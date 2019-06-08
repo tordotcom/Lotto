@@ -26,15 +26,16 @@ namespace Lotto.Models
         }
     
         public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Account_Role> Account_Role { get; set; }
         public virtual DbSet<Discount> Discount { get; set; }
-        public virtual DbSet<Lotto> Lottoe { get; set; }
+        public virtual DbSet<LottoMain> LottoMain { get; set; }
         public virtual DbSet<Main_Discount> Main_Discount { get; set; }
         public virtual DbSet<Main_Rate> Main_Rate { get; set; }
         public virtual DbSet<Period> Period { get; set; }
         public virtual DbSet<Poll> Poll { get; set; }
         public virtual DbSet<Rate> Rate { get; set; }
         public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<Account_Role> Account_Role { get; set; }
         public virtual DbSet<LottoSub> LottoSub { get; set; }
+        public virtual DbSet<Result> Result { get; set; }
     }
 }
