@@ -151,8 +151,8 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><!-- <img src="~/Images/overlay-banner_original.png" alt="Logo"> -->Lotto_</a>
-                    <a class="navbar-brand hidden" href="./"><img src="~/Images/logo2.png" alt="Logo"></a>
+                    <a class="navbar-brand" href="@Url.Action("Index", "User")"><!-- <img src="~/Images/overlay-banner_original.png" alt="Logo"> -->Lotto_</a>
+                    <a class="navbar-brand hidden" href="@Url.Action("Index", "User")"><img src="~/Images/logo2.png" alt="Logo"></a>
                     <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                 </div>
             </div>
@@ -243,8 +243,16 @@
                     </div>
 
                     <div class="dropdown for-username">
-                        <!-- ถ้าติดตรงนี้ Login ก่อน -->
-                        <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
+                        <div class="dropdown for-username">
+                            @if (Session["Username"] != null)
+                            {
+                                <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
+                            }
+                            else
+                            {
+                                <b>Unknown</b>
+                            }
+                        </div>
                     </div>
 
                     <div class="user-area dropdown float-right">
