@@ -1,7 +1,7 @@
 ﻿// Confirm Add && Update
 $("#btnEdit").click(function () {
 	if ($(this).val() == 1) {
-		if ($('#editUserForm').valid()) {
+		//if ($('#editUserForm').valid()) {
 			var id = $(this).attr("data-id");
 			var UserData = {
 				ID: id,
@@ -34,7 +34,7 @@ $("#btnEdit").click(function () {
 					alert("error");
 				}
 			});
-		}
+		//}
     }
 
 	if ($(this).val() == 0) {

@@ -600,5 +600,34 @@ namespace Lotto.Controllers
                 return Json("fail");
             }
         }
+
+        //-------------------------------------Add Result data --------------------------------//
+        [HttpPost]
+        public ActionResult AddResult(Result Lotto)
+        {
+            if (Lotto != null)
+            {
+
+                var R = new Result();
+                R.Name = Lotto.Name;
+                R.first_three = Lotto.first_three;
+                R.last_three = Lotto.last_three;
+                R.three_down_1 = Lotto.three_down_1;
+                R.three_down_2 = Lotto.three_down_2;
+                R.three_down_3 = Lotto.three_down_3;
+                R.three_down_4 = Lotto.three_down_4;
+                R.two_down = Lotto.two_down;
+                R.create_date = DateTime.Now;
+                R.update_date = DateTime.Now;
+                db.Result.Add(R);
+                db.SaveChanges();
+
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
     }
 }
