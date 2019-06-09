@@ -1,9 +1,18 @@
-﻿
+﻿@model IList<Lotto.Models.Poll_Detail>
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_User.cshtml";
 }
-
+@{
+    var pollCount = 0;
+    var receive = "รับแล้ว";
+    var amount = 0;
+    var total_amount = 0;
+    var amount_receive = 0;
+    var total_receive = 0;
+    var discount = 0;
+    var total_discount = 0;
+}
 <h2>ดูโพย</h2>
 <hr />
 
@@ -52,28 +61,50 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>รับแล้ว</td>
-                            <td>15000</td>
-                            <td>15000</td>
-                            <td>1.00</td>
-                            <td>0</td>
-                            <td>01-01-2019 13:00</td>
-                            <td>01-01-2019 13:00</td>
-                            <td><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkModal">ดูโพย</button></td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            pollCount += 1;
+                            if (item.Receive == "1")
+                            {
+                                receive = "รับแล้ว";
+                                amount = Int32.Parse(item.Amount);
+                                amount_receive = Int32.Parse(item.Amount);
+                                discount = Int32.Parse(item.Discount);
+                                total_amount += amount;
+                                total_receive += amount_receive;
+                                total_discount += discount;
+                            }
+                            else
+                            {
+                                receive = "คืนทั้งใบ";
+                                amount = Int32.Parse(item.Amount);
+                                total_amount += amount;
+                                amount_receive = 0;
+                                total_receive += amount_receive;
+                            }
+                            <tr>
+                                <td>@pollCount</td>
+                                <td>@receive</td>
+                                <td>@amount</td>
+                                <td>@amount_receive</td>
+                                <td>@discount</td> 
+                                <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                                <td>@item.create_date</td>
+                                <td>@item.create_date</td>
+                                <td><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#checkModal">ดูโพย</button></td>
+                            </tr>
+                        }
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>รวม</th>
-                            <th>1 ใบ</th>
-                            <th>15000</th>
-                            <th>15000</th>
-                            <th>1.00</th>
-                            <th>0</th>
+                            <th>@pollCount ใบ</th>
+                            <th>@total_amount</th>
+                            <th>@total_receive</th>
+                            <th>@total_discount</th>
+                            <th>0</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <th>สรุป</th>
-                            <th>134</th>
+                            <th>@total_discount</th>
                             <th><button type="button" class="btn btn-sm btn-success">สรุปยอด</button></th>
                         </tr>
                     </tfoot>
@@ -136,7 +167,7 @@
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">วันที่รับ</label></div>
                                         <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
                                     </div>
-                                
+
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยหมายเลข</label></div>
                                         <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
@@ -819,7 +850,7 @@
     (function ($) {
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
-             fixedHeader: {
+            fixedHeader: {
                 footer: true
             }
         });

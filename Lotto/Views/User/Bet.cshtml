@@ -1,9 +1,30 @@
-﻿
+﻿@model IList<Lotto.Models.Poll_Detail>
 @{
     ViewBag.Title = "Bet";
     Layout = "~/Views/Shared/_User.cshtml";
 }
-
+@{ 
+    var pollCount = 0;
+    var receive = 0;
+    var total_amount = 0;
+    var reject_amount = 0;
+    var discount = 0;
+    foreach (var item in Model)
+    {
+        pollCount += 1;
+        if(item.Receive=="1")
+        {
+            receive += 1;
+            total_amount += Int32.Parse(item.Amount);
+            discount += Int32.Parse(item.Discount);
+        }
+        else
+        {
+            reject_amount += Int32.Parse(item.Amount);
+        }
+    }
+    var currentPoll = pollCount+1;
+}
 <h2>แทงโพย</h2>
 <hr />
 
@@ -38,7 +59,7 @@
                         <div class="col-md-6">
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
-                                <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm" value="@currentPoll" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
@@ -46,25 +67,25 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
-                                <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm" value="@pollCount ใบ" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
-                                <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm" value="@receive ใบ" disabled></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืนงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm" value="@reject_amount ฿"style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทงงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm" value="@total_amount ฿"style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่ายงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm" value="@discount ฿"style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"></div>

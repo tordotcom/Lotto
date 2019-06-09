@@ -1,8 +1,10 @@
 ﻿using Lotto.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Lotto.Controllers
@@ -18,11 +20,94 @@ namespace Lotto.Controllers
 
         public ActionResult Bet() //แทงโพย
         {
+            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            if(P != null)
+            {
+                string connetionString = null;
+                var pollDetail = new List<Poll_Detail>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@UID", "2"); // user ID
+                    cmd.Parameters.AddWithValue("@period", P.ID.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            pollDetail.Add(new Poll_Detail
+                            {
+                                ID = Reader["ID"].ToString(),
+                                Receive = Reader["Receive"].ToString(),
+                                Amount = Reader["amount"].ToString(),
+                                Discount = Reader["discount"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(pollDetail);
+            }
             return View();
         }
 
         public ActionResult List() //ดูโพย
         {
+            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            if (P != null)
+            {
+                string connetionString = null;
+                var pollDetail = new List<Poll_Detail>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive,p.create_date";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@UID", "2"); // user ID
+                    cmd.Parameters.AddWithValue("@period", P.ID.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            pollDetail.Add(new Poll_Detail
+                            {
+                                ID = Reader["ID"].ToString(),
+                                Receive = Reader["Receive"].ToString(),
+                                Amount = Reader["amount"].ToString(),
+                                Discount = Reader["discount"].ToString(),
+                                create_date = Reader["create_date"].ToString()
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(pollDetail);
+            }
             return View();
         }
 
