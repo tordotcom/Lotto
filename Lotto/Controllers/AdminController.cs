@@ -64,7 +64,7 @@ namespace Lotto.Controllers
         }
         public ActionResult Result() //ดูเลขหวย
         {
-            return View();
+            return View(db.Result.ToList());
         }
         public ActionResult Setting() //ตั้งค่า
         {
@@ -604,20 +604,21 @@ namespace Lotto.Controllers
 
         //-------------------------------------Add Result data --------------------------------//
         [HttpPost]
-        public ActionResult AddResult(Result Lotto)
+        public ActionResult AddResult(Result Result)
         {
-            if (Lotto != null)
+            if (Result != null)
             {
 
                 var R = new Result();
-                R.Name = Lotto.Name;
-                R.first_three = Lotto.first_three;
-                R.last_three = Lotto.last_three;
-                R.three_down_1 = Lotto.three_down_1;
-                R.three_down_2 = Lotto.three_down_2;
-                R.three_down_3 = Lotto.three_down_3;
-                R.three_down_4 = Lotto.three_down_4;
-                R.two_down = Lotto.two_down;
+                R.Name = Result.Name;
+                R.Lotto_day = Result.Lotto_day;
+                R.first_three = Result.first_three;
+                R.last_three = Result.last_three;
+                R.three_down_1 = Result.three_down_1;
+                R.three_down_2 = Result.three_down_2;
+                R.three_down_3 = Result.three_down_3;
+                R.three_down_4 = Result.three_down_4;
+                R.two_down = Result.two_down;
                 R.create_date = DateTime.Now;
                 R.update_date = DateTime.Now;
                 db.Result.Add(R);

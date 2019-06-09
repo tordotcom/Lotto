@@ -1,4 +1,4 @@
-﻿
+﻿@model IList<Lotto.Models.Result>
 @{
     ViewBag.Title = "Result";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -73,6 +73,7 @@
                         <tr>
                             <th>วันที่</th>
                             <th>หวย</th>
+                            <th>3 หน้า</th>
                             <th>3 บน</th>
                             <th>3 ล่าง</th>
                             <th>2 ล่าง</th>
@@ -80,17 +81,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in Model)
+                        {
                         <tr>
-                            <td>2019-05-16</td>
-                            <td>หวยรัฐบาล</td>
-                            <td>526</td>
-                            <td>949 669 239 323</td>
-                            <td>71</td>
+                            <td>@item.Lotto_day</td>
+                            <td>@item.Name</td>
+                            <td>@item.first_three</td>
+                            <td>@item.last_three</td>
+                            <td>@item.three_down_1 @item.three_down_2 @item.three_down_3 @item.three_down_4</td>
+                            <td>@item.two_down</td>
                             <td>
-                                <button type="button" class="btn btn-primary edit" data-id="" data-toggle="modal" data-target="#checkLastedLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
-                                <button type="button" class="btn btn-danger delete" data-id="" data-date="" data-toggle="modal" data-target="#deleteLastedModal" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
+                                <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Lotto_day" data-toggle="modal" data-target="#deleteResultLotto" data-backdrop="static" data-keyboard="false">ลบ</button>
                             </td>
                         </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -118,7 +123,7 @@
                         <tbody>
                             <tr>
                                 <td style="width:30%">งวดวันที่</td>
-                                <td style="width:70%" colspan="4"><input type="text" id="insert_datepicker" name="text-input" class="form-control form-control-sm"></td>
+                                <td style="width:70%" colspan="4"><input type="text" id="insert_datepicker" name="insert_datepicker_name" class="form-control form-control-sm"></td>
                             </tr>
                             <tr>
                                 <td>หวย</td>
@@ -148,7 +153,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnEdit">ยืนยัน</button>
+                <button type="button" class="btn btn-primary" data-id="0" id="btnEdit">ยืนยัน</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -159,7 +164,7 @@
 
 <script>
 
-     // URL 
+     // URL
     addResult = '@Url.Action("AddResult", "Admin")';
     updateResult = '@Url.Action("UpdateResult", "Admin")';
     deleteResult = '@Url.Action("DeleteResult", "Admin")';

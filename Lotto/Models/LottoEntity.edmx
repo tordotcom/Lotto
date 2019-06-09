@@ -158,8 +158,9 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lotto_day" Type="nvarchar" MaxLength="10" />
           <Property Name="first_three" Type="nvarchar" MaxLength="3" />
           <Property Name="last_three" Type="nvarchar" MaxLength="3" />
           <Property Name="three_down_1" Type="nvarchar" MaxLength="3" />
@@ -278,6 +279,7 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
             <DefiningQuery>SELECT 
     [Result].[ID] AS [ID], 
     [Result].[Name] AS [Name], 
+    [Result].[Lotto_day] AS [Lotto_day], 
     [Result].[first_three] AS [first_three], 
     [Result].[last_three] AS [last_three], 
     [Result].[three_down_1] AS [three_down_1], 
@@ -487,22 +489,6 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="LottoMain" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoSub" ToRole="LottoMain" />
         </EntityType>
-        <EntityType Name="Result">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="last_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="create_date" Type="DateTime" Precision="3" />
-          <Property Name="update_date" Type="DateTime" Precision="3" />
-        </EntityType>
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -597,7 +583,6 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
           <EntitySet Name="Rate" EntityType="Self.Rate" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="LottoSub" EntityType="Self.LottoSub" />
-          <EntitySet Name="Result" EntityType="Self.Result" />
           <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Discount" EntitySet="Discount" />
@@ -622,7 +607,25 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
             <End Role="Period" EntitySet="Period" />
             <End Role="Poll" EntitySet="Poll" />
           </AssociationSet>
+          <EntitySet Name="Result" EntityType="ltfomModel.Result" />
         </EntityContainer>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lotto_day" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -800,17 +803,18 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
           <EntitySetMapping Name="Result">
             <EntityTypeMapping TypeName="ltfomModel.Result">
               <MappingFragment StoreEntitySet="Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="first_three" ColumnName="first_three" />
-                <ScalarProperty Name="last_three" ColumnName="last_three" />
-                <ScalarProperty Name="three_down_1" ColumnName="three_down_1" />
-                <ScalarProperty Name="three_down_2" ColumnName="three_down_2" />
-                <ScalarProperty Name="three_down_3" ColumnName="three_down_3" />
-                <ScalarProperty Name="three_down_4" ColumnName="three_down_4" />
-                <ScalarProperty Name="two_down" ColumnName="two_down" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="three_down_4" ColumnName="three_down_4" />
+                <ScalarProperty Name="three_down_3" ColumnName="three_down_3" />
+                <ScalarProperty Name="three_down_2" ColumnName="three_down_2" />
+                <ScalarProperty Name="three_down_1" ColumnName="three_down_1" />
+                <ScalarProperty Name="last_three" ColumnName="last_three" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="Lotto_day" ColumnName="Lotto_day" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
