@@ -674,5 +674,14 @@ namespace Lotto.Controllers
                 return Json("fail");
             }
         }
+
+        //-------------------------------------Get Current Period --------------------------------//
+        [HttpPost]
+        public ActionResult GetCurrentPeriod()
+        {
+            Period current = db.Period.Where(s => s.Date >= DateTime.Now).SingleOrDefault();
+
+            return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy") , Status = current.Status });
+        }
     }
 }
