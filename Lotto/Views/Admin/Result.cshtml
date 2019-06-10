@@ -1,4 +1,4 @@
-﻿
+﻿@model IList<Lotto.Models.Result>
 @{
     ViewBag.Title = "Result";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -14,7 +14,7 @@
 </div>
 <hr />
 
-<div class="row">
+<!--<div class="row">
     <div class="col-md-12">
         <div class="card lotto-status">
             <div class="card-body">
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <div class="row">
     <div class="col-md-12">
@@ -73,6 +73,7 @@
                         <tr>
                             <th>วันที่</th>
                             <th>หวย</th>
+                            <th>3 หน้า</th>
                             <th>3 บน</th>
                             <th>3 ล่าง</th>
                             <th>2 ล่าง</th>
@@ -80,17 +81,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2019-05-16</td>
-                            <td>หวยรัฐบาล</td>
-                            <td>526</td>
-                            <td>949 669 239 323</td>
-                            <td>71</td>
-                            <td>
-                                <button type="button" class="btn btn-primary edit" data-id="" data-toggle="modal" data-target="#checkLastedLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
-                                <button type="button" class="btn btn-danger delete" data-id="" data-date="" data-toggle="modal" data-target="#deleteLastedModal" data-backdrop="static" data-keyboard="false">ลบ</button>
-                            </td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Lotto_day</td>
+                                <td>@item.Name</td>
+                                <td>@item.first_three</td>
+                                <td>@item.last_three</td>
+                                <td>@item.three_down_1 @item.three_down_2 @item.three_down_3 @item.three_down_4</td>
+                                <td>@item.two_down</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
+                                    <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Lotto_day" data-toggle="modal" data-target="#deleteResultLotto" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -118,7 +123,7 @@
                         <tbody>
                             <tr>
                                 <td style="width:30%">งวดวันที่</td>
-                                <td style="width:70%" colspan="4"><input type="text" id="insert_datepicker" name="text-input" class="form-control form-control-sm"></td>
+                                <td style="width:70%" colspan="4"><input type="text" id="insert_datepicker" name="insert_datepicker_name" class="form-control form-control-sm"></td>
                             </tr>
                             <tr>
                                 <td>หวย</td>
@@ -148,7 +153,27 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnEdit">ยืนยัน</button>
+                <button type="button" class="btn btn-primary" data-id="0" id="btnEdit">ยืนยัน</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteResultLotto" tabindex="-1" role="dialog" aria-labelledby="deleteResultLottoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteResultLottoLabel">ลบข้อมูล</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ต้องการลบผลหวยวันที่ "<b id="deleteDate"></b>" ใช้หรือไม่?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-id="0" id="btnDelete">ยืนยัน</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -156,13 +181,17 @@
 </div>
 
 <script src="~/Assets/js/result.js"></script>
+<script src="~/Assets/js/sweetalert2.all.min.js"></script>
 
 <script>
 
-     // URL 
+     // URL
     addResult = '@Url.Action("AddResult", "Admin")';
     updateResult = '@Url.Action("UpdateResult", "Admin")';
     deleteResult = '@Url.Action("DeleteResult", "Admin")';
+
+     var o = new Object();
+    o = @Html.Raw(Json.Encode(Model));
 
     (function ($) {
         $('#bootstrap-data-table').DataTable({
@@ -184,6 +213,34 @@
 
     $(".add-result").click(function () {
         $("btnEdit").val(0);
+        $("#checkResultLottoLabel").html("เพิ่มข้อมูลผลหวย");
+    });
+
+     $(".edit").click(function () {
+        $("btnEdit").val(1);
+        $("#checkResultLottoLabel").html("แก้ไขข้อมูลผลหวย");
+
+        var id = $(this).attr("data-id");
+        for (var i = 0; i < o.length;i++) {
+            if (id == o[i].ID) {
+                document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
+                $("#insert_datepicker").val(o[i].Lotto_day);
+                $("#lotto_name").val(o[i].Name);
+                $("#first_three").val(o[i].first_three);
+                $("#last_three").val(o[i].last_three);
+                $("#three_down_1").val(o[i].three_down_1);
+                $("#three_down_2").val(o[i].three_down_2);
+                $("#three_down_3").val(o[i].three_down_3);
+                $("#three_down_4").val(o[i].three_down_3);
+                $("#two_down").val(o[i].two_down);
+            }
+        }
+    });
+
+    $(".delete").click(function () {
+        var id = $(this).attr("data-id");
+        document.getElementById('btnDelete').setAttribute('data-id', id);
+        $('#deleteUsername').html($(this).attr("data-username"));
     });
 </script>
 

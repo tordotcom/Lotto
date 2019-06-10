@@ -16,6 +16,7 @@ namespace Lotto.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public string Lotto_day { get; set; }
         public string first_three { get; set; }
         public string last_three { get; set; }
         public string three_down_1 { get; set; }
