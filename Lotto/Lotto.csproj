@@ -238,6 +238,7 @@
     <Compile Include="Models\LottoSub.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Lotto_Detail.cs" />
     <Compile Include="Models\Main_Discount.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
@@ -311,6 +312,7 @@
     <Content Include="Assets\js\lib\gmap\gmapApi.js" />
     <Content Include="Assets\js\lib\gmap\gmaps.js" />
     <Content Include="Assets\js\lib\gmap\gmaps.min.js" />
+    <Content Include="Assets\js\list.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\member.js" />
     <Content Include="Assets\js\member_price.js" />

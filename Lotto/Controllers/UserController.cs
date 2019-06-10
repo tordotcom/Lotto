@@ -76,7 +76,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive,p.create_date";
+                    string query = "SELECT p.[ID],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive,p.create_date,p.[Create_By]";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@UID", "2"); // user ID
                     cmd.Parameters.AddWithValue("@period", P.ID.ToString());
@@ -92,6 +92,7 @@ namespace Lotto.Controllers
                                 Receive = Reader["Receive"].ToString(),
                                 Amount = Reader["amount"].ToString(),
                                 Discount = Reader["discount"].ToString(),
+                                Create_By = Reader["Create_By"].ToString(),
                                 create_date = Reader["create_date"].ToString()
                             });
                         }
@@ -702,6 +703,45 @@ namespace Lotto.Controllers
             lottosub.update_date = DateTime.Now;
             db.LottoSub.Add(lottosub);
             db.SaveChanges();
+        }
+        [HttpPost]
+        public ActionResult getPoll(string id)
+        {
+            string connetionString = null;
+            var lottoDetail = new List<Lotto_Detail>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT p.[ID],LM.Type,LM.Number,LM.Amount FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID],[Type],[Number],[Amount] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID where p.ID=@pID";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@pID", id.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        lottoDetail.Add(new Lotto_Detail
+                        {
+                            Type = Reader["Type"].ToString(),
+                            Amount = Reader["Amount"].ToString(),
+                            Number = Reader["Number"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            return Json(lottoDetail);
         }
     }
 }

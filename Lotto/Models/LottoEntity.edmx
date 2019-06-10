@@ -152,14 +152,13 @@
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Result">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lotto_day" Type="nvarchar" MaxLength="10" />
           <Property Name="first_three" Type="nvarchar" MaxLength="3" />
           <Property Name="last_three" Type="nvarchar" MaxLength="3" />
           <Property Name="three_down_1" Type="nvarchar" MaxLength="3" />
@@ -273,22 +272,8 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
           <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Result" EntityType="Self.Result" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Result" EntityType="Self.Result" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Result].[ID] AS [ID], 
-    [Result].[Name] AS [Name], 
-    [Result].[first_three] AS [first_three], 
-    [Result].[last_three] AS [last_three], 
-    [Result].[three_down_1] AS [three_down_1], 
-    [Result].[three_down_2] AS [three_down_2], 
-    [Result].[three_down_3] AS [three_down_3], 
-    [Result].[three_down_4] AS [three_down_4], 
-    [Result].[two_down] AS [two_down], 
-    [Result].[create_date] AS [create_date], 
-    [Result].[update_date] AS [update_date]
-    FROM [dbo].[Result] AS [Result]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Discount" EntitySet="Discount" />
@@ -502,6 +487,7 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
           <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="Lotto_day" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
@@ -800,6 +786,7 @@ warning 6002: The table/view 'ltfom.dbo.Result' does not have a primary key defi
           <EntitySetMapping Name="Result">
             <EntityTypeMapping TypeName="ltfomModel.Result">
               <MappingFragment StoreEntitySet="Result">
+                <ScalarProperty Name="Lotto_day" ColumnName="Lotto_day" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="first_three" ColumnName="first_three" />

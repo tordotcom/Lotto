@@ -11,6 +11,7 @@ namespace Lotto.Models
         public string Receive { get; set; }
         public string Amount { get; set; }
         public string Discount { get; set; }
+        public string Create_By { get; set; }
         public string create_date { get; set; }
     }
 }
