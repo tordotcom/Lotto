@@ -1,9 +1,11 @@
 ﻿// Confirm Add && Update
 $("#btnEdit").click(function () {
 	if ($(this).val() == 1) {
+		var id = $(this).attr("data-id");
 		var ResultData1 = {
 			ID: id,
 			Name: $("#lotto_name").val(), 
+			Lotto_day: $("#insert_datepicker").val(), 
 			first_three: $("#first_three").val(), 
 			last_three: $("#last_three").val(), 
 			three_down_1: $("#three_down_1").val(), 

@@ -83,18 +83,18 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>@item.Lotto_day</td>
-                            <td>@item.Name</td>
-                            <td>@item.first_three</td>
-                            <td>@item.last_three</td>
-                            <td>@item.three_down_1 @item.three_down_2 @item.three_down_3 @item.three_down_4</td>
-                            <td>@item.two_down</td>
-                            <td>
-                                <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
-                                <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Lotto_day" data-toggle="modal" data-target="#deleteResultLotto" data-backdrop="static" data-keyboard="false">ลบ</button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@item.Lotto_day</td>
+                                <td>@item.Name</td>
+                                <td>@item.first_three</td>
+                                <td>@item.last_three</td>
+                                <td>@item.three_down_1 @item.three_down_2 @item.three_down_3 @item.three_down_4</td>
+                                <td>@item.two_down</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
+                                    <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Lotto_day" data-toggle="modal" data-target="#deleteResultLotto" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -160,7 +160,28 @@
     </div>
 </div>
 
+<div class="modal fade" id="deleteResultLotto" tabindex="-1" role="dialog" aria-labelledby="deleteResultLottoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteResultLottoLabel">ลบข้อมูล</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ต้องการลบผลหวยวันที่ "<b id="deleteDate"></b>" ใช้หรือไม่?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-id="0" id="btnDelete">ยืนยัน</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Assets/js/result.js"></script>
+<script src="~/Assets/js/sweetalert2.all.min.js"></script>
 
 <script>
 
@@ -168,6 +189,9 @@
     addResult = '@Url.Action("AddResult", "Admin")';
     updateResult = '@Url.Action("UpdateResult", "Admin")';
     deleteResult = '@Url.Action("DeleteResult", "Admin")';
+
+     var o = new Object();
+    o = @Html.Raw(Json.Encode(Model));
 
     (function ($) {
         $('#bootstrap-data-table').DataTable({
@@ -189,6 +213,34 @@
 
     $(".add-result").click(function () {
         $("btnEdit").val(0);
+        $("#checkResultLottoLabel").html("เพิ่มข้อมูลผลหวย");
+    });
+
+     $(".edit").click(function () {
+        $("btnEdit").val(1);
+        $("#checkResultLottoLabel").html("แก้ไขข้อมูลผลหวย");
+
+        var id = $(this).attr("data-id");
+        for (var i = 0; i < o.length;i++) {
+            if (id == o[i].ID) {
+                document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
+                $("#insert_datepicker").val(o[i].Lotto_day);
+                $("#lotto_name").val(o[i].Name);
+                $("#first_three").val(o[i].first_three);
+                $("#last_three").val(o[i].last_three);
+                $("#three_down_1").val(o[i].three_down_1);
+                $("#three_down_2").val(o[i].three_down_2);
+                $("#three_down_3").val(o[i].three_down_3);
+                $("#three_down_4").val(o[i].three_down_3);
+                $("#two_down").val(o[i].two_down);
+            }
+        }
+    });
+
+    $(".delete").click(function () {
+        var id = $(this).attr("data-id");
+        document.getElementById('btnDelete').setAttribute('data-id', id);
+        $('#deleteUsername').html($(this).attr("data-username"));
     });
 </script>
 
