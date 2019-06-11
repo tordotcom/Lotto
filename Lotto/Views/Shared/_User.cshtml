@@ -265,8 +265,6 @@
 
                             <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
 
-                            <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
-
                             <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
                         </div>
                     </div>
@@ -277,6 +275,28 @@
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card lotto-status">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    หวยรัฐบาล : <b><span id="todayDate"></span></b>
+                                </div>
+                                <div class="col-md-3">
+                                    ปิดเวลา : <b><span id="closeTime"></span></b>
+                                </div>
+                                <div class="col-md-3">
+                                    สถานะ : <b><span id="lottoStatus"></span></b>
+                                </div>
+                                <div class="col-md-3">
+                                    ยอดแทง : <b><span id="totalBetCount"></span></b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @RenderBody()
         </div>
         <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel" aria-hidden="true">
@@ -372,16 +392,13 @@
     <script src="~/Assets/js/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
         getRate = '@Url.Action("getRate", "Admin")';
+        getPeriod = '@Url.Action("GetCurrentPeriod", "Admin")';
         UpdateRateDiscount = '@Url.Action("UpdateRateDiscount", "Admin")';
     </script>
 
     <script>
         (function ($) {
             clock();
-            var d = new Date();
-            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-            $('#todayDate').html(strDate);
-            $('#lottoStatus').html("ปิดรับแล้ว");
             $('#closeTime').html("15:00:00");
             $('#totalBetCount').html("134");
 
@@ -399,6 +416,25 @@
             $(".digital-clock").text(h+" : "+m+" : "+s);
              setTimeout(function(){clock()}, 500);
         }
+
+        $.ajax({
+			url: getPeriod,
+			type: "POST",
+			dataType: "json",
+			success: function (data) {
+                //alert(JSON.stringify(data));
+                $("#todayDate").html(data.Date);
+                if (data.Status == 1) {
+                    $("#lottoStatus").html("เปิด");
+                }
+                else {
+                    $("#lottoStatus").html("ปิด");
+                }
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert("error");
+			}
+		});
 
     </script>
 
