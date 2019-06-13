@@ -66,8 +66,9 @@ namespace Lotto.Controllers
 
         public ActionResult List() //ดูโพย
         {
-            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
-            if (P != null)
+            //Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            int id = db.Period.Max(p => p.ID);
+            if (id != 0)
             {
                 string connetionString = null;
                 var pollDetail = new List<Poll_Detail>();
@@ -79,7 +80,7 @@ namespace Lotto.Controllers
                     string query = "SELECT p.[ID],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive,p.create_date,p.[Create_By]";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@UID", "2"); // user ID
-                    cmd.Parameters.AddWithValue("@period", P.ID.ToString());
+                    cmd.Parameters.AddWithValue("@period", id.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
                     Console.Write(Reader);
                     try

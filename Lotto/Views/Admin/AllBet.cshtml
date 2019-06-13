@@ -1,9 +1,18 @@
-﻿
+﻿@model IList<Lotto.Models.All_Number>
 @{
     ViewBag.Title = "AllBet";
     Layout = "~/Views/Shared/_Admin.cshtml";
+    var twoup = 0;
+    var threeup = 0;
+    var three_ = 0;
+    var two_ = 0;
+    var fthree = 0;
+    var fthree_ = 0;
+    var up = 0;
+    var down = 0;
+    var twodown = 0;
+    var threedown = 0;
 }
-
 <h2>ดูเลขทั้งหมด</h2>
 <hr />
 
@@ -35,61 +44,61 @@
                         <div class="col-md-1"><label for="select" class="form-control-label">เรียง</label></div>
                         <div class="col-md-4">
                             <select name="select" id="select" class="form-control-sm form-control">
-                                <option value="0">Please select</option>
-                                <option value="1">Option #1</option>
-                                <option value="2">Option #2</option>
-                                <option value="3">Option #3</option>
+                                <option value="0" selected>เลข</option>
+                                <option value="1">ยอดแทง</option>
                             </select>
                         </div>
-                        <div class="col-md-1"><label for="select" class="form-control-label">แสดง</label></div>
-                        <div class="col-md-4">
-                            <select name="select" id="select" class="form-control-sm form-control">
-                                <option value="0">Please select</option>
-                                <option value="1">Option #1</option>
-                                <option value="2">Option #2</option>
-                                <option value="3">Option #3</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
+                        @*<div class="col-md-1"><label for="select" class="form-control-label">แสดง</label></div>
+                            <div class="col-md-4">
+                                <select name="select" id="select" class="form-control-sm form-control">
+                                    <option value="0">Please select</option>
+                                    <option value="1">Option #1</option>
+                                    <option value="2">Option #2</option>
+                                    <option value="3">Option #3</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>*@
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                คิวโพยเข้า : <b>ไม่มีโพย</b>
+    @*<div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    คิวโพยเข้า : <b>ไม่มีโพย</b>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <strong class="card-title">สรุป</strong>
             </div>
             <div class="table table-stats" style="text-align:center;">
-                <table class="table">
+                <table>
                     <thead>
                         <tr>
                             <th></th>
-                            <th colspan="4" style="color:white;background-color:#00c292;">สู้บน</th>
+                            <th colspan="6" style="color:white;background-color:#00c292;">สู้บน</th>
                             <th colspan="4" style="color:white;background-color:#00c292;">สู้ล่าง</th>
                         </tr>
                     </thead>
                     <thead>
                         <tr>
                             <th></th>
-                            <th style="background-color:white;">1370</th>
-                            <th style="background-color:white;">1000</th>
-                            <th style="background-color:white;">400</th>
-                            <th style="background-color:white;">0</th>
-                            <th style="background-color:white;">5000</th>
-                            <th style="background-color:white;">10000</th>
-                            <th style="background-color:white;">1170</th>
-                            <th style="background-color:white;">0</th>
+                            <th style="background-color:white;" id="twoup">0</th>
+                            <th style="background-color:white;" id="threeup">0</th>
+                            <th style="background-color:white;" id="three_">0</th>
+                            <th style="background-color:white;" id="two_">0</th>
+                            <th style="background-color:white;" id="fthree">0</th>
+                            <th style="background-color:white;" id="fthree_">0</th>
+                            <th style="background-color:white;" id="up">0</th>
+                            <th style="background-color:white;" id="down">0</th>
+                            <th style="background-color:white;" id="twodown">0</th>
+                            <th style="background-color:white;" id="threedown">0</th>
                         </tr>
                     </thead>
                     <thead>
@@ -99,6 +108,8 @@
                             <th style="color:white;background-color:black;">3 บน</th>
                             <th style="color:white;background-color:red;">3 โต๊ด</th>
                             <th style="color:white;background-color:black;">2 โต๊ด</th>
+                            <th style="color:white;background-color:red;">3 หน้า</th>
+                            <th style="color:white;background-color:black;">3 หน้าโต๊ด</th>
                             <th style="color:white;background-color:red;">วิ่ง บน</th>
                             <th style="color:white;background-color:black;">วื่ง ล่าง</th>
                             <th style="color:white;background-color:red;">2 ล่าง</th>
@@ -107,70 +118,134 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
-                            <td>#</td>
+                            <td>
+                                <table>
+                                    @for (int i = 1; i <= Int32.Parse(Model[0].Max); i++)
+                                    {                                       
+                                        <tr><td>@i</td></tr>
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t2up">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "2" && item.Type == "t")
+                                        {
+                                            twoup += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t3up">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "3" && item.Type == "t")
+                                        {
+                                            threeup += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t3_">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "3" && item.Type == "t_")
+                                        {
+                                            three_ += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t2_">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "2" && item.Type == "t_")
+                                        {
+                                            two_ += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t3f">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "3" && item.Type == "f")
+                                        {
+                                            fthree += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t3f_">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "3" && item.Type == "f_")
+                                        {
+                                            fthree_ += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t1up">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "1" && item.Type == "t")
+                                        {
+                                            up += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t1down">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "1" && item.Type == "b")
+                                        {
+                                            down += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t2down">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "2" && item.Type == "b")
+                                        {
+                                            twodown += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <table id="t3down">
+                                    @foreach (var item in Model)
+                                    {
+                                        if (item.nLen == "3" && item.Type == "b")
+                                        {
+                                            threedown += Int32.Parse(item.Amount);
+                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                        }
+                                    }
+                                </table>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -180,7 +255,126 @@
 </div>
 
 <script>
+    var model = @Html.Raw(Json.Encode(Model));
+    var twoup = @Html.Raw(twoup);
+    var threeup = @Html.Raw(threeup);
+    var three_ = @Html.Raw(three_);
+    var two_ = @Html.Raw(two_);
+    var fthree = @Html.Raw(fthree);
+    var fthree_ = @Html.Raw(fthree_);
+    var up = @Html.Raw(up);
+    var down = @Html.Raw(down);
+    var twodown = @Html.Raw(twodown);
+    var threedown = @Html.Raw(threedown);
+    console.log(threedown);
+    $("#twoup").html(twoup);
+    $("#threeup").html(threeup);
+    $("#threedown").html(threedown);
+    $("#three_").html(three_);
+    $("#two_").html(two_);
+    $("#fthree").html(fthree);
+    $("#fthree_").html(fthree_);
+    $("#up").html(up);
+    $("#down").html(down);
+    $("#twodown").html(twodown);
     (function ($) {
         $('#allLotto').html('18675');
     })(jQuery);
+
+    $("#select").change(function () {
+        $("#t2up").html("");
+        $("#t3up").html("");
+        $("#t3_").html("");
+        $("#t2_").html("");
+        $("#t3f").html("");
+        $("#t3f_").html("");
+        $("#t1up").html("");
+        $("#t1down").html("");
+        $("#t2down").html("");
+        $("#t3down").html("");
+        if (this.value == 0) {
+            model.sort(function (a, b) {
+                return a.Number.localeCompare(b.Number);
+            });
+           
+            for (var i = 0; i < Object.keys(model).length; i++) {
+                if (model[i].Type == "t" && model[i].nLen == "2") {
+                    $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "3" && model[i].Type == "t") {
+                    $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "3" && model[i].Type == "t_") {
+                    $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "2" && model[i].Type == "t_") {
+                    $("#t2_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "3" && model[i].Type == "f") {
+                    $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "3" && model[i].Type == "f_") {
+                    $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "1" && model[i].Type == "t") {
+                    $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "1" && model[i].Type == "b") {
+                    $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "2" && model[i].Type == "b") {
+                    $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else if (model[i].nLen == "3" && model[i].Type == "b") {
+                    $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+
+                }
+            }
+        }
+        else {
+            model.sort(function (a, b) {
+                return b.Amount.localeCompare(a.Amount);
+            });
+            //console.log(model);
+            for (var i = 0; i < Object.keys(model).length; i++) {
+                for (var i = 0; i < Object.keys(model).length; i++) {
+                    if (model[i].Type == "t" && model[i].nLen == "2") {
+                        $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "3" && model[i].Type == "t") {
+                        $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "3" && model[i].Type == "t_") {
+                        $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "2" && model[i].Type == "t_") {
+                        $("#t2_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "3" && model[i].Type == "f") {
+                        $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "3" && model[i].Type == "f_") {
+                        $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "1" && model[i].Type == "t") {
+                        $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "1" && model[i].Type == "b") {
+                        $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "2" && model[i].Type == "b") {
+                        $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else if (model[i].nLen == "3" && model[i].Type == "b") {
+                        $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    }
+                    else {
+
+                    }
+                }
+            }
+        }
+    });
 </script>

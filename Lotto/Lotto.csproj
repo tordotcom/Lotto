@@ -213,6 +213,7 @@
     <Compile Include="Models\Account_Role.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\All_Number.cs" />
     <Compile Include="Models\Discount.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
@@ -292,6 +293,7 @@
     <Content Include="Assets\js\init\peitychart-init.js" />
     <Content Include="Assets\js\init\vector-init.js" />
     <Content Include="Assets\js\init\weather-init.js" />
+    <Content Include="Assets\js\lib\all_bet.js" />
     <Content Include="Assets\js\lib\chosen\chosen.jquery.js" />
     <Content Include="Assets\js\lib\chosen\chosen.jquery.min.js" />
     <Content Include="Assets\js\lib\chosen\chosen.proto.js" />

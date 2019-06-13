@@ -26,6 +26,5 @@ namespace Lotto.Models
         public string two_down { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
-        public string Lotto_day { get; set; }
     }
 }
