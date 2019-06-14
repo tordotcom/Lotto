@@ -745,7 +745,7 @@ namespace Lotto.Controllers
                     if (x != null)
                     {
                         x.Value = setting.Value;
-                        x.update_date = now
+                        x.update_date = DateTime.Now;
                         db.Entry(x).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                     }
