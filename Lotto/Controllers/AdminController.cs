@@ -725,5 +725,38 @@ namespace Lotto.Controllers
 
             return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy") , Status = current.Status });
         }
+
+        //-------------------------------------Get Setting --------------------------------//
+        [HttpPost]
+        public ActionResult GetSetting()
+        {
+            return Json(new { Setting = db.Setting }, JsonRequestBehavior.AllowGet);
+        }
+
+        //-------------------------------------Update Setting --------------------------------//
+        [HttpPost]
+        public ActionResult UpdateSetting(List<Setting> S)
+        {
+            if (S != null)
+            {
+                foreach (var setting in S)
+                {
+                    Setting x = db.Setting.Where(r => r.Name == setting.Name).First();
+                    if (x != null)
+                    {
+                        x.Value = setting.Value;
+                        x.update_date = now
+                        db.Entry(x).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+       
     }
 }

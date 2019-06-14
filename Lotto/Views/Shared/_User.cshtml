@@ -393,13 +393,13 @@
     <script type="text/javascript">
         getRate = '@Url.Action("getRate", "Admin")';
         getPeriod = '@Url.Action("GetCurrentPeriod", "Admin")';
+        getSetting = '@Url.Action("GetSetting", "Admin")';
         UpdateRateDiscount = '@Url.Action("UpdateRateDiscount", "Admin")';
     </script>
 
     <script>
         (function ($) {
             clock();
-            $('#closeTime').html("15:00:00");
             $('#totalBetCount').html("134");
 
         })(jQuery);
@@ -431,6 +431,18 @@
                     $("#lottoStatus").html("ปิด");
                 }
 			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert("error");
+			}
+        });
+
+        $.ajax({
+			url: getSetting,
+			type: "POST",
+			dataType: "json",
+            success: function (data) {
+                $('#closeTime').html(data['Setting'][1].Value);
+            },
 			error: function (xhr, ajaxOptions, thrownError) {
 				alert("error");
 			}

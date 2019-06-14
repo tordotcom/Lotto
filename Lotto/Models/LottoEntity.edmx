@@ -179,6 +179,16 @@
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Value" Type="nvarchar" MaxLength="150" />
+          <Property Name="create_date" Type="datetime" />
+          <Property Name="update_date" Type="datetime" />
+        </EntityType>
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -274,6 +284,7 @@
           <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Result" EntityType="Self.Result" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Discount" EntitySet="Discount" />
@@ -591,6 +602,7 @@
             <End Role="Poll" EntitySet="Poll" />
           </AssociationSet>
           <EntitySet Name="Result" EntityType="ltfomModel.Result" />
+          <EntitySet Name="Setting" EntityType="ltfomModel.Setting" />
         </EntityContainer>
         <EntityType Name="Result">
           <Key>
@@ -606,6 +618,16 @@
           <Property Name="three_down_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="three_down_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
         </EntityType>
@@ -796,6 +818,17 @@
                 <ScalarProperty Name="last_three" ColumnName="last_three" />
                 <ScalarProperty Name="first_three" ColumnName="first_three" />
                 <ScalarProperty Name="Lotto_day" ColumnName="Lotto_day" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Setting">
+            <EntityTypeMapping TypeName="ltfomModel.Setting">
+              <MappingFragment StoreEntitySet="Setting">
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

@@ -8,7 +8,7 @@ $("#btnEdit").click(function () {
 				Name: $("#txtName").val(),
 				Password: $("#txtPassword").val(),
 				Status: $("#txtStatusSelect").val(),
-				Description: $("#txtDescription").val(),
+				Description: $("#txtDescription").val()
 			};
 			$.ajax({
 				url: updateUser,

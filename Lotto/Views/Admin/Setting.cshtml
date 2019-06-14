@@ -52,14 +52,18 @@
                             <td>
                                 <div class="form-check-inline form-check">
                                     <label for="" class="form-check-label ">
-                                        <input type="radio" id="" name="" value="true" class="form-check-input">ใช่
+                                        <input type="radio" id="autoPollAcceptTrue" name="auto_poll_accept" value="1" class="form-check-input">ใช่
                                     </label>
                                     &nbsp;&nbsp;&nbsp;
                                     <label for="" class="form-check-label ">
-                                        <input type="radio" id="" name="" value="false" class="form-check-input">ไม่ใช่
+                                        <input type="radio" id="autoPollAcceptFalse" name="auto_poll_accept" value="0" class="form-check-input">ไม่ใช่
                                     </label>
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
+                            <td>เวลาปิดอัตโนมัติ</td>
+                            <td><input class="form-control form-control-sm" type="text" id="settingAutoCloseTime" placeholder="00:00" /></td>
                         </tr>
                         <tr>
                             <td>ตัวนำหน้ารหัสสมาชิก</td>
@@ -93,17 +97,51 @@
                 </table>
 
                 <center>
-                    <button type="button" class="btn btn-primary">บันทึก</button>
+                    <button type="button" class="btn btn-primary" id="saveSetting">บันทึก</button>
                     <button type="button" class="btn btn-danger">ยกเลิก</button>
                 </center>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+        updateSetting = '@Url.Action("UpdateSetting", "Admin")';
+</script>
 
 <script>
-    (function ($) {
 
-    })(jQuery);
+    $("#saveSetting").click(function () {
+        var setting = [
+            {
+                Name: "auto_poll_accept",
+                Value: $('input[name=auto_poll_accept]:checked').val()
+            },
+            {
+                Name: "auto_close_time",
+                Value: $('#settingAutoCloseTime').val()
+            }
+        ];
+
+        //alert(JSON.stringify(setting));
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            url: updateSetting,
+            data: { S: setting },
+            success: function (data) {          
+                if (data == "ss") {
+					Swal.fire({
+						type: 'success',
+						title: 'แก้ไขข้อมูลเรียบร้อย',
+						showConfirmButton: false,
+						timer: 1500
+					});
+				}
+            },
+            failure: function (response) {          
+                alert("error");
+            }
+        }); 
+    });
 </script>
 
