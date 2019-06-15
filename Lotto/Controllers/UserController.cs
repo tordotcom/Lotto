@@ -115,6 +115,50 @@ namespace Lotto.Controllers
 
         public ActionResult Return() //เลขคืน
         {
+            int id = db.Period.Max(p => p.ID);
+            if (id != 0)
+            {
+                string connetionString = null;
+                var pollDetail = new List<Poll_Detail>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT p.[ID],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date,p.update_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID  group by p.ID,p.Receive,p.create_date,p.[Create_By],p.update_date";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@UID", "2"); // user ID
+                    cmd.Parameters.AddWithValue("@period", id.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            pollDetail.Add(new Poll_Detail
+                            {
+                                ID = Reader["ID"].ToString(),
+                                Receive = Reader["Receive"].ToString(),
+                                Amount = Reader["amount"].ToString(),
+                                Discount = Reader["discount"].ToString(),
+                                Create_By = Reader["Create_By"].ToString(),
+                                create_date = Reader["create_date"].ToString(),
+                                update_date = Reader["update_date"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(pollDetail);
+            }
             return View();
         }
 
@@ -743,6 +787,14 @@ namespace Lotto.Controllers
 
             }
             return Json(lottoDetail);
+        }
+        //---------------------------------------- ดึงข้อมูลเลขที่ออก ---------------------------------------------------//
+
+        [HttpPost]
+        public ActionResult getResult(string date)
+        {
+            Result R = db.Result.Where(s => s.Lotto_day == date).FirstOrDefault<Result>();
+            return Json(R);
         }
     }
 }

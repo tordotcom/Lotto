@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="~/Assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="~/Assets/css/style.css">
     <link rel="stylesheet" href="~/Assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="~/Assets/js/bootstrap-datepicker-1.9.0/css/bootstrap-datepicker.min.css">
+    @*<link rel="stylesheet" href="~/Assets/js/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.th.min.js">*@
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="~/Assets/js/main.js"></script>
@@ -44,6 +46,8 @@
     <script src="~/Assets/js/lib/data-table/buttons.print.min.js"></script>
     <script src="~/Assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="~/Assets/js/init/datatables-init.js"></script>
+    <script src="~/Assets/js/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Assets/js/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.th.min.js"></script>
 
     <style>
         body {
@@ -121,9 +125,133 @@
         .right {
             text-align: right;
         }
+
+        .loader {
+            top: 0;
+            left: 0;
+            position: fixed;
+            opacity: 0.8;
+            z-index: 10000000;
+            background: Black;
+            height: 100%;
+            width: 100%;
+            margin: auto;
+        }
+
+        .strip-holder {
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            left: 50%;
+            margin-left: -50px;
+            position: relative;
+        }
+
+        .strip-1,
+        .strip-2,
+        .strip-3 {
+            width: 20px;
+            height: 20px;
+            background: #0072bc;
+            position: relative;
+            -webkit-animation: stripMove 2s ease infinite alternate;
+            animation: stripMove 2s ease infinite alternate;
+            -moz-animation: stripMove 2s ease infinite alternate;
+        }
+
+        .strip-2 {
+            -webkit-animation-duration: 2.1s;
+            animation-duration: 2.1s;
+            background-color: #23a8ff;
+        }
+
+        .strip-3 {
+            -webkit-animation-duration: 2.2s;
+            animation-duration: 2.2s;
+            background-color: #89d1ff;
+        }
+
+        @@-webkit-keyframes stripMove {
+            0% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+        }
+
+        @@-moz-keyframes stripMove {
+            0% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(50px, 0px, 0px);
+                -webkit-transform: translate3d(50px, 0px, 0px);
+                -moz-transform: translate3d(50px, 0px, 0px);
+            }
+        }
+
+        @@keyframes stripMove {
+            0% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(50px, 0px, 0px);
+                -webkit-transform: translate3d(50px, 0px, 0px);
+                -moz-transform: translate3d(50px, 0px, 0px);
+            }
+        }
     </style>
 </head>
 <body>
+
+    <div class="loader" id="AjaxLoader" style="display:none;">
+        <div class="strip-holder">
+            <div class="strip-1"></div>
+            <div class="strip-2"></div>
+            <div class="strip-3"></div>
+        </div>
+    </div>
+
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -404,24 +532,24 @@
 
         })(jQuery);
 
-        function clock(){
+        function clock() {
             var today = new Date();
             var h = today.getHours();
             var m = today.getMinutes();
             var s = today.getSeconds();
-             if(s<10){
-                 s = "0"+s;
-             }
+            if (s < 10) {
+                s = "0" + s;
+            }
 
-            $(".digital-clock").text(h+" : "+m+" : "+s);
-             setTimeout(function(){clock()}, 500);
+            $(".digital-clock").text(h + " : " + m + " : " + s);
+            setTimeout(function () { clock() }, 500);
         }
-
+         
         $.ajax({
-			url: getPeriod,
-			type: "POST",
-			dataType: "json",
-			success: function (data) {
+            url: getPeriod,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
                 //alert(JSON.stringify(data));
                 $("#todayDate").html(data.Date);
                 if (data.Status == 1) {
@@ -430,23 +558,23 @@
                 else {
                     $("#lottoStatus").html("ปิด");
                 }
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert("error");
-			}
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
         });
 
         $.ajax({
-			url: getSetting,
-			type: "POST",
-			dataType: "json",
+            url: getSetting,
+            type: "POST",
+            dataType: "json",
             success: function (data) {
                 $('#closeTime').html(data['Setting'][1].Value);
             },
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert("error");
-			}
-		});
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
 
     </script>
 

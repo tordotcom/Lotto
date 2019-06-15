@@ -1,5 +1,12 @@
-﻿$(".bet-type").click(function () {
-    $(this).find(".input-bet-type").fadeOut(function () {
+﻿$(document)
+    .ajaxStart(function () {
+        $('#AjaxLoader').show();
+    })
+    .ajaxStop(function () {
+        $('#AjaxLoader').hide();
+    });
+$(".bet-type").click(function () {
+    $(this).find(".input-bet-type").fadeOut(0,function () {
         $(this).css('cursor', 'default').css('text-decoration', 'none');
 
         var text = $(this).text();
@@ -28,6 +35,20 @@
             SumAmountPoll();
         }
         
+    })
+});
+$("#clear").click(function () {
+    Swal.fire({
+        title: 'ต้องการเคลียร์เลข?',
+        text: "กรุณายืนยันการเคลียร์ตัวเลข",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'เคลียร์',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        location.reload();
     })
 });
 function keyPress2(obj, id, evt) {
