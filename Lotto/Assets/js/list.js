@@ -11,22 +11,22 @@
     var total_amount = $("#total_amount").val();
     var total_receive = $("#total_receive").val();
     var total_discount = $("#total_discount").val();
-    var reject_amount = $(this).attr("data-reject");
+	var reject_amount = $(this).attr("data-reject");
 
-    $("#poll_number").val(poll_count);
-    $("#receive_status").val(receive);
-    $("#amount").val(amount);
-    $("#receive").val(amount_receive);
-    $("#discount").val(discount);
-    $("#poll_date").val(create_date);
-    $("#poll_by").val(create_by);
-    $("#receive_date").val(create_date);
-    $("#poll_id").val(poll_id);
-    $("#total_poll").val(totalPollcount);
-    $("#receive_poll").val(total_receive);
-    $("#r_amount").val(reject_amount);
-    $("#receive_amount").val(total_amount);
-    $("#t_discount").val(total_discount);
+	$("#poll_number").html(poll_count);
+	$("#receive_status").html(receive);
+	$("#amount").html(amount);
+	$("#receive").html(amount_receive);
+	$("#discount").html(discount);
+	$("#poll_date").html(create_date);
+	$("#poll_by").html(create_by);
+	$("#receive_date").html(create_date);
+	$("#poll_id").html(poll_id);
+	$("#total_poll").html(totalPollcount);
+	$("#receive_poll").html(total_receive);
+	$("#r_amount").html(reject_amount);
+	$("#receive_amount").html(total_amount);
+	$("#t_discount").html(total_discount);
 
     $.ajax({
         url: getPoll,

@@ -296,106 +296,112 @@
         </div>
     </header>
     <!-- /#header -->
-                        <!-- Content -->
-                        <div class="content">
+        <!-- Content -->
+        <div class="content">
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="card lotto-status">
+                        <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="card lotto-status">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    หวยรัฐบาล : <b><span id="todayDate"></span></b>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    สถานะ : <b><span id="lottoStatus"></span></b>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="col-md-3">
+                                    หวยรัฐบาล : <b><span id="todayDate"></span></b>
                                 </div>
-                            </div>
-                            @RenderBody()
-                        </div>
-                        <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="priceModalLabel">ราคาจ่าย</h5>
-                                        <button type="button" class="close x" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" align="center">
-                                        <table class="table table-bordered table-sm" style="text-align:center;width:70%;">
-                                            <thead>
-                                                <tr style="color:white;background-color:blue;">
-                                                    <th nowrap>ชนิด</th>
-                                                    <th nowrap>ราคาจ่าย</th>
-                                                    <th nowrap>ส่วนลด(%)</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3 บน</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="ThreeUp" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="ThreeUp_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3 โต๊ด</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="ThreeOod" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="ThreeOod_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2 บน</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="TwoUp" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="TwoUp_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2 โต๊ด</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="TwoOod" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="TwoOod_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>วิ่ง บน</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="Up" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="Up_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3 ล่าง</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="ThreeDown" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="ThreeDown_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2 ล่าง</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="TwoDown" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="TwoDown_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>วิ่ง ล่าง</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="Down" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="Down_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3 หน้า</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="FirstThree" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="FirstThree_discount" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3 หน้าโต๊ด</td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="FirstThreeOod" /></td>
-                                                    <td><input class="form-control form-control-sm" type="text" id="FirstThreeOod_discount" /></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <button class="btn btn-success" id="btnUpdateRate">บันทึก</button>
-                                    </div>
+                                <div class="col-md-3">
+                                    ปิดเวลา : <b><span id="closeTime"></span></b>
+                                </div>
+                                <div class="col-md-3">
+                                    สถานะ : <b><span id="lottoStatus"></span></b>
+                                </div>
+                                <div class="col-md-3">
+                                    ยอดแทง : <b><span id="totalBetCount"></span></b>
                                 </div>
                             </div>
                         </div>
-                        <!-- /.content -->
-                        <div class="clearfix"></div>
-                        <!-- Footer -->
-                        <!--<footer class="site-footer">
+                    </div>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+        <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="priceModalLabel">ราคาจ่าย</h5>
+                        <button type="button" class="close x" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <table class="table table-bordered table-sm" style="text-align:center;width:70%;">
+                            <thead>
+                                <tr style="color:white;background-color:blue;">
+                                    <th nowrap>ชนิด</th>
+                                    <th nowrap>ราคาจ่าย</th>
+                                    <th nowrap>ส่วนลด(%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3 บน</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="ThreeUp" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="ThreeUp_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>3 โต๊ด</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="ThreeOod" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="ThreeOod_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>2 บน</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="TwoUp" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="TwoUp_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>2 โต๊ด</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="TwoOod" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="TwoOod_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>วิ่ง บน</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="Up" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="Up_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>3 ล่าง</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="ThreeDown" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="ThreeDown_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>2 ล่าง</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="TwoDown" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="TwoDown_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>วิ่ง ล่าง</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="Down" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="Down_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>3 หน้า</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="FirstThree" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="FirstThree_discount" /></td>
+                                </tr>
+                                <tr>
+                                    <td>3 หน้าโต๊ด</td>
+                                    <td><input class="form-control form-control-sm" type="text" id="FirstThreeOod" /></td>
+                                    <td><input class="form-control form-control-sm" type="text" id="FirstThreeOod_discount" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-success" id="btnUpdateRate">บันทึก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content -->
+        <div class="clearfix"></div>
+        <!-- Footer -->
+        <!--<footer class="site-footer">
         <div class="footer-inner bg-white">
             <div class="row">
                 <div class="col-sm-6">
@@ -424,6 +430,7 @@
         var globalSetting;
         (function ($) {
             clock();
+            $('#totalBetCount').html("134");
         })(jQuery);
 
         function clock(){
@@ -475,7 +482,19 @@
 			error: function (xhr, ajaxOptions, thrownError) {
 				alert("error");
 			}
-		});
+        });
+
+        $.ajax({
+            url: getSetting,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                $('#closeTime').html(data['Setting'][1].Value);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
     </script>
 </body>
 </html>

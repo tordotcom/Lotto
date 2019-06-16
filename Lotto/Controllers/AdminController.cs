@@ -721,7 +721,7 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult GetCurrentPeriod()
         {
-            Period current = db.Period.Where(s => s.Date >= DateTime.Now).SingleOrDefault();
+            Period current = db.Period.Where(s => s.Status == "1").SingleOrDefault();
 
             return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy") , Status = current.Status });
         }
