@@ -1,4 +1,4 @@
-﻿
+﻿@model IList<Lotto.Models.total_bet>
 @{
     ViewBag.Title = "BuyTotal";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -28,20 +28,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Arm</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>15000</td>
-                            <td>15000</td>
-                            <td>14.20</td>
-                            <td>0</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary">สรุปยอด</button>
-                                <button type="button" class="btn btn-sm btn-success">ใบแจ้งยอด</button>
-                                <button type="button" class="btn btn-sm btn-warning">ดูโพย</button>
-                            </td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            var totalPoll = Int32.Parse(item.Reject) + Int32.Parse(item.Receive);
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@totalPoll</td>
+                                <td>@item.Receive</td>
+                                <td>@item.Amount</td>
+                                <td>@item.AmountReceive</td>
+                                <td>@item.AmountDiscount</td>
+                                <td>0</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary">สรุปยอด</button>
+                                    <button type="button" class="btn btn-sm btn-success">ใบแจ้งยอด</button>
+                                    <button type="button" class="btn btn-sm btn-warning">ดูโพย</button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

@@ -82,6 +82,49 @@ namespace Lotto.Controllers
         }
         public ActionResult BetTotal() //ยอดสรุปเป็นใบ
         {
+            int id = db.Period.Max(p => p.ID);
+            if (id != 0)
+            {
+                string connetionString = null;
+                var all = new List<total_bet>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT po.UID,a.Name,r.poll_receive,rr.poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as int)END) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID left join(SELECT Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", id.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            all.Add(new total_bet
+                            {
+                                UID = Reader["UID"].ToString(),
+                                Name = Reader["Name"].ToString(),
+                                Amount = Reader["Amount"].ToString(),
+                                AmountDiscount = Reader["AmountDiscount"].ToString(),
+                                AmountReceive = Reader["AmountReceive"].ToString(),
+                                Receive = Reader["poll_receive"].ToString(),
+                                Reject = Reader["poll_reject"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(all);
+            }
             return View();
         }
         public ActionResult Out() //แทงออก
