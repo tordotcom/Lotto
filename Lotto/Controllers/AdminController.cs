@@ -74,6 +74,50 @@ namespace Lotto.Controllers
 
         public ActionResult List() //ดูโพย
         {
+            int id = db.Period.Max(p => p.ID);
+            if (id != 0)
+            {
+                string connetionString = null;
+                var pollDetail = new List<Poll_Detail>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "select t1.ID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) as rNumber from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", id.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            pollDetail.Add(new Poll_Detail
+                            {
+                                ID = Reader["ID"].ToString(),
+                                name = Reader["Name"].ToString(),
+                                Receive = Reader["Receive"].ToString(),
+                                Amount = Reader["amount"].ToString(),
+                                Discount = Reader["discount"].ToString(),
+                                Create_By = Reader["Create_By"].ToString(),
+                                create_date = Reader["create_date"].ToString(),
+                                poll_number = Reader["rNumber"].ToString()
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(pollDetail);
+            }
             return View();
         }
         public ActionResult Bet() //แทงโพย
