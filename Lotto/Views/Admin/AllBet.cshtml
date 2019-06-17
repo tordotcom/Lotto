@@ -13,31 +13,14 @@
     var twodown = 0;
     var threedown = 0;
 }
-<h2>ดูเลขทั้งหมด</h2>
-<hr />
 
-<!--div class="row">
-    <div class="col-md-12">
-        <div class="card lotto-status">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        หวยรัฐบาล : <b><span id="todayDate"></span></b>
-                    </div>
-                    <div class="col-md-4">
-                        สถานะ : <b><span id="lottoStatus"></span></b>
-                    </div>
-                    <div class="col-md-4">
-                        ยอดรวม : <b><span id="allLotto"></span></b>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<div>-->
 <div class="row">
     <div class="col-md-12">
         <div class="card">
+            <div class="card-header">
+                <i class="mr-2 fa fa-th-large"></i>
+                <strong class="card-title">ดูเลขทั้งหมด</strong>
+            </div>
             <div class="card-body">
                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                     <div class="row form-group">
@@ -49,212 +32,199 @@
                             </select>
                         </div>
                         @*<div class="col-md-1"><label for="select" class="form-control-label">แสดง</label></div>
-                            <div class="col-md-4">
-                                <select name="select" id="select" class="form-control-sm form-control">
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>*@
+                        <div class="col-md-4">
+                            <select name="select" id="select" class="form-control-sm form-control">
+                                <option value="0">Please select</option>
+                                <option value="1">Option #1</option>
+                                <option value="2">Option #2</option>
+                                <option value="3">Option #3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>*@
                     </div>
                 </form>
+                <hr />
+                <div class="table table-stats" style="text-align:center;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th colspan="6" style="color:white;background-color:#00c292;">สู้บน</th>
+                                <th colspan="4" style="color:white;background-color:#00c292;">สู้ล่าง</th>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="background-color:white;" id="twoup">0</th>
+                                <th style="background-color:white;" id="threeup">0</th>
+                                <th style="background-color:white;" id="three_">0</th>
+                                <th style="background-color:white;" id="two_">0</th>
+                                <th style="background-color:white;" id="fthree">0</th>
+                                <th style="background-color:white;" id="fthree_">0</th>
+                                <th style="background-color:white;" id="up">0</th>
+                                <th style="background-color:white;" id="down">0</th>
+                                <th style="background-color:white;" id="twodown">0</th>
+                                <th style="background-color:white;" id="threedown">0</th>
+                            </tr>
+                        </thead>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="color:white;background-color:red;">2 บน</th>
+                                <th style="color:white;background-color:black;">3 บน</th>
+                                <th style="color:white;background-color:red;">3 โต๊ด</th>
+                                <th style="color:white;background-color:black;">2 โต๊ด</th>
+                                <th style="color:white;background-color:red;">3 หน้า</th>
+                                <th style="color:white;background-color:black;">3 หน้าโต๊ด</th>
+                                <th style="color:white;background-color:red;">วิ่ง บน</th>
+                                <th style="color:white;background-color:black;">วื่ง ล่าง</th>
+                                <th style="color:white;background-color:red;">2 ล่าง</th>
+                                <th style="color:white;background-color:black;">3 ล่าง</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table>
+                                        @for (int i = 1; i <= Int32.Parse(Model[0].Max); i++)
+                                        {
+                                            <tr><td>@i</td></tr>
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t2up">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "2" && item.Type == "t")
+                                            {
+                                                twoup += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t3up">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "3" && item.Type == "t")
+                                            {
+                                                threeup += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t3_">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "3" && item.Type == "t_")
+                                            {
+                                                three_ += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t2_">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "2" && item.Type == "t_")
+                                            {
+                                                two_ += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t3f">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "3" && item.Type == "f")
+                                            {
+                                                fthree += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t3f_">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "3" && item.Type == "f_")
+                                            {
+                                                fthree_ += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t1up">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "1" && item.Type == "t")
+                                            {
+                                                up += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t1down">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "1" && item.Type == "b")
+                                            {
+                                                down += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t2down">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "2" && item.Type == "b")
+                                            {
+                                                twodown += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <table id="t3down">
+                                        @foreach (var item in Model)
+                                        {
+                                            if (item.nLen == "3" && item.Type == "b")
+                                            {
+                                                threedown += Int32.Parse(item.Amount);
+                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                            }
+                                        }
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
             </div>
-        </div>
-    </div>
-    @*<div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    คิวโพยเข้า : <b>ไม่มีโพย</b>
-                </div>
-            </div>
-        </div>*@
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title">สรุป</strong>
-            </div>
-            <div class="table table-stats" style="text-align:center;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th colspan="6" style="color:white;background-color:#00c292;">สู้บน</th>
-                            <th colspan="4" style="color:white;background-color:#00c292;">สู้ล่าง</th>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th style="background-color:white;" id="twoup">0</th>
-                            <th style="background-color:white;" id="threeup">0</th>
-                            <th style="background-color:white;" id="three_">0</th>
-                            <th style="background-color:white;" id="two_">0</th>
-                            <th style="background-color:white;" id="fthree">0</th>
-                            <th style="background-color:white;" id="fthree_">0</th>
-                            <th style="background-color:white;" id="up">0</th>
-                            <th style="background-color:white;" id="down">0</th>
-                            <th style="background-color:white;" id="twodown">0</th>
-                            <th style="background-color:white;" id="threedown">0</th>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th style="color:white;background-color:red;">2 บน</th>
-                            <th style="color:white;background-color:black;">3 บน</th>
-                            <th style="color:white;background-color:red;">3 โต๊ด</th>
-                            <th style="color:white;background-color:black;">2 โต๊ด</th>
-                            <th style="color:white;background-color:red;">3 หน้า</th>
-                            <th style="color:white;background-color:black;">3 หน้าโต๊ด</th>
-                            <th style="color:white;background-color:red;">วิ่ง บน</th>
-                            <th style="color:white;background-color:black;">วื่ง ล่าง</th>
-                            <th style="color:white;background-color:red;">2 ล่าง</th>
-                            <th style="color:white;background-color:black;">3 ล่าง</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <table>
-                                    @for (int i = 1; i <= Int32.Parse(Model[0].Max); i++)
-                                    {                                       
-                                        <tr><td>@i</td></tr>
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t2up">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "2" && item.Type == "t")
-                                        {
-                                            twoup += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t3up">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "3" && item.Type == "t")
-                                        {
-                                            threeup += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t3_">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "3" && item.Type == "t_")
-                                        {
-                                            three_ += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t2_">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "2" && item.Type == "t_")
-                                        {
-                                            two_ += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t3f">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "3" && item.Type == "f")
-                                        {
-                                            fthree += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t3f_">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "3" && item.Type == "f_")
-                                        {
-                                            fthree_ += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t1up">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "1" && item.Type == "t")
-                                        {
-                                            up += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t1down">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "1" && item.Type == "b")
-                                        {
-                                            down += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t2down">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "2" && item.Type == "b")
-                                        {
-                                            twodown += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                            <td style="vertical-align: top;">
-                                <table id="t3down">
-                                    @foreach (var item in Model)
-                                    {
-                                        if (item.nLen == "3" && item.Type == "b")
-                                        {
-                                            threedown += Int32.Parse(item.Amount);
-                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
-                                        }
-                                    }
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> <!-- /.table-stats -->
         </div>
     </div>
 </div>
 
-<script>
+    <script>
     var model = @Html.Raw(Json.Encode(Model));
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);
@@ -296,7 +266,7 @@
             model.sort(function (a, b) {
                 return a.Number.localeCompare(b.Number);
             });
-           
+
             for (var i = 0; i < Object.keys(model).length; i++) {
                 if (model[i].Type == "t" && model[i].nLen == "2") {
                     $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
@@ -377,4 +347,4 @@
             }
         }
     });
-</script>
+    </script>

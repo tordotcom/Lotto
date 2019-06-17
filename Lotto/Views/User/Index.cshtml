@@ -4,8 +4,33 @@
     Layout = "~/Views/Shared/_User.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="card" id="ipContent">
+            <div class="card-body">
+                <div class="stat-widget-five">
+                    <div class="stat-icon dib flat-color-7">
+                        <i class="pe-7s-airplay"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="text-left dib">
+                            <div class="stat-text">IP Address ของคุณคือ <span id="ip"></span></div>
+                            <div class="stat-heading">เข้าใช้งานล่าสุดเมื่อ <span id="lastSignout"></span></div>
+                            <div class="stat-heading">จาก IP Address <span id="lastIp"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     (function ($) {
-        
+        $.getJSON("http://jsonip.com?callback=?", function (data) {
+            $("#ip").text(data.ip);
+            $("#lastIp").text(data.ip);
+        });
+        $('#lastSignout').html('2019-01-01 13:00:00');
     })(jQuery);
 </script>

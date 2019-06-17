@@ -405,29 +405,90 @@
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card lotto-status">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    หวยรัฐบาล : <b><span id="todayDate"></span></b>
+            <!-- Animated -->
+            <div class="animated fadeIn">
+                <!-- Widgets  -->
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-3">
+                                        <i class="pe-7s-date"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="" id="todayDate"></span></div>
+                                            <div class="stat-heading">หวยรัฐบาล</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    ปิดเวลา : <b><span id="closeTime"></span></b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-2">
+                                        <i class="pe-7s-cash"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="count" id="totalBetCount"></span></div>
+                                            <div class="stat-heading">ยอดแทง</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    สถานะ : <b><span id="lottoStatus"></span></b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-5">
+                                        <i class="pe-7s-power"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="" id="lottoStatus"></span></div>
+                                            <div class="stat-heading">สถานะ</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    ยอดแทง : <b><span id="totalBetCount"></span></b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-4">
+                                        <i class="pe-7s-clock"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-text"><span class="" id="closeTime"></span></div>
+                                            <div class="stat-heading">ปิดเวลา</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /Widgets -->
+                <div class="row">
+                    <div class="col-md-12">
+                        @RenderBody()
+                    </div>
+                </div>
             </div>
-            @RenderBody()
+            <!-- .animated -->
         </div>
         <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-labelledby="priceModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
