@@ -72,7 +72,7 @@
                                 <td>@discount</td>
                                 <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@item.create_date</td>
-                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-reject="@reject_amount" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal">ดูโพย</button></td>
+                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal">ดูโพย</button></td>
                             </tr>
                         }
                     </tbody>
@@ -91,10 +91,6 @@
                         </tr>
                     </tfoot>
                 </table>
-                <input type="hidden" id="totalPollcount" value="@pollCount" />
-                <input type="hidden" id="total_amount" value="@total_amount" />
-                <input type="hidden" id="total_receive" value="@total_receive" />
-                <input type="hidden" id="total_discount" value="@total_discount" />
             </div>
         </div>
     </div>
@@ -115,7 +111,8 @@
                         <h3>สรุปโพย</h3>
                     </div>
                     <div class="col-md-6 right">
-                        <button type="button" class="btn btn-sm btn-secondary" id="printPDF">พิมพ์โพย</button>
+                        <button type="button" class="btn btn-sm btn-warning" id="edit">แก้ไข</button>
+                        <button type="button" class="btn btn-sm btn-danger" id="reject">คืนทั้งใบ</button>
                     </div>
                     <div class="col-md-12" id="printArea">
                         <hr />
@@ -202,9 +199,11 @@
         </div>
     </div>
 </div>
-<script src="~/Assets/js/list.js"></script>
+<script src="~/Assets/js/admin_list.js"></script>
 <script>
     getPoll = '@Url.Action("getPoll", "User")';
+    getPollHeadDetail = '@Url.Action("getPoll", "Admin")';
+    RejectPoll = '@Url.Action("RejectPoll", "Admin")';
     (function ($) {
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],

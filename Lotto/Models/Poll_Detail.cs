@@ -16,5 +16,6 @@ namespace Lotto.Models
         public string Create_By { get; set; }
         public string create_date { get; set; }
         public string update_date { get; set; }
+        public string UID { get; set; }
     }
 }
