@@ -124,7 +124,42 @@ namespace Lotto.Controllers
         }
         public ActionResult Bet() //แทงโพย
         {
-            return View();
+            string connetionString = null;
+            var data = new List<admin_bet>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT a.[ID],a.[Name],a.[Description],a.[Status],count(p.Period_ID) as poll_count FROM [dbo].[Account] a left join(SELECT [ID],[UID],[Period_ID] FROM [dbo].[Poll]) p on a.ID=p.UID where a.Name !='administrator' group by a.[ID],a.[Name],a.[Description],a.[Status] order by count(p.Period_ID) desc";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        data.Add(new admin_bet
+                        {
+                            UID = Reader["ID"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Description = Reader["Description"].ToString(),
+                            Status = Reader["Status"].ToString(),
+                            poll_count = Reader["poll_count"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            return View(data);
         }
         public ActionResult BetTotal() //ยอดสรุปเป็นใบ
         {

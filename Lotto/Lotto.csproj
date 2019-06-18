@@ -213,6 +213,7 @@
     <Compile Include="Models\Account_Role.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\admin_bet.cs" />
     <Compile Include="Models\All_Number.cs" />
     <Compile Include="Models\Discount.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>

@@ -1,4 +1,4 @@
-﻿
+﻿@model IList<Lotto.Models.admin_bet>
 @{
     ViewBag.Title = "Buy";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -23,14 +23,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#betModal">แทงโพย</button></td>
-                            <td>3434</td>
-                            <td>Arm</td>
-                            <td>1</td>
-                            <td>ใช้งาน</td>
-                            <td>sdasdsadsads</td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            var status = "ใช้งาน";
+                            if(item.Status=="1")
+                            {
+                                status = "ใช้งาน";
+                            }
+                            else
+                            {
+                                status = "ปิดใช้งาน";
+                            }
+                            <tr>
+                                <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#betModal">แทงโพย</button></td>
+                                <td>@item.UID</td>
+                                <td>@item.Name</td>
+                                <td>@item.poll_count</td>
+                                <td>@status</td>
+                                <td>@item.Description</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
