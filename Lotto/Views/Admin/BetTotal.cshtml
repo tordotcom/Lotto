@@ -133,7 +133,8 @@
             },
             {
                 "title": "ยอดถูก",
-                "data": null
+                "data": "gg",
+                "defaultContent": "0"
             },
             {
                 "title": "วันที่ส่ง",
@@ -163,26 +164,27 @@
 
                     pollTable.clear();
                     $.each(data, function (index, value) {
-                        /*if (value.Receive == "1")
+                        //console.log(value.Receive);
+                        if (value.Receive == "1")
                         {
-                            value.receive = "รับแล้ว";
-                            amount = value.Amount;
-                            amount_receive = value.Amount;
-                            discount = value.Discount;
-                            value.total_amount += amount;
-                            value.total_receive += amount_receive;
-                            value.total_discount += discount;
+                            value.Receive = "รับแล้ว";
+                            //amount = value.Amount;
+                            //amount_receive = value.Amount;
+                            //discount = value.Discount;
+                            //value.total_amount += amount;
+                            //value.total_receive += amount_receive;
+                            //value.total_discount += discount;
                         }
                         else
                         {
-                            value.receive = "คืนทั้งใบ";
-                            amount = value.Amount;
-                            amount_receive = 0;
-                            value.discount = 0;
-                            value.total_amount += amount;
-                            value.total_receive += amount_receive;
-                            value.reject_amount += amount;
-                        }*/
+                            value.Receive = "คืนทั้งใบ";
+                            //amount = value.Amount;
+                            //amount_receive = 0;
+                            //value.discount = 0;
+                            //value.total_amount += amount;
+                            //value.total_receive += amount_receive;
+                            //value.reject_amount += amount;
+                        }
                         pollTable.row.add(value);
                     });
                     pollTable.draw();
