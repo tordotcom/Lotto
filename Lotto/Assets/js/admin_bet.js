@@ -6,7 +6,7 @@
         $('#AjaxLoader').hide();
     });
 $(".bet-type").click(function () {
-    $(this).find(".input-bet-type").fadeOut(0,function () {
+    $(this).find(".input-bet-type").fadeOut(0, function () {
         $(this).css('cursor', 'default').css('text-decoration', 'none');
 
         var text = $(this).text();
@@ -31,10 +31,10 @@ $(".bet-type").click(function () {
             document.getElementById(this.id).setAttribute('data-type', "t");
         }
         var id = (this.id).replace("t", "");
-        if ($('#n' + id).val() != "" && $('#b' + id).val() !="") {
+        if ($('#n' + id).val() != "" && $('#b' + id).val() != "") {
             SumAmountPoll();
         }
-        
+
     })
 });
 $("#clear").click(function () {
@@ -92,7 +92,7 @@ function keyPress(obj, id, evt) {
     else return false;
 }
 function updateType(id) {
-    $("#t"+id).click();
+    $("#t" + id).click();
 }
 function checkNumber(id) {
 
@@ -212,9 +212,9 @@ function checkAmount(id) {
 
     // วิ่งบน
     if ((sTyp == 't') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
-        bValid = true;        
+        bValid = true;
     }
-        // 2 บน
+    // 2 บน
     else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
 
@@ -236,14 +236,14 @@ function checkAmount(id) {
 
         // 3 บน  3 โต๊ด
     } else if ((sTyp == 't') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
-        bValid = true;    
+        bValid = true;
     }
-        // 3 บน  3 กลับ และ 6 กลับ
-        // วิ่งล่าง
+    // 3 บน  3 กลับ และ 6 กลับ
+    // วิ่งล่าง
     else if ((sTyp == 'b') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
-        bValid = true;      
+        bValid = true;
     }
-        // 2 ล่าง
+    // 2 ล่าง
     else if ((sTyp == 'b') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
 
@@ -253,9 +253,9 @@ function checkAmount(id) {
 
         // 3 ล่าง
     } else if ((sTyp == 'b') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
-        bValid = true;    
+        bValid = true;
     }
-        // วิ่งบน + วิ่งล่าง
+    // วิ่งบน + วิ่งล่าง
     else if ((sTyp == 'tb') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
 
@@ -281,9 +281,9 @@ function checkAmount(id) {
 
         // 3บน  3โต๊ด 3ล่าง (123 = 10x20/30)
     } else if ((sTyp == 'tb') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 2) && (iAmtPosS > iAmtPosA) && (iAmtPosS < iAmtLen - 1)) {
-        bValid = true;   
+        bValid = true;
     }
-        // 3 หน้า
+    // 3 หน้า
     else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
 
@@ -295,7 +295,7 @@ function checkAmount(id) {
     } else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
         bValid = true;
     }
-        // 3 หน้า  3 ท้าย
+    // 3 หน้า  3 ท้าย
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
     }
@@ -303,11 +303,11 @@ function checkAmount(id) {
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
         bValid = true;
     }
-        // 3 หน้า  3 หน้าโต๊ด 3 หลัง 3 หลังโต๊ด
+    // 3 หน้า  3 หน้าโต๊ด 3 หลัง 3 หลังโต๊ด
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
         bValid = true;
     }
-    else {}
+    else { }
 
     if (!bValid) {
         if (((sTyp == 'f') || (sTyp == 'ft')) && iNumLen < 3) {
@@ -330,27 +330,27 @@ function checkAmount(id) {
                     $("#b" + id).focus();
                 }
             });
-        }       
+        }
         return false;
     }
     SumAmountPoll();
-   
+
     return true;
 }
 function SumAmountPoll() {
     sum = 0;
-    var bet={ };
+    var bet = {};
     var j = 1;
     for (var i = 1; i <= 90; i++) {
         var n = $('#n' + i).val();
-        var b = $('#b' + i).val();  
+        var b = $('#b' + i).val();
         if (n.length > 0 && b.length > 0) {
             bet[j] = {};
             bet[j]["type"] = $('#t' + i).attr("data-type");
             bet[j]["Number"] = n;
             bet[j]["Amount"] = b;
             j++;
-        }                   
+        }
     }
     var arrLength = Object.keys(bet).length;
     for (var i = 1; i <= arrLength; i++) {
@@ -372,7 +372,7 @@ function SumAmountPoll() {
                 }
             }
             else {
-                sum = sum +  parseInt(amount[1]);
+                sum = sum + parseInt(amount[1]);
             }
         }
         else {
@@ -389,6 +389,7 @@ function SumAmountPoll() {
 $("#sendLotto").click(function () {
     var state = false;
     var bet = [];
+    
     for (var i = 1; i <= 90; i++) {
         var n = $('#n' + i).val();
         var b = $('#b' + i).val();
@@ -400,9 +401,9 @@ $("#sendLotto").click(function () {
                 title: 'ช่องที่ ' + i + ' กรุณากรอกจำนวนเงิน',
                 showConfirmButton: true,
                 onAfterClose: () => {
-                    $("#b"+i).focus();
+                    $("#b" + i).focus();
                 }
-            });           
+            });
             state = false;
             return false;
         }
@@ -418,8 +419,7 @@ $("#sendLotto").click(function () {
             state = false;
             return false;
         }
-        else if (n.length > 0 && b.length > 0)
-        {
+        else if (n.length > 0 && b.length > 0) {
             if (!checkNumber(i)) {
                 state = false;
                 return false;
@@ -431,18 +431,19 @@ $("#sendLotto").click(function () {
                 bet.push({
                     bType: $('#t' + i).attr("data-type"),
                     Number: n,
-                    Amount:b
+                    Amount: b
                 });
                 state = true;
-            }           
+            }
         }
-        else { }       
+        else { }
     }
-    console.log(bet);  
+    console.log(bet);
+    var uid = $(this).attr("data-id");
     if (state) {
         $.ajax({
             url: addPoll,
-            data: { poll: bet },
+            data: { poll: bet, UID: uid},
             type: "POST",
             dataType: "json",
             success: function (data) {

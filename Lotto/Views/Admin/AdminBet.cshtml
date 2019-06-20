@@ -1,0 +1,120 @@
+﻿@model IList<Lotto.Models.Poll_Detail>
+@{
+    ViewBag.Title = "Bet";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@{
+    var pollCount = 0;
+    var receive = 0;
+    var total_amount = 0;
+    var reject_amount = 0;
+    var discount = 0;
+    foreach (var item in Model)
+    {
+        pollCount += 1;
+        if (item.Receive == "1")
+        {
+            receive += 1;
+            total_amount += Int32.Parse(item.Amount);
+            discount += Int32.Parse(item.Discount);
+        }
+        else
+        {
+            reject_amount += Int32.Parse(item.Amount);
+        }
+    }
+    var currentPoll = pollCount + 1;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="mr-2 fa fa-list-ol"></i>
+                <strong class="card-title">แทงโพย</strong>
+            </div>
+            <div class="card-body">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row form-group">
+                                <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
+                                <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm" value="@currentPoll" disabled></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
+                                <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm" disabled value="0 ฿" style="text-align:right"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
+                                <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm" value="@pollCount ใบ" disabled></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
+                                <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm" value="@receive ใบ" disabled></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row form-group">
+                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืนงวดนี้</label></div>
+                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm" value="@reject_amount ฿" style="text-align:right" disabled></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทงงวดนี้</label></div>
+                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm" value="@total_amount ฿" style="text-align:right" disabled></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่ายงวดนี้</label></div>
+                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm" value="@discount ฿" style="text-align:right" disabled></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-5"></div>
+                                <div class="col col-md-7 ">
+                                    <button type="button" class="btn btn-primary" id="sendLotto" data-id="@ViewBag.UID" >ส่งโพย</button>
+                                    <button type="button" class="btn btn-secondary" id="clear">เคลียร์</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                @for (int i = 1; i <= 90; i++)
+                                {
+                                    var type_id = "t" + i.ToString();
+                                    var lotto_id = "n" + i.ToString();
+                                    var price_id = "b" + i.ToString();
+                                    if (i == 31 || i == 61 || i == 1)
+                                    {
+                                        @:<div class="col-lg-4">
+                                        }
+                                        <div class="bet-cell">
+                                            <div class="bet-no">@i</div>
+                                            <div class="bet-type"><div id="@type_id" class="form-control form-control-sm input-bet-type" data-type="t">บ</div></div>
+                                            @{<div class="bet-lotto"><input id="@lotto_id" type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" onchange="checkNumber('@i')" onkeypress="return keyPress2(this,'@i' , event);"></div>}
+                                            <div class="bet-equal">=</div>
+                                            <div class="bet-price"><input id="@price_id" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" onchange="checkAmount('@i')" onkeypress="return keyPress(this, '@i', event)"></div>
+                                        </div>
+                                        if (i == 30 || i == 60 || i == 90)
+                                        {
+                                        @:</div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Assets/js/admin_bet.js"></script>
+<script src="~/Assets/js/sweetalert2.all.min.js"></script>
+<script>
+    addPoll = '@Url.Action("AddPoll", "Admin")';
+    (function ($) {
+        $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        });
+    })(jQuery);
+</script>
