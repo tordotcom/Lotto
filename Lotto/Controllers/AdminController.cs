@@ -908,8 +908,13 @@ namespace Lotto.Controllers
         public ActionResult GetCurrentPeriod()
         {
             Period current = db.Period.Where(s => s.Status == "1").SingleOrDefault();
-
-            return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy") , Status = current.Status });
+            if(current!=null)
+            {
+                return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy") , Status = current.Status });
+            }
+            int id = db.Period.Max(p => p.ID);
+            current = db.Period.Where(s => s.ID == id).First();
+            return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy"), Status = current.Status });
         }
 
         //-------------------------------------Get Setting --------------------------------//
