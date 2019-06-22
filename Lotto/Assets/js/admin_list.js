@@ -108,24 +108,37 @@
 
 $("#reject").click(function () {
     var pid = $(this).attr("data-pid");
-    $.ajax({
-        url: RejectPoll,
-        data: { PollID: pid },
-        type: "POST",
-        dataType: "json",
-        success: function (data) {
-            Swal.fire({
-                type: 'success',
-                title: 'คืนเรียบร้อย',
-                showConfirmButton: false,
-                timer: 1500,
-                onAfterClose: () => {
-                    location.reload();
+    Swal.fire({
+        title: 'ต้องการคืนเลข?',
+        text: "กรุณายืนยันการคืนเลข",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'คืนเลข',
+        cancelButtonText: 'ยกเลิก'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                url: RejectPoll,
+                data: { PollID: pid },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'คืนเรียบร้อย',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onAfterClose: () => {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
                 }
             });
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert("error");
         }
-    });
+    })
 });

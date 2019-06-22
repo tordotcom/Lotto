@@ -5,7 +5,8 @@
     .ajaxStop(function () {
         $('#AjaxLoader').hide();
     });
-$(".bet-type").click(function () {
+$(document).on('click', '.bet-type', function () {
+//$(".bet-type").click(function () {
     $(this).find(".input-bet-type").fadeOut(0, function () {
         $(this).css('cursor', 'default').css('text-decoration', 'none');
 

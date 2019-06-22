@@ -139,7 +139,19 @@
             {
                 "title": "วันที่ส่ง",
                 "data": "create_date"
-            }]
+            },
+            {
+                "title": "วันที่ส่ง",
+                "data": null,
+                "defaultContent": "<button type='button' class='btn btn-sm btn-primary get-poll'>ดูโพย</button>"
+            },
+            {
+                "title": "user",
+                "visible": false,
+                "searchable": false,
+                "data":"UID"
+            }
+            ]
         });
 
         $(".get-user-poll").click(function () {
@@ -193,6 +205,10 @@
                     alert("error");
                 }
             });
+        });
+
+        $(".get-poll").click(function () {
+
         });
     })(jQuery);
 </script>

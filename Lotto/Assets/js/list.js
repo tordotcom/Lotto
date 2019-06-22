@@ -13,6 +13,8 @@
     var total_discount = $("#total_discount").val();
 	var reject_amount = $(this).attr("data-reject");
 
+    console.log(poll_count);
+    console.log(receive);
 	$("#poll_number").html(poll_count);
 	$("#receive_status").html(receive);
 	$("#amount").html(amount);
