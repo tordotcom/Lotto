@@ -32,22 +32,22 @@
                             </select>
                         </div>
                         @*<div class="col-md-1"><label for="select" class="form-control-label">แสดง</label></div>
-                        <div class="col-md-4">
-                            <select name="select" id="select" class="form-control-sm form-control">
-                                <option value="0">Please select</option>
-                                <option value="1">Option #1</option>
-                                <option value="2">Option #2</option>
-                                <option value="3">Option #3</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>*@
+                            <div class="col-md-4">
+                                <select name="select" id="select" class="form-control-sm form-control">
+                                    <option value="0">Please select</option>
+                                    <option value="1">Option #1</option>
+                                    <option value="2">Option #2</option>
+                                    <option value="3">Option #3</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>*@
                     </div>
                 </form>
                 <hr />
                 <div class="table table-stats" style="text-align:center;">
-                    <table>
+                    <table class="table-fixed" width="100%">
                         <thead>
                             <tr>
                                 <th style="border: 0;"></th>
@@ -224,7 +224,7 @@
     </div>
 </div>
 
-    <script>
+<script>
     var model = @Html.Raw(Json.Encode(Model));
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);
@@ -347,4 +347,4 @@
             }
         }
     });
-    </script>
+</script>

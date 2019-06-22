@@ -375,29 +375,28 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="dropdown for-username">
-                        <div class="dropdown for-username">
-                            @if (Session["Username"] != null)
-                            {
-                                <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
-                            }
-                            else
-                            {
-                                <b>Unknown</b>
-                            }
-                        </div>
+                        @if (Session["Username"] != null)
+                        {
+                            <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
+                        }
+                        else
+                        {
+                            <b>Unknown</b>
+                        }
                     </div>
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="~/Images/admin.jpg" alt="User Avatar">
+                            <img class="user-avatar rounded-circle" src="~/Images//admin.jpg" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
 
                             <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+
+                            <a class="nav-link" href="@Url.Action("Setting", "Admin")"><i class="fa fa -cog"></i>Settings</a>
 
                             <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
                         </div>
@@ -453,7 +452,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-5">
+                                    <div class="stat-icon dib" id="lottoStatusIcon">
                                         <i class="pe-7s-power"></i>
                                     </div>
                                     <div class="stat-content">
@@ -471,7 +470,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-4">
+                                    <div class="stat-icon dib flat-color-6">
                                         <i class="pe-7s-clock"></i>
                                     </div>
                                     <div class="stat-content">
@@ -612,23 +611,25 @@
             setTimeout(function () { clock() }, 500);
         }
          
-        $.ajax({
-            url: getPeriod,
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
+         $.ajax({
+			url: getPeriod,
+			type: "POST",
+			dataType: "json",
+			success: function (data) {
                 //alert(JSON.stringify(data));
                 $("#todayDate").html(data.Date);
                 if (data.Status == 1) {
+                    $("#lottoStatusIcon").addClass('flat-color-1');
                     $("#lottoStatus").html("เปิด");
                 }
                 else {
+                    $("#lottoStatusIcon").addClass('flat-color-4');
                     $("#lottoStatus").html("ปิด");
                 }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert("error");
-            }
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert("error");
+			}
         });
 
         $.ajax({
