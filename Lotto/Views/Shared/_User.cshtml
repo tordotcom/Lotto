@@ -124,6 +124,10 @@
             text-align: right;
         }
 
+        .center {
+            text-align: center;
+        }
+
         .bold {
             font-weight: bold;
         }
@@ -628,15 +632,27 @@
         });
 
         $.ajax({
-            url: getSetting,
-            type: "POST",
-            dataType: "json",
+			url: getSetting,
+			type: "POST",
+			dataType: "json",
             success: function (data) {
-                $('#closeTime').html(data['Setting'][1].Value);
+                globalSetting = data['Setting'];
+
+                for (i = 0; i <= globalSetting.length ; i++){
+                    if (globalSetting[i].Name == "auto_close_time") {
+                         $('#closeTime').html(globalSetting[i].Value);
+                    }
+                    if (globalSetting[i].Name == "dealer_phone") {
+                        $('#dealerPhone').val(globalSetting[i].Value);
+                    }
+                    if (globalSetting[i].Name == "dealer_line") {
+                         $('#dealerLine').val(globalSetting[i].Value);
+                    }
+                }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert("error");
-            }
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert("error");
+			}
         });
 
     </script>

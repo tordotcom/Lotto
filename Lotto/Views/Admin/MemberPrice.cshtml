@@ -184,7 +184,10 @@
     $(document).ready(function () {
         $('#bootstrap-data-table').DataTable({
             aoColumnDefs: [
-                { "bSortable": false, "aTargets": ["_all"] }
+                {
+                    /*"bSortable": false,*/
+                    "aTargets": ["_all"]
+                }
             ],
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
