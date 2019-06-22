@@ -4,22 +4,76 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-header">
                 <i class="mr-2 fa fa-user"></i>
                 <strong class="card-title">ข้อมูลเจ้ามือ</strong>
             </div>
             <div class="card-body">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row form-group">
+                                <div class="col col-md-4"><label for="text-input" class="form-control-label">เบอร์โทร</label></div>
+                                <div class="col col-md-8"><input type="text" id="dealerPhone" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-4"><label for="text-input" class="form-control-label">Line</label></div>
+                                <div class="col col-md-8"><input type="text" id="dealerLine" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-12 center">
+                                    <button type="button" class="btn btn-success" id="btnUpdateDealer">บันทึก</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
     </div>
 </div>
             
 
 <script>
     (function ($) {
+        updateSetting = '@Url.Action("UpdateSetting", "Admin")';
 
+        $("#btnUpdateDealer").click(function () {
+
+            var setting = [
+                {
+                    Name: "dealer_phone",
+                    Value: $("#dealerPhone").val()
+                },
+                {
+                    Name: "dealer_line",
+                    Value: $("#dealerLine").val()
+                }
+            ];
+
+            //alert(JSON.stringify(setting));
+
+            $.ajax({
+                dataType: 'json',
+                type: 'POST',
+                url: updateSetting,
+                data: { S: setting },
+                success: function (data) {  
+                    if (data == "ss") {
+					    Swal.fire({
+						    type: 'success',
+						    title: 'แก้ไขข้อมูลเรียบร้อย',
+						    showConfirmButton: false,
+						    timer: 1500
+					    });
+				    }
+                },
+                failure: function (response) {          
+                    alert("error");
+                }
+            }); 
+        });
     })(jQuery);
 </script>
 

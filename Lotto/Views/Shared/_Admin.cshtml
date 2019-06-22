@@ -129,6 +129,14 @@
         .right {
             text-align: right;
         }
+
+        .center {
+            text-align: center;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -537,12 +545,22 @@
 			dataType: "json",
             success: function (data) {
                 globalSetting = data['Setting'];
-                if (globalSetting[1].Name != null) {
-                    $('#closeTime').html(globalSetting[1].Value);
-                    $('#settingAutoCloseTime').val(globalSetting[1].Value);
-                }
-                if (globalSetting[0].Value != null) {
-                    $("input[name=auto_poll_accept][value=" + globalSetting[0].Value + "]").attr('checked', 'checked');
+                //alert(JSON.stringify(globalSetting));
+
+                for (i = 0; i <= globalSetting.length ; i++){
+                    if (globalSetting[i].Name && globalSetting[i].Name == "auto_poll_accept") {
+                        $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
+                    }
+                    if (globalSetting[i].Name == "auto_close_time") {
+                         $('#closeTime').html(globalSetting[i].Value);
+                         $('#settingAutoCloseTime').val(globalSetting[i].Value);
+                    }
+                    if (globalSetting[i].Name == "dealer_phone") {
+                        $('#dealerPhone').val(globalSetting[i].Value);
+                    }
+                    if (globalSetting[i].Name == "dealer_line") {
+                         $('#dealerLine').val(globalSetting[i].Value);
+                    }
                 }
             },
 			error: function (xhr, ajaxOptions, thrownError) {
