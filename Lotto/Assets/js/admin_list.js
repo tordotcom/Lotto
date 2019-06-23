@@ -7,7 +7,10 @@
     var receive = $(this).attr("data-receive");
     var poll_number = $(this).attr("data-pollNumber");
     var poll_id = $(this).attr("data-id");
-    var uid = $(this).attr("data-UID");
+	var uid = $(this).attr("data-UID");
+
+	document.getElementById('sendPoll').setAttribute('data-uid', uid);
+	document.getElementById('sendPoll').setAttribute('data-pid', poll_id);
 
     $("#poll_number").html(poll_number);
     $("#receive_status").html(receive);
@@ -60,7 +63,8 @@
         dataType: "json",
         success: function (data) {
             var htmlString = "";
-            var type;
+			var type;
+			rowPoll = Object.keys(data).length;
             for (var i = 0; i < Object.keys(data).length; i++) {
                 var type_id = "t" + (i+1);
                 var lotto_id = "n" + (i+1);
@@ -98,7 +102,7 @@
                     htmlString += '</div>'
                 }
             }
-            $("#poll").html(htmlString);
+			$("#poll").html(htmlString);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert("error");

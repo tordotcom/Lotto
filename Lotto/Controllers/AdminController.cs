@@ -282,6 +282,48 @@ namespace Lotto.Controllers
         }
         public ActionResult Cut() //ตัดเลข
         {
+            int id = db.Period.Max(p => p.ID);
+            if (id != 0)
+            {
+                string connetionString = null;
+                var all = new List<All_Number>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "select t1.Type,t1.Number,t1.Amount,t1.nLen,t2.max from (SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,ls.Number) t1 left join(select MAX(tt.num) as max from(select t.Type,t.nLen,COUNT(*) as num from(SELECT ls.Type,LEN(ls.Number) as nLen,ls.number  FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,LEN(ls.Number),ls.number) t group by t.Type,t.nLen) tt) t2 on 1=1 order by t1.Type , t1.Number";
+                    //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", id.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            all.Add(new All_Number
+                            {
+                                Type = Reader["Type"].ToString(),
+                                Number = Reader["Number"].ToString(),
+                                Amount = Reader["Amount"].ToString(),
+                                nLen = Reader["nLen"].ToString(),
+                                Max = Reader["max"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(all);
+            }
             return View();
         }
         public ActionResult OutTotal() //ยอดแทงออก
@@ -1071,7 +1113,7 @@ namespace Lotto.Controllers
         }
 
         [HttpPost]
-        public ActionResult addPoll(PollData Data,string UID)
+        public ActionResult addPoll(PollData Data, string UID, string PID)
         {
             dynamic discount_rate;
             Period P = db.Period.Where(s => s.Status == "1").FirstOrDefault<Period>();
@@ -1087,20 +1129,39 @@ namespace Lotto.Controllers
             }
 
             int uid = Int32.Parse(UID);
-            var poll = new Poll();
-            poll.UID = uid; //----------- user id-----------//
-            poll.Period_ID = P.ID;
-            poll.Receive = "1";
-            poll.Create_By = "Admin"; //--------- Admin --------//
-            poll.create_date = DateTime.Now;
-            poll.update_date = DateTime.Now;
-            db.Poll.Add(poll);
-            db.SaveChanges();
-            int pID = poll.ID;
+            int pollID;
+
+            if (PID != null)
+            {
+                pollID = Int32.Parse(PID);
+                List<LottoMain> main = db.LottoMain.Where(m => m.Poll_ID == pollID).ToList<LottoMain>();
+                foreach (LottoMain moo in main)
+                {
+                    db.LottoSub.RemoveRange(db.LottoSub.Where(x => x.Lotto_ID == moo.ID));
+                    db.SaveChanges();
+                }
+                db.LottoMain.RemoveRange(db.LottoMain.Where(m => m.Poll_ID == pollID));
+                db.SaveChanges();
+            }
+            else
+            {
+                var poll = new Poll();
+                poll.UID = uid; //----------- user id-----------//
+                poll.Period_ID = P.ID;
+                poll.Receive = "1";
+                poll.Create_By = "Admin"; //--------- Admin --------//
+                poll.create_date = DateTime.Now;
+                poll.update_date = DateTime.Now;
+                db.Poll.Add(poll);
+                db.SaveChanges();
+
+                pollID = poll.ID;
+            }
+
             foreach (var item in Data.poll)
             {
                 var lotto = new LottoMain();
-                lotto.Poll_ID = pID;
+                lotto.Poll_ID = pollID;
                 lotto.Type = item.bType;
                 lotto.Number = item.Number;
                 lotto.Amount = item.Amount;

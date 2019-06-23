@@ -137,6 +137,19 @@
         .bold {
             font-weight: bold;
         }
+
+        .table-fixed th, .table-fixed td {
+           font-size:14px!important; 
+           padding-left:5px!important; 
+           padding-right:5px!important;
+           vertical-align: top!important; 
+           border-spacing: 1px !important;
+           line-height:10px!important; 
+        }
+
+        .hidden {
+            display:none;
+        }
     </style>
 </head>
 <body>
@@ -355,7 +368,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-5">
+                                    <div class="stat-icon dib" id="lottoStatusIcon">
                                         <i class="pe-7s-power"></i>
                                     </div>
                                     <div class="stat-content">
@@ -373,7 +386,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-4">
+                                    <div class="stat-icon dib flat-color-6">
                                         <i class="pe-7s-clock"></i>
                                     </div>
                                     <div class="stat-content">
@@ -491,6 +504,9 @@
     </div>
     <!-- /#right-panel -->
     <!-- Scripts -->
+    <script type="text/javascript">
+        var globalSetting;
+    </script>
     <script src="~/Assets/js/rate.js"></script>
     <script src="~/Assets/js/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
@@ -501,7 +517,6 @@
     </script>
 
     <script type="text/javascript">
-        var globalSetting;
         (function ($) {
             clock();
             $('#totalBetCount').html("134");
@@ -528,9 +543,11 @@
                 //alert(JSON.stringify(data));
                 $("#todayDate").html(data.Date);
                 if (data.Status == 1) {
+                    $("#lottoStatusIcon").addClass('flat-color-1');
                     $("#lottoStatus").html("เปิด");
                 }
                 else {
+                    $("#lottoStatusIcon").addClass('flat-color-4');
                     $("#lottoStatus").html("ปิด");
                 }
 			},
