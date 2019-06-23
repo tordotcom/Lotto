@@ -115,17 +115,17 @@
                         if (Model[0].BetStatus == "ปิดรับ")
                         {
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-block btn-secondary btn-sm">เปิดรับพนักงานแทง</button>
+                                <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="open" data-id="@Model[0].PID" id="user_oc">เปิดรับพนักงานแทง</button>
                             </div>
                         }
                         else
                         {
                             <div class="col-md-3">
-                                <button type="button" class="btn btn-block btn-secondary btn-sm">ปิดรับพนักงานแทง</button>
+                                <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="close" data-id="@Model[0].PID" id="user_oc">ปิดรับพนักงานแทง</button>
                             </div>
                         }
                         <div class="col-md-3 offset-md-3">
-                            <button type="button" class="btn btn-block btn-danger btn-sm">ปิดหวย</button>
+                            <button type="button" class="btn btn-block btn-danger btn-sm" data-id="@Model[0].PID" id="closeLotto">ปิดหวย</button>
                         </div>
                     }
                     else
@@ -276,6 +276,8 @@
 <script src="~/Assets/js/close.js"></script>
 <script>
     addPeroid = '@Url.Action("addPeroid", "Admin")';
+    betStatus = '@Url.Action("UpdateBetStatus", "Admin")';
+    closeLotto = '@Url.Action("CloseLotto", "Admin")';
     (function ($) {
 
     })(jQuery);

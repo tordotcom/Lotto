@@ -566,12 +566,20 @@ namespace Lotto.Controllers
                 }
                 catch
                 {
-
+                    
                 }
                 ViewBag.UID = id;
                 return View(pollDetail);
             }
-            return View();
+            else
+            {
+                var pollDetail = new List<Poll_Detail>();
+                pollDetail.Add(new Poll_Detail
+                {
+                    Receive = "close"
+                });
+                return View(pollDetail);
+            }        
         }
             //---------------------------------------------------------------------------------------------------//
             //-------------------------------------------function------------------------------------------------//
@@ -1712,6 +1720,40 @@ namespace Lotto.Controllers
             p.Close_BY = "";
             p.create_date = DateTime.Now;
             db.Period.Add(p);
+            db.SaveChanges();
+            return Json("ss");
+        }
+
+        [HttpPost]
+        public ActionResult UpdateBetStatus(string Status,string PID)
+        {
+            int id = Int32.Parse(PID);
+            if(Status== "close")
+            {
+                Status = "0";
+            }
+            else if(Status == "open")
+            {
+                Status = "1";
+            }
+            else { }
+            Period p = db.Period.Where(s => s.ID == id).FirstOrDefault<Period>();
+            p.BetStatus = Status;
+            db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Json("ss");
+        }
+
+        [HttpPost]
+        public ActionResult CloseLotto( string PID)
+        {
+            int id = Int32.Parse(PID);
+            Period p = db.Period.Where(s => s.ID == id).FirstOrDefault<Period>();
+            p.BetStatus = "0";
+            p.Status = "0";
+            p.Close_BY = "Admin";
+            p.update_date = DateTime.Now;
+            db.Entry(p).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return Json("ss");
         }

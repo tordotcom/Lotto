@@ -3,7 +3,18 @@
     ViewBag.Title = "Bet";
     Layout = "~/Views/Shared/_User.cshtml";
 }
-@{
+@if (Model[0].Receive == "close")
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <center><h2 style="color:red">ยังไม่เปิดรับแทง</h2></center>
+            </div>
+        </div>
+    </div>
+}
+else
+{
     var pollCount = 0;
     var receive = 0;
     var total_amount = 0;
@@ -22,12 +33,12 @@
         {
             reject_amount += Int32.Parse(item.Amount);
         }
-        else {
-            pollCount=0;
+        else
+        {
+            pollCount = 0;
         }
     }
     var currentPoll = pollCount + 1;
-}
 
 <div class="row">
     <div class="col-md-12">
@@ -96,8 +107,8 @@
                                             <div class="bet-equal">=</div>
                                             <div class="bet-price"><input id="@price_id" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" onchange="checkAmount('@i')" onkeypress="return keyPress(this, '@i', event)"></div>
                                         </div>
-                                        if (i == 30 || i == 60 || i == 90)
-                                        {
+                                    if (i == 30 || i == 60 || i == 90)
+                                    {
                                         @:</div>
                                     }
                                 }
@@ -110,6 +121,7 @@
         </div>
     </div>
 </div>
+}
 
 <script src="~/Assets/js/user_bet.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>

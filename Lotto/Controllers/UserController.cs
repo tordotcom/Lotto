@@ -61,7 +61,16 @@ namespace Lotto.Controllers
                 }
                 return View(pollDetail);
             }
-            return View();
+            else
+            {
+                var pollDetail = new List<Poll_Detail>();
+                pollDetail.Add(new Poll_Detail
+                {
+                    Receive = "close"
+                });
+                return View(pollDetail);
+            }
+            
         }
 
         public ActionResult List() //ดูโพย
