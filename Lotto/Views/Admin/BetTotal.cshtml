@@ -28,21 +28,24 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            var totalPoll = Int32.Parse(item.Reject) + Int32.Parse(item.Receive);
-                            <tr>
-                                <td>@item.Name</td>
-                                <td>@totalPoll</td>
-                                <td>@item.Receive</td>
-                                <td>@item.Amount</td>
-                                <td>@item.AmountReceive</td>
-                                <td>@item.AmountDiscount</td>
-                                <td>0</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-primary">สรุปยอด</button>
-                                    <button type="button" class="btn btn-sm btn-success">ใบแจ้งยอด</button>
-                                    <button type="button" class="btn btn-sm btn-warning get-user-poll" data-uid="@item.UID" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false">ดูโพย</button>
-                                </td>
-                            </tr>
+                            if (item.UID !="0")
+                            {
+                                var totalPoll = Int32.Parse(item.Reject) + Int32.Parse(item.Receive);
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@totalPoll</td>
+                                    <td>@item.Receive</td>
+                                    <td>@item.Amount</td>
+                                    <td>@item.AmountReceive</td>
+                                    <td>@item.AmountDiscount</td>
+                                    <td>0</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary">สรุปยอด</button>
+                                        <button type="button" class="btn btn-sm btn-success">ใบแจ้งยอด</button>
+                                        <button type="button" class="btn btn-sm btn-warning get-user-poll" data-uid="@item.UID" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false">ดูโพย</button>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>

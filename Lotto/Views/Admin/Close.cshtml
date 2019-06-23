@@ -1,4 +1,4 @@
-﻿
+﻿@model IList<Lotto.Models.Close>
 @{
     ViewBag.Title = "Close";
     Layout = "~/Views/Shared/_Admin.cshtml";
@@ -12,93 +12,91 @@
                 <strong class="card-title">ปิดหวย</strong>
             </div>
             <div class="card-body">
-                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Amount</div></div>
+                </div>
+                @*<div class="row form-group">
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รอรับ</label></div>
                         <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิด</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาหวยออก</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
-                </form>
+                    </div>*@
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountReceive</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountUser</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">15:00:00</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิด</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">ปิดอัตโนมัติ</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาหวยออก</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">16:00:00</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].BetStatus</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CreateDate</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">Admin</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseDate</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseBy</div></div>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         @*<div class="col-md-12/">
-            <div class="card">
-                <div class="card-header">
-                    เลขเต็ม
-                </div>
-                <div class="card-body">
-                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class="form-control-label">วิ่ง บน</label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3"><label for="text-input" class="form-control-label">วิ่ง ล่าง</label></div>
-                            <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12/">
-            <div class="card">
-                <div class="card-header">
-                    เลขอั้น
-                </div>
-                <div class="card-body">
-                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="row form-group">
-                            <div class="col-md-12"><input type="text" id="text-input" name="text-input" placeholder="ไม่มีเลขอั้น" class="form-control"></div>
-                        </div>
-                    </form>
+                <div class="card">
+                    <div class="card-header">
+                        เลขเต็ม
+                    </div>
+                    <div class="card-body">
+                        <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">วิ่ง บน</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class="form-control-label">วิ่ง ล่าง</label></div>
+                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>*@
+            <div class="col-md-12/">
+                <div class="card">
+                    <div class="card-header">
+                        เลขอั้น
+                    </div>
+                    <div class="card-body">
+                        <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div class="row form-group">
+                                <div class="col-md-12"><input type="text" id="text-input" name="text-input" placeholder="ไม่มีเลขอั้น" class="form-control"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>*@
         <div class="col-md-12/">
             <button type="button" class="btn btn-block btn-primary btn-sm">ใบสรุปยอดเงิน</button>
             <button type="button" class="btn btn-block btn-warning btn-sm">ใบสรุปยอดเก็บ</button>
@@ -108,18 +106,38 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
-                    </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-secondary btn-sm">ปิดรับ</button>
-                    </div>
-                    <div class="col-md-3">
+                    @if (Model[0].CloseBy == "")
+                    {
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
+                        </div>
 
-                    </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-danger btn-sm">ยกเลิกหวย</button>
-                    </div>
+                        if (Model[0].BetStatus == "ปิดรับ")
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-secondary btn-sm">เปิดรับพนักงานแทง</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-secondary btn-sm">ปิดรับพนักงานแทง</button>
+                            </div>
+                        }
+                        <div class="col-md-3 offset-md-3">
+                            <button type="button" class="btn btn-block btn-danger btn-sm">ปิดหวย</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#lottoOpen">เปิดหวยใหม่</button>
+                        </div>
+                    }
+
                 </div>
             </div>
         </div>
@@ -144,65 +162,69 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>3 บน</td>
-                            <td colspan="4"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr>
-                            <td>2 ล่าง</td>
-                            <td colspan="4"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr>
-                            <td>3 ล่าง</td>
-                            <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr style="color:white;background-color:blue;">
-                            <td nowrap>อัตราจ่าย</td>
-                            <td colspan="2" nowrap>ใส่ % ที่จ่าย</td>
-                            <td colspan="2" nowrap>หรือราคาที่จ่าย</td>
+                            <td>3 หน้า</td>
+                            <td colspan="4"><input type="text" id="ft" name="text-input" class="form-control form-control-sm"></td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr>
-                            <td>3 โต๊ด</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr>
-                            <td>2 บน</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr>
-                            <td>2 โต๊ด</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr>
-                            <td>วิ่ง บน</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                        </tr>
-                        <tr>
-                            <td>3 ล่าง</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            <td colspan="4"><input type="text" id="tt" name="text-input" class="form-control form-control-sm"></td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            <td colspan="4"><input type="text" id="twob" name="text-input" class="form-control form-control-sm"></td>
                         </tr>
                         <tr>
-                            <td>วิ่ง ล่าง</td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            <td>3 ล่าง</td>
+                            <td><input type="text" id="tb1" name="text-input" class="form-control form-control-sm"></td>
+                            <td><input type="text" id="tb2" name="text-input" class="form-control form-control-sm"></td>
+                            <td><input type="text" id="tb3" name="text-input" class="form-control form-control-sm"></td>
+                            <td><input type="text" id="tb4" name="text-input" class="form-control form-control-sm"></td>
                         </tr>
+                        @*<tr style="color:white;background-color:blue;">
+            <td nowrap>อัตราจ่าย</td>
+            <td colspan="2" nowrap>ใส่ % ที่จ่าย</td>
+            <td colspan="2" nowrap>หรือราคาที่จ่าย</td>
+        </tr>
+        <tr>
+            <td>3 บน</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>
+        <tr>
+            <td>3 โต๊ด</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>
+        <tr>
+            <td>2 บน</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>
+        <tr>
+            <td>2 โต๊ด</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>
+        <tr>
+            <td>วิ่ง บน</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>
+        <tr>
+            <td>3 ล่าง</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>
+        <tr>
+            <td>2 ล่าง</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>
+        <tr>
+            <td>วิ่ง ล่าง</td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+        </tr>*@
                     </tbody>
                 </table>
             </div>
@@ -213,9 +235,47 @@
         </div>
     </div>
 </div>
-
-
+<div class="modal fade" id="lottoOpen" tabindex="-1" role="dialog" aria-labelledby="lottoOpen" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkModalLabel">เปิดหวย</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">ประเภท</label></div>
+                            <div class="col-12 col-md-9"><div class="form-control-label bold">หวยรัฐบาล</div></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">งวดวันที่</label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="start_datepicker" name="text-input" class="form-control form-control-sm"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
+                            <div class="col-12 col-md-9"><div class="form-control-label bold">15:00:00</div></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
+                            <div class="col-12 col-md-9"><div class="form-control-label bold">AUTO</div></div>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="openLotto">เปิด</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/js/close.js"></script>
 <script>
+    addPeroid = '@Url.Action("addPeroid", "Admin")';
     (function ($) {
 
     })(jQuery);

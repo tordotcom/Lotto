@@ -70,7 +70,58 @@ namespace Lotto.Controllers
 
         public ActionResult Close() //ปิดหวย
         {
-            return View();
+            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            var pid=0;
+            if (P!=null)
+            {
+                pid = P.ID;
+            }
+            else
+            {
+                int id = db.Period.Max(p => p.ID);
+                pid = id;
+            }
+            string connetionString = null;
+            var all = new List<Close>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT pe.ID,pe.create_date,pe.update_date,pe.Date,case when pe.BetStatus='0' then 'ปิดรับ' else 'เปิดรับ' end as BetStatus,pe.Close_BY,sum(ISNULL(CAST(ls.Amount as int), 0 )) as Amount,ISNULL(cr.crR, 0 ) as crR,ISNULL(cu.countu , 0 ) as countu FROM [dbo].[Period] pe left join(SELECT [ID],Period_ID,Receive,update_date,create_date FROM [dbo].[Poll] where Receive='1') p on p.Period_ID=pe.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join (SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT Period_ID as crPID,COUNT(Receive) as crR,Receive as crRe FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID) cr on p.Period_ID=cr.crPID and p.Receive=cr.crRe left join(SELECT COUNT(distinct UID) as countu,Period_ID as cuPID,Receive as cuR FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID,Receive) cu on p.Period_ID=cu.cuPID and p.Receive=cu.cuR where pe.ID=@period group by pe.ID,pe.create_date,pe.Date,pe.Close_BY,pe.update_date,cr.crR,cu.countu,pe.BetStatus";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", pid.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        all.Add(new Close
+                        {
+                            PID = Reader["ID"].ToString(),
+                            Date = Reader["Date"].ToString(),
+                            Amount = Reader["Amount"].ToString(),
+                            CountReceive = Reader["crR"].ToString(),
+                            CountUser = Reader["countu"].ToString(),
+                            CloseBy = Reader["Close_BY"].ToString(),
+                            CreateDate = Reader["create_date"].ToString(),
+                            CloseDate = Reader["update_date"].ToString(),
+                            BetStatus = Reader["BetStatus"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            return View(all);
         }
 
         public ActionResult List(String UID) //ดูโพย
@@ -190,7 +241,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT po.UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as int)END) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
+                    string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as int)END) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@period", id.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
@@ -1582,6 +1633,26 @@ namespace Lotto.Controllers
             lottosub.update_date = DateTime.Now;
             db.LottoSub.Add(lottosub);
             db.SaveChanges();
+        }
+        [HttpPost]
+        public ActionResult addPeroid(DateTime Date)
+        {
+            var pDate = Date.ToString("yyyy-MM-dd");
+            //List<Period> oldPeroid = db.Period.Where(s => s.Status == "1").ToList();
+            //oldPeroid.ForEach(a => a.Status = "0");
+            //db.Entry(oldPeroid).State = System.Data.Entity.EntityState.Modified;
+            //db.SaveChanges();
+
+            var p = new Period();
+            p.UID = 1; //----------- user id-----------//
+            p.Date = DateTime.ParseExact(pDate, "yyyy-MM-dd", null);
+            p.Status = "1";
+            p.BetStatus = "0";
+            p.Close_BY = "";
+            p.create_date = DateTime.Now;
+            db.Period.Add(p);
+            db.SaveChanges();
+            return Json("ss");
         }
     }
 }

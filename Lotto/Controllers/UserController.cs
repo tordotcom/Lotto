@@ -30,7 +30,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive";
+                    string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount FROM [dbo].[Period] pe left join(select ID,Receive,Period_ID,UID FROM [dbo].[Poll] where UID=@UID) p on pe.ID=p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where pe.ID=@period group by p.ID,p.Receive";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@UID", "2"); // user ID
                     cmd.Parameters.AddWithValue("@period", P.ID.ToString());

@@ -18,9 +18,12 @@
             total_amount += Int32.Parse(item.Amount);
             discount += Int32.Parse(item.Discount);
         }
-        else
+        else if (item.Receive == "0")
         {
             reject_amount += Int32.Parse(item.Amount);
+        }
+        else {
+            pollCount=0;
         }
     }
     var currentPoll = pollCount + 1;

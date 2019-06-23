@@ -638,7 +638,7 @@
             success: function (data) {
                 globalSetting = data['Setting'];
 
-                for (i = 0; i <= globalSetting.length ; i++){
+                for (var i = 0; i < globalSetting.length ; i++){
                     if (globalSetting[i].Name == "auto_close_time") {
                          $('#closeTime').html(globalSetting[i].Value);
                     }

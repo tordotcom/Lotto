@@ -548,7 +548,7 @@
                 //alert(JSON.stringify(globalSetting));
 
                 for (i = 0; i <= globalSetting.length ; i++){
-                    if (globalSetting[i].Name && globalSetting[i].Name == "auto_poll_accept") {
+                    if (globalSetting[i].Name == "auto_poll_accept") {
                         $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
                     }
                     if (globalSetting[i].Name == "auto_close_time") {

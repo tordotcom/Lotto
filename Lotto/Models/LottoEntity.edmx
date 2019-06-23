@@ -118,6 +118,8 @@
           <Property Name="UID" Type="int" />
           <Property Name="Date" Type="datetime" />
           <Property Name="Status" Type="nvarchar" MaxLength="1" />
+          <Property Name="BetStatus" Type="nvarchar" MaxLength="1" />
+          <Property Name="Close_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -423,6 +425,8 @@
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Poll" Relationship="Self.FK_Poll_Period" FromRole="Period" ToRole="Poll" />
+          <Property Name="BetStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Close_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Poll">
           <Key>
@@ -738,6 +742,8 @@
           <EntitySetMapping Name="Period">
             <EntityTypeMapping TypeName="ltfomModel.Period">
               <MappingFragment StoreEntitySet="Period">
+                <ScalarProperty Name="Close_BY" ColumnName="Close_BY" />
+                <ScalarProperty Name="BetStatus" ColumnName="BetStatus" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
