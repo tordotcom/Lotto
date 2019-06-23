@@ -146,6 +146,10 @@
            border-spacing: 1px !important;
            line-height:10px!important; 
         }
+
+        .hidden {
+            display:none;
+        }
     </style>
 </head>
 <body>
@@ -500,6 +504,9 @@
     </div>
     <!-- /#right-panel -->
     <!-- Scripts -->
+    <script type="text/javascript">
+        var globalSetting;
+    </script>
     <script src="~/Assets/js/rate.js"></script>
     <script src="~/Assets/js/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
@@ -510,7 +517,6 @@
     </script>
 
     <script type="text/javascript">
-        var globalSetting;
         (function ($) {
             clock();
             $('#totalBetCount').html("134");
@@ -559,7 +565,7 @@
                 //alert(JSON.stringify(globalSetting));
 
                 for (i = 0; i <= globalSetting.length ; i++){
-                    if (globalSetting[i].Name && globalSetting[i].Name == "auto_poll_accept") {
+                    if (globalSetting[i].Name == "auto_poll_accept") {
                         $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
                     }
                     if (globalSetting[i].Name == "auto_close_time") {

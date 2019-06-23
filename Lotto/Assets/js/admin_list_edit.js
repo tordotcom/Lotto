@@ -38,6 +38,7 @@ $(document).on('click', '.bet-type', function () {
 
     })
 });
+
 $("#clear").click(function () {
     Swal.fire({
         title: 'ต้องการเคลียร์เลข?',
@@ -342,7 +343,7 @@ function SumAmountPoll() {
     sum = 0;
     var bet = {};
     var j = 1;
-    for (var i = 1; i <= 90; i++) {
+	for (var i = 1; i <= rowPoll; i++) {
         var n = $('#n' + i).val();
         var b = $('#b' + i).val();
         if (n.length > 0 && b.length > 0) {
@@ -385,13 +386,13 @@ function SumAmountPoll() {
             }
         }
     }
-    $("#thisTotal").val(sum + " ฿");
+	$("#amount").html(sum);
 }
-$("#sendLotto").click(function () {
+$("#sendPoll").click(function () {
     var state = false;
     var bet = [];
-    
-    for (var i = 1; i <= 90; i++) {
+
+	for (var i = 1; i <= rowPoll; i++) {
         var n = $('#n' + i).val();
         var b = $('#b' + i).val();
         b = b.replace("X", "x");
@@ -437,14 +438,16 @@ $("#sendLotto").click(function () {
                 state = true;
             }
         }
-        else { }
-    }
+	}
+
     console.log(bet);
-    var uid = $(this).attr("data-id");
+	var uid = $(this).attr("data-uid");
+	var pid = $(this).attr("data-pid");
+
     if (state) {
         $.ajax({
             url: addPoll,
-            data: { poll: bet, UID: uid , PID: null},
+            data: { poll: bet, UID: uid , PID: pid},
             type: "POST",
             dataType: "json",
             success: function (data) {

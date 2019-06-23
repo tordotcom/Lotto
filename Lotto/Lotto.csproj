@@ -293,6 +293,7 @@
     <Content Include="Assets\images\w_load.gif" />
     <Content Include="Assets\js\admin_bet.js" />
     <Content Include="Assets\js\admin_list.js" />
+    <Content Include="Assets\js\admin_list_edit.js" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.css" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.min.css" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.standalone.css" />

@@ -1062,7 +1062,7 @@ namespace Lotto.Controllers
         }
 
         [HttpPost]
-        public ActionResult addPoll(PollData Data,string UID)
+        public ActionResult addPoll(PollData Data, string UID, string PID)
         {
             dynamic discount_rate;
             Period P = db.Period.Where(s => s.Status == "1").FirstOrDefault<Period>();
@@ -1078,20 +1078,39 @@ namespace Lotto.Controllers
             }
 
             int uid = Int32.Parse(UID);
-            var poll = new Poll();
-            poll.UID = uid; //----------- user id-----------//
-            poll.Period_ID = P.ID;
-            poll.Receive = "1";
-            poll.Create_By = "Admin"; //--------- Admin --------//
-            poll.create_date = DateTime.Now;
-            poll.update_date = DateTime.Now;
-            db.Poll.Add(poll);
-            db.SaveChanges();
-            int pID = poll.ID;
+            int pollID;
+
+            if (PID != null)
+            {
+                pollID = Int32.Parse(PID);
+                List<LottoMain> main = db.LottoMain.Where(m => m.Poll_ID == pollID).ToList<LottoMain>();
+                foreach (LottoMain moo in main)
+                {
+                    db.LottoSub.RemoveRange(db.LottoSub.Where(x => x.Lotto_ID == moo.ID));
+                    db.SaveChanges();
+                }
+                db.LottoMain.RemoveRange(db.LottoMain.Where(m => m.Poll_ID == pollID));
+                db.SaveChanges();
+            }
+            else
+            {
+                var poll = new Poll();
+                poll.UID = uid; //----------- user id-----------//
+                poll.Period_ID = P.ID;
+                poll.Receive = "1";
+                poll.Create_By = "Admin"; //--------- Admin --------//
+                poll.create_date = DateTime.Now;
+                poll.update_date = DateTime.Now;
+                db.Poll.Add(poll);
+                db.SaveChanges();
+
+                pollID = poll.ID;
+            }
+
             foreach (var item in Data.poll)
             {
                 var lotto = new LottoMain();
-                lotto.Poll_ID = pID;
+                lotto.Poll_ID = pollID;
                 lotto.Type = item.bType;
                 lotto.Number = item.Number;
                 lotto.Amount = item.Amount;
