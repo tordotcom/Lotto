@@ -98,8 +98,8 @@
                 </div>
             </div>*@
         <div class="col-md-12/">
-            <button type="button" class="btn btn-block btn-primary btn-sm">ใบสรุปยอดเงิน</button>
-            <button type="button" class="btn btn-block btn-warning btn-sm">ใบสรุปยอดเก็บ</button>
+            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเงิน</button>
+            <button type="button" class="btn btn-block btn-warning btn-sm" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
         </div>
     </div>
     <div class="col-md-12">
@@ -184,50 +184,50 @@
                             <td><input type="text" id="tb4"maxlength="3" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
                         </tr>
                         @*<tr style="color:white;background-color:blue;">
-            <td nowrap>อัตราจ่าย</td>
-            <td colspan="2" nowrap>ใส่ % ที่จ่าย</td>
-            <td colspan="2" nowrap>หรือราคาที่จ่าย</td>
-        </tr>
-        <tr>
-            <td>3 บน</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>
-        <tr>
-            <td>3 โต๊ด</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>
-        <tr>
-            <td>2 บน</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>
-        <tr>
-            <td>2 โต๊ด</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>
-        <tr>
-            <td>วิ่ง บน</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>
-        <tr>
-            <td>3 ล่าง</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>
-        <tr>
-            <td>2 ล่าง</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>
-        <tr>
-            <td>วิ่ง ล่าง</td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-            <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-        </tr>*@
+                                <td nowrap>อัตราจ่าย</td>
+                                <td colspan="2" nowrap>ใส่ % ที่จ่าย</td>
+                                <td colspan="2" nowrap>หรือราคาที่จ่าย</td>
+                            </tr>
+                            <tr>
+                                <td>3 บน</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>3 โต๊ด</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>2 บน</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>2 โต๊ด</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>วิ่ง บน</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>3 ล่าง</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>2 ล่าง</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td>วิ่ง ล่าง</td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                                <td colspan="2"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
+                            </tr>*@
                     </tbody>
                 </table>
             </div>
@@ -266,11 +266,255 @@
                             <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
                             <div class="col-12 col-md-9"><div class="form-control-label bold">AUTO</div></div>
                         </div>
-                    </div>                
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="openLotto">เปิด</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="totalBalance" tabindex="-1" role="dialog" aria-labelledby="totalBalanceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="totalBalanceLabel">ใบสรุปยอดเงิน</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="printBalanceArea">
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead style="color:white;background-color:blue;">
+                        <tr>
+                            <th rowspan="2">ชนิด</th>
+                            <th colspan="3">ยอดทั้งหมด</th>
+                            <th colspan="3">แทงออก</th>
+                            <th colspan="3">รับไว้</th>
+                        </tr>
+                         <tr>
+                            <th>แทงหัก %</th>
+                            <th>ถูก</th>
+                            <th>สุทธิ</th>
+                            <th>แทงหัก %</th>
+                            <th>ถูก</th>
+                            <th>สุทธิ</th>
+                            <th>แทงหัก %</th>
+                            <th>ถูก</th>
+                            <th>สุทธิ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2 บน</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3 บน</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3 โต๊ด</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2 โต๊ด</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3 หน้า</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3 หน้าโต๊ด</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>วิ่ง บน</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>วื่ง ล่าง</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2 ล่าง</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3 ล่าง</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="color:white;background-color:blue;">
+                        <tr>
+                            <td>รวม</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="printBalance">พิมพ์</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="totalKeep" tabindex="-1" role="dialog" aria-labelledby="totalKeepLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="totalKeepLabel">ใบสรุปยอดเก็บ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="printKeepArea">
+                <div class="row">
+                    <div class="col-md-3">
+                        หวยรัฐบาล
+                    </div>
+                    <div class="col-md-1">
+                        -
+                    </div>
+                    <div class="col-md-2">
+                        80000
+                    </div>
+                    <div class="col-md-1">
+                        -
+                    </div>
+                    <div class="col-md-2">
+                        60000
+                    </div>
+                    <div class="col-md-1">
+                        -
+                    </div>
+                    <div class="col-md-2">
+                        คน
+                    </div>
+                    <div class="col-md-12">
+                        <hr/>
+                        <table class="table table-bordered" style="text-align:center;">
+                            <thead style="color:white;background-color:blue;">
+                                <tr>
+                                    <th>ยอดเก็บ</th>
+                                    <th>ยอดจ่าย</th>
+                                    <th>หมายเลข - ชื่อ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <tfoot style="color:white;background-color:blue;">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="printKeep">เปิด</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -285,5 +529,28 @@
     (function ($) {
 
     })(jQuery);
+
+    $('#printBalance').click(function () {
+        var printContents = document.getElementById('printBalanceArea').innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    });
+
+     $('#printKeep').click(function () {
+        var printContents = document.getElementById('printKeepArea').innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    });
+
 </script>
 
