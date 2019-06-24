@@ -88,7 +88,7 @@ namespace Lotto.Controllers
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "SELECT pe.ID,pe.create_date,pe.update_date,pe.Date,case when pe.BetStatus='0' then 'ปิดรับ' else 'เปิดรับ' end as BetStatus,pe.Close_BY,sum(ISNULL(CAST(ls.Amount as int), 0 )) as Amount,ISNULL(cr.crR, 0 ) as crR,ISNULL(cu.countu , 0 ) as countu FROM [dbo].[Period] pe left join(SELECT [ID],Period_ID,Receive,update_date,create_date FROM [dbo].[Poll] where Receive='1') p on p.Period_ID=pe.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join (SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT Period_ID as crPID,COUNT(Receive) as crR,Receive as crRe FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID) cr on p.Period_ID=cr.crPID and p.Receive=cr.crRe left join(SELECT COUNT(distinct UID) as countu,Period_ID as cuPID,Receive as cuR FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID,Receive) cu on p.Period_ID=cu.cuPID and p.Receive=cu.cuR where pe.ID=@period group by pe.ID,pe.create_date,pe.Date,pe.Close_BY,pe.update_date,cr.crR,cu.countu,pe.BetStatus";
+                string query = "SELECT pe.ID,pe.Check_Result,pe.create_date,pe.update_date,pe.Date,case when pe.BetStatus='0' then 'ปิดรับ' else 'เปิดรับ' end as BetStatus,pe.Close_BY,sum(ISNULL(CAST(ls.Amount as int), 0 )) as Amount,ISNULL(cr.crR, 0 ) as crR,ISNULL(cu.countu , 0 ) as countu FROM [dbo].[Period] pe left join(SELECT [ID],Period_ID,Receive,update_date,create_date FROM [dbo].[Poll] where Receive='1') p on p.Period_ID=pe.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join (SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT Period_ID as crPID,COUNT(Receive) as crR,Receive as crRe FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID) cr on p.Period_ID=cr.crPID and p.Receive=cr.crRe left join(SELECT COUNT(distinct UID) as countu,Period_ID as cuPID,Receive as cuR FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID,Receive) cu on p.Period_ID=cu.cuPID and p.Receive=cu.cuR where pe.ID=@period group by pe.ID,pe.create_date,pe.Date,pe.Close_BY,pe.Check_Result,pe.update_date,cr.crR,cu.countu,pe.BetStatus";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 cmd.Parameters.AddWithValue("@period", pid.ToString());
                 SqlDataReader Reader = cmd.ExecuteReader();
@@ -108,6 +108,7 @@ namespace Lotto.Controllers
                             CreateDate = Reader["create_date"].ToString(),
                             CloseDate = Reader["update_date"].ToString(),
                             BetStatus = Reader["BetStatus"].ToString(),
+                            CheckResult= Reader["Check_Result"].ToString()
                         });
                     }
                     cnn.Close();
@@ -1717,6 +1718,7 @@ namespace Lotto.Controllers
             p.Date = DateTime.ParseExact(pDate, "yyyy-MM-dd", null);
             p.Status = "1";
             p.BetStatus = "0";
+            p.Check_Result = "0";
             p.Close_BY = "";
             p.create_date = DateTime.Now;
             db.Period.Add(p);
@@ -1755,6 +1757,11 @@ namespace Lotto.Controllers
             p.update_date = DateTime.Now;
             db.Entry(p).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
+            return Json("ss");
+        }
+        [HttpPost]
+        public ActionResult CheckResult(string PID,string FT,string FTO1,string FTO2,string FTO3,string FTO4,string FTO5,string TU,string TUO1,string TUO2,string TUO3,string TUO4,string TUO5,string TD,string TDO1)
+        {
             return Json("ss");
         }
     }

@@ -119,3 +119,74 @@ $("#closeLotto").click(function () {
         }
     })
 });
+function keyPress(obj, evt) {
+
+    evt = evt || window.event;
+    var code = evt.keyCode || evt.which;
+    // enter = 13, tab = 9
+    // space = 32,  + = 43
+
+    if (code >= 48 && code <= 57) {
+        return true;  // Number 0-9
+    }
+    else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+    else if (code >= 37 && code <= 40) return true;  // left, up, right, down
+    else return false;
+}
+$("#check_result").click(function () {
+    var pid = $(this).attr("data-id");
+    var first_three = $("#ft").val();
+    var three_up = $("#tt").val();
+    var two_down = $("#twob").val();
+    var three_down1 = $("#tb1").val();
+    var three_down2 = $("#tb2").val();
+    var three_down3 = $("#tb3").val();
+    var three_down4 = $("#tb4").val();
+    if (first_three != "" && three_up != "" && two_down != "" && three_down1 != "" && three_down2 != "" && three_down3 != "" && three_down4 != "") {
+        if (first_three.length == 3 && three_up.length == 3 && two_down.length == 2 && three_down1.length == 3 && three_down2.length == 3 && three_down3.length == 3 && three_down4.length == 3) {
+            var ft = first_three.split('');
+            var ft_ood_1 = ft[0] + ft[2] + ft[1];
+            var ft_ood_2 = ft[1] + ft[0] + ft[2];
+            var ft_ood_3 = ft[1] + ft[2] + ft[0];
+            var ft_ood_4 = ft[2] + ft[0] + ft[1];
+            var ft_ood_5 = ft[2] + ft[1] + ft[0];
+            var tu = three_up.split('');
+            var tu_ood_1 = tu[0] + tu[2] + tu[1];
+            var tu_ood_2 = tu[1] + tu[0] + tu[2];
+            var tu_ood_3 = tu[1] + tu[2] + tu[0];
+            var tu_ood_4 = tu[2] + tu[0] + tu[1];
+            var tu_ood_5 = tu[2] + tu[1] + tu[0];
+            var td = two_down.split('');
+            var td_ood_1 = td[1] + td[0];
+
+            $.ajax({
+                url: CheckResult,
+                data: { PID: pid, FT: first_three, FTO1: ft_ood_1, FTO2: ft_ood_2, FTO3: ft_ood_3, FTO4: ft_ood_4, FTO5: ft_ood_5, TU: three_up, TUO1: tu_ood_1, TUO2: tu_ood_2, TUO3: tu_ood_3, TUO4: tu_ood_4, TUO5: tu_ood_5, TD: two_down, TDO1: td_ood_1 },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data == "ss") {
+                        //Swal.fire({
+                        //    type: 'success',
+                        //    title: "ปิดหวยเรียบร้อย",
+                        //    showConfirmButton: false,
+                        //    timer: 1500,
+                        //    onAfterClose: () => {
+                        //        location.reload();
+                        //    }
+                        //});
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
+        }
+        else {
+            Swal.fire('กรุณากรอกผลหวยให้ถูกต้อง');
+        }
+    }
+    else {
+        Swal.fire('กรุณากรอกผลหวยให้ครบถ้วน');
+    }
+});

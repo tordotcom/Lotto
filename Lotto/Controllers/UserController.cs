@@ -20,7 +20,7 @@ namespace Lotto.Controllers
 
         public ActionResult Bet() //แทงโพย
         {
-            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            Period P = db.Period.Where(x => x.BetStatus == "1").FirstOrDefault<Period>();
             if(P != null)
             {
                 string connetionString = null;

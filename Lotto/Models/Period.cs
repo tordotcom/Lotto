@@ -28,6 +28,7 @@ namespace Lotto.Models
         public Nullable<System.DateTime> update_date { get; set; }
         public string BetStatus { get; set; }
         public string Close_BY { get; set; }
+        public string Check_Result { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Poll> Poll { get; set; }

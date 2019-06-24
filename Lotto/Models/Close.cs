@@ -16,5 +16,6 @@ namespace Lotto.Models
         public string BetStatus { get; set; }
         public string CreateDate { get; set; }
         public string CloseDate { get; set; }
+        public string CheckResult { get; set; }
     }
 }

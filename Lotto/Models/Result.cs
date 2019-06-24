@@ -26,5 +26,17 @@ namespace Lotto.Models
         public string two_down { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
+        public Nullable<int> Period_ID { get; set; }
+        public string first_3_ood_1 { get; set; }
+        public string first_3_ood_2 { get; set; }
+        public string first_3_ood_3 { get; set; }
+        public string first_3_ood_4 { get; set; }
+        public string first_3_ood_5 { get; set; }
+        public string last_3_ood_1 { get; set; }
+        public string last_3_ood_2 { get; set; }
+        public string last_3_ood_3 { get; set; }
+        public string last_3_ood_4 { get; set; }
+        public string last_3_ood_5 { get; set; }
+        public string two_down_ood { get; set; }
     }
 }

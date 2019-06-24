@@ -108,9 +108,9 @@
                 <div class="row">
                     @if (Model[0].CloseBy == "")
                     {
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
-                        </div>
+                        @*<div class="col-md-3">
+                <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
+            </div>*@
 
                         if (Model[0].BetStatus == "ปิดรับ")
                         {
@@ -133,9 +133,12 @@
                         <div class="col-md-3">
                             <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
                         </div>
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#lottoOpen">เปิดหวยใหม่</button>
-                        </div>
+                        if (Model[0].CheckResult == "1")
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#lottoOpen">เปิดหวยใหม่</button>
+                            </div>
+                        }
                     }
 
                 </div>
@@ -163,22 +166,22 @@
                     <tbody>
                         <tr>
                             <td>3 หน้า</td>
-                            <td colspan="4"><input type="text" id="ft" name="text-input" class="form-control form-control-sm"></td>
+                            <td colspan="4"><input type="text" id="ft"maxlength="3" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
-                            <td colspan="4"><input type="text" id="tt" name="text-input" class="form-control form-control-sm"></td>
+                            <td colspan="4"><input type="text" id="tt"maxlength="3" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td colspan="4"><input type="text" id="twob" name="text-input" class="form-control form-control-sm"></td>
+                            <td colspan="4"><input type="text" id="twob"maxlength="2" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td><input type="text" id="tb1" name="text-input" class="form-control form-control-sm"></td>
-                            <td><input type="text" id="tb2" name="text-input" class="form-control form-control-sm"></td>
-                            <td><input type="text" id="tb3" name="text-input" class="form-control form-control-sm"></td>
-                            <td><input type="text" id="tb4" name="text-input" class="form-control form-control-sm"></td>
+                            <td><input type="text" id="tb1"maxlength="3" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
+                            <td><input type="text" id="tb2"maxlength="3" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
+                            <td><input type="text" id="tb3"maxlength="3" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
+                            <td><input type="text" id="tb4"maxlength="3" name="text-input" class="form-control form-control-sm"onkeypress="return keyPress(this, event);"></td>
                         </tr>
                         @*<tr style="color:white;background-color:blue;">
             <td nowrap>อัตราจ่าย</td>
@@ -229,7 +232,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">ตรวจ</button>
+                <button type="button" class="btn btn-primary" id="check_result" data-id="@Model[0].PID">ตรวจ</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -278,6 +281,7 @@
     addPeroid = '@Url.Action("addPeroid", "Admin")';
     betStatus = '@Url.Action("UpdateBetStatus", "Admin")';
     closeLotto = '@Url.Action("CloseLotto", "Admin")';
+    CheckResult= '@Url.Action("CheckResult", "Admin")';
     (function ($) {
 
     })(jQuery);
