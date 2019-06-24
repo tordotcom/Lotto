@@ -175,6 +175,9 @@ $("#check_result").click(function () {
                         //        location.reload();
                         //    }
                         //});
+                        
+                        //$("#Check_close_modal").click();
+                        //$("#totalBalance").modal('show');
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
