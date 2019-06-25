@@ -337,7 +337,7 @@ namespace Lotto.Controllers
         }
         public ActionResult LottoBackward() //ดูหวยย้อนหลัง
         {
-            return View();
+            return View(db.Period.ToList());
         }
         public ActionResult Result() //ดูเลขหวย
         {
