@@ -8,6 +8,7 @@ namespace Lotto.Models
     public class Poll_Detail
     {
         public string ID { get; set; }
+        public string PeriodDate { get; set; }
         public string name { get; set; }
         public string poll_number { get; set; }
         public string Receive { get; set; }
