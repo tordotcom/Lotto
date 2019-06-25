@@ -594,7 +594,7 @@
     <Content Include="Views\Admin\Out.cshtml" />
     <Content Include="Views\Admin\Cut.cshtml" />
     <Content Include="Views\Admin\OutTotal.cshtml" />
-    <Content Include="Views\Admin\BetBackward.cshtml" />
+    <Content Include="Views\Admin\ListBackward.cshtml" />
     <Content Include="Views\Admin\LottoBackward.cshtml" />
     <Content Include="Views\Admin\Setting.cshtml" />
     <Content Include="Views\Admin\Member.cshtml" />

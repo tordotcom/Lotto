@@ -331,13 +331,60 @@ namespace Lotto.Controllers
         {
             return View();
         }
-        public ActionResult BetBackward() //ดูโพยย้อนหลัง
+        public ActionResult ListBackward() //ดูโพยย้อนหลัง
         {
-            return View();
+            List<Period> pr = db.Period.ToList<Period>();
+            string connetionString = null;
+            var pollDetail = new List<Poll_Detail>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+
+            foreach (Period poo in pr)
+            {
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", poo.ID.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            pollDetail.Add(new Poll_Detail
+                            {
+                                ID = Reader["ID"].ToString(),
+                                PeriodDate = poo.Date.ToString(),
+                                name = Reader["Name"].ToString(),
+                                Receive = Reader["Receive"].ToString(),
+                                Amount = Reader["amount"].ToString(),
+                                Discount = Reader["discount"].ToString(),
+                                Create_By = Reader["Create_By"].ToString(),
+                                create_date = Reader["create_date"].ToString(),
+                                poll_number = Reader["rNumber"].ToString(),
+                                UID = Reader["UID"].ToString(),
+                            }); ;
+                        }
+                        cnn.Close();
+
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+            return View(pollDetail);
         }
         public ActionResult LottoBackward() //ดูหวยย้อนหลัง
         {
-            return View();
+            return View(db.Period.ToList());
         }
         public ActionResult Result() //ดูเลขหวย
         {

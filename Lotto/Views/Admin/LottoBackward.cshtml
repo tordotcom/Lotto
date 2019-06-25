@@ -1,4 +1,4 @@
-﻿
+﻿@model IList<Lotto.Models.Period>
 @{ ViewBag.Title = "LottoBackward"; Layout = "~/Views/Shared/_Admin.cshtml"; }
 
 <div class="row">
@@ -17,18 +17,30 @@
                             <th>สถานะ</th>
                             <th>ปิดเมื่อ</th>
                             <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>หวยรัฐบาล</td>
-                            <td>16-04-2019</td>
-                            <td>ปิดรับแล้ว</td>
-                            <td>16-04-2019 23:00</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showLottoModal">สรุปยอด</button></td>
-                            <td><button type="button" class="btn btn-warning">ย้อนกลับ</button></td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            var status = "";
+                            if(item.Status=="1")
+                            {
+                                status = "เสร็จ";
+                            }
+                            else
+                            {
+                                status = "ปิดรับ";
+                            }
+                            <tr>
+                                <td>รัฐบาล</td>
+                                <td>@String.Format("{0:d}", item.Date)</td>
+                                <td>@status</td>
+                                <td>@item.update_date</td>
+                                <td>
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showLottoModal">สรุปยอด</button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -53,51 +65,47 @@
                                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยที่รอรับ</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">15:00:00</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ปิด</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">ปิดอัตโนมัติ</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เวลาหวยออก</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">16:00:00</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">Admin</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
-                                        <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
                                     </div>
                                 </form>
                             </div>
@@ -112,11 +120,11 @@
                                 <div class="card-body">
                                     <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                                         <div class="row form-group">
-                                            <div class="col col-md-5"><label for="text-input" class="form-control-label">วิ่ง บน</label></div>
+                                            <div class="col col-md-5"><label class="form-control-label">วิ่ง บน</label></div>
                                             <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
                                         </div>
                                         <div class="row form-group">
-                                            <div class="col col-md-5"><label for="text-input" class="form-control-label">วิ่ง ล่าง</label></div>
+                                            <div class="col col-md-5"><label class="form-control-label">วิ่ง ล่าง</label></div>
                                             <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
                                         </div>
                                     </form>

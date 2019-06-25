@@ -1,7 +1,18 @@
-﻿
+﻿@model IList<Lotto.Models.Poll_Detail>
 @{
     ViewBag.Title = "BetBackward";
     Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@{
+    var pollCount = 0;
+    var receive = "รับแล้ว";
+    var amount = 0;
+    var total_amount = 0;
+    var amount_receive = 0;
+    var total_receive = 0;
+    var discount = 0;
+    var total_discount = 0;
+    var reject_amount = 0;
 }
 
 <div class="row">
@@ -15,6 +26,7 @@
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th>งวดวันที่</th>
                             <th>สมาชิก</th>
                             <th>ใบที่</th>
                             <th>หมายเลขโพย</th>
@@ -28,18 +40,65 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in Model)
+                        {
+                            pollCount += 1;
+                            if (item.Receive == "1")
+                            {
+                                receive = "รับแล้ว";
+                                if (item.Amount != "")
+                                {
+                                    amount = Int32.Parse(item.Amount);
+                                    amount_receive = Int32.Parse(item.Amount);
+                                }
+                                else
+                                {
+                                    amount = 0;
+                                    amount_receive = 0;
+                                }
+                                if (item.Discount != "")
+                                {
+                                    discount = Int32.Parse(item.Discount);
+                                }
+                                else
+                                {
+                                    discount = 0;
+                                }
+                                total_amount += amount;
+                                total_receive += amount_receive;
+                                total_discount += discount;
+                            }
+                            else
+                            {
+                                receive = "คืนทั้งใบ";
+                                if (item.Amount != "")
+                                {
+                                    amount = Int32.Parse(item.Amount);
+                                }
+                                else
+                                {
+                                    amount = 0;
+                                }
+                                total_amount += amount;
+                                amount_receive = 0;
+                                total_receive += amount_receive;
+                                reject_amount += amount;
+                                discount = 0;
+                            }
                         <tr>
-                            <td>Arm</td>
-                            <td>1</td>
-                            <td>2323</td>
-                            <td>รับแล้ว</td>
-                            <td>15000</td>
-                            <td>15000</td>
-                            <td>14250</td>
-                            <td>0</td>
-                            <td>01-01-2019 13:00</td>
-                            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkModal">ดูโพย</button></td>
+                            <td>@String.Format("{0:dd//MM/yyyy}", item.PeriodDate)</td>
+                            <td>@item.name</td>
+                            <td>@item.poll_number</td>
+                            <td>@item.ID</td>
+                            <td>@receive</td>
+                            <td>@amount</td>
+                            <td>@amount_receive</td>
+                            <td>@discount</td>
+                            <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                            <td>@item.create_date</td>
+                            <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal" data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
                         </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -698,7 +757,9 @@
 
 <script>
     (function ($) {
-
+          $('#bootstrap-data-table').DataTable({
+            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]]
+        });
     })(jQuery);
 </script>
 
