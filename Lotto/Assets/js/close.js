@@ -135,6 +135,8 @@ function keyPress(obj, evt) {
 }
 $("#check_result").click(function () {
     var pid = $(this).attr("data-id");
+    var day = $(this).attr("data-day");
+    //console.log(day);
     var first_three = $("#ft").val();
     var three_up = $("#tt").val();
     var two_down = $("#twob").val();
@@ -150,21 +152,30 @@ $("#check_result").click(function () {
             var ft_ood_3 = ft[1] + ft[2] + ft[0];
             var ft_ood_4 = ft[2] + ft[0] + ft[1];
             var ft_ood_5 = ft[2] + ft[1] + ft[0];
+            
             var tu = three_up.split('');
             var tu_ood_1 = tu[0] + tu[2] + tu[1];
             var tu_ood_2 = tu[1] + tu[0] + tu[2];
             var tu_ood_3 = tu[1] + tu[2] + tu[0];
             var tu_ood_4 = tu[2] + tu[0] + tu[1];
             var tu_ood_5 = tu[2] + tu[1] + tu[0];
+
+            var two_up = tu[1] + tu[2];
+            var two_up_ood = tu[2] + tu[1];
+
+            var up = tu[2];
+
             var td = two_down.split('');
             var td_ood_1 = td[1] + td[0];
 
+            var down = td[1];
             $.ajax({
                 url: CheckResult,
-                data: { PID: pid, FT: first_three, FTO1: ft_ood_1, FTO2: ft_ood_2, FTO3: ft_ood_3, FTO4: ft_ood_4, FTO5: ft_ood_5, TU: three_up, TUO1: tu_ood_1, TUO2: tu_ood_2, TUO3: tu_ood_3, TUO4: tu_ood_4, TUO5: tu_ood_5, TD: two_down, TDO1: td_ood_1 },
+                data: { PID: pid, DAY: day, FT: first_three, FTO1: ft_ood_1, FTO2: ft_ood_2, FTO3: ft_ood_3, FTO4: ft_ood_4, FTO5: ft_ood_5, TU: three_up, TUO1: tu_ood_1, TUO2: tu_ood_2, TUO3: tu_ood_3, TUO4: tu_ood_4, TUO5: tu_ood_5, TD: two_down, TDO1: td_ood_1, ThDown1: three_down1, ThDown2: three_down2, ThDown3: three_down3, ThDown4: three_down4, TwUP: two_up, Tw_up_ood: two_up_ood, UP: up, DOWN: down },
                 type: "POST",
                 dataType: "json",
                 success: function (data) {
+                    console.log(data);
                     if (data == "ss") {
                         //Swal.fire({
                         //    type: 'success',
@@ -176,8 +187,8 @@ $("#check_result").click(function () {
                         //    }
                         //});
                         
-                        //$("#Check_close_modal").click();
-                        //$("#totalBalance").modal('show');
+                        $("#total").click();
+                        
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

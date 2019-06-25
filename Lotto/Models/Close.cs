@@ -8,7 +8,7 @@ namespace Lotto.Models
     public class Close
     {
         public string PID { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string Amount { get; set; }
         public string CountReceive { get; set; }
         public string CountUser { get; set; }

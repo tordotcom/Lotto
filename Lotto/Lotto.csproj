@@ -257,6 +257,7 @@
     </Compile>
     <Compile Include="Models\PollData.cs" />
     <Compile Include="Models\Poll_Detail.cs" />
+    <Compile Include="Models\Poll_Result.cs" />
     <Compile Include="Models\Rate.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
@@ -270,6 +271,7 @@
     <Compile Include="Models\Setting.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\totalResult.cs" />
     <Compile Include="Models\total_bet.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\User_Rate_Discount.cs" />
@@ -496,6 +498,10 @@
     <Content Include="Assets\scss\style.scss" />
     <Content Include="Images\logo.psd" />
     <Content Include="Images\_gitignore" />
+    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.css.map" />
+    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker3.css.map" />
+    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker3.standalone.css.map" />
     <EntityDeploy Include="Models\LottoEntity.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LottoEntity.Designer.cs</LastGenOutput>
@@ -503,10 +509,6 @@
     <Content Include="Models\LottoEntity.edmx.diagram">
       <DependentUpon>LottoEntity.edmx</DependentUpon>
     </Content>
-    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.css.map" />
-    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.standalone.css.map" />
-    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker3.css.map" />
-    <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker3.standalone.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

@@ -100,7 +100,7 @@ namespace Lotto.Controllers
                         all.Add(new Close
                         {
                             PID = Reader["ID"].ToString(),
-                            Date = Reader["Date"].ToString(),
+                            Date = Convert.ToDateTime(Reader["Date"]),
                             Amount = Reader["Amount"].ToString(),
                             CountReceive = Reader["crR"].ToString(),
                             CountUser = Reader["countu"].ToString(),
@@ -1209,12 +1209,12 @@ namespace Lotto.Controllers
                                 iamt = Int32.Parse(amt[0]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 //---------------------- 2 เต็ง -------------------------------//
-                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString(), amt[0], totalDiscount);
+                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString(), amt[0], totalDiscount, NumLen);
 
                                 //-------------------- 2 โต๊ด -------------------------------//
                                 iamt = Int32.Parse(amt[1]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, num[1].ToString() + num[0].ToString(), amt[1], totalDiscount);
+                                InsertLottoSub(lID, typ, num[1].ToString() + num[0].ToString(), amt[1], totalDiscount, NumLen);
                             }
                             else if (typ == "t")
                             {
@@ -1222,13 +1222,13 @@ namespace Lotto.Controllers
                                 iamt = Int32.Parse(amt[0]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 //---------------------- 2 เต็ง -------------------------------//
-                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString(), amt[0], totalDiscount);
+                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString(), amt[0], totalDiscount, NumLen);
 
 
                                 //-------------------- 2 โต๊ด -------------------------------//
                                 iamt = Int32.Parse(amt[1]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, num[1].ToString() + num[0].ToString(), amt[1], totalDiscount);
+                                InsertLottoSub(lID, typ, num[1].ToString() + num[0].ToString(), amt[1], totalDiscount, NumLen);
                             }
                             else if (typ == "t_")
                             {
@@ -1245,7 +1245,7 @@ namespace Lotto.Controllers
                                 {
                                     sort = num[1].ToString() + num[0].ToString();
                                 }
-                                InsertLottoSub(lID, typ, sort, amt[1], totalDiscount);
+                                InsertLottoSub(lID, typ, sort, amt[1], totalDiscount, NumLen);
                             }
                             else { }
                         }
@@ -1255,23 +1255,23 @@ namespace Lotto.Controllers
                             d = Int32.Parse(discount_rate.two_up);
                             iamt = Int32.Parse(amt[0]);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "t", num[0].ToString() + num[1].ToString(), amt[0], totalDiscount);
+                            InsertLottoSub(lID, "t", num[0].ToString() + num[1].ToString(), amt[0], totalDiscount, NumLen);
 
                             //------------------ 2 บน โต๊ด-----------------------//
                             iamt = Int32.Parse(amt[1]);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "t", num[1].ToString() + num[0].ToString(), amt[1], totalDiscount);
+                            InsertLottoSub(lID, "t", num[1].ToString() + num[0].ToString(), amt[1], totalDiscount, NumLen);
 
                             //------------------- 2 ล่าง ---------------------------//
                             d = Int32.Parse(discount_rate.down);
                             iamt = Int32.Parse(amt[0]);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "b", num[0].ToString() + num[1].ToString(), amt[0], totalDiscount);
+                            InsertLottoSub(lID, "b", num[0].ToString() + num[1].ToString(), amt[0], totalDiscount, NumLen);
 
                             //------------------ 2 ล่าง โต๊ด-----------------------//
                             iamt = Int32.Parse(amt[1]);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "b", num[1].ToString() + num[0].ToString(), amt[1], totalDiscount);
+                            InsertLottoSub(lID, "b", num[1].ToString() + num[0].ToString(), amt[1], totalDiscount, NumLen);
                         }
                         else
                         {
@@ -1303,7 +1303,7 @@ namespace Lotto.Controllers
                                 iamt = Int32.Parse(amt[0]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 //---------------------- 3 เต็ง -------------------------------//
-                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString() + num[2].ToString(), amt[0], totalDiscount);
+                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString() + num[2].ToString(), amt[0], totalDiscount, NumLen);
 
                                 //-------------------- 3 โต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.three_ood);
@@ -1328,7 +1328,7 @@ namespace Lotto.Controllers
                                     num[2] = temp;
                                 }
                                 sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
-                                InsertLottoSub(lID, "t_", sort, amt[1], totalDiscount);
+                                InsertLottoSub(lID, "t_", sort, amt[1], totalDiscount, NumLen);
                             }
                             else
                             {
@@ -1355,7 +1355,7 @@ namespace Lotto.Controllers
                                     num[2] = temp;
                                 }
                                 sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
-                                InsertLottoSub(lID, "t_", sort, amt[1], totalDiscount);
+                                InsertLottoSub(lID, "t_", sort, amt[1], totalDiscount, NumLen);
                             }
                         }
                         else if (typ == "f")
@@ -1371,7 +1371,7 @@ namespace Lotto.Controllers
                                 iamt = Int32.Parse(amt[0]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 //---------------------- 3 หน้าเต็ง -------------------------------//
-                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString() + num[2].ToString(), amt[0], totalDiscount);
+                                InsertLottoSub(lID, typ, num[0].ToString() + num[1].ToString() + num[2].ToString(), amt[0], totalDiscount, NumLen);
 
                                 //-------------------- 3 หน้าโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.first_three_ood);
@@ -1396,7 +1396,7 @@ namespace Lotto.Controllers
                                     num[2] = temp;
                                 }
                                 sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
-                                InsertLottoSub(lID, "f_", sort, amt[1], totalDiscount);
+                                InsertLottoSub(lID, "f_", sort, amt[1], totalDiscount, NumLen);
                             }
                             else
                             {
@@ -1423,7 +1423,7 @@ namespace Lotto.Controllers
                                     num[2] = temp;
                                 }
                                 sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
-                                InsertLottoSub(lID, "f_", sort, amt[1], totalDiscount);
+                                InsertLottoSub(lID, "f_", sort, amt[1], totalDiscount, NumLen);
                             }
                         }
                         else if (typ == "ft")
@@ -1439,12 +1439,12 @@ namespace Lotto.Controllers
                                 d = Int32.Parse(discount_rate.first_three);
                                 iamt = Int32.Parse(amt[0]) / 2;
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, "f", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount);
+                                InsertLottoSub(lID, "f", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount, NumLen);
                                 //---------------------- 3 บนเต็ง -------------------------------//
                                 d = Int32.Parse(discount_rate.three_up);
                                 iamt = Int32.Parse(amt[0]) / 2;
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, "t", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount);
+                                InsertLottoSub(lID, "t", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount, NumLen);
                                 //-------------------- 3 หน้าโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.first_three_ood);
                                 iamt = Int32.Parse(amt[1]) / 2;
@@ -1468,13 +1468,13 @@ namespace Lotto.Controllers
                                     num[2] = temp;
                                 }
                                 sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
-                                InsertLottoSub(lID, "f_", sort, iamt.ToString(), totalDiscount);
+                                InsertLottoSub(lID, "f_", sort, iamt.ToString(), totalDiscount, NumLen);
 
                                 //-------------------- 3 บนโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.three_ood);
                                 iamt = Int32.Parse(amt[1]) / 2;
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, "t_", sort, iamt.ToString(), totalDiscount);
+                                InsertLottoSub(lID, "t_", sort, iamt.ToString(), totalDiscount, NumLen);
                             }
                             else
                             {
@@ -1501,7 +1501,7 @@ namespace Lotto.Controllers
                                     num[2] = temp;
                                 }
                                 sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
-                                InsertLottoSub(lID, "f_", sort, iamt.ToString(), totalDiscount);
+                                InsertLottoSub(lID, "f_", sort, iamt.ToString(), totalDiscount, NumLen);
 
                                 //-------------------- 3 บนโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.three_ood);
@@ -1526,7 +1526,7 @@ namespace Lotto.Controllers
                                     num[2] = temp;
                                 }
                                 sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
-                                InsertLottoSub(lID, "t_", sort, iamt.ToString(), totalDiscount);
+                                InsertLottoSub(lID, "t_", sort, iamt.ToString(), totalDiscount, NumLen);
                             }
                         }
                         else
@@ -1555,7 +1555,7 @@ namespace Lotto.Controllers
                                 d = Int32.Parse(discount_rate.up);
                                 iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount);
+                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount, NumLen);
                             }
                             else
                             {
@@ -1563,7 +1563,7 @@ namespace Lotto.Controllers
                                 d = Int32.Parse(discount_rate.down);
                                 iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount);
+                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount, NumLen);
                             }
                         }
                         else if (typ == "tb")
@@ -1572,12 +1572,12 @@ namespace Lotto.Controllers
                             d = Int32.Parse(discount_rate.up);
                             iamt = Int32.Parse(item.Amount);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "t", item.Number, item.Amount, totalDiscount);
+                            InsertLottoSub(lID, "t", item.Number, item.Amount, totalDiscount, NumLen);
                             //---------------------- วิ่งล่าง -------------------------------//
                             d = Int32.Parse(discount_rate.down);
                             iamt = Int32.Parse(item.Amount);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "b", item.Number, item.Amount, totalDiscount);
+                            InsertLottoSub(lID, "b", item.Number, item.Amount, totalDiscount, NumLen);
                         }
                         else { return Json("Fail"); }
                     }
@@ -1595,7 +1595,7 @@ namespace Lotto.Controllers
                                 d = Int32.Parse(discount_rate.two_up);
                                 iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount);
+                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount, NumLen);
 
                             }
                             else
@@ -1604,7 +1604,7 @@ namespace Lotto.Controllers
                                 iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 //---------------------- 2 ล่าง -------------------------------//
-                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount);
+                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount, NumLen);
                             }
                         }
                         else if (typ == "tb")
@@ -1613,13 +1613,13 @@ namespace Lotto.Controllers
                             d = Int32.Parse(discount_rate.two_up);
                             iamt = Int32.Parse(item.Amount);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "t", item.Number, item.Amount, totalDiscount);
+                            InsertLottoSub(lID, "t", item.Number, item.Amount, totalDiscount, NumLen);
 
                             //---------------------- 2 ล่าง -------------------------------//
                             d = Int32.Parse(discount_rate.two_down);
                             iamt = Int32.Parse(item.Amount);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "b", item.Number, item.Amount, totalDiscount);
+                            InsertLottoSub(lID, "b", item.Number, item.Amount, totalDiscount, NumLen);
 
                         }
                         else { return Json("Fail"); }
@@ -1638,7 +1638,7 @@ namespace Lotto.Controllers
                                 d = Int32.Parse(discount_rate.three_up);
                                 iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount);
+                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount, NumLen);
                             }
                             else if (typ == "f")
                             {
@@ -1646,7 +1646,7 @@ namespace Lotto.Controllers
                                 d = Int32.Parse(discount_rate.first_three);
                                 iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount);
+                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount, NumLen);
                             }
                             else
                             {
@@ -1654,7 +1654,7 @@ namespace Lotto.Controllers
                                 d = Int32.Parse(discount_rate.three_down);
                                 iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
-                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount);
+                                InsertLottoSub(lID, typ, item.Number, item.Amount, totalDiscount, NumLen);
                             }
                         }
                         else if (typ == "tb")
@@ -1663,13 +1663,13 @@ namespace Lotto.Controllers
                             d = Int32.Parse(discount_rate.three_up);
                             iamt = Int32.Parse(item.Amount);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "t", item.Number, item.Amount, totalDiscount);
+                            InsertLottoSub(lID, "t", item.Number, item.Amount, totalDiscount, NumLen);
 
                             //---------------------- 3 ล่าง -------------------------------//
                             d = Int32.Parse(discount_rate.three_down);
                             iamt = Int32.Parse(item.Amount);
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "b", item.Number, item.Amount, totalDiscount);
+                            InsertLottoSub(lID, "b", item.Number, item.Amount, totalDiscount, NumLen);
                         }
                         else if (typ == "ft")
                         {
@@ -1677,12 +1677,12 @@ namespace Lotto.Controllers
                             d = Int32.Parse(discount_rate.two_up);
                             iamt = Int32.Parse(item.Amount) / 2;
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "t", item.Number, iamt.ToString(), totalDiscount);
+                            InsertLottoSub(lID, "t", item.Number, iamt.ToString(), totalDiscount, NumLen);
                             //---------------------- 3 หน้า -------------------------------//
                             d = Int32.Parse(discount_rate.two_down);
                             iamt = Int32.Parse(item.Amount) / 2;
                             totalDiscount = (iamt - (iamt * d) / 100);
-                            InsertLottoSub(lID, "f", item.Number, iamt.ToString(), totalDiscount);
+                            InsertLottoSub(lID, "f", item.Number, iamt.ToString(), totalDiscount, NumLen);
                         }
                         else { return Json("Fail"); }
                     }
@@ -1691,14 +1691,17 @@ namespace Lotto.Controllers
             }
             return Json("ss");
         }
-        public void InsertLottoSub(int lid, string Type, string number, string amount, int totalDiscount)
+        public void InsertLottoSub(int lid, string Type, string number, string amount, int totalDiscount,int NumLen)
         {
             var lottosub = new LottoSub();
             lottosub.Lotto_ID = lid;
             lottosub.Type = Type;
+            lottosub.NumLen.ToString();
             lottosub.Number = number;
             lottosub.Amount = amount;
             lottosub.AmountDiscount = totalDiscount.ToString();
+            lottosub.AmountWin = "0";
+            lottosub.Result_Status = "0";
             lottosub.create_date = DateTime.Now;
             lottosub.update_date = DateTime.Now;
             db.LottoSub.Add(lottosub);
@@ -1715,7 +1718,7 @@ namespace Lotto.Controllers
 
             var p = new Period();
             p.UID = 1; //----------- user id-----------//
-            p.Date = DateTime.ParseExact(pDate, "yyyy-MM-dd", null);
+            p.Date = Date;
             p.Status = "1";
             p.BetStatus = "0";
             p.Check_Result = "0";
@@ -1760,9 +1763,283 @@ namespace Lotto.Controllers
             return Json("ss");
         }
         [HttpPost]
-        public ActionResult CheckResult(string PID,string FT,string FTO1,string FTO2,string FTO3,string FTO4,string FTO5,string TU,string TUO1,string TUO2,string TUO3,string TUO4,string TUO5,string TD,string TDO1)
+        public ActionResult CheckResult(string PID,DateTime DAY,string FT,string FTO1,string FTO2,string FTO3,string FTO4,string FTO5,string TU,string TUO1,string TUO2,string TUO3,string TUO4,string TUO5,string TD,string TDO1,string ThDown1,string ThDown2,string ThDown3,string ThDown4,string TwUP,string Tw_up_ood,string UP,string DOWN)
         {
-            return Json("ss");
+            string connetionString = null;
+            var data = new List<Poll_Result>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT ls.[ID],ls.Type,ls.NumLen,ls.Number,ls.Amount,ls.AmountDiscount,isnull(r.[three_up],mr.three_up) as three_up,isnull(r.[three_ood],mr.[three_ood]) as three_ood,isnull(r.[three_down],mr.[three_down]) as three_down,isnull(r.[two_up],mr.[two_up]) as two_up,isnull(r.[two_ood],mr.[two_ood]) as two_ood,isnull(r.[two_down],mr.[two_down]) as two_down,isnull(r.[up],mr.[up]) as up,isnull(r.[down],mr.[down]) as down,isnull(r.[first_three],mr.[first_three]) as first_three,isnull(r.[first_three_ood],mr.[first_three_ood]) as first_three_ood FROM [dbo].[Period] pe left join(SELECT [ID],UID,[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],NumLen,[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[UID],[three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood] FROM [dbo].[Rate]) r on po.UID=r.UID left join(SELECT [ID],[three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood] FROM [dbo].[Main_Rate]) mr on 1=1 where pe.ID=@period";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", PID.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        data.Add(new Poll_Result
+                        {
+                            ID = Reader["ID"].ToString(),
+                            Type = Reader["Type"].ToString(),
+                            NumLen = Reader["NumLen"].ToString(),
+                            Number = Reader["Number"].ToString(),
+                            Amount = Reader["Amount"].ToString(),
+                            AmountDiscount = Reader["AmountDiscount"].ToString(),
+                            three_up = Reader["three_up"].ToString(),
+                            three_ood = Reader["three_ood"].ToString(),
+                            three_down = Reader["three_down"].ToString(),
+                            two_up = Reader["two_up"].ToString(),
+                            two_ood = Reader["two_ood"].ToString(),
+                            two_down = Reader["two_down"].ToString(),
+                            up = Reader["up"].ToString(),
+                            down = Reader["down"].ToString(),
+                            first_three = Reader["first_three"].ToString(),
+                            first_three_ood = Reader["first_three_ood"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            var list = new List<totalResult>
+            {
+                new totalResult { Type = "Up", AmountDiscount = 0, Win = 0,total=0 },
+                new totalResult { Type = "Down", AmountDiscount = 0, Win = 0 ,total=0},
+                new totalResult { Type = "FirstThree", AmountDiscount = 0, Win = 0 ,total=0},
+                new totalResult { Type = "FirstThreeOod", AmountDiscount = 0, Win = 0 ,total=0},
+                new totalResult { Type = "ThreeUp", AmountDiscount = 0, Win = 0 ,total=0},
+                new totalResult { Type = "ThreeUPOod", AmountDiscount = 0, Win =0 ,total=0},
+                new totalResult { Type = "ThreeDown", AmountDiscount = 0, Win = 0 ,total=0},
+                new totalResult { Type = "TwoUp", AmountDiscount = 0, Win = 0 ,total=0},
+                new totalResult { Type = "TwoDown", AmountDiscount = 0, Win = 0 ,total=0},
+                new totalResult { Type = "TwoOod", AmountDiscount = 0, Win = 0 ,total=0}
+           }; 
+            foreach (var idata in data)
+            {
+                if (idata.ID!="")
+                {
+                    int amount_ = Int32.Parse(idata.Amount);
+                    int amountDis = Int32.Parse(idata.AmountDiscount);
+                    if (idata.NumLen == "1")
+                    {
+                        if (idata.Type == "t" && idata.Number == UP)
+                        {
+                            UpdateLottoSub(idata.Amount, idata.up, idata.ID);
+                            int rate = Int32.Parse(idata.up);
+                            list[0].Win = list[0].Win + (amount_ * rate);
+                            list[0].AmountDiscount = list[0].AmountDiscount + amountDis;
+                            list[0].total = list[0].AmountDiscount + list[0].Win;
+                        }
+                        else if (idata.Type == "b" && idata.Number == DOWN)
+                        {
+                            UpdateLottoSub(idata.Amount, idata.down, idata.ID);
+                            int rate = Int32.Parse(idata.down);
+                            list[1].Win = list[1].Win + (amount_ * rate);
+                            list[1].AmountDiscount = list[1].AmountDiscount + amountDis;
+                            list[1].total = list[1].AmountDiscount + list[1].Win;
+                        }
+                        else if(idata.Type == "t")
+                        {
+                            list[0].AmountDiscount = list[0].AmountDiscount + amountDis;
+                            list[0].total = list[0].AmountDiscount + list[0].Win;
+                        }
+                        else if(idata.Type == "b")
+                        {
+                            list[1].AmountDiscount = list[1].AmountDiscount + amountDis;
+                            list[1].total = list[1].AmountDiscount + list[1].Win;
+                        }
+                        else { }
+                    }
+                    else if (idata.NumLen == "2")
+                    {
+                        if (idata.Type == "t" && idata.Number == TwUP)
+                        {
+                            UpdateLottoSub(idata.Amount, idata.two_up, idata.ID);
+                            int rate = Int32.Parse(idata.two_up);
+                            list[7].Win = list[7].Win + (amount_ * rate);
+                            list[7].AmountDiscount = list[7].AmountDiscount + amountDis;
+                            list[7].total = list[7].AmountDiscount + list[7].Win;
+                        }
+                        else if (idata.Type == "b" && idata.Number == TD)
+                        {
+                            UpdateLottoSub(idata.Amount, idata.two_down, idata.ID);
+                            int rate = Int32.Parse(idata.two_down);
+                            list[8].Win = list[8].Win + (amount_ * rate);
+                            list[8].AmountDiscount = list[8].AmountDiscount + amountDis;
+                            list[8].total = list[8].AmountDiscount + list[8].Win;
+                        }
+                        else if (idata.Type == "t_" && (idata.Number == Tw_up_ood || idata.Number == TwUP))
+                        {
+                            UpdateLottoSub(idata.Amount, idata.two_ood, idata.ID);
+                            int rate = Int32.Parse(idata.two_ood);
+                            list[9].Win = list[9].Win + (amount_ * rate);
+                            list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
+                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                        }
+                        else if (idata.Type == "b_" && (idata.Number == TDO1 || idata.Number == TD))
+                        {
+                            UpdateLottoSub(idata.Amount, idata.two_ood, idata.ID);
+                            int rate = Int32.Parse(idata.two_ood);
+                            list[9].Win = list[9].Win + (amount_ * rate);
+                            list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
+                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                        }
+                        else if(idata.Type == "t")
+                        {
+                            list[7].AmountDiscount = list[7].AmountDiscount + amountDis;
+                            list[7].total = list[7].AmountDiscount + list[7].Win;
+                        }
+                        else if (idata.Type == "b")
+                        {
+                            list[8].AmountDiscount = list[8].AmountDiscount + amountDis;
+                            list[8].total = list[8].AmountDiscount + list[8].Win;
+                        }
+                        else if (idata.Type == "t_")
+                        {
+                            list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
+                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                        }
+                        else if (idata.Type == "b_")
+                        {
+                            list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
+                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                        }
+                        else { }
+                    }
+                    else if (idata.NumLen == "3")
+                    {
+                        if (idata.Type == "t" && idata.Number == TU)
+                        {
+                            UpdateLottoSub(idata.Amount, idata.three_up, idata.ID);
+                            int rate = Int32.Parse(idata.three_up);
+                            list[4].Win = list[4].Win + (amount_ * rate);
+                            list[4].AmountDiscount = list[4].AmountDiscount + amountDis;
+                            list[4].total = list[4].AmountDiscount + list[4].Win;
+                        }
+                        else if (idata.Type == "b" && (idata.Number == ThDown1 || idata.Number == ThDown2 || idata.Number == ThDown3 || idata.Number == ThDown4))
+                        {
+                            UpdateLottoSub(idata.Amount, idata.three_down, idata.ID);
+                            int rate = Int32.Parse(idata.three_down);
+                            list[6].Win = list[6].Win + (amount_ * rate);
+                            list[6].AmountDiscount = list[6].AmountDiscount + amountDis;
+                            list[6].total = list[6].AmountDiscount + list[6].Win;
+                        }
+                        else if (idata.Type == "t_" && (idata.Number == TU || idata.Number == TUO1 || idata.Number == TUO2 || idata.Number == TUO3 || idata.Number == TUO4 || idata.Number == TUO5))
+                        {
+                            UpdateLottoSub(idata.Amount, idata.three_ood, idata.ID);
+                            int rate = Int32.Parse(idata.three_ood);
+                            list[5].Win = list[5].Win + (amount_ * rate);
+                            list[5].AmountDiscount = list[5].AmountDiscount + amountDis;
+                            list[5].total = list[5].AmountDiscount + list[5].Win;
+                        }
+                        else if (idata.Type == "f" && idata.Number == FT)
+                        {
+                            UpdateLottoSub(idata.Amount, idata.first_three, idata.ID);
+                            int rate = Int32.Parse(idata.first_three);
+                            list[2].Win = list[2].Win + (amount_ * rate);
+                            list[2].AmountDiscount = list[2].AmountDiscount + amountDis;
+                            list[2].total = list[2].AmountDiscount + list[2].Win;
+                        }
+                        else if (idata.Type == "f_" && (idata.Number == FT || idata.Number == FTO1 || idata.Number == FTO2 || idata.Number == FTO3 || idata.Number == FTO4 || idata.Number == FTO5))
+                        {
+                            UpdateLottoSub(idata.Amount, idata.first_three_ood, idata.ID);
+                            int rate = Int32.Parse(idata.first_three_ood);
+                            list[3].Win = list[3].Win + (amount_ * rate);
+                            list[3].AmountDiscount = list[3].AmountDiscount + amountDis;
+                            list[3].total = list[3].AmountDiscount + list[3].Win;
+                        }
+                        else if(idata.Type == "t")
+                        {
+                            list[4].AmountDiscount = list[4].AmountDiscount + amountDis;
+                            list[4].total = list[4].AmountDiscount + list[4].Win;
+                        }
+                        else if (idata.Type == "b")
+                        {
+                            list[6].AmountDiscount = list[6].AmountDiscount + amountDis;
+                            list[6].total = list[6].AmountDiscount + list[6].Win;
+                        }
+                        else if (idata.Type == "t_")
+                        {
+                            list[5].AmountDiscount = list[5].AmountDiscount + amountDis;
+                            list[5].total = list[5].AmountDiscount + list[5].Win;
+                        }
+                        else if (idata.Type == "f")
+                        {
+                            list[2].AmountDiscount = list[2].AmountDiscount + amountDis;
+                            list[2].total = list[2].AmountDiscount + list[2].Win;
+                        }
+                        else if (idata.Type == "f_")
+                        {
+                            list[3].AmountDiscount = list[3].AmountDiscount + amountDis;
+                            list[3].total = list[3].AmountDiscount + list[3].Win;
+                        }
+                        else { }
+                    }
+                    else { }
+                }
+            }
+            int id = Int32.Parse(PID);
+            Period p = db.Period.Where(s => s.ID == id).FirstOrDefault<Period>();
+            p.Check_Result = "1";
+            db.Entry(p).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+
+            var r = new Result();
+            r.Period_ID = id;
+            r.Name = "หวยรัฐบาล";
+            r.Lotto_day = DAY;
+            r.Up = UP;
+            r.Down = DOWN;
+            r.two_up = TwUP;
+            r.two_up_ood = Tw_up_ood;
+            r.two_down = TD;
+            r.two_down_ood = TDO1;
+            r.first_three = FT;
+            r.first_3_ood_1 = FTO1;
+            r.first_3_ood_2 = FTO2;
+            r.first_3_ood_3 = FTO3;
+            r.first_3_ood_4 = FTO4;
+            r.first_3_ood_5 = FTO5;
+            r.last_three = TU;
+            r.last_3_ood_1 = TUO1;
+            r.last_3_ood_2 = TUO2;
+            r.last_3_ood_3 = TUO3;
+            r.last_3_ood_4 = TUO4;
+            r.last_3_ood_5 = TUO5;
+            r.three_down_1 = ThDown1;
+            r.three_down_2 = ThDown2;
+            r.three_down_3 = ThDown3;
+            r.three_down_4 = ThDown4;           
+            r.update_date = DateTime.Now;
+            r.create_date = DateTime.Now;
+            db.Result.Add(r);
+            db.SaveChanges();
+            return Json(list);
+        }
+
+        public void UpdateLottoSub( string Amount, string Rate, string ID)
+        {
+            int id = Int32.Parse(ID);
+            var amount = Int32.Parse(Amount);
+            var rate = Int32.Parse(Rate);
+            var win = amount * rate;
+            LottoSub ls = db.LottoSub.Where(s => s.ID == id).FirstOrDefault<LottoSub>();
+            ls.update_date = DateTime.Now;
+            ls.AmountWin = win.ToString();
+            ls.Result_Status = "1";
+            db.Entry(ls).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

@@ -15,28 +15,32 @@ namespace Lotto.Models
     public partial class Result
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Lotto_day { get; set; }
-        public string first_three { get; set; }
-        public string last_three { get; set; }
-        public string three_down_1 { get; set; }
-        public string three_down_2 { get; set; }
-        public string three_down_3 { get; set; }
-        public string three_down_4 { get; set; }
-        public string two_down { get; set; }
-        public Nullable<System.DateTime> create_date { get; set; }
-        public Nullable<System.DateTime> update_date { get; set; }
         public Nullable<int> Period_ID { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> Lotto_day { get; set; }
+        public string first_three { get; set; }
         public string first_3_ood_1 { get; set; }
         public string first_3_ood_2 { get; set; }
         public string first_3_ood_3 { get; set; }
         public string first_3_ood_4 { get; set; }
         public string first_3_ood_5 { get; set; }
+        public string last_three { get; set; }
         public string last_3_ood_1 { get; set; }
         public string last_3_ood_2 { get; set; }
         public string last_3_ood_3 { get; set; }
         public string last_3_ood_4 { get; set; }
         public string last_3_ood_5 { get; set; }
+        public string three_down_1 { get; set; }
+        public string three_down_2 { get; set; }
+        public string three_down_3 { get; set; }
+        public string three_down_4 { get; set; }
+        public string two_down { get; set; }
         public string two_down_ood { get; set; }
+        public Nullable<System.DateTime> create_date { get; set; }
+        public Nullable<System.DateTime> update_date { get; set; }
+        public string Up { get; set; }
+        public string Down { get; set; }
+        public string two_up { get; set; }
+        public string two_up_ood { get; set; }
     }
 }

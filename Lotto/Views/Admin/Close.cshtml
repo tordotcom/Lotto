@@ -13,13 +13,17 @@
             </div>
             <div class="card-body">
                 <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">งวดวันที่</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Date.ToString("dd/MM/yyyy") </div></div>
+                </div>
+                <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
                     <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Amount</div></div>
                 </div>
                 @*<div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รอรับ</label></div>
-                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>*@
+            <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รอรับ</label></div>
+            <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+        </div>*@
                 <div class="row form-group">
                     <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
                     <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountReceive</div></div>
@@ -98,7 +102,7 @@
                 </div>
             </div>*@
         <div class="col-md-12/">
-            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเงิน</button>
+            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" id="total" data-keyboard="false">ใบสรุปยอดเงิน</button>
             <button type="button" class="btn btn-block btn-warning btn-sm" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
         </div>
     </div>
@@ -232,7 +236,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="check_result" data-id="@Model[0].PID">ตรวจ</button>
+                <button type="button" class="btn btn-primary" id="check_result" data-dismiss="modal" data-day="@Model[0].Date"data-id="@Model[0].PID">ตรวจ</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
@@ -292,19 +296,19 @@
                         <tr>
                             <th rowspan="2">ชนิด</th>
                             <th colspan="3">ยอดทั้งหมด</th>
-                            <th colspan="3">แทงออก</th>
-                            <th colspan="3">รับไว้</th>
+                            @*<th colspan="3">แทงออก</th>
+                            <th colspan="3">รับไว้</th>*@
                         </tr>
                          <tr>
                             <th>แทงหัก %</th>
                             <th>ถูก</th>
                             <th>สุทธิ</th>
-                            <th>แทงหัก %</th>
+                            @*<th>แทงหัก %</th>
                             <th>ถูก</th>
                             <th>สุทธิ</th>
                             <th>แทงหัก %</th>
                             <th>ถูก</th>
-                            <th>สุทธิ</th>
+                            <th>สุทธิ</th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -313,120 +317,120 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>3 บน</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>วิ่ง บน</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                     </tbody>
                     <tfoot style="color:white;background-color:blue;">
@@ -435,12 +439,12 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            @*<td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td></td>*@
                         </tr>
                     </tfoot>
                 </table>

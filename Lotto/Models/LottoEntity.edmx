@@ -68,6 +68,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Lotto_ID" Type="int" />
           <Property Name="Type" Type="nvarchar" MaxLength="2" />
+          <Property Name="NumLen" Type="nvarchar" MaxLength="50" />
           <Property Name="Number" Type="nvarchar" MaxLength="50" />
           <Property Name="Amount" Type="nvarchar" MaxLength="50" />
           <Property Name="AmountDiscount" Type="nvarchar" MaxLength="50" />
@@ -164,7 +165,13 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Period_ID" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Lotto_day" Type="nvarchar" MaxLength="10" />
+          <Property Name="Lotto_day" Type="datetime" />
+          <Property Name="Up" Type="nvarchar" MaxLength="3" />
+          <Property Name="Down" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_up_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
+          <Property Name="two_down_ood" Type="nvarchar" MaxLength="2" />
           <Property Name="first_three" Type="nvarchar" MaxLength="3" />
           <Property Name="first_3_ood_1" Type="nvarchar" MaxLength="3" />
           <Property Name="first_3_ood_2" Type="nvarchar" MaxLength="3" />
@@ -181,8 +188,6 @@
           <Property Name="three_down_2" Type="nvarchar" MaxLength="3" />
           <Property Name="three_down_3" Type="nvarchar" MaxLength="3" />
           <Property Name="three_down_4" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_down" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_down_ood" Type="nvarchar" MaxLength="2" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -393,6 +398,23 @@
           <NavigationProperty Name="Poll" Relationship="Self.FK_Lotto_Poll" FromRole="LottoMain" ToRole="Poll" />
           <NavigationProperty Name="LottoSub" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoMain" ToRole="LottoSub" />
         </EntityType>
+        <EntityType Name="LottoSub">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lotto_ID" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AmountDiscount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AmountWin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="Result_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LottoMain" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoSub" ToRole="LottoMain" />
+          <Property Name="NumLen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Main_Discount">
           <Key>
             <PropertyRef Name="ID" />
@@ -437,12 +459,12 @@
           <Property Name="UID" Type="Int32" />
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="create_date" Type="DateTime" Precision="3" />
-          <Property Name="update_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Poll" Relationship="Self.FK_Poll_Period" FromRole="Period" ToRole="Poll" />
           <Property Name="BetStatus" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <Property Name="Close_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Check_Result" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Poll" Relationship="Self.FK_Poll_Period" FromRole="Period" ToRole="Poll" />
         </EntityType>
         <EntityType Name="Poll">
           <Key>
@@ -479,6 +501,39 @@
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Rate_Account" FromRole="Rate" ToRole="Account" />
         </EntityType>
+        <EntityType Name="Result">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Period_ID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lotto_day" Type="DateTime" Precision="3" />
+          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_3_ood_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_3_ood_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_3_ood_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_3_ood_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="first_3_ood_5" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_3_ood_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_3_ood_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_3_ood_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_3_ood_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="last_3_ood_5" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_down_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="two_down_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="create_date" Type="DateTime" Precision="3" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="Up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="two_up_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="ID" />
@@ -489,21 +544,15 @@
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="LottoSub">
+        <EntityType Name="Setting">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Lotto_ID" Type="Int32" />
-          <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AmountDiscount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="LottoMain" Relationship="Self.FK_LottoSub_Lotto" FromRole="LottoSub" ToRole="LottoMain" />
-          <Property Name="AmountWin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Result_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
@@ -592,13 +641,15 @@
           <EntitySet Name="Account_Role" EntityType="Self.Account_Role" />
           <EntitySet Name="Discount" EntityType="Self.Discount" />
           <EntitySet Name="LottoMain" EntityType="Self.LottoMain" />
+          <EntitySet Name="LottoSub" EntityType="Self.LottoSub" />
           <EntitySet Name="Main_Discount" EntityType="Self.Main_Discount" />
           <EntitySet Name="Main_Rate" EntityType="Self.Main_Rate" />
           <EntitySet Name="Period" EntityType="Self.Period" />
           <EntitySet Name="Poll" EntityType="Self.Poll" />
           <EntitySet Name="Rate" EntityType="Self.Rate" />
+          <EntitySet Name="Result" EntityType="Self.Result" />
           <EntitySet Name="Role" EntityType="Self.Role" />
-          <EntitySet Name="LottoSub" EntityType="Self.LottoSub" />
+          <EntitySet Name="Setting" EntityType="Self.Setting" />
           <AssociationSet Name="FK_Discount_Account" Association="Self.FK_Discount_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Discount" EntitySet="Discount" />
@@ -623,48 +674,7 @@
             <End Role="Period" EntitySet="Period" />
             <End Role="Poll" EntitySet="Poll" />
           </AssociationSet>
-          <EntitySet Name="Result" EntityType="ltfomModel.Result" />
-          <EntitySet Name="Setting" EntityType="ltfomModel.Setting" />
         </EntityContainer>
-        <EntityType Name="Result">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Lotto_day" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="last_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="create_date" Type="DateTime" Precision="3" />
-          <Property Name="update_date" Type="DateTime" Precision="3" />
-          <Property Name="Period_ID" Type="Int32" />
-          <Property Name="first_3_ood_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_3_ood_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_3_ood_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_3_ood_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_3_ood_5" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="last_3_ood_1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="last_3_ood_2" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="last_3_ood_3" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="last_3_ood_4" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="last_3_ood_5" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_down_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Setting">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Value" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="create_date" Type="DateTime" Precision="3" />
-          <Property Name="update_date" Type="DateTime" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -731,6 +741,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LottoSub">
+            <EntityTypeMapping TypeName="ltfomModel.LottoSub">
+              <MappingFragment StoreEntitySet="LottoSub">
+                <ScalarProperty Name="NumLen" ColumnName="NumLen" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Lotto_ID" ColumnName="Lotto_ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AmountDiscount" ColumnName="AmountDiscount" />
+                <ScalarProperty Name="AmountWin" ColumnName="AmountWin" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="Result_Status" ColumnName="Result_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Main_Discount">
             <EntityTypeMapping TypeName="ltfomModel.Main_Discount">
               <MappingFragment StoreEntitySet="Main_Discount">
@@ -772,13 +799,13 @@
           <EntitySetMapping Name="Period">
             <EntityTypeMapping TypeName="ltfomModel.Period">
               <MappingFragment StoreEntitySet="Period">
-                <ScalarProperty Name="Check_Result" ColumnName="Check_Result" />
-                <ScalarProperty Name="Close_BY" ColumnName="Close_BY" />
-                <ScalarProperty Name="BetStatus" ColumnName="BetStatus" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BetStatus" ColumnName="BetStatus" />
+                <ScalarProperty Name="Close_BY" ColumnName="Close_BY" />
+                <ScalarProperty Name="Check_Result" ColumnName="Check_Result" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="update_date" ColumnName="update_date" />
               </MappingFragment>
@@ -817,6 +844,40 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Result">
+            <EntityTypeMapping TypeName="ltfomModel.Result">
+              <MappingFragment StoreEntitySet="Result">
+                <ScalarProperty Name="two_up_ood" ColumnName="two_up_ood" />
+                <ScalarProperty Name="two_up" ColumnName="two_up" />
+                <ScalarProperty Name="Down" ColumnName="Down" />
+                <ScalarProperty Name="Up" ColumnName="Up" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Period_ID" ColumnName="Period_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Lotto_day" ColumnName="Lotto_day" />
+                <ScalarProperty Name="first_three" ColumnName="first_three" />
+                <ScalarProperty Name="first_3_ood_1" ColumnName="first_3_ood_1" />
+                <ScalarProperty Name="first_3_ood_2" ColumnName="first_3_ood_2" />
+                <ScalarProperty Name="first_3_ood_3" ColumnName="first_3_ood_3" />
+                <ScalarProperty Name="first_3_ood_4" ColumnName="first_3_ood_4" />
+                <ScalarProperty Name="first_3_ood_5" ColumnName="first_3_ood_5" />
+                <ScalarProperty Name="last_three" ColumnName="last_three" />
+                <ScalarProperty Name="last_3_ood_1" ColumnName="last_3_ood_1" />
+                <ScalarProperty Name="last_3_ood_2" ColumnName="last_3_ood_2" />
+                <ScalarProperty Name="last_3_ood_3" ColumnName="last_3_ood_3" />
+                <ScalarProperty Name="last_3_ood_4" ColumnName="last_3_ood_4" />
+                <ScalarProperty Name="last_3_ood_5" ColumnName="last_3_ood_5" />
+                <ScalarProperty Name="three_down_1" ColumnName="three_down_1" />
+                <ScalarProperty Name="three_down_2" ColumnName="three_down_2" />
+                <ScalarProperty Name="three_down_3" ColumnName="three_down_3" />
+                <ScalarProperty Name="three_down_4" ColumnName="three_down_4" />
+                <ScalarProperty Name="two_down" ColumnName="two_down" />
+                <ScalarProperty Name="two_down_ood" ColumnName="two_down_ood" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Role">
             <EntityTypeMapping TypeName="ltfomModel.Role">
               <MappingFragment StoreEntitySet="Role">
@@ -828,60 +889,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LottoSub">
-            <EntityTypeMapping TypeName="ltfomModel.LottoSub">
-              <MappingFragment StoreEntitySet="LottoSub">
-                <ScalarProperty Name="Result_Status" ColumnName="Result_Status" />
-                <ScalarProperty Name="AmountWin" ColumnName="AmountWin" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Lotto_ID" ColumnName="Lotto_ID" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="AmountDiscount" ColumnName="AmountDiscount" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Result">
-            <EntityTypeMapping TypeName="ltfomModel.Result">
-              <MappingFragment StoreEntitySet="Result">
-                <ScalarProperty Name="two_down_ood" ColumnName="two_down_ood" />
-                <ScalarProperty Name="last_3_ood_5" ColumnName="last_3_ood_5" />
-                <ScalarProperty Name="last_3_ood_4" ColumnName="last_3_ood_4" />
-                <ScalarProperty Name="last_3_ood_3" ColumnName="last_3_ood_3" />
-                <ScalarProperty Name="last_3_ood_2" ColumnName="last_3_ood_2" />
-                <ScalarProperty Name="last_3_ood_1" ColumnName="last_3_ood_1" />
-                <ScalarProperty Name="first_3_ood_5" ColumnName="first_3_ood_5" />
-                <ScalarProperty Name="first_3_ood_4" ColumnName="first_3_ood_4" />
-                <ScalarProperty Name="first_3_ood_3" ColumnName="first_3_ood_3" />
-                <ScalarProperty Name="first_3_ood_2" ColumnName="first_3_ood_2" />
-                <ScalarProperty Name="first_3_ood_1" ColumnName="first_3_ood_1" />
-                <ScalarProperty Name="Period_ID" ColumnName="Period_ID" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="two_down" ColumnName="two_down" />
-                <ScalarProperty Name="three_down_4" ColumnName="three_down_4" />
-                <ScalarProperty Name="three_down_3" ColumnName="three_down_3" />
-                <ScalarProperty Name="three_down_2" ColumnName="three_down_2" />
-                <ScalarProperty Name="three_down_1" ColumnName="three_down_1" />
-                <ScalarProperty Name="last_three" ColumnName="last_three" />
-                <ScalarProperty Name="first_three" ColumnName="first_three" />
-                <ScalarProperty Name="Lotto_day" ColumnName="Lotto_day" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Setting">
             <EntityTypeMapping TypeName="ltfomModel.Setting">
               <MappingFragment StoreEntitySet="Setting">
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

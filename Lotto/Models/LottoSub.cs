@@ -20,10 +20,11 @@ namespace Lotto.Models
         public string Number { get; set; }
         public string Amount { get; set; }
         public string AmountDiscount { get; set; }
+        public string AmountWin { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
-        public string AmountWin { get; set; }
         public string Result_Status { get; set; }
+        public string NumLen { get; set; }
     
         public virtual LottoMain LottoMain { get; set; }
     }
