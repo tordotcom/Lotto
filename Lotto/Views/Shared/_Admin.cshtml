@@ -562,7 +562,7 @@
                 globalSetting = data['Setting'];
                 //alert(JSON.stringify(globalSetting));
 
-                for (i = 0; i <= globalSetting.length ; i++){
+                for (i = 0; i < globalSetting.length ; i++){
                     if (globalSetting[i].Name == "auto_poll_accept") {
                         $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
                     }

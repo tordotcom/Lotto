@@ -122,6 +122,85 @@ namespace Lotto.Controllers
             {
 
             }
+
+            var user_bet = new List<User_Bet_Result>();
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT po.UID,a.Name,sum(CAST(ls.AmountDiscount as int)) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period group by po.UID,a.Name";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", pid.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        user_bet.Add(new User_Bet_Result
+                        {
+                            ID = Reader["UID"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Discount = Reader["AmountDiscount"].ToString(),
+                            Win = Reader["AmountWin"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            if (all[0].CheckResult=="1")
+            {
+                List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
+                ViewData["TAR"] = TAR;
+                ViewData["UBET"] = user_bet;
+            }
+            else if(all[0].CheckResult == "0")
+            {
+                var total_type_bet = new List<Total_Amount_Result>();
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "select t.Type,sum(CAST(t.AmountDiscount as int)) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", pid.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            total_type_bet.Add(new Total_Amount_Result
+                            {                                
+                                Type = Reader["Type"].ToString(),
+                                Amount_Discount = Reader["AmountDiscount"].ToString(),
+                                Amount_Win = Reader["Win"].ToString(),
+                                
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                ViewData["TAR"] = total_type_bet;
+                ViewData["UBET"] = user_bet;
+            }
+            else { }
             return View(all);
         }
 
@@ -2072,6 +2151,20 @@ namespace Lotto.Controllers
             r.create_date = DateTime.Now;
             db.Result.Add(r);
             db.SaveChanges();
+
+            foreach(var ilist in list)
+            {
+                var tr = new Total_Amount_Result();
+                tr.Type = ilist.Type;
+                tr.Amount_Discount = ilist.AmountDiscount.ToString();
+                tr.Period_ID = PID;
+                tr.Amount_Win = ilist.Win.ToString();
+                tr.create_date = DateTime.Now;
+                tr.update_date = DateTime.Now;
+                db.Total_Amount_Result.Add(tr);
+                db.SaveChanges();
+            }
+            
             return Json(list);
         }
 

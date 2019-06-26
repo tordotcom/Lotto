@@ -272,8 +272,12 @@
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\totalResult.cs" />
+    <Compile Include="Models\Total_Amount_Result.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\total_bet.cs" />
     <Compile Include="Models\UserLogin.cs" />
+    <Compile Include="Models\User_Bet_Result.cs" />
     <Compile Include="Models\User_Rate_Discount.cs" />
     <Compile Include="Models\User_Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

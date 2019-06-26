@@ -177,18 +177,15 @@ $("#check_result").click(function () {
                 success: function (data) {
                     console.log(data);
                     if (data == "ss") {
-                        //Swal.fire({
-                        //    type: 'success',
-                        //    title: "ปิดหวยเรียบร้อย",
-                        //    showConfirmButton: false,
-                        //    timer: 1500,
-                        //    onAfterClose: () => {
-                        //        location.reload();
-                        //    }
-                        //});
-                        
-                        $("#total").click();
-                        
+                        Swal.fire({
+                            type: 'success',
+                            title: "ตรวจเลขเรียบร้อย",
+                            showConfirmButton: false,
+                            timer: 1500,
+                            onAfterClose: () => {
+                                location.reload();
+                            }
+                        });   
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

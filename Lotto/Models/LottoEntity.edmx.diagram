@@ -24,6 +24,7 @@
         <AssociationConnector Association="ltfomModel.FK_Lotto_Poll" ManuallyRouted="false" />
         <AssociationConnector Association="ltfomModel.FK_LottoSub_Lotto" ManuallyRouted="false" />
         <AssociationConnector Association="ltfomModel.FK_Poll_Period" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ltfomModel.Total_Amount_Result" Width="1.5" PointX="12.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

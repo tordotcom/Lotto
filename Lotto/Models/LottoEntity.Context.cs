@@ -38,5 +38,6 @@ namespace Lotto.Models
         public virtual DbSet<Result> Result { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Setting> Setting { get; set; }
+        public virtual DbSet<Total_Amount_Result> Total_Amount_Result { get; set; }
     }
 }
