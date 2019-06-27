@@ -396,6 +396,7 @@
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.zh-TW.min.js" />
     <Content Include="Assets\js\close.js" />
     <Content Include="Assets\js\dashboard.js" />
+    <Content Include="Assets\js\dateformat.js" />
     <Content Include="Assets\js\init\chartjs-init.js" />
     <Content Include="Assets\js\init\datatables-init.js" />
     <Content Include="Assets\js\init\flot-chart-init.js" />

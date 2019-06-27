@@ -5,116 +5,71 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="mr-2 fa fa-clock-o"></i>
-                    <strong class="card-title">ปิดหวย</strong>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="mr-2 fa fa-clock-o"></i>
+                <strong class="card-title">ปิดหวย</strong>
+            </div>
+            <div class="card-body">
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">งวดวันที่</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Date.ToString("dd/MM/yyyy") </div></div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" id="total" data-keyboard="false">ใบสรุปยอดเงิน</button>
-                        </div>
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-block btn-warning btn-sm" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
-                        </div>
-                   </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">งวดวันที่</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Date.ToString("dd/MM/yyyy") </div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Amount</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountReceive</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountUser</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">15:00:00</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิด</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">ปิดอัตโนมัติ</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาหวยออก</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">16:00:00</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].BetStatus</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CreateDate</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">Admin</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseDate</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseBy</div></div>
-                    </div>
-                    <div class="row">
-                        @if (Model[0].CloseBy == "")
-                        {
-                            @*<div class="col-md-3">
-                                <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
-                            </div>*@
-
-                            if (Model[0].BetStatus == "ปิดรับ")
-                            {
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="open" data-id="@Model[0].PID" id="user_oc">เปิดรับพนักงานแทง</button>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="close" data-id="@Model[0].PID" id="user_oc">ปิดรับพนักงานแทง</button>
-                                </div>
-                            }
-                            <div class="col-md-3 offset-md-3">
-                                <button type="button" class="btn btn-block btn-danger btn-sm" data-id="@Model[0].PID" id="closeLotto">ปิดหวย</button>
-                            </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
-                                </div>
-                                if (Model[0].CheckResult == "1")
-                                {
-                                    <div class="col-md-3">
-                                        <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#lottoOpen">เปิดหวยใหม่</button>
-                                    </div>
-                                }
-                            }
-                        </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Amount</div></div>
                 </div>
-                <div class="card-footer">
-
+                @*<div class="row form-group">
+                        <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รอรับ</label></div>
+                        <div class="col-12 col-md-9"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
+                    </div>*@
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountReceive</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountUser</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">15:00:00</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิด</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">ปิดอัตโนมัติ</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาหวยออก</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">16:00:00</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].BetStatus</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CreateDate</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">Admin</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseDate</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseBy</div></div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            @*<div class="col-md-12/">
+    </div>
+    <div class="col-md-6">
+        @*<div class="col-md-12/">
                 <div class="card">
                     <div class="card-header">
                         เลขเต็ม
@@ -147,8 +102,55 @@
                     </div>
                 </div>
             </div>*@
+        <div class="col-md-12/">
+            <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" id="total" data-keyboard="false">ใบสรุปยอดเงิน</button>
+            <button type="button" class="btn btn-block btn-warning btn-sm" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
         </div>
     </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    @if (Model[0].CloseBy == "")
+                    {
+                        @*<div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
+                            </div>*@
+
+                        if (Model[0].BetStatus == "ปิดรับ")
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="open" data-id="@Model[0].PID" id="user_oc">เปิดรับพนักงานแทง</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="close" data-id="@Model[0].PID" id="user_oc">ปิดรับพนักงานแทง</button>
+                            </div>
+                        }
+                        <div class="col-md-3 offset-md-3">
+                            <button type="button" class="btn btn-block btn-danger btn-sm" data-id="@Model[0].PID" id="closeLotto">ปิดหวย</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
+                        </div>
+                        if (Model[0].CheckResult == "1")
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#lottoOpen">เปิดหวยใหม่</button>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="checkModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
@@ -284,31 +286,30 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title" id="totalBalanceLabel">ใบสรุปยอดเงิน</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="printBalanceArea">
-                <br />
-                <h5>ใบสรุปยอดเงิน งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</h5><hr/>
                 <table class="table table-bordered" style="text-align:center;">
                     <thead style="color:white;background-color:blue;">
                         <tr>
                             <th rowspan="2">ชนิด</th>
                             <th colspan="3">ยอดทั้งหมด</th>
                             @*<th colspan="3">แทงออก</th>
-                    <th colspan="3">รับไว้</th>*@
+                                <th colspan="3">รับไว้</th>*@
                         </tr>
                         <tr>
-                            <th>แทงหัก %</th>
+                            <th>ยอดแทงหัก %</th>
                             <th>ถูก</th>
                             <th>สุทธิ</th>
                             @*<th>แทงหัก %</th>
-                    <th>ถูก</th>
-                    <th>สุทธิ</th>
-                    <th>แทงหัก %</th>
-                    <th>ถูก</th>
-                    <th>สุทธิ</th>*@
+                                <th>ถูก</th>
+                                <th>สุทธิ</th>
+                                <th>แทงหัก %</th>
+                                <th>ถูก</th>
+                                <th>สุทธิ</th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -345,68 +346,92 @@
                             var ttwoup = 0;
                             var ttwodown = 0;
                             var ttwoood = 0;
+
+                            var totaldis = 0;
+                            var toralwin = 0;
+                            var total = 0;
                         }
                         @foreach (var item in (List<Total_Amount_Result>)ViewData["TAR"])
                         {
                             if (item.Type == "Up")
                             {
-                                up = Int32.Parse(item.Amount_Discount);
+                                up =Int32.Parse(item.Amount_Discount);
                                 wup = Int32.Parse(item.Amount_Win);
                                 tup = up - wup;
+                                totaldis = totaldis+ Int32.Parse(item.Amount_Discount);
+                                toralwin= toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "Down")
                             {
                                 down = Int32.Parse(item.Amount_Discount);
                                 wdown = Int32.Parse(item.Amount_Win);
                                 tdown = down - wdown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "FirstThree")
                             {
                                 fthree = Int32.Parse(item.Amount_Discount);
                                 wfthree = Int32.Parse(item.Amount_Win);
                                 tfthree = fthree - wfthree;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "FirstThreeOod")
                             {
                                 fthreeood = Int32.Parse(item.Amount_Discount);
                                 wfthreeood = Int32.Parse(item.Amount_Win);
                                 tfthreeood = fthreeood - wfthreeood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "ThreeUp")
                             {
                                 threeup = Int32.Parse(item.Amount_Discount);
                                 wthreeup = Int32.Parse(item.Amount_Win);
                                 tthreeup = threeup - wthreeup;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "ThreeUPOod")
                             {
                                 threeupood = Int32.Parse(item.Amount_Discount);
                                 wthreeupood = Int32.Parse(item.Amount_Win);
                                 tthreeupood = threeupood - wthreeupood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "ThreeDown")
                             {
                                 threedown = Int32.Parse(item.Amount_Discount);
                                 wthreedown = Int32.Parse(item.Amount_Win);
                                 tthreedown = threedown - wthreedown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "TwoUp")
                             {
                                 twoup = Int32.Parse(item.Amount_Discount);
                                 wtwoup = Int32.Parse(item.Amount_Win);
                                 ttwoup = twoup - wtwoup;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "TwoDown")
                             {
                                 twodown = Int32.Parse(item.Amount_Discount);
                                 wtwodown = Int32.Parse(item.Amount_Win);
                                 ttwodown = twodown - wtwodown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "TwoOod")
                             {
                                 twoood = Int32.Parse(item.Amount_Discount);
                                 wtwoood = Int32.Parse(item.Amount_Win);
                                 ttwoood = twoood - wtwoood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else { }
                         }
@@ -474,9 +499,9 @@
                     <tfoot style="color:white;background-color:blue;">
                         <tr>
                             <td>รวม</td>
-                            <td id="tdis"></td>
-                            <td id="twin"></td>
-                            <td id="ttotal"></td>
+                            <td id="tdis">@totaldis</td>
+                            <td id="twin">@toralwin</td>
+                            <td id="ttotal">@(totaldis - toralwin)</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -493,13 +518,23 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title" id="totalKeepLabel">ใบสรุปยอดเก็บ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="printKeepArea">
-                <br />
-                <h5>ใบสรุปยอดเก็บ งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</h5><hr />
+                @{
+                    var sum = 0;
+                    var sumw = 0;
+                    var countu = 0;
+                }
+                @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
+                {
+                    sum = sum + Int32.Parse(item.Discount);
+                    sumw= sumw+ Int32.Parse(item.Win);
+                    countu += 1;
+                }
                 <div class="row">
                     <div class="col-md-3">
                         หวยรัฐบาล
@@ -508,13 +543,13 @@
                         -
                     </div>
                     <div class="col-md-2">
-                        80000
+                        @sum
                     </div>
                     <div class="col-md-1">
                         -
                     </div>
                     <div class="col-md-2">
-                        60000
+                        @countu
                     </div>
                     <div class="col-md-1">
                         -
@@ -533,17 +568,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
+                                {
+                                    <tr>
+                                        <td>@item.Discount</td>
+                                        <td>@item.Win</td>
+                                        <td>@item.Name</td>
+                                    </tr>
+                                }
                             </tbody>
                             <tfoot style="color:white;background-color:blue;">
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>@sum</td>
+                                    <td>@sumw</td>
+                                    <td>@(sum- sumw)</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -551,8 +589,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="printKeep">พิมพ์</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                <button type="button" class="btn btn-primary" id="printKeep">เปิด</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
     </div>
@@ -568,32 +606,25 @@
     })(jQuery);
 
     $('#printBalance').click(function () {
+        var printContents = document.getElementById('printBalanceArea').innerHTML;
+        var originalContents = document.body.innerHTML;
 
-          var printContents = document.getElementById('printBalanceArea');
+        document.body.innerHTML = printContents;
 
-          var newWin = window.open('','Print-Window');
+        window.print();
 
-          newWin.document.open();
-
-          newWin.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"></head><body onload="window.print()">'+printContents.innerHTML+'</body></html>');
-
-          newWin.document.close();
-
-          setTimeout(function(){newWin.close();},10);
+        document.body.innerHTML = originalContents;
     });
 
      $('#printKeep').click(function () {
-        var printContents = document.getElementById('printKeepArea');
+        var printContents = document.getElementById('printKeepArea').innerHTML;
+        var originalContents = document.body.innerHTML;
 
-          var newWin = window.open('','Print-Window');
+        document.body.innerHTML = printContents;
 
-          newWin.document.open();
+        window.print();
 
-          newWin.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"></head><body onload="window.print()">'+printContents.innerHTML+'</body></html>');
-
-          newWin.document.close();
-
-          setTimeout(function(){newWin.close();},10);
+        document.body.innerHTML = originalContents;
     });
 
 </script>

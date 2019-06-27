@@ -148,31 +148,130 @@
         .hidden {
             display:none;
         }
-
-        #printme {
-            display: none;
+        .loader {
+            top: 0;
+            left: 0;
+            position: fixed;
+            opacity: 0.8;
+            z-index: 10000000;
+            background: Black;
+            height: 100%;
+            width: 100%;
+            margin: auto;
         }
 
-        #printme {
-            display: none;
+        .strip-holder {
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            left: 50%;
+            margin-left: -50px;
+            position: relative;
         }
 
-        @@media print {
-            .container {
-                display: none;
+        .strip-1,
+        .strip-2,
+        .strip-3 {
+            width: 20px;
+            height: 20px;
+            background: #0072bc;
+            position: relative;
+            -webkit-animation: stripMove 2s ease infinite alternate;
+            animation: stripMove 2s ease infinite alternate;
+            -moz-animation: stripMove 2s ease infinite alternate;
+        }
+
+        .strip-2 {
+            -webkit-animation-duration: 2.1s;
+            animation-duration: 2.1s;
+            background-color: #23a8ff;
+        }
+
+        .strip-3 {
+            -webkit-animation-duration: 2.2s;
+            animation-duration: 2.2s;
+            background-color: #89d1ff;
+        }
+
+        @@-webkit-keyframes stripMove {
+            0% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
             }
-            .modal-footer {
-                display: none;
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
             }
-    
-            #printme {
-                display: block;
+
+            100% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
             }
-    
+        }
+
+        @@-moz-keyframes stripMove {
+            0% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(50px, 0px, 0px);
+                -webkit-transform: translate3d(50px, 0px, 0px);
+                -moz-transform: translate3d(50px, 0px, 0px);
+            }
+        }
+
+        @@keyframes stripMove {
+            0% {
+                transform: translate3d(-50px, 0px, 0px);
+                -webkit-transform: translate3d(-50px, 0px, 0px);
+                -moz-transform: translate3d(-50px, 0px, 0px);
+            }
+
+            50% {
+                transform: translate3d(0px, 0px, 0px);
+                -webkit-transform: translate3d(0px, 0px, 0px);
+                -moz-transform: translate3d(0px, 0px, 0px);
+                transform: scale(4, 1);
+                -webkit-transform: scale(4, 1);
+                -moz-transform: scale(4, 1);
+            }
+
+            100% {
+                transform: translate3d(50px, 0px, 0px);
+                -webkit-transform: translate3d(50px, 0px, 0px);
+                -moz-transform: translate3d(50px, 0px, 0px);
+            }
         }
     </style>
 </head>
 <body>
+    <div class="loader" id="AjaxLoader" style="display:none;">
+        <div class="strip-holder">
+            <div class="strip-1"></div>
+            <div class="strip-2"></div>
+            <div class="strip-3"></div>
+        </div>
+    </div>
     <!-- Left Panel -->
     <aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
@@ -191,7 +290,7 @@
                     @*<li class=""><a href="@Url.Action("Out", "Admin")"><i class="menu-icon fa fa-sign-out"></i>แทงออก</a></li>*@
                     <li class=""><a href="@Url.Action("Cut", "Admin")"><i class="menu-icon fa fa-scissors"></i>ตัดเลข</a></li>
                     @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-chevron-circle-up"></i>สู้บน</a></li>
-        <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-chevron-circle-down"></i>สู้ล่าง</a></li>*@
+                        <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-chevron-circle-down"></i>สู้ล่าง</a></li>*@
                     @*<li class=""><a href="@Url.Action("OutTotal", "Admin")"><i class="menu-icon fa fa-tasks"></i>ยอดแทงออก</a></li>*@
 
                     <li class="menu-title">รายงาน</li><!-- /.menu-title -->
@@ -509,17 +608,17 @@
         <div class="clearfix"></div>
         <!-- Footer -->
         <!--<footer class="site-footer">
-        <div class="footer-inner bg-white">
-            <div class="row">
-                <div class="col-sm-6">
-                    Copyright &copy; 2018 Ela Admin
-                </div>
-                <div class="col-sm-6 text-right">
-                    Designed by <a href="https://colorlib.com">Colorlib</a>
+            <div class="footer-inner bg-white">
+                <div class="row">
+                    <div class="col-sm-6">
+                        Copyright &copy; 2018 Ela Admin
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        Designed by <a href="https://colorlib.com">Colorlib</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>-->
+        </footer>-->
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
@@ -542,24 +641,24 @@
             $('#totalBetCount').html("134");
         })(jQuery);
 
-        function clock(){
+        function clock() {
             var today = new Date();
             var h = today.getHours();
             var m = today.getMinutes();
             var s = today.getSeconds();
-             if(s<10){
-                 s = "0"+s;
-             }
+            if (s < 10) {
+                s = "0" + s;
+            }
 
-            $(".digital-clock").text(h+" : "+m+" : "+s);
-            setTimeout(function(){clock()}, 500);
+            $(".digital-clock").text(h + " : " + m + " : " + s);
+            setTimeout(function () { clock() }, 500);
         }
 
         $.ajax({
-			url: getPeriod,
-			type: "POST",
-			dataType: "json",
-			success: function (data) {
+            url: getPeriod,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
                 //alert(JSON.stringify(data));
                 $("#todayDate").html(data.Date);
                 if (data.Status == 1) {
@@ -570,39 +669,39 @@
                     $("#lottoStatusIcon").addClass('flat-color-4');
                     $("#lottoStatus").html("ปิด");
                 }
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert("error");
-			}
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
         });
 
         $.ajax({
-			url: getSetting,
-			type: "POST",
-			dataType: "json",
+            url: getSetting,
+            type: "POST",
+            dataType: "json",
             success: function (data) {
                 globalSetting = data['Setting'];
                 //alert(JSON.stringify(globalSetting));
 
-                for (i = 0; i < globalSetting.length ; i++){
+                for (i = 0; i < globalSetting.length; i++) {
                     if (globalSetting[i].Name == "auto_poll_accept") {
                         $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
                     }
                     if (globalSetting[i].Name == "auto_close_time") {
-                         $('#closeTime').html(globalSetting[i].Value);
-                         $('#settingAutoCloseTime').val(globalSetting[i].Value);
+                        $('#closeTime').html(globalSetting[i].Value);
+                        $('#settingAutoCloseTime').val(globalSetting[i].Value);
                     }
                     if (globalSetting[i].Name == "dealer_phone") {
                         $('#dealerPhone').val(globalSetting[i].Value);
                     }
                     if (globalSetting[i].Name == "dealer_line") {
-                         $('#dealerLine').val(globalSetting[i].Value);
+                        $('#dealerLine').val(globalSetting[i].Value);
                     }
                 }
             },
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert("error");
-			}
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
         });
 
         $.ajax({
@@ -618,23 +717,23 @@
         });
 
         $(document.body)
-        .on('show.bs.modal', function () {
-            if (this.clientHeight <= window.innerHeight) {
-                return;
-            }
-            // Get scrollbar width
-            var scrollbarWidth = getScrollBarWidth()
-            if (scrollbarWidth) {
-                $(document.body).css('padding-right', scrollbarWidth);
-                $('.navbar-fixed-top').css('padding-right', scrollbarWidth);    
-            }
-        })
-        .on('hidden.bs.modal', function () {
-            $(document.body).css('padding-right', 0);
-            $('.navbar-fixed-top').css('padding-right', 0);
-        });
+            .on('show.bs.modal', function () {
+                if (this.clientHeight <= window.innerHeight) {
+                    return;
+                }
+                // Get scrollbar width
+                var scrollbarWidth = getScrollBarWidth()
+                if (scrollbarWidth) {
+                    $(document.body).css('padding-right', scrollbarWidth);
+                    $('.navbar-fixed-top').css('padding-right', scrollbarWidth);
+                }
+            })
+            .on('hidden.bs.modal', function () {
+                $(document.body).css('padding-right', 0);
+                $('.navbar-fixed-top').css('padding-right', 0);
+            });
 
-        function getScrollBarWidth () {
+        function getScrollBarWidth() {
             var inner = document.createElement('p');
             inner.style.width = "100%";
             inner.style.height = "200px";
@@ -647,15 +746,15 @@
             outer.style.width = "200px";
             outer.style.height = "150px";
             outer.style.overflow = "hidden";
-            outer.appendChild (inner);
+            outer.appendChild(inner);
 
-            document.body.appendChild (outer);
+            document.body.appendChild(outer);
             var w1 = inner.offsetWidth;
             outer.style.overflow = 'scroll';
             var w2 = inner.offsetWidth;
             if (w1 == w2) w2 = outer.clientWidth;
 
-            document.body.removeChild (outer);
+            document.body.removeChild(outer);
 
             return (w1 - w2);
         };
