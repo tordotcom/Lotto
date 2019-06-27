@@ -435,7 +435,7 @@ namespace Lotto.Controllers
                             pollDetail.Add(new Poll_Detail
                             {
                                 ID = Reader["ID"].ToString(),
-                                PeriodDate = poo.Date.ToString(),
+                                PeriodDate = String.Format("{0:dd/MM/yyyy}", poo.Date),
                                 name = Reader["Name"].ToString(),
                                 Receive = Reader["Receive"].ToString(),
                                 Amount = Reader["amount"].ToString(),
