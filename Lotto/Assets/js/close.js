@@ -1,4 +1,11 @@
-﻿$("#start_datepicker").datepicker(
+﻿$(document)
+    .ajaxStart(function () {
+        $('#AjaxLoader').show();
+    })
+    .ajaxStop(function () {
+        $('#AjaxLoader').hide();
+    });
+$("#start_datepicker").datepicker(
     { dateFormat: 'yy-mm-dd' }
 ).datepicker("setDate", new Date());
 

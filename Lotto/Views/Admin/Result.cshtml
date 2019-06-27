@@ -12,7 +12,7 @@
                 <strong class="card-title">ดูผลหวยย้อนหลัง</strong>
             </div>
             <div class="card-body">               
-                <div class="row form-group">
+                @*<div class="row form-group">
                     <div class="col-md-1"><label for="select" class="form-control-label">วันที่</label></div>
                     <div class="col-md-4">
                         <input type="text" id="start_datepicker" name="text-input" class="form-control form-control-sm">
@@ -25,7 +25,7 @@
                         <button type="submit" class="btn btn-primary">แสดง</button>
                     </div>
                 </div>
-                <hr/>
+                <hr/>*@
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -35,7 +35,8 @@
                             <th>3 บน</th>
                             <th>3 ล่าง</th>
                             <th>2 ล่าง</th>
-                            <th><button type="button" class="btn btn-dark add-result" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">เพิ่มผลหวย</button></th>
+                            <th></th>
+                            @*<th><button type="button" class="btn btn-dark add-result" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">เพิ่มผลหวย</button></th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -50,7 +51,7 @@
                                 <td>@item.two_down</td>
                                 <td>
                                     <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
-                                    <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Lotto_day" data-toggle="modal" data-target="#deleteResultLotto" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                    @*<button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Lotto_day" data-toggle="modal" data-target="#deleteResultLotto" data-backdrop="static" data-keyboard="false">ลบ</button>*@
                                 </td>
                             </tr>
                         }

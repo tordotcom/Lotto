@@ -1891,6 +1891,61 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult CheckResult(string PID,DateTime DAY,string FT,string FTO1,string FTO2,string FTO3,string FTO4,string FTO5,string TU,string TUO1,string TUO2,string TUO3,string TUO4,string TUO5,string TD,string TDO1,string ThDown1,string ThDown2,string ThDown3,string ThDown4,string TwUP,string Tw_up_ood,string UP,string DOWN)
         {
+            int perID = Int32.Parse(PID);
+            Period pe= db.Period.Where(s => s.Check_Result == "1").Where(x => x.ID == perID).FirstOrDefault<Period>();
+            if (pe!=null)
+            {
+                string connetionString1 = null;
+                var update = new List<LottoSub>();
+                connetionString1 = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString1);
+                    cnn.Open();
+                    string query = "SELECT ls.ID FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", PID.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            update.Add(new LottoSub
+                            {
+                                ID = Int32.Parse(Reader["ID"].ToString()),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                foreach(var item in update)
+                {
+                    LottoSub ls = db.LottoSub.Where(s => s.ID == item.ID).FirstOrDefault<LottoSub>();
+                    ls.AmountWin = "0";
+                    ls.update_date = DateTime.Now;
+                    db.Entry(ls).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                var tar = db.Total_Amount_Result.Where(q => q.Period_ID == PID).ToList();
+                foreach (var item in tar)
+                {
+                    db.Total_Amount_Result.Remove(item);
+                }
+                var re = db.Result.Where(q => q.Period_ID == perID).ToList();
+                foreach (var item in re)
+                {
+                    db.Result.Remove(item);
+                }
+            }
             string connetionString = null;
             var data = new List<Poll_Result>();
             connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
@@ -2165,7 +2220,7 @@ namespace Lotto.Controllers
                 db.SaveChanges();
             }
             
-            return Json(list);
+            return Json("ss");
         }
 
         public void UpdateLottoSub( string Amount, string Rate, string ID)
