@@ -265,11 +265,24 @@
         $("#t1down").html("");
         $("#t2down").html("");
         $("#t3down").html("");
+       
         if (this.value == 0) {
             model.sort(function (a, b) {
-                return a.Number.localeCompare(b.Number);
+                if (parseInt(a.nLen) == parseInt(b.nLen)) {
+                    if (a.Type == b.Type) {
+                        return (parseInt(a.Number) < parseInt(b.Number)) ? -1 : (parseInt(a.Number) > parseInt(b.Number)) ? 1 : 0;
+                    }
+                    else {
+                        return (a.Type < b.Type) ? -1 : 1;
+                    }
+                }
+                else {
+                    return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
+                }
+                
+                //return a.Number.localeCompare(b.Number);
             });
-
+            console.log(model);
             for (var i = 0; i < Object.keys(model).length; i++) {
                 if (model[i].Type == "t" && model[i].nLen == "2") {
                     $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
@@ -308,9 +321,21 @@
         }
         else {
             model.sort(function (a, b) {
-                return b.Amount.localeCompare(a.Amount);
+                if (parseInt(a.nLen) == parseInt(b.nLen)) {
+                    if (a.Type == b.Type) {
+                        return (parseInt(a.Amount) > parseInt(b.Amount)) ? -1 : (parseInt(a.Amount) < parseInt(b.Amount)) ? 1 : 0;
+                    }
+                    else {
+                        return (a.Type < b.Type) ? -1 : 1;
+                    }
+                }
+                else {
+                    return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
+                }
+                
+                //return b.Amount.localeCompare(a.Amount);
             });
-            //console.log(model);
+            console.log(model);
             for (var i = 0; i < Object.keys(model).length; i++) {
                 for (var i = 0; i < Object.keys(model).length; i++) {
                     if (model[i].Type == "t" && model[i].nLen == "2") {
