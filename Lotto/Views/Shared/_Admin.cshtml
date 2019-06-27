@@ -148,6 +148,28 @@
         .hidden {
             display:none;
         }
+
+        #printme {
+            display: none;
+        }
+
+        #printme {
+            display: none;
+        }
+
+        @@media print {
+            .container {
+                display: none;
+            }
+            .modal-footer {
+                display: none;
+            }
+    
+            #printme {
+                display: block;
+            }
+    
+        }
     </style>
 </head>
 <body>
