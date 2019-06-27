@@ -301,7 +301,7 @@
                                 <th colspan="3">รับไว้</th>*@
                         </tr>
                         <tr>
-                            <th>แทงหัก %</th>
+                            <th>ยอดแทงหัก %</th>
                             <th>ถูก</th>
                             <th>สุทธิ</th>
                             @*<th>แทงหัก %</th>
@@ -346,6 +346,10 @@
                             var ttwoup = 0;
                             var ttwodown = 0;
                             var ttwoood = 0;
+
+                            var totaldis = 0;
+                            var toralwin = 0;
+                            var total = 0;
                         }
                         @foreach (var item in (List<Total_Amount_Result>)ViewData["TAR"])
                         {
@@ -354,60 +358,80 @@
                                 up =Int32.Parse(item.Amount_Discount);
                                 wup = Int32.Parse(item.Amount_Win);
                                 tup = up - wup;
+                                totaldis = totaldis+ Int32.Parse(item.Amount_Discount);
+                                toralwin= toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "Down")
                             {
                                 down = Int32.Parse(item.Amount_Discount);
                                 wdown = Int32.Parse(item.Amount_Win);
                                 tdown = down - wdown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "FirstThree")
                             {
                                 fthree = Int32.Parse(item.Amount_Discount);
                                 wfthree = Int32.Parse(item.Amount_Win);
                                 tfthree = fthree - wfthree;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "FirstThreeOod")
                             {
                                 fthreeood = Int32.Parse(item.Amount_Discount);
                                 wfthreeood = Int32.Parse(item.Amount_Win);
                                 tfthreeood = fthreeood - wfthreeood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "ThreeUp")
                             {
                                 threeup = Int32.Parse(item.Amount_Discount);
                                 wthreeup = Int32.Parse(item.Amount_Win);
                                 tthreeup = threeup - wthreeup;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "ThreeUPOod")
                             {
                                 threeupood = Int32.Parse(item.Amount_Discount);
                                 wthreeupood = Int32.Parse(item.Amount_Win);
                                 tthreeupood = threeupood - wthreeupood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "ThreeDown")
                             {
                                 threedown = Int32.Parse(item.Amount_Discount);
                                 wthreedown = Int32.Parse(item.Amount_Win);
                                 tthreedown = threedown - wthreedown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "TwoUp")
                             {
                                 twoup = Int32.Parse(item.Amount_Discount);
                                 wtwoup = Int32.Parse(item.Amount_Win);
                                 ttwoup = twoup - wtwoup;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "TwoDown")
                             {
                                 twodown = Int32.Parse(item.Amount_Discount);
                                 wtwodown = Int32.Parse(item.Amount_Win);
                                 ttwodown = twodown - wtwodown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else if (item.Type == "TwoOod")
                             {
                                 twoood = Int32.Parse(item.Amount_Discount);
                                 wtwoood = Int32.Parse(item.Amount_Win);
                                 ttwoood = twoood - wtwoood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
                             }
                             else { }
                         }
@@ -475,9 +499,9 @@
                     <tfoot style="color:white;background-color:blue;">
                         <tr>
                             <td>รวม</td>
-                            <td id="tdis"></td>
-                            <td id="twin"></td>
-                            <td id="ttotal"></td>
+                            <td id="tdis">@totaldis</td>
+                            <td id="twin">@toralwin</td>
+                            <td id="ttotal">@(totaldis - toralwin)</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -500,6 +524,17 @@
                 </button>
             </div>
             <div class="modal-body" id="printKeepArea">
+                @{
+                    var sum = 0;
+                    var sumw = 0;
+                    var countu = 0;
+                }
+                @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
+                {
+                    sum = sum + Int32.Parse(item.Discount);
+                    sumw= sumw+ Int32.Parse(item.Win);
+                    countu += 1;
+                }
                 <div class="row">
                     <div class="col-md-3">
                         หวยรัฐบาล
@@ -508,13 +543,13 @@
                         -
                     </div>
                     <div class="col-md-2">
-                        80000
+                        @sum
                     </div>
                     <div class="col-md-1">
                         -
                     </div>
                     <div class="col-md-2">
-                        60000
+                        @countu
                     </div>
                     <div class="col-md-1">
                         -
@@ -533,17 +568,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
+                                {
+                                    <tr>
+                                        <td>@item.Discount</td>
+                                        <td>@item.Win</td>
+                                        <td>@item.Name</td>
+                                    </tr>
+                                }
                             </tbody>
                             <tfoot style="color:white;background-color:blue;">
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>@sum</td>
+                                    <td>@sumw</td>
+                                    <td>@(sum- sumw)</td>
                                 </tr>
                             </tfoot>
                         </table>
