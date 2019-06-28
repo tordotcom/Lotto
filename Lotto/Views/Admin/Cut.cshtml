@@ -22,6 +22,17 @@
                     <strong class="card-title">ตัดเลข</strong>
                 </div>
                 <div class="card-body">
+                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="row form-group">
+                            <div class="col-md-1"><label for="select" class="form-control-label">เรียง</label></div>
+                            <div class="col-md-4">
+                                <select name="select" id="select" class="form-control-sm form-control">
+                                    <option value="0" selected>เลข</option>
+                                    <option value="1">ยอดแทง</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table table-stats" style="text-align:center;">
                         <table class="table-fixed" width="100%">
                             <thead>
@@ -64,7 +75,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        @if (Model.Count>0)
+                                        @if (Model.Count > 0)
                                         {
                                             <table>
                                                 @for (int i = 1; i <= Int32.Parse(Model[0].Max); i++)
@@ -197,63 +208,140 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                    <td><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></td>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div> <!-- /.table-stats -->
+                    @*<div><strong class="card-title">ยอดจ่ายสูงสุด</strong></div>
+                    <div class="table table-stats" style="text-align:center;">
+                        <table class="table-fixed" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="border: 0;"></th>
+                                    <th style="color:white;background-color:red;">2 บน</th>
+                                    <th style="color:white;background-color:black;">3 บน</th>
+                                    <th style="color:white;background-color:red;">3 โต๊ด</th>
+                                    <th style="color:white;background-color:black;">2 โต๊ด</th>
+                                    <th style="color:white;background-color:red;">3 หน้า</th>
+                                    <th style="color:white;background-color:black;">3 หน้าโต๊ด</th>
+                                    <th style="color:white;background-color:red;">วิ่ง บน</th>
+                                    <th style="color:white;background-color:black;">วื่ง ล่าง</th>
+                                    <th style="color:white;background-color:red;">2 ล่าง</th>
+                                    <th style="color:white;background-color:black;">3 ล่าง</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-        </div>
+        </div>*@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="row form-group">
-                            <div class="col-md-1"><label for="select" class="form-control-label">ตัดเศษ</label></div>
-                            <div class="col-md-2">
-                                <select name="select" id="select" class="form-control-sm form-control">
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2"><label for="select" class="form-control-label">แบ่งโพยเป็น</label></div>
-                            <div class="col-md-2">
-                                <input type="text" id="text-input" name="text-input" class="form-control form-control-sm" placeholder="%">
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-block btn-sm btn-success">ตัด</button>
-                            </div>
-                            <div class="col-md-3"></div>
+                    <div class="table table-stats" style="text-align:center;">
+                        <table class="table-fixed" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="border: 0;"></th>
+                                    <th style="color:white;background-color:red;">2 บน</th>
+                                    <th style="color:white;background-color:black;">3 บน</th>
+                                    <th style="color:white;background-color:red;">3 โต๊ด</th>
+                                    <th style="color:white;background-color:black;">2 โต๊ด</th>
+                                    <th style="color:white;background-color:red;">3 หน้า</th>
+                                    <th style="color:white;background-color:black;">3 หน้าโต๊ด</th>
+                                    <th style="color:white;background-color:red;">วิ่ง บน</th>
+                                    <th style="color:white;background-color:black;">วื่ง ล่าง</th>
+                                    <th style="color:white;background-color:red;">2 ล่าง</th>
+                                    <th style="color:white;background-color:black;">3 ล่าง</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="text" id="two_up" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="three_up" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="three_ood" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="two_ood" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="first_three" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="first_three_ood" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="up" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="down" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="two_down" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                    <td><input type="text" id="three_down" autocomplete="off" name="text-input" class="form-control form-control-sm" onkeypress="return keyPress(this, event);"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct2up">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="cct3up">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct3_">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct2_">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct3f">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct3f_">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct1up">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct1down">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct2down">
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <table id="ct3down">
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-2 offset-5">
+                            <button type="button" class="btn btn-block btn-sm btn-success" id="cut">ตัด</button>
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-9">
-                                (ตัวอย่างเช่น 50,50 หรือ 30,30,40 หรือ ปล่อยว่างถ้าไม่แบ่ง)
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 <script>
+    getRate = '@Url.Action("getRate", "Admin")';
+    var rate;
     var model = @Html.Raw(Json.Encode(Model));
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);
@@ -265,7 +353,21 @@
     var down = @Html.Raw(down);
     var twodown = @Html.Raw(twodown);
     var threedown = @Html.Raw(threedown);
-    console.log(threedown);
+    $(document).ready(function () {
+        $.ajax({
+            url: getRate,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                rate = data;
+                
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
+    });
+    
     $("#twoup").html(twoup);
     $("#threeup").html(threeup);
     $("#threedown").html(threedown);
@@ -291,11 +393,24 @@
         $("#t1down").html("");
         $("#t2down").html("");
         $("#t3down").html("");
+
         if (this.value == 0) {
             model.sort(function (a, b) {
-                return a.Number.localeCompare(b.Number);
-            });
+                if (parseInt(a.nLen) == parseInt(b.nLen)) {
+                    if (a.Type == b.Type) {
+                        return (parseInt(a.Number) < parseInt(b.Number)) ? -1 : (parseInt(a.Number) > parseInt(b.Number)) ? 1 : 0;
+                    }
+                    else {
+                        return (a.Type < b.Type) ? -1 : 1;
+                    }
+                }
+                else {
+                    return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
+                }
 
+                //return a.Number.localeCompare(b.Number);
+            });
+            console.log(model);
             for (var i = 0; i < Object.keys(model).length; i++) {
                 if (model[i].Type == "t" && model[i].nLen == "2") {
                     $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
@@ -334,9 +449,21 @@
         }
         else {
             model.sort(function (a, b) {
-                return b.Amount.localeCompare(a.Amount);
+                if (parseInt(a.nLen) == parseInt(b.nLen)) {
+                    if (a.Type == b.Type) {
+                        return (parseInt(a.Amount) > parseInt(b.Amount)) ? -1 : (parseInt(a.Amount) < parseInt(b.Amount)) ? 1 : 0;
+                    }
+                    else {
+                        return (a.Type < b.Type) ? -1 : 1;
+                    }
+                }
+                else {
+                    return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
+                }
+
+                //return b.Amount.localeCompare(a.Amount);
             });
-            //console.log(model);
+            console.log(model);
             for (var i = 0; i < Object.keys(model).length; i++) {
                 for (var i = 0; i < Object.keys(model).length; i++) {
                     if (model[i].Type == "t" && model[i].nLen == "2") {
@@ -376,4 +503,118 @@
             }
         }
     });
+    $("#cut").click(function () {
+        $("#ct2up").html("");
+        $("#ct3up").html("");
+        $("#ct3_").html("");
+        $("#ct2_").html("");
+        $("#ct3f").html("");
+        $("#ct3f_").html("");
+        $("#ct1up").html("");
+        $("#ct1down").html("");
+        $("#ct2down").html("");
+        $("#ct3down").html("");
+        model.sort(function (a, b) {
+            if (parseInt(a.nLen) == parseInt(b.nLen)) {
+                if (a.Type == b.Type) {
+                    return (parseInt(a.Number) < parseInt(b.Number)) ? -1 : (parseInt(a.Number) > parseInt(b.Number)) ? 1 : 0;
+                }
+                else {
+                    return (a.Type < b.Type) ? -1 : 1;
+                }
+            }
+            else {
+                return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
+            }
+        });
+        for (var i = 0; i < Object.keys(model).length; i++) {
+            if (model[i].Type == "t" && model[i].nLen == "2") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#two_up").val());  
+                if (amount > receiveAmount) {
+                    $("#ct2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }               
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "t") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#three_up").val());
+                if (amount > receiveAmount) {
+                    $("#ct3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }        
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "t_") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#three_ood").val());
+                if (amount > receiveAmount) {
+                    $("#ct3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else if (model[i].nLen == "2" && model[i].Type == "t_") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#two_ood").val());
+                if (amount > receiveAmount) {
+                    $("#ct2_").append('<tr><td nowrap>' + model[i].Number + ' = ' +(amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "f") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#first_three").val());
+                if (amount > receiveAmount) {
+                    $("#ct3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "f_") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#first_three_ood").val());
+                if (amount > receiveAmount) {
+                    $("#ct3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else if (model[i].nLen == "1" && model[i].Type == "t") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#up").val());
+                if (amount > receiveAmount) {
+                    $("#ct1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else if (model[i].nLen == "1" && model[i].Type == "b") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#down").val());
+                if (amount > receiveAmount) {
+                    $("#ct1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else if (model[i].nLen == "2" && model[i].Type == "b") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#two_down").val());
+                if (amount > receiveAmount) {
+                    $("#ct2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "b") {
+                var amount = parseInt(model[i].Amount);
+                var receiveAmount = parseInt($("#three_down").val());
+                if (amount > receiveAmount) {
+                    $("#ct3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                }
+            }
+            else {
+
+            }
+        }
+    });
+    function keyPress(obj, evt) {
+
+        evt = evt || window.event;
+        var code = evt.keyCode || evt.which;
+        // enter = 13, tab = 9
+        // space = 32,  + = 43
+
+        if (code >= 48 && code <= 57) {
+            return true;  // Number 0-9
+        }
+        else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+        else if (code >= 37 && code <= 40) return true;  // left, up, right, down
+        else return false;
+    }
 </script>
