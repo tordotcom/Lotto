@@ -1,4 +1,5 @@
 ﻿@model IList<Lotto.Models.Poll_Detail>
+@using Lotto.Models
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_User.cshtml";
@@ -13,6 +14,8 @@
     var discount = 0;
     var total_discount = 0;
     var reject_amount = 0;
+    var win = 0;
+    var totalwin = 0;
 }
 
 <div class="row">
@@ -50,6 +53,9 @@
                                 total_amount += amount;
                                 total_receive += amount_receive;
                                 total_discount += discount;
+                                win = Int32.Parse(item.Win);
+                                totalwin = totalwin + win;
+
                             }
                             else
                             {
@@ -67,10 +73,10 @@
                                 <td>@amount</td>
                                 <td>@amount_receive</td>
                                 <td>@discount</td>
-                                <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                                <td>@win</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@item.create_date</td>
                                 <td>@item.create_date</td>
-                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-reject="@reject_amount" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal">ดูโพย</button></td>
+                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal">ดูโพย</button></td>
                             </tr>
                         }
                     </tbody>
@@ -81,10 +87,10 @@
                             <th>@total_amount</th>
                             <th>@total_receive</th>
                             <th>@total_discount</th>
-                            <th>0</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                            <th>@totalwin</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <th>สรุป</th>
-                            <th>@total_discount</th>
-                            <th><button type="button" class="btn btn-sm btn-success">สรุปยอด</button></th>
+                            <th>@(total_discount - totalwin)</th>
+                            <th><button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#totalBalance" data-backdrop="static">สรุปยอด</button></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -92,6 +98,7 @@
                 <input type="hidden" id="total_amount" value="@total_amount" />
                 <input type="hidden" id="total_receive" value="@total_receive" />
                 <input type="hidden" id="total_discount" value="@total_discount" />
+                <input type="hidden" id="reject" value="@reject_amount" />
             </div>
         </div>
     </div>
@@ -183,7 +190,7 @@
                                 </div>
                             </form>
                         </div>
-                        <hr/>
+                        <hr />
                         <div class="col-md-12">
                             <div class="row" id="poll">
 
@@ -196,6 +203,274 @@
                     <button type="button" class="btn btn-primary">ตรวจ</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                 </div>*@
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="totalBalance" tabindex="-1" role="dialog" aria-labelledby="totalBalanceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="printBalanceArea">
+                @*<br />
+                <h4 class="center">ใบสรุปยอดเงิน งวดวันที่ </h4><hr />*@
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead style="color:white;background-color:blue;">
+                        <tr>
+                            <th rowspan="2">ชนิด</th>
+                            <th colspan="4">ยอดทั้งหมด</th>
+                            @*<th colspan="3">แทงออก</th>
+                                <th colspan="3">รับไว้</th>*@
+                        </tr>
+                        <tr>
+                            <th>ยอดแทง</th>
+                            <th>ยอดหัก %</th>
+                            <th>ยอดถูก</th>
+                            <th>สรุป</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var up = 0;
+                            var down = 0;
+                            var fthree = 0;
+                            var fthreeood = 0;
+                            var threeup = 0;
+                            var threeupood = 0;
+                            var threedown = 0;
+                            var twoup = 0;
+                            var twodown = 0;
+                            var twoood = 0;
+                            var up_bet = 0;
+                            var down_bet = 0;
+                            var fthree_bet = 0;
+                            var fthreeood_bet = 0;
+                            var threeup_bet = 0;
+                            var threeupood_bet = 0;
+                            var threedown_bet = 0;
+                            var twoup_bet = 0;
+                            var twodown_bet = 0;
+                            var twoood_bet = 0;
+
+                            var wup = 0;
+                            var wdown = 0;
+                            var wfthree = 0;
+                            var wfthreeood = 0;
+                            var wthreeup = 0;
+                            var wthreeupood = 0;
+                            var wthreedown = 0;
+                            var wtwoup = 0;
+                            var wtwodown = 0;
+                            var wtwoood = 0;
+
+                            var tup = 0;
+                            var tdown = 0;
+                            var tfthree = 0;
+                            var tfthreeood = 0;
+                            var tthreeup = 0;
+                            var tthreeupood = 0;
+                            var tthreedown = 0;
+                            var ttwoup = 0;
+                            var ttwodown = 0;
+                            var ttwoood = 0;
+
+                            var totaldis = 0;
+                            var toralwin = 0;
+                            var total = 0;
+                        }
+                        @foreach (var item in (List<user_total>)ViewData["TAR"])
+                        {
+                            if (item.Type == "Up")
+                            {
+                                up = Int32.Parse(item.Amount_Discount);
+                                wup = Int32.Parse(item.Amount_Win);
+                                tup = up - wup;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                up_bet = Int32.Parse(item.Amount);
+                                total = total + up_bet;
+                            }
+                            else if (item.Type == "Down")
+                            {
+                                down_bet = Int32.Parse(item.Amount);
+                                total = total + down_bet;
+                                down = Int32.Parse(item.Amount_Discount);
+                                wdown = Int32.Parse(item.Amount_Win);
+                                tdown = down - wdown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "FirstThree")
+                            {
+                                fthree_bet = Int32.Parse(item.Amount);
+                                total = total + fthree_bet;
+                                fthree = Int32.Parse(item.Amount_Discount);
+                                wfthree = Int32.Parse(item.Amount_Win);
+                                tfthree = fthree - wfthree;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "FirstThreeOod")
+                            {
+                                fthreeood_bet = Int32.Parse(item.Amount);
+                                total = total + fthreeood_bet;
+                                fthreeood = Int32.Parse(item.Amount_Discount);
+                                wfthreeood = Int32.Parse(item.Amount_Win);
+                                tfthreeood = fthreeood - wfthreeood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "ThreeUp")
+                            {
+                                threeup_bet = Int32.Parse(item.Amount);
+                                total = total + threeup_bet;
+                                threeup = Int32.Parse(item.Amount_Discount);
+                                wthreeup = Int32.Parse(item.Amount_Win);
+                                tthreeup = threeup - wthreeup;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "ThreeUPOod")
+                            {
+                                threeupood_bet = Int32.Parse(item.Amount);
+                                total = total + threeupood_bet;
+                                threeupood = Int32.Parse(item.Amount_Discount);
+                                wthreeupood = Int32.Parse(item.Amount_Win);
+                                tthreeupood = threeupood - wthreeupood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "ThreeDown")
+                            {
+                                threedown_bet = Int32.Parse(item.Amount);
+                                total = total + threedown_bet;
+                                threedown = Int32.Parse(item.Amount_Discount);
+                                wthreedown = Int32.Parse(item.Amount_Win);
+                                tthreedown = threedown - wthreedown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "TwoUp")
+                            {
+                                twoup_bet = Int32.Parse(item.Amount);
+                                total = total + twoup_bet;
+                                twoup = Int32.Parse(item.Amount_Discount);
+                                wtwoup = Int32.Parse(item.Amount_Win);
+                                ttwoup = twoup - wtwoup;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "TwoDown")
+                            {
+                                twodown_bet = Int32.Parse(item.Amount);
+                                total = total + twodown_bet;
+                                twodown = Int32.Parse(item.Amount_Discount);
+                                wtwodown = Int32.Parse(item.Amount_Win);
+                                ttwodown = twodown - wtwodown;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else if (item.Type == "TwoOod")
+                            {
+                                twoood_bet = Int32.Parse(item.Amount);
+                                total = total + twoood_bet;
+                                twoood = Int32.Parse(item.Amount_Discount);
+                                wtwoood = Int32.Parse(item.Amount_Win);
+                                ttwoood = twoood - wtwoood;
+                                totaldis = totaldis + Int32.Parse(item.Amount_Discount);
+                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                            }
+                            else { }
+                        }
+                        <tr>
+                            <td>วิ่ง บน</td>
+                            <td>@up_bet</td>
+                            <td id="udis">@up</td>
+                            <td id="uwin">@wup</td>
+                            <td id="utotal">@tup</td>
+                        </tr>
+                        <tr>
+                            <td>วื่ง ล่าง</td>
+                            <td>@down_bet</td>
+                            <td id="ddis">@down</td>
+                            <td id="dwin">@wdown</td>
+                            <td id="dtotal">@tdown</td>
+                        </tr>
+                        <tr>
+                            <td>3 หน้า</td>
+                            <td>@fthree_bet</td>
+                            <td id="f3dis">@fthree</td>
+                            <td id="f3win">@wfthree</td>
+                            <td id="f3total">@tfthree</td>
+                        </tr>
+                        <tr>
+                            <td>3 หน้าโต๊ด</td>
+                            <td>@fthreeood_bet</td>
+                            <td id="f3odis">@fthreeood</td>
+                            <td id="f3owin">@wfthreeood</td>
+                            <td id="f3ototal">@tfthreeood</td>
+                        </tr>
+                        <tr>
+                            <td>3 บน</td>
+                            <td>@threeup_bet</td>
+                            <td id="u3dis">@threeup</td>
+                            <td id="u3win">@wthreeup</td>
+                            <td id="u3total">@tthreeup</td>
+                        </tr>
+                        <tr>
+                            <td>3 โต๊ด</td>
+                            <td>@threeupood_bet</td>
+                            <td id="u3odis">@threeupood</td>
+                            <td id="u3owin">@wthreeupood</td>
+                            <td id="u3ototal">@tthreeupood</td>
+                        </tr>
+                        <tr>
+                            <td>3 ล่าง</td>
+                            <td>@threedown_bet</td>
+                            <td id="d3dis">@threedown</td>
+                            <td id="d3win">@wthreedown</td>
+                            <td id="d3total">@tthreedown</td>
+                        </tr>
+                        <tr>
+                            <td>2 บน</td>
+                            <td>@twoup_bet</td>
+                            <td id="u2dis">@twoup</td>
+                            <td id="u2win">@wtwoup</td>
+                            <td id="u2total">@ttwoup</td>
+                        </tr>
+                        <tr>
+                            <td>2 ล่าง</td>
+                            <td>@twodown_bet</td>
+                            <td id="d2dis">@twodown</td>
+                            <td id="d2win">@wtwodown</td>
+                            <td id="d2total">@ttwodown</td>
+                        </tr>
+                        <tr>
+                            <td>2 โต๊ด</td>
+                            <td>@twoood_bet</td>
+                            <td id="o2dis">@twoood</td>
+                            <td id="o2win">@wtwoood</td>
+                            <td id="o2total">@ttwoood</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="color:white;background-color:blue;">
+                        <tr>
+                            <td>รวม</td>
+                            <td>@total</td>
+                            <td id="tdis">@totaldis</td>
+                            <td id="twin">@toralwin</td>
+                            <td id="ttotal">@(totaldis - toralwin)</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="printBalance">พิมพ์</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+            </div>
         </div>
     </div>
 </div>

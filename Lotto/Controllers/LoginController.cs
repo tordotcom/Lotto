@@ -17,7 +17,18 @@ namespace Lotto.Controllers
         // GET: Login
         public ActionResult Login()
         {
-            return View();
+            if (Session["Role"] == "Administrator")
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return View();
+            }
         }
         [HttpPost]
         public ActionResult Login(UserLogin objUser)
@@ -63,13 +74,13 @@ namespace Lotto.Controllers
                 {
                     bool verify = VerifyHash(objUser.Password, user[0].Password);
                     if (verify)
-                    {
-                        Session["ID"] = user[0].ID;
-                        Session["Username"] = user[0].Username;
-                        Session["Role"] = user[0].Role;
+                    {                      
                         bool role = Check_Role("admin", user[0].Role);
                         if (role)
                         {
+                            Session["ID"] = user[0].ID;
+                            Session["Username"] = user[0].Username;
+                            Session["Role"] = "Administrator";
                             return RedirectToAction("Index", "Admin");                            
                         }
                         else
@@ -77,6 +88,9 @@ namespace Lotto.Controllers
                             role = Check_Role("user", user[0].Role);
                             if (role)
                             {
+                                Session["ID"] = user[0].ID;
+                                Session["Username"] = user[0].Username;
+                                Session["Role"] = "User";
                                 int id = Int32.Parse(user[0].ID);
                                 Account A = db.Account.Where(s => s.ID == id).FirstOrDefault<Account>();
                                 if (A != null)

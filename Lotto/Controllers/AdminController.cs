@@ -18,158 +18,101 @@ namespace Lotto.Controllers
         // GET: Admin
         public ActionResult Index() //หน้าแรก
         {
-            return View();
+            if(Session["Role"] == "Administrator")
+            {
+                return View();
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
         }
 
         public ActionResult AllBet() //ดูเลขทั้งหมด
         {
-            int id = db.Period.Max(p => p.ID);
-            if (id != 0)
+            if(Session["Role"] == "Administrator")
             {
-                string connetionString = null;
-                var all = new List<All_Number>();
-                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-                try
+                int id = db.Period.Max(p => p.ID);
+                if (id != 0)
                 {
-                    SqlConnection cnn = new SqlConnection(connetionString);
-                    cnn.Open();
-                    string query = "select t1.Type,t1.Number,t1.Amount,t1.nLen,t2.max from (SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,ls.Number) t1 left join(select MAX(tt.num) as max from(select t.Type,t.nLen,COUNT(*) as num from(SELECT ls.Type,LEN(ls.Number) as nLen,ls.number  FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,LEN(ls.Number),ls.number) t group by t.Type,t.nLen) tt) t2 on 1=1 order by t1.Type , t1.Number";
-                    //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
-                    SqlCommand cmd = new SqlCommand(query, cnn);
-                    cmd.Parameters.AddWithValue("@period", id.ToString());
-                    SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
+                    string connetionString = null;
+                    var all = new List<All_Number>();
+                    connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                     try
                     {
-                        while (Reader.Read())
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "select t1.Type,t1.Number,t1.Amount,t1.nLen,t2.max from (SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,ls.Number) t1 left join(select MAX(tt.num) as max from(select t.Type,t.nLen,COUNT(*) as num from(SELECT ls.Type,LEN(ls.Number) as nLen,ls.number  FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,LEN(ls.Number),ls.number) t group by t.Type,t.nLen) tt) t2 on 1=1 order by t1.Type , t1.Number";
+                        //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", id.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
                         {
-                            all.Add(new All_Number
+                            while (Reader.Read())
                             {
-                                Type = Reader["Type"].ToString(),
-                                Number = Reader["Number"].ToString(),
-                                Amount = Reader["Amount"].ToString(),
-                                nLen = Reader["nLen"].ToString(),
-                                Max = Reader["max"].ToString(),
-                            });
+                                all.Add(new All_Number
+                                {
+                                    Type = Reader["Type"].ToString(),
+                                    Number = Reader["Number"].ToString(),
+                                    Amount = Reader["Amount"].ToString(),
+                                    nLen = Reader["nLen"].ToString(),
+                                    Max = Reader["max"].ToString(),
+                                });
+                            }
+                            cnn.Close();
                         }
-                        cnn.Close();
+                        catch
+                        {
+
+                        }
                     }
                     catch
                     {
 
                     }
+                    return View(all);
                 }
-                catch
-                {
-
-                }
-                return View(all);
+                return View();
             }
-            return View();
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
         }
 
         public ActionResult Close() //ปิดหวย
         {
-            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
-            var pid=0;
-            if (P!=null)
+            if(Session["Role"] == "Administrator")
             {
-                pid = P.ID;
-            }
-            else
-            {
-                int id = db.Period.Max(p => p.ID);
-                pid = id;
-            }
-            string connetionString = null;
-            var all = new List<Close>();
-            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-            try
-            {
-                SqlConnection cnn = new SqlConnection(connetionString);
-                cnn.Open();
-                string query = "SELECT pe.ID,pe.Check_Result,pe.create_date,pe.update_date,pe.Date,case when pe.BetStatus='0' then 'ปิดรับ' else 'เปิดรับ' end as BetStatus,pe.Close_BY,sum(ISNULL(CAST(ls.Amount as int), 0 )) as Amount,ISNULL(cr.crR, 0 ) as crR,ISNULL(cu.countu , 0 ) as countu FROM [dbo].[Period] pe left join(SELECT [ID],Period_ID,Receive,update_date,create_date FROM [dbo].[Poll] where Receive='1') p on p.Period_ID=pe.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join (SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT Period_ID as crPID,COUNT(Receive) as crR,Receive as crRe FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID) cr on p.Period_ID=cr.crPID and p.Receive=cr.crRe left join(SELECT COUNT(distinct UID) as countu,Period_ID as cuPID,Receive as cuR FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID,Receive) cu on p.Period_ID=cu.cuPID and p.Receive=cu.cuR where pe.ID=@period group by pe.ID,pe.create_date,pe.Date,pe.Close_BY,pe.Check_Result,pe.update_date,cr.crR,cu.countu,pe.BetStatus";
-                SqlCommand cmd = new SqlCommand(query, cnn);
-                cmd.Parameters.AddWithValue("@period", pid.ToString());
-                SqlDataReader Reader = cmd.ExecuteReader();
-                Console.Write(Reader);
-                try
+                Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+                var pid=0;
+                if (P!=null)
                 {
-                    while (Reader.Read())
-                    {
-                        all.Add(new Close
-                        {
-                            PID = Reader["ID"].ToString(),
-                            Date = Convert.ToDateTime(Reader["Date"]),
-                            Amount = Reader["Amount"].ToString(),
-                            CountReceive = Reader["crR"].ToString(),
-                            CountUser = Reader["countu"].ToString(),
-                            CloseBy = Reader["Close_BY"].ToString(),
-                            CreateDate = Reader["create_date"].ToString(),
-                            CloseDate = Reader["update_date"].ToString(),
-                            BetStatus = Reader["BetStatus"].ToString(),
-                            CheckResult= Reader["Check_Result"].ToString()
-                        });
-                    }
-                    cnn.Close();
+                    pid = P.ID;
                 }
-                catch
+                else
                 {
-
+                    int id = db.Period.Max(p => p.ID);
+                    pid = id;
                 }
-            }
-            catch
-            {
-
-            }
-
-            var user_bet = new List<User_Bet_Result>();
-            try
-            {
-                SqlConnection cnn = new SqlConnection(connetionString);
-                cnn.Open();
-                string query = "SELECT po.UID,a.Name,sum(CAST(ls.AmountDiscount as int)) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period group by po.UID,a.Name";
-                SqlCommand cmd = new SqlCommand(query, cnn);
-                cmd.Parameters.AddWithValue("@period", pid.ToString());
-                SqlDataReader Reader = cmd.ExecuteReader();
-                Console.Write(Reader);
-                try
-                {
-                    while (Reader.Read())
-                    {
-                        user_bet.Add(new User_Bet_Result
-                        {
-                            ID = Reader["UID"].ToString(),
-                            Name = Reader["Name"].ToString(),
-                            Discount = Reader["AmountDiscount"].ToString(),
-                            Win = Reader["AmountWin"].ToString(),
-                        });
-                    }
-                    cnn.Close();
-                }
-                catch
-                {
-
-                }
-            }
-            catch
-            {
-
-            }
-            if (all[0].CheckResult=="1")
-            {
-                List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
-                ViewData["TAR"] = TAR;
-                ViewData["UBET"] = user_bet;
-            }
-            else if(all[0].CheckResult == "0")
-            {
-                var total_type_bet = new List<Total_Amount_Result>();
+                string connetionString = null;
+                var all = new List<Close>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                 try
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "select t.Type,sum(CAST(t.AmountDiscount as int)) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
+                    string query = "SELECT pe.ID,pe.Check_Result,pe.create_date,pe.update_date,pe.Date,case when pe.BetStatus='0' then 'ปิดรับ' else 'เปิดรับ' end as BetStatus,pe.Close_BY,sum(ISNULL(CAST(ls.Amount as int), 0 )) as Amount,ISNULL(cr.crR, 0 ) as crR,ISNULL(cu.countu , 0 ) as countu FROM [dbo].[Period] pe left join(SELECT [ID],Period_ID,Receive,update_date,create_date FROM [dbo].[Poll] where Receive='1') p on p.Period_ID=pe.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join (SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT Period_ID as crPID,COUNT(Receive) as crR,Receive as crRe FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID) cr on p.Period_ID=cr.crPID and p.Receive=cr.crRe left join(SELECT COUNT(distinct UID) as countu,Period_ID as cuPID,Receive as cuR FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID,Receive) cu on p.Period_ID=cu.cuPID and p.Receive=cu.cuR where pe.ID=@period group by pe.ID,pe.create_date,pe.Date,pe.Close_BY,pe.Check_Result,pe.update_date,cr.crR,cu.countu,pe.BetStatus";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@period", pid.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
@@ -178,12 +121,18 @@ namespace Lotto.Controllers
                     {
                         while (Reader.Read())
                         {
-                            total_type_bet.Add(new Total_Amount_Result
-                            {                                
-                                Type = Reader["Type"].ToString(),
-                                Amount_Discount = Reader["AmountDiscount"].ToString(),
-                                Amount_Win = Reader["Win"].ToString(),
-                                
+                            all.Add(new Close
+                            {
+                                PID = Reader["ID"].ToString(),
+                                Date = Convert.ToDateTime(Reader["Date"]),
+                                Amount = Reader["Amount"].ToString(),
+                                CountReceive = Reader["crR"].ToString(),
+                                CountUser = Reader["countu"].ToString(),
+                                CloseBy = Reader["Close_BY"].ToString(),
+                                CreateDate = Reader["create_date"].ToString(),
+                                CloseDate = Reader["update_date"].ToString(),
+                                BetStatus = Reader["BetStatus"].ToString(),
+                                CheckResult= Reader["Check_Result"].ToString()
                             });
                         }
                         cnn.Close();
@@ -197,522 +146,760 @@ namespace Lotto.Controllers
                 {
 
                 }
-                ViewData["TAR"] = total_type_bet;
-                ViewData["UBET"] = user_bet;
+
+                var user_bet = new List<User_Bet_Result>();
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT po.UID,a.Name,sum(CAST(ls.AmountDiscount as int)) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period group by po.UID,a.Name";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", pid.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            user_bet.Add(new User_Bet_Result
+                            {
+                                ID = Reader["UID"].ToString(),
+                                Name = Reader["Name"].ToString(),
+                                Discount = Reader["AmountDiscount"].ToString(),
+                                Win = Reader["AmountWin"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                if (all[0].CheckResult=="1")
+                {
+                    List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
+                    ViewData["TAR"] = TAR;
+                    ViewData["UBET"] = user_bet;
+                }
+                else if(all[0].CheckResult == "0")
+                {
+                    var total_type_bet = new List<Total_Amount_Result>();
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "select t.Type,sum(CAST(t.AmountDiscount as int)) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", pid.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                total_type_bet.Add(new Total_Amount_Result
+                                {                                
+                                    Type = Reader["Type"].ToString(),
+                                    Amount_Discount = Reader["AmountDiscount"].ToString(),
+                                    Amount_Win = Reader["Win"].ToString(),
+                                
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    ViewData["TAR"] = total_type_bet;
+                    ViewData["UBET"] = user_bet;
+                }
+                else { }
+                return View(all);
             }
-            else { }
-            return View(all);
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
         }
 
         public ActionResult List(String UID) //ดูโพย
         {
-            string param;
-            if (UID != null)
+            if(Session["Role"] == "Administrator")
             {
-                param = "and p.UID = '" + UID + "'";
-            }
-            else
-            {
-                param = "";
-            }
-            int id = db.Period.Max(p => p.ID);
-            if (id != 0)
-            {
-                string connetionString = null;
-                var pollDetail = new List<Poll_Detail>();
-                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-                try
-                {
-                    SqlConnection cnn = new SqlConnection(connetionString);
-                    cnn.Open();
-                    string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
-                    SqlCommand cmd = new SqlCommand(query, cnn);
-                    cmd.Parameters.AddWithValue("@period", id.ToString());
-                    SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
-                    try
-                    {
-                        while (Reader.Read())
-                        {
-                            pollDetail.Add(new Poll_Detail
-                            {
-                                ID = Reader["ID"].ToString(),
-                                name = Reader["Name"].ToString(),
-                                Receive = Reader["Receive"].ToString(),
-                                Amount = Reader["amount"].ToString(),
-                                Discount = Reader["discount"].ToString(),
-                                Create_By = Reader["Create_By"].ToString(),
-                                create_date = Reader["create_date"].ToString(),
-                                poll_number = Reader["rNumber"].ToString(),
-                                UID = Reader["UID"].ToString(),
-                            });
-                        }
-                        cnn.Close();
-
-                    }
-                    catch
-                    {
-
-                    }
-                }
-                catch
-                {
-
-                }
+                string param;
                 if (UID != null)
                 {
-                    return Json(pollDetail);
+                    param = "and p.UID = '" + UID + "'";
                 }
                 else
                 {
-                    return View(pollDetail);
+                    param = "";
                 }
-            }
-            return View();
-        }
-        public ActionResult Bet() //แทงโพย
-        {
-            string connetionString = null;
-            var data = new List<admin_bet>();
-            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-            try
-            {
-                SqlConnection cnn = new SqlConnection(connetionString);
-                cnn.Open();
-                string query = "SELECT a.[ID],a.[Name],a.[Description],a.[Status],count(p.Period_ID) as poll_count FROM [dbo].[Account] a left join(SELECT [ID],[UID],[Period_ID] FROM [dbo].[Poll]) p on a.ID=p.UID where a.Name !='administrator' group by a.[ID],a.[Name],a.[Description],a.[Status] order by count(p.Period_ID) desc";
-                SqlCommand cmd = new SqlCommand(query, cnn);
-                SqlDataReader Reader = cmd.ExecuteReader();
-                Console.Write(Reader);
-                try
+                int id = db.Period.Max(p => p.ID);
+                if (id != 0)
                 {
-                    while (Reader.Read())
-                    {
-                        data.Add(new admin_bet
-                        {
-                            UID = Reader["ID"].ToString(),
-                            Name = Reader["Name"].ToString(),
-                            Description = Reader["Description"].ToString(),
-                            Status = Reader["Status"].ToString(),
-                            poll_count = Reader["poll_count"].ToString(),
-                        });
-                    }
-                    cnn.Close();
-                }
-                catch
-                {
-
-                }
-            }
-            catch
-            {
-
-            }
-            return View(data);
-        }
-        public ActionResult BetTotal() //ยอดสรุปเป็นใบ
-        {
-            int id = db.Period.Max(p => p.ID);
-            if (id != 0)
-            {
-                string connetionString = null;
-                var all = new List<total_bet>();
-                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-                try
-                {
-                    SqlConnection cnn = new SqlConnection(connetionString);
-                    cnn.Open();
-                    string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as int)END) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
-                    SqlCommand cmd = new SqlCommand(query, cnn);
-                    cmd.Parameters.AddWithValue("@period", id.ToString());
-                    SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
+                    string connetionString = null;
+                    var pollDetail = new List<Poll_Detail>();
+                    connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                     try
                     {
-                        while (Reader.Read())
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", id.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
                         {
-                            all.Add(new total_bet
+                            while (Reader.Read())
                             {
-                                UID = Reader["UID"].ToString(),
-                                Name = Reader["Name"].ToString(),
-                                Amount = Reader["Amount"].ToString(),
-                                AmountDiscount = Reader["AmountDiscount"].ToString(),
-                                AmountReceive = Reader["AmountReceive"].ToString(),
-                                Receive = Reader["poll_receive"].ToString(),
-                                Reject = Reader["poll_reject"].ToString(),
-                            });
+                                pollDetail.Add(new Poll_Detail
+                                {
+                                    ID = Reader["ID"].ToString(),
+                                    name = Reader["Name"].ToString(),
+                                    Receive = Reader["Receive"].ToString(),
+                                    Amount = Reader["amount"].ToString(),
+                                    Discount = Reader["discount"].ToString(),
+                                    Create_By = Reader["Create_By"].ToString(),
+                                    create_date = Reader["create_date"].ToString(),
+                                    poll_number = Reader["rNumber"].ToString(),
+                                    UID = Reader["UID"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+
                         }
-                        cnn.Close();
+                        catch
+                        {
+
+                        }
                     }
                     catch
                     {
 
                     }
+                    if (UID != null)
+                    {
+                        return Json(pollDetail);
+                    }
+                    else
+                    {
+                        return View(pollDetail);
+                    }
                 }
-                catch
-                {
-
-                }
-                return View(all);
+                return View();
             }
-            return View();
-        }
-        public ActionResult Out() //แทงออก
-        {
-            return View();
-        }
-        public ActionResult Cut() //ตัดเลข
-        {
-            int id = db.Period.Max(p => p.ID);
-            if (id != 0)
+            else if(Session["Role"] == "User")
             {
-                string connetionString = null;
-                var all = new List<All_Number>();
-                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-                try
-                {
-                    SqlConnection cnn = new SqlConnection(connetionString);
-                    cnn.Open();
-                    string query = "select t1.Type,t1.Number,t1.Amount,t1.nLen,t2.max from (SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,ls.Number) t1 left join(select MAX(tt.num) as max from(select t.Type,t.nLen,COUNT(*) as num from(SELECT ls.Type,LEN(ls.Number) as nLen,ls.number  FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,LEN(ls.Number),ls.number) t group by t.Type,t.nLen) tt) t2 on 1=1 order by t1.Type , t1.Number";
-                    //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
-                    SqlCommand cmd = new SqlCommand(query, cnn);
-                    cmd.Parameters.AddWithValue("@period", id.ToString());
-                    SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
-                    try
-                    {
-                        while (Reader.Read())
-                        {
-                            all.Add(new All_Number
-                            {
-                                Type = Reader["Type"].ToString(),
-                                Number = Reader["Number"].ToString(),
-                                Amount = Reader["Amount"].ToString(),
-                                nLen = Reader["nLen"].ToString(),
-                                Max = Reader["max"].ToString(),
-                            });
-                        }
-                        cnn.Close();
-                    }
-                    catch
-                    {
-
-                    }
-                }
-                catch
-                {
-
-                }
-                return View(all);
-            }
-            return View();
-        }
-        public ActionResult OutTotal() //ยอดแทงออก
-        {
-            return View();
-        }
-        public ActionResult ListBackward() //ดูโพยย้อนหลัง
-        {
-            List<Period> pr = db.Period.ToList<Period>();
-            string connetionString = null;
-            var pollDetail = new List<Poll_Detail>();
-            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-
-            foreach (Period poo in pr)
-            {
-                try
-                {
-                    SqlConnection cnn = new SqlConnection(connetionString);
-                    cnn.Open();
-                    string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
-                    SqlCommand cmd = new SqlCommand(query, cnn);
-                    cmd.Parameters.AddWithValue("@period", poo.ID.ToString());
-                    SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
-                    try
-                    {
-                        while (Reader.Read())
-                        {
-                            pollDetail.Add(new Poll_Detail
-                            {
-                                ID = Reader["ID"].ToString(),
-                                PeriodDate = String.Format("{0:dd/MM/yyyy}", poo.Date),
-                                name = Reader["Name"].ToString(),
-                                Receive = Reader["Receive"].ToString(),
-                                Amount = Reader["amount"].ToString(),
-                                Discount = Reader["discount"].ToString(),
-                                Create_By = Reader["Create_By"].ToString(),
-                                create_date = Reader["create_date"].ToString(),
-                                poll_number = Reader["rNumber"].ToString(),
-                                UID = Reader["UID"].ToString(),
-                            }); ;
-                        }
-                        cnn.Close();
-
-                    }
-                    catch
-                    {
-
-                    }
-                }
-                catch
-                {
-
-                }
-            }
-            return View(pollDetail);
-        }
-        public ActionResult LottoBackward() //ดูหวยย้อนหลัง
-        {
-            return View(db.Period.ToList());
-        }
-        public ActionResult Result() //ดูเลขหวย
-        {
-            return View(db.Result.ToList());
-        }
-        public ActionResult Setting() //ตั้งค่า
-        {
-            return View();
-        }
-        public ActionResult Member() //สมาชิก
-        {
-            string connetionString = null;
-            var user = new List<User_Role>();
-            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-            try
-            {
-                SqlConnection cnn = new SqlConnection(connetionString);
-                cnn.Open();
-                string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID";
-                SqlCommand cmd = new SqlCommand(query, cnn);
-                SqlDataReader Reader = cmd.ExecuteReader();
-                Console.Write(Reader);
-                try
-                {
-                    while (Reader.Read())
-                    {
-                        user.Add(new User_Role
-                        {
-                            ID = Reader["ID"].ToString(),
-                            Username = Reader["Username"].ToString(),
-                            Name = Reader["Name"].ToString(),
-                            Description = Reader["Description"].ToString(),
-                            Status = Reader["Status"].ToString(),
-                            create_date = Reader["create_date"].ToString(),
-                            update_date = Reader["update_date"].ToString(),
-                            Create_By_UID = Reader["Create_By_UID"].ToString(),
-                            Last_Login = Reader["Last_Login"].ToString(),
-                            Role = Reader["Role"].ToString()
-                        });
-                    }
-                    cnn.Close();
-                }
-                catch
-                {
-
-                }
-            }
-            catch
-            {
-
-            }
-            if (user.Count > 0)
-            {
-                for(int i=0;i<user.Count;i++)
-                {
-                    bool role = Check_Role("user", user[i].Role);
-                    if(!role)
-                    {
-                        user.RemoveAt(i);
-                    }
-                }
-            }                
-            return View(user);
-        }
-        public ActionResult MemberPrice() //ราคาสมาชิก
-        {
-            string connetionString = null;
-            var user = new List<User_Rate_Discount>();
-            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-            try
-            {
-                SqlConnection cnn = new SqlConnection(connetionString);
-                cnn.Open();
-                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.[first_three_ood],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.[first_three_ood] as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Discount]) d on a.ID = d.UID where ra.UID is not null";
-                SqlCommand cmd = new SqlCommand(query, cnn);
-                SqlDataReader Reader = cmd.ExecuteReader();
-                Console.Write(Reader);
-                try
-                {
-                    while (Reader.Read())
-                    {
-                        user.Add(new User_Rate_Discount
-                        {
-                            ID = Reader["ID"].ToString(),
-                            rateID = Reader["rateID"].ToString(),
-                            discountID = Reader["discountID"].ToString(),
-                            Username = Reader["Username"].ToString(),
-                            Name = Reader["Name"].ToString(),
-                            Role = Reader["Role"].ToString(),
-                            ThreeUP = Reader["three_up"].ToString(),
-                            ThreeDown = Reader["three_down"].ToString(),
-                            ThreeOod = Reader["three_ood"].ToString(),
-                            FirstThree = Reader["first_three"].ToString(),
-                            FirstThreeOod = Reader["first_three_ood"].ToString(),
-                            TwoUp = Reader["two_up"].ToString(),
-                            TwoOod = Reader["two_ood"].ToString(),
-                            TwoDown = Reader["two_down"].ToString(),
-                            Up = Reader["up"].ToString(),
-                            Down = Reader["down"].ToString(),
-                            ThreeUP_discount = Reader["three_up_d"].ToString(),
-                            ThreeDown_discount = Reader["three_down_d"].ToString(),
-                            ThreeOod_discount = Reader["three_ood_d"].ToString(),
-                            FirstThree_discount = Reader["first_three_d"].ToString(),
-                            FirstThreeOod_discount = Reader["first_three_ood_d"].ToString(),
-                            TwoUp_discount = Reader["two_up_d"].ToString(),
-                            TwoOod_discount = Reader["two_ood_d"].ToString(),
-                            TwoDown_discount = Reader["two_down_d"].ToString(),
-                            Up_discount = Reader["up_d"].ToString(),
-                            Down_discount = Reader["down_d"].ToString(),
-                        });
-                    }
-                    cnn.Close();
-                }
-                catch
-                {
-
-                }
-            }
-            catch
-            {
-
-            }
-            try
-            {
-                SqlConnection cnn = new SqlConnection(connetionString);
-                cnn.Open();
-                string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where rate.UID is null";
-                SqlCommand cmd = new SqlCommand(query, cnn);
-                SqlDataReader Reader = cmd.ExecuteReader();
-                Console.Write(Reader);
-                try
-                {
-                    while (Reader.Read())
-                    {
-                        user.Add(new User_Rate_Discount
-                        {
-                            ID = Reader["ID"].ToString(),
-                            Username = Reader["Username"].ToString(),
-                            Name = Reader["Name"].ToString(),
-                            Role = Reader["Role"].ToString(),
-                            ThreeUP = Reader["three_up"].ToString(),
-                            ThreeDown = Reader["three_down"].ToString(),
-                            ThreeOod = Reader["three_ood"].ToString(),
-                            FirstThree = Reader["first_three"].ToString(),
-                            FirstThreeOod = Reader["first_three_ood"].ToString(),
-                            TwoUp = Reader["two_up"].ToString(),
-                            TwoOod = Reader["two_ood"].ToString(),
-                            TwoDown = Reader["two_down"].ToString(),
-                            Up = Reader["up"].ToString(),
-                            Down = Reader["down"].ToString(),
-                            ThreeUP_discount = Reader["three_up_d"].ToString(),
-                            ThreeDown_discount = Reader["three_down_d"].ToString(),
-                            ThreeOod_discount = Reader["three_ood_d"].ToString(),
-                            FirstThree_discount = Reader["first_three_d"].ToString(),
-                            FirstThreeOod_discount = Reader["first_three_ood_d"].ToString(),
-                            TwoUp_discount = Reader["two_up_d"].ToString(),
-                            TwoOod_discount = Reader["two_ood_d"].ToString(),
-                            TwoDown_discount = Reader["two_down_d"].ToString(),
-                            Up_discount = Reader["up_d"].ToString(),
-                            Down_discount = Reader["down_d"].ToString(),
-                        });
-                    }
-                    cnn.Close();
-                }
-                catch
-                {
-
-                }
-            }
-            catch
-            {
-
-            }
-            if (user.Count > 0)
-            {
-                for (int i = 0; i < user.Count; i++)
-                {
-                    bool role = Check_Role("user", user[i].Role);
-                    if (!role)
-                    {
-                        user.RemoveAt(i);
-                    }
-                }
-            }
-            return View(user);
-        }
-        public ActionResult DealerInfo() //ข้อมูลเจ้ามือ
-        {
-            return View();
-        }
-        public ActionResult AdminBet(int id) //แทงโพย
-        {
-            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
-            if (P != null)
-            {
-                string connetionString = null;
-                var pollDetail = new List<Poll_Detail>();
-                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-                try
-                {
-                    SqlConnection cnn = new SqlConnection(connetionString);
-                    cnn.Open();
-                    string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive";
-                    SqlCommand cmd = new SqlCommand(query, cnn);
-                    cmd.Parameters.AddWithValue("@UID", id.ToString()); // user ID
-                    cmd.Parameters.AddWithValue("@period", P.ID.ToString());
-                    SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
-                    try
-                    {
-                        while (Reader.Read())
-                        {
-                            pollDetail.Add(new Poll_Detail
-                            {
-                                ID = Reader["ID"].ToString(),
-                                Receive = Reader["Receive"].ToString(),
-                                Amount = Reader["amount"].ToString(),
-                                Discount = Reader["discount"].ToString(),
-                            });
-                        }
-                        cnn.Close();
-                    }
-                    catch
-                    {
-
-                    }
-                }
-                catch
-                {
-                    
-                }
-                ViewBag.UID = id;
-                return View(pollDetail);
+                return RedirectToAction("Index", "User");
             }
             else
             {
-                var pollDetail = new List<Poll_Detail>();
-                pollDetail.Add(new Poll_Detail
-                {
-                    Receive = "close"
-                });
-                return View(pollDetail);
-            }        
+                return RedirectToAction("Login", "Login");
+            }
         }
-            //---------------------------------------------------------------------------------------------------//
-            //-------------------------------------------function------------------------------------------------//
-            //---------------------------------------------------------------------------------------------------//
-            //----------------------------------------check role-------------------------------------------------//
-            public bool Check_Role(string plainText, string hashValue)
+        public ActionResult Bet() //แทงโพย
+        {
+            if(Session["Role"] == "Administrator")
+            {
+                string connetionString = null;
+                var data = new List<admin_bet>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT a.[ID],a.[Name],a.[Description],a.[Status],count(p.Period_ID) as poll_count FROM [dbo].[Account] a left join(SELECT [ID],[UID],[Period_ID] FROM [dbo].[Poll]) p on a.ID=p.UID where a.Name !='administrator' group by a.[ID],a.[Name],a.[Description],a.[Status] order by count(p.Period_ID) desc";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            data.Add(new admin_bet
+                            {
+                                UID = Reader["ID"].ToString(),
+                                Name = Reader["Name"].ToString(),
+                                Description = Reader["Description"].ToString(),
+                                Status = Reader["Status"].ToString(),
+                                poll_count = Reader["poll_count"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(data);  
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult BetTotal() //ยอดสรุปเป็นใบ
+        {
+            if(Session["Role"] == "Administrator")
+            {
+                int id = db.Period.Max(p => p.ID);
+                if (id != 0)
+                {
+                    string connetionString = null;
+                    var all = new List<total_bet>();
+                    connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as int)END) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", id.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                all.Add(new total_bet
+                                {
+                                    UID = Reader["UID"].ToString(),
+                                    Name = Reader["Name"].ToString(),
+                                    Amount = Reader["Amount"].ToString(),
+                                    AmountDiscount = Reader["AmountDiscount"].ToString(),
+                                    AmountReceive = Reader["AmountReceive"].ToString(),
+                                    Receive = Reader["poll_receive"].ToString(),
+                                    Reject = Reader["poll_reject"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    return View(all);
+                }
+                return View();
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult Out() //แทงออก
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                return View();
+            }
+            else if (Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult Cut() //ตัดเลข
+        {
+            if(Session["Role"] == "Administrator")
+            {
+                int id = db.Period.Max(p => p.ID);
+                if (id != 0)
+                {
+                    string connetionString = null;
+                    var all = new List<All_Number>();
+                    connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "select t1.Type,t1.Number,t1.Amount,t1.nLen,t2.max from (SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,ls.Number) t1 left join(select MAX(tt.num) as max from(select t.Type,t.nLen,COUNT(*) as num from(SELECT ls.Type,LEN(ls.Number) as nLen,ls.number  FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,LEN(ls.Number),ls.number) t group by t.Type,t.nLen) tt) t2 on 1=1 order by t1.Type , t1.Number";
+                        //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", id.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                all.Add(new All_Number
+                                {
+                                    Type = Reader["Type"].ToString(),
+                                    Number = Reader["Number"].ToString(),
+                                    Amount = Reader["Amount"].ToString(),
+                                    nLen = Reader["nLen"].ToString(),
+                                    Max = Reader["max"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    return View(all);
+                }
+                return View();
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult OutTotal() //ยอดแทงออก
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                return View();
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult ListBackward() //ดูโพยย้อนหลัง
+        {
+            if(Session["Role"] == "Administrator")
+            {
+                List<Period> pr = db.Period.ToList<Period>();
+                string connetionString = null;
+                var pollDetail = new List<Poll_Detail>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+
+                foreach (Period poo in pr)
+                {
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", poo.ID.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                pollDetail.Add(new Poll_Detail
+                                {
+                                    ID = Reader["ID"].ToString(),
+                                    PeriodDate = String.Format("{0:dd/MM/yyyy}", poo.Date),
+                                    name = Reader["Name"].ToString(),
+                                    Receive = Reader["Receive"].ToString(),
+                                    Amount = Reader["amount"].ToString(),
+                                    Discount = Reader["discount"].ToString(),
+                                    Create_By = Reader["Create_By"].ToString(),
+                                    create_date = Reader["create_date"].ToString(),
+                                    poll_number = Reader["rNumber"].ToString(),
+                                    UID = Reader["UID"].ToString(),
+                                }); ;
+                            }
+                            cnn.Close();
+
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                return View(pollDetail);
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult LottoBackward() //ดูหวยย้อนหลัง
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                return View(db.Period.ToList());
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult Result() //ดูเลขหวย
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                return View(db.Result.ToList());
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult Setting() //ตั้งค่า
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                return View();
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult Member() //สมาชิก
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                string connetionString = null;
+                var user = new List<User_Role>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            user.Add(new User_Role
+                            {
+                                ID = Reader["ID"].ToString(),
+                                Username = Reader["Username"].ToString(),
+                                Name = Reader["Name"].ToString(),
+                                Description = Reader["Description"].ToString(),
+                                Status = Reader["Status"].ToString(),
+                                create_date = Reader["create_date"].ToString(),
+                                update_date = Reader["update_date"].ToString(),
+                                Create_By_UID = Reader["Create_By_UID"].ToString(),
+                                Last_Login = Reader["Last_Login"].ToString(),
+                                Role = Reader["Role"].ToString()
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                if (user.Count > 0)
+                {
+                    for(int i=0;i<user.Count;i++)
+                    {
+                        bool role = Check_Role("user", user[i].Role);
+                        if(!role)
+                        {
+                            user.RemoveAt(i);
+                        }
+                    }
+                }                
+                return View(user);
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult MemberPrice() //ราคาสมาชิก
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                string connetionString = null;
+                var user = new List<User_Rate_Discount>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.[first_three_ood],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.[first_three_ood] as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Discount]) d on a.ID = d.UID where ra.UID is not null";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    //Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            user.Add(new User_Rate_Discount
+                            {
+                                ID = Reader["ID"].ToString(),
+                                rateID = Reader["rateID"].ToString(),
+                                discountID = Reader["discountID"].ToString(),
+                                Username = Reader["Username"].ToString(),
+                                Name = Reader["Name"].ToString(),
+                                Role = Reader["Role"].ToString(),
+                                ThreeUP = Reader["three_up"].ToString(),
+                                ThreeDown = Reader["three_down"].ToString(),
+                                ThreeOod = Reader["three_ood"].ToString(),
+                                FirstThree = Reader["first_three"].ToString(),
+                                FirstThreeOod = Reader["first_three_ood"].ToString(),
+                                TwoUp = Reader["two_up"].ToString(),
+                                TwoOod = Reader["two_ood"].ToString(),
+                                TwoDown = Reader["two_down"].ToString(),
+                                Up = Reader["up"].ToString(),
+                                Down = Reader["down"].ToString(),
+                                ThreeUP_discount = Reader["three_up_d"].ToString(),
+                                ThreeDown_discount = Reader["three_down_d"].ToString(),
+                                ThreeOod_discount = Reader["three_ood_d"].ToString(),
+                                FirstThree_discount = Reader["first_three_d"].ToString(),
+                                FirstThreeOod_discount = Reader["first_three_ood_d"].ToString(),
+                                TwoUp_discount = Reader["two_up_d"].ToString(),
+                                TwoOod_discount = Reader["two_ood_d"].ToString(),
+                                TwoDown_discount = Reader["two_down_d"].ToString(),
+                                Up_discount = Reader["up_d"].ToString(),
+                                Down_discount = Reader["down_d"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where rate.UID is null";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    //Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            user.Add(new User_Rate_Discount
+                            {
+                                ID = Reader["ID"].ToString(),
+                                Username = Reader["Username"].ToString(),
+                                Name = Reader["Name"].ToString(),
+                                Role = Reader["Role"].ToString(),
+                                ThreeUP = Reader["three_up"].ToString(),
+                                ThreeDown = Reader["three_down"].ToString(),
+                                ThreeOod = Reader["three_ood"].ToString(),
+                                FirstThree = Reader["first_three"].ToString(),
+                                FirstThreeOod = Reader["first_three_ood"].ToString(),
+                                TwoUp = Reader["two_up"].ToString(),
+                                TwoOod = Reader["two_ood"].ToString(),
+                                TwoDown = Reader["two_down"].ToString(),
+                                Up = Reader["up"].ToString(),
+                                Down = Reader["down"].ToString(),
+                                ThreeUP_discount = Reader["three_up_d"].ToString(),
+                                ThreeDown_discount = Reader["three_down_d"].ToString(),
+                                ThreeOod_discount = Reader["three_ood_d"].ToString(),
+                                FirstThree_discount = Reader["first_three_d"].ToString(),
+                                FirstThreeOod_discount = Reader["first_three_ood_d"].ToString(),
+                                TwoUp_discount = Reader["two_up_d"].ToString(),
+                                TwoOod_discount = Reader["two_ood_d"].ToString(),
+                                TwoDown_discount = Reader["two_down_d"].ToString(),
+                                Up_discount = Reader["up_d"].ToString(),
+                                Down_discount = Reader["down_d"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                if (user.Count > 0)
+                {
+                    for (int i = 0; i < user.Count; i++)
+                    {
+                        bool role = Check_Role("user", user[i].Role);
+                        if (!role)
+                        {
+                            user.RemoveAt(i);
+                        }
+                    }
+                }
+                return View(user);
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult DealerInfo() //ข้อมูลเจ้ามือ
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                return View();
+            }
+            else if (Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        public ActionResult AdminBet(int id) //แทงโพย
+        {
+            if (Session["Role"] == "Administrator")
+            {
+                Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+                if (P != null)
+                {
+                    string connetionString = null;
+                    var pollDetail = new List<Poll_Detail>();
+                    connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@UID", id.ToString()); // user ID
+                        cmd.Parameters.AddWithValue("@period", P.ID.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                pollDetail.Add(new Poll_Detail
+                                {
+                                    ID = Reader["ID"].ToString(),
+                                    Receive = Reader["Receive"].ToString(),
+                                    Amount = Reader["amount"].ToString(),
+                                    Discount = Reader["discount"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+                    
+                    }
+                    ViewBag.UID = id;
+                    return View(pollDetail);
+                }
+                else
+                {
+                    var pollDetail = new List<Poll_Detail>();
+                    pollDetail.Add(new Poll_Detail
+                    {
+                        Receive = "close"
+                    });
+                    return View(pollDetail);
+                }
+            }
+            else if(Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        //---------------------------------------------------------------------------------------------------//
+        //-------------------------------------------function------------------------------------------------//
+        //---------------------------------------------------------------------------------------------------//
+        //----------------------------------------check role-------------------------------------------------//
+        public bool Check_Role(string plainText, string hashValue)
         {
             bool verify = VerifyHash(plainText, hashValue);
             return verify;
@@ -1822,7 +2009,7 @@ namespace Lotto.Controllers
             var lottosub = new LottoSub();
             lottosub.Lotto_ID = lid;
             lottosub.Type = Type;
-            lottosub.NumLen.ToString();
+            lottosub.NumLen= NumLen.ToString();
             lottosub.Number = number;
             lottosub.Amount = amount;
             lottosub.AmountDiscount = totalDiscount.ToString();

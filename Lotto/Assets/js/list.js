@@ -11,7 +11,7 @@
     var total_amount = $("#total_amount").val();
     var total_receive = $("#total_receive").val();
     var total_discount = $("#total_discount").val();
-	var reject_amount = $(this).attr("data-reject");
+    var reject_amount = $("#reject").val();
 
     console.log(poll_count);
     console.log(receive);

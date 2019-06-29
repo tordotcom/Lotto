@@ -1,10 +1,10 @@
-﻿
+﻿@model IList<Lotto.Models.Result>
 @{
     ViewBag.Title = "Result";
     Layout = "~/Views/Shared/_User.cshtml";
 }
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="row">
     <div class="col-md-12">
@@ -47,7 +47,19 @@
                             <th>2 ล่าง</th>
                         </tr>
                     </thead>
-                    <tbody id="t_result"></tbody>
+                    <tbody id="t_result">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th>@String.Format("{0:dd/MM/yyyy}", item.Lotto_day)</th>
+                                <th>@item.Name</th>
+                                <th>@item.last_three</th>
+                                <th>@item.three_down_1 &nbsp; @item.three_down_2 &nbsp; @item.three_down_3 &nbsp; @item.three_down_4</th>
+                                <th>@item.first_three</th>
+                                <th>@item.two_down</th>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -55,36 +67,37 @@
 </div>
 
 <script src="~/Assets/js/user_result.js"></script>
-<script>  
+<script>
+
     getResult= '@Url.Action("getResult", "User")';
     (function ($) {
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
 
-        $.ajax({
-			url: updateResult,
-			data: { Result: ResultData1 },
-			type: "POST",
-			dataType: "json",
-			success: function (data) {
-				if (data == "ss") {
-					Swal.fire({
-						type: 'success',
-						title: 'แก้ไขข้อมูลเรียบร้อย',
-						showConfirmButton: false,
-						timer: 1500
-					});
-					$('.modal-backdrop').remove();
-					$(".close").trigger('click');
-					setTimeout(function () {
-						location.reload(true);
-					}, 2000);
-				}
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert("error");
-			}
-		});
+  //      $.ajax({
+		//	url: updateResult,
+		//	data: { Result: ResultData1 },
+		//	type: "POST",
+		//	dataType: "json",
+		//	success: function (data) {
+		//		if (data == "ss") {
+		//			Swal.fire({
+		//				type: 'success',
+		//				title: 'แก้ไขข้อมูลเรียบร้อย',
+		//				showConfirmButton: false,
+		//				timer: 1500
+		//			});
+		//			$('.modal-backdrop').remove();
+		//			$(".close").trigger('click');
+		//			setTimeout(function () {
+		//				location.reload(true);
+		//			}, 2000);
+		//		}
+		//	},
+		//	error: function (xhr, ajaxOptions, thrownError) {
+		//		alert("error");
+		//	}
+		//});
     })(jQuery);
 </script>
