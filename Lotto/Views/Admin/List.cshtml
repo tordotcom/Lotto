@@ -237,6 +237,7 @@
     addPoll = '@Url.Action("AddPoll", "Admin")';
     var rowPoll = 0;
     (function ($) {
+        initialPoll();
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
             fixedHeader: {
