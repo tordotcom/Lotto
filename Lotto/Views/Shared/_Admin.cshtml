@@ -704,18 +704,6 @@
             }
         });
 
-        $.ajax({
-            url: getSetting,
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
-                $('#closeTime').html(data['Setting'][1].Value);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert("error");
-            }
-        });
-
         $(document.body)
             .on('show.bs.modal', function () {
                 if (this.clientHeight <= window.innerHeight) {

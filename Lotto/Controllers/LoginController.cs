@@ -17,11 +17,11 @@ namespace Lotto.Controllers
         // GET: Login
         public ActionResult Login()
         {
-            if (Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
-            else if(Session["Role"] == "User")
+            else if((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }

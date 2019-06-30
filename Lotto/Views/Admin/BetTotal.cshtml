@@ -40,8 +40,8 @@
                                     <td>@item.AmountDiscount</td>
                                     <td>0</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
-                                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบแจ้งยอด</button>
+                                        <button type="button" class="btn btn-sm btn-primary get-balance" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
+                                        <button type="button" class="btn btn-sm btn-success get-keep" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบแจ้งยอด</button>
                                         <button type="button" class="btn btn-sm btn-warning get-user-poll" data-uid="@item.UID" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false">ดูโพย</button>
                                     </td>
                                 </tr>
@@ -70,15 +70,15 @@
                     <tfoot>
                         <tr>
                             <th>รวม</th>
-                            <th><span id="pollCount"> ใบ</th>
+                            <th><span id="pollCount"></span> ใบ</th>
                             <th></th>
                             <th></th>
-                            <th><span id="total_amount"></th>
-                            <th><span id="total_receive"></th>
-                            <th><span id="total_discount"></th>
+                            <th><span id="total_amount"></span></th>
+                            <th><span id="total_receive"></span></th>
+                            <th><span id="total_discount"></span></th>
                             <th>0</th>
                             <th>สรุป</th>
-                            <th><span id="total_discount_2"></th>
+                            <th><span id="total_discount_2"></span></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -197,6 +197,66 @@
     </div>
 </div>
 
+<div class="modal fade" id="totalBalance" tabindex="-1" role="dialog" aria-labelledby="totalBalanceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="printBalanceArea">
+                <br />
+                <h4 class="center">ใบสรุปยอดเงิน ง<span id="balanceUser"></span> งวดวันที่ <span id="balancePeriod"></span></h4><hr/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="printBalance">พิมพ์</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="totalKeep" tabindex="-1" role="dialog" aria-labelledby="totalKeepLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+           <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="printKeepArea">
+                <br />
+                <h4 class="center">ใบสรุปยอดเก็บ <span id="keepUser"></span> งวดวันที่ <span id="keepPeriod"></span></h4><hr />
+                 <div class="row">
+                    <div class="col-md-12">
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">หวยรัฐบาล</label></div>
+                            <div class="col-12 col-md-7"><div id="keeptotalSum" class="form-control-label bold"></div></div>
+                        </div>
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">ยอดเก็บ</label></div>
+                            <div class="col-12 col-md-7"><div id="keepSum" class="form-control-label bold"></div></div>
+                        </div>
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">ยอดจ่าย</label></div>
+                            <div class="col-12 col-md-7"><div id="keepSumw" class="form-control-label bold"></div></div>
+                        </div>
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">รวมทั้งหมด</label></div>
+                            <div class="col-12 col-md-7"><div id="keepSum_last" class="form-control-label bold"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="printKeep">พิมพ์</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Assets/js/admin_list.js"></script>
 <script src="~/Assets/js/admin_list_edit.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
@@ -209,6 +269,8 @@
         getPollHeadDetail = '@Url.Action("getPoll", "Admin")';
         RejectPoll = '@Url.Action("RejectPoll", "Admin")';
         addPoll = '@Url.Action("AddPoll", "Admin")';
+        getUserBetResult = '@Url.Action("GetUserBetResult", "Admin")';
+        getUserTotalBalance = '@Url.Action("GetUserTotalBalance", "Admin")';
 
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
@@ -280,6 +342,52 @@
                 }
             }
             ]
+        });
+
+        $('.get-balance').click(function () {
+            $('#balanceUser').html($(this).data("uname"));
+            $('#balancePeriod').html($("#todayDate").html());
+            var id = $(this).data('uid');
+            $.ajax({
+                url: getUserTotalBalance,
+                data: { uID: id },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    alert(JSON.stringify(data));
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
+        });
+
+         $('.get-keep').click(function () {
+            $('#keepUser').html($(this).data("uname"));
+            $('#keepPeriod').html($("#todayDate").html());
+            var id = $(this).data('uid');
+            var keepSum = 0;
+            var keepSumw = 0;
+            $.ajax({
+                url: getUserBetResult,
+                data: { uID: id },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    //alert(JSON.stringify(data));
+                    $.each(data, function (index, value) {
+                        keepSum += parseInt(value.Discount);
+                        keepSumw += parseInt(value.Win);
+                    });
+                    $('#keeptotalSum').html(keepSum);
+                    $('#keepSum').html(keepSum);
+                    $('#keepSumw').html(keepSumw);
+                    $('#keepSum_last').html(Math.abs(keepSum-keepSumw));
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
         });
 
         $(".get-user-poll").click(function () {
