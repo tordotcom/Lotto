@@ -207,7 +207,90 @@
             </div>
             <div class="modal-body" id="printBalanceArea">
                 <br />
-                <h4 class="center">ใบสรุปยอดเงิน ง<span id="balanceUser"></span> งวดวันที่ <span id="balancePeriod"></span></h4><hr/>
+                <h4 class="center">ใบสรุปยอดเงิน <span id="balanceUser"></span> งวดวันที่ <span id="balancePeriod"></span></h4><hr/>
+                <table class="table table-bordered" style="text-align:center;">
+                    <thead style="color:white;background-color:blue;">
+                        <tr>
+                            <th rowspan="2">ชนิด</th>
+                            <th colspan="3">ยอดทั้งหมด</th>
+                        </tr>
+                        <tr>
+                            <th>ยอดแทงหัก %</th>
+                            <th>ถูก</th>
+                            <th>สุทธิ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>วิ่ง บน</td>
+                            <td id="udis"></td>
+                            <td id="uwin"></td>
+                            <td id="utotal"></td>
+                        </tr>
+                        <tr>
+                            <td>วื่ง ล่าง</td>
+                            <td id="ddis"></td>
+                            <td id="dwin"></td>
+                            <td id="dtotal"></td>
+                        </tr>
+                        <tr>
+                            <td>3 หน้า</td>
+                            <td id="f3dis"></td>
+                            <td id="f3win"></td>
+                            <td id="f3total"></td>
+                        </tr>
+                        <tr>
+                            <td>3 หน้าโต๊ด</td>
+                            <td id="f3odis"></td>
+                            <td id="f3owin"></td>
+                            <td id="f3ototal"></td>
+                        </tr>
+                        <tr>
+                            <td>3 บน</td>
+                            <td id="u3dis"></td>
+                            <td id="u3win"></td>
+                            <td id="u3total"></td>
+                        </tr>
+                        <tr>
+                            <td>3 โต๊ด</td>
+                            <td id="u3odis"></td>
+                            <td id="u3owin"></td>
+                            <td id="u3ototal"></td>
+                        </tr>
+                        <tr>
+                            <td>3 ล่าง</td>
+                            <td id="d3dis"></td>
+                            <td id="d3win"></td>
+                            <td id="d3total"></td>
+                        </tr>
+                        <tr>
+                            <td>2 บน</td>
+                            <td id="u2dis"></td>
+                            <td id="u2win"></td>
+                            <td id="u2total"></td>
+                        </tr>
+                        <tr>
+                            <td>2 ล่าง</td>
+                            <td id="d2dis"></td>
+                            <td id="d2win"></td>
+                            <td id="d2total"></td>
+                        </tr>
+                        <tr>
+                            <td>2 โต๊ด</td>
+                            <td id="o2dis"></td>
+                            <td id="o2win"></td>
+                            <td id="o2total"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="color:white;background-color:blue;">
+                        <tr>
+                            <td>รวม</td>
+                            <td id="tdis"></td>
+                            <td id="twin"></td>
+                            <td id="ttotal"></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="printBalance">พิมพ์</button>
@@ -227,12 +310,12 @@
             </div>
             <div class="modal-body" id="printKeepArea">
                 <br />
-                <h4 class="center">ใบสรุปยอดเก็บ <span id="keepUser"></span> งวดวันที่ <span id="keepPeriod"></span></h4><hr />
+                <h4 class="center">ใบสรุปยอดเก็บ <span id="keepUser"></span></h4><hr />
                  <div class="row">
                     <div class="col-md-12">
                          <div class="row form-group">
                             <div class="col col-md-5"><label class="form-control-label">หวยรัฐบาล</label></div>
-                            <div class="col-12 col-md-7"><div id="keeptotalSum" class="form-control-label bold"></div></div>
+                            <div class="col-12 col-md-7"><div id="keepPeriod" class="form-control-label bold"></div></div>
                         </div>
                          <div class="row form-group">
                             <div class="col col-md-5"><label class="form-control-label">ยอดเก็บ</label></div>
@@ -354,7 +437,155 @@
                 type: "POST",
                 dataType: "json",
                 success: function (data) {
-                    alert(JSON.stringify(data));
+                    //alert(JSON.stringify(data));
+                    var udis = 0;
+                    var uwin = 0;
+                    var utotal = 0;
+                    var ddis = 0;
+                    var dwin = 0;
+                    var dtotal = 0;
+                    var f3dis = 0;
+                    var f3win = 0;
+                    var f3total = 0;
+                    var f3odis = 0;
+                    var f3owin = 0;
+                    var f3ototal = 0;
+                    var u3dis = 0;
+                    var u3win = 0;
+                    var u3total = 0;
+                    var u3odis = 0;
+                    var u3owin = 0;
+                    var u3ototal = 0;
+                    var d3dis = 0;
+                    var d3win = 0;
+                    var d3total = 0;
+                    var u2dis = 0;
+                    var u2win = 0;
+                    var u2total = 0;
+                    var d2dis = 0;
+                    var d2win = 0;
+                    var d2total = 0;
+                    var o2dis = 0;
+                    var o2win = 0;
+                    var o2total = 0;
+                    var tdis = 0;
+                    var twin = 0;
+                    var ttotal = 0;
+                    $.each(data, function (index, value) {
+                        if (value.Type == "Up")
+                        {
+                            udis = parseInt(value.Amount_Discount);
+                            uwin = parseInt(value.Amount_Win);
+                            utotal = udis - uwin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "Down")
+                        {
+                            ddis = parseInt(value.Amount_Discount);
+                            dwin = parseInt(value.Amount_Win);
+                            dtotal = ddis - dwin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "FirstThree")
+                        {
+                            f3dis = parseInt(value.Amount_Discount);
+                            f3win = parseInt(value.Amount_Win);
+                            f3total = f3dis - f3win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "FirstThreeOod")
+                        {
+                            f3odis = parseInt(value.Amount_Discount);
+                            f3owin = parseInt(value.Amount_Win);
+                            f3ototal = f3odis - f3owin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "ThreeUp")
+                        {
+                            u3dis = parseInt(value.Amount_Discount);
+                            u3win = parseInt(value.Amount_Win);
+                            u3total = u3dis - u3win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "ThreeUPOod")
+                        {
+                            u3odis = parseInt(value.Amount_Discount);
+                            u3owin = parseInt(value.Amount_Win);
+                            u3ototal = u3odis - u3owin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "ThreeDown")
+                        {
+                            d3dis = parseInt(value.Amount_Discount);
+                            d3win = parseInt(value.Amount_Win);
+                            d3total = d3dis - d3win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "TwoUp")
+                        {
+                            u2dis = parseInt(value.Amount_Discount);
+                            u2win = parseInt(value.Amount_Win);
+                            u2total = u2dis - u2win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "TwoDown")
+                        {
+                            d2dis = parseInt(value.Amount_Discount);
+                            d2win = parseInt(value.Amount_Win);
+                            d2total = d2dis - d2win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "TwoOod")
+                        {
+                            o2dis = parseInt(value.Amount_Discount);
+                            o2win = parseInt(value.Amount_Win);
+                            o2total = o2dis - o2win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                    });
+                    $('#udis').html(udis);
+                    $('#uwin').html(uwin);
+                    $('#utotal').html(utotal);
+                    $('#ddis').html(ddis);
+                    $('#dwin').html(dwin);
+                    $('#dtotal').html(dtotal);
+                    $('#f3dis').html(f3dis);
+                    $('#f3win').html(f3win);
+                    $('#f3total').html(f3total);
+                    $('#f3odis').html(f3odis);
+                    $('#f3owin').html(f3owin);
+                    $('#f3ototal').html(f3ototal);
+                    $('#u3dis').html(u3dis);
+                    $('#u3win').html(u3win);
+                    $('#u3total').html(u3total);
+                    $('#u3odis').html(u3odis);
+                    $('#u3owin').html(u3owin);
+                    $('#u3ototal').html(u3ototal);
+                    $('#d3dis').html(d3dis);
+                    $('#d3win').html(d3win);
+                    $('#d3total').html(d3total);
+                    $('#u2dis').html(u2dis);
+                    $('#u2win').html(u2win);
+                    $('#u2total').html(u2total);
+                    $('#d2dis').html(d2dis);
+                    $('#d2win').html(d2win);
+                    $('#d2total').html(d2total);
+                    $('#o2dis').html(o2dis);
+                    $('#o2win').html(o2win);
+                    $('#o2total').html(o2total);
+                    $('#tdis').html(tdis);
+                    $('#twin').html(twin);
+                    $('#ttotal').html(tdis-twin);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert("error");
@@ -379,7 +610,6 @@
                         keepSum += parseInt(value.Discount);
                         keepSumw += parseInt(value.Win);
                     });
-                    $('#keeptotalSum').html(keepSum);
                     $('#keepSum').html(keepSum);
                     $('#keepSumw').html(keepSumw);
                     $('#keepSum_last').html(Math.abs(keepSum-keepSumw));
