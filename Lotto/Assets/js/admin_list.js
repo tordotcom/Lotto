@@ -92,12 +92,12 @@
                     if (i == 30 || i == 60 || i == 0) {
                         htmlString += '<div class="col-lg-4">';
                     }
-                    htmlString += '<div class="bet-cell">' +
-                        '<div class="bet-no">' + (i + 1) + '</div>' +
-                        '<div class="bet-type"><div id="' + type_id + '" class="form-control form-control-sm input-bet-type" data-type="' + data[i].Type+'">' + type + '</div></div>' +
-                        '<div class="bet-lotto"><input id="' + lotto_id + '" type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled onchange="checkNumber(' + (i + 1) + ')" onkeypress="return keyPress2(this,' + (i + 1)+' , event);" value="' + data[i].Number + '"></div>' +
-                        '<div class="bet-equal">=</div>' +
-                        '<div class="bet-price"><input id="' + price_id + '" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" onchange="checkAmount(' + (i + 1) + ')" onkeypress="return keyPress(this, ' + (i + 1) +', event)" disabled value="' + data[i].Amount + '"></div>' +
+                    htmlString += '<div class="row bet-cell">' +
+                        '<div class="col-xs-1 bet-no">&nbsp;' + (i + 1) + '&nbsp;</div>' +
+                        '<div class="col-xs-3 bet-type"><div id="' + type_id + '" class="form-control form-control-sm input-bet-type" data-type="' + data[i].Type+'">' + type + '</div></div>' +
+                        '<div class="col-xs-3 bet-lotto"><input id="' + lotto_id + '" type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled onchange="checkNumber(' + (i + 1) + ')" onkeypress="return keyPress2(this,' + (i + 1)+' , event);" value="' + data[i].Number + '"></div>' +
+                        '<div class="col-xs-1 bet-equal">&nbsp;=&nbsp;</div>' +
+                        '<div class="col-xs-4 bet-price"><input id="' + price_id + '" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" onchange="checkAmount(' + (i + 1) + ')" onkeypress="return keyPress(this, ' + (i + 1) +', event)" disabled value="' + data[i].Amount + '"></div>' +
                         '</div>'
                     if (i == 29 || i == 59 || i == 89) {
                         htmlString += '</div>'
