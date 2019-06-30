@@ -374,14 +374,7 @@
                         </div>
                     </div>
                     <div class="dropdown for-username">
-                        @if (Session["Username"] != null)
-                        {
-                            <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
-                        }
-                        else
-                        {
-                            <b>Unknown</b>
-                        }
+                        <b id="profile"></b>
                     </div>
 
                     <div class="user-area dropdown float-right">
@@ -593,6 +586,15 @@
     <script>
         (function ($) {
             clock();
+            var user = '@Session["Username"]';
+            if (user != '')
+            {
+                $('#profile').html(user.toUpperCase());
+            }
+            else
+            {
+                window.location.href = '@Url.Action("Login", "Login")';
+            }
         })(jQuery);
 
         function clock() {
