@@ -18,9 +18,9 @@
                 <strong class="card-title">ราคาสมาชิก</strong>
             </div>
             <div class="card-body">
-                <table id="bootstrap-data-table" class="table table-bordered table-striped no-spacing" cellspacing="0">
+                <table id="bootstrap-data-table" class="table table-bordered table-fixed2 center" width="100%">
                     <thead>
-                        <tr style="text-align:center">
+                        <tr>
                             <th rowspan="2">รหัสสมาชิก</th>
                             <th rowspan="2">ชื่อ</th>
                             <th colspan="2" style="color:white;background-color:red;">3 บน</th>
@@ -35,7 +35,7 @@
                             <th colspan="2" style="color:white;background-color:black;">3 หน้าโต๊ด</th>
                             <th rowspan="2"></th>
                         </tr>
-                        <tr style="text-align:center">
+                        <tr>
                             <th style="color:white;background-color:blue;">ราคา</th>
                             <th style="color:white;background-color:green;">ลด%</th>
                             <th style="color:white;background-color:blue;">ราคา</th>
@@ -61,7 +61,7 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr style="text-align:center">
+                            <tr>
                                 <td>@item.Username</td>
                                 <td>@item.Name</td>
                                 <td>@item.ThreeUP</td>
@@ -85,8 +85,12 @@
                                 <td>@item.FirstThreeOod</td>
                                 <td>@item.FirstThreeOod_discount</td>
                                 <td nowrap>
-                                    <button type="button" class="btn-sm btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editPriceModal">แก้ไข</button>
-                                    <button type="button" class="btn-sm btn-warning">Copy</button>
+                                    <button type="button" class="btn btn-sm btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editPriceModal">แก้ไข</button>
+                                    @if(item.rateID != null)
+                                    {
+                                    <button type="button" class="btn btn-sm btn-warning setdefault" data-rid="@item.rateID" data-name="@item.Name" data-toggle="modal" data-target="#setDefaultModal" data-backdrop="static" data-keyboard="false">ค่าหลัก</button>
+                                    }
+                                    <!-- <button type="button" class="btn btn-sm btn-warning">Copy</button> -->
                                 </td>
                             </tr>
                         }
@@ -177,10 +181,32 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="setDefaultModal" tabindex="-1" role="dialog" aria-labelledby="setDefaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="setDefaultModalLabel">คืนค่าหลัก</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ต้องการตั้งราคาสมาชิก "<b id="deleteUsername"></b>" เป็นค่าหลักใช้หรือไม่?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-id="0" id="btnDelete">ยืนยัน</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="~/Assets/js/member_price.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
     UpdateUserRateDiscount = '@Url.Action("UpdateUserRateDiscount", "Admin")';
+    removeRate = '@Url.Action("RemoveRate", "Admin")';
     $(document).ready(function () {
         $('#bootstrap-data-table').DataTable({
             aoColumnDefs: [
@@ -192,14 +218,6 @@
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
     });
-    //(function ($) {
-    //    $('#bootstrap-data-table').DataTable({
-    //        lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
-    //        columnDefs: [
-    //            { "orderable": false, "targets": 0 }
-    //        ]
-    //    });
-    //})(jQuery);
     var o = new Object();
     o = @Html.Raw(Json.Encode(Model));
     $(".edit").click(function () {
@@ -233,4 +251,40 @@
             }
         }
     });
+
+    $(".setdefault").click(function () {
+        var id = $(this).attr("data-rid");
+        document.getElementById('btnDelete').setAttribute('data-id', id);
+        $('#deleteUsername').html($(this).attr("data-name"));
+    });
+
+    // Confirm Delete
+    $("#btnDelete").click(function () {
+        var id = $(this).attr("data-id");
+
+        $.ajax({
+            url: removeRate,
+            data: { RID: id },
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                if (data == "ss") {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'เปลี่ยนเป็นค่าหลักเรียบร้อย',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $('.modal-backdrop').remove();
+                    $(".close").trigger('click');
+                    setTimeout(function () {
+                        location.reload(true);
+                    }, 2000);
+                }   
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
+});
 </script>

@@ -2534,5 +2534,21 @@ namespace Lotto.Controllers
             }
             return Json(user_bet);
         }
+
+        [HttpPost]
+        public ActionResult RemoveRate(int RID)
+        {
+            Rate R = db.Rate.Where(s => s.ID == RID).First();
+            if (R != null)
+            {
+                db.Rate.Remove(R);
+                db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
     }
 }
