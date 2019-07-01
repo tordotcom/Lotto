@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -152,7 +153,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT po.UID,a.Name,sum(CAST(ls.AmountDiscount as int)) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe "+
+                    string query = "SELECT po.UID,a.Name,ROUND(sum(CAST(ls.AmountDiscount as float)),1) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe " +
                                     "left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID "+
                                     "left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID "+
                                     "left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period group by po.UID,a.Name";
@@ -196,7 +197,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t.Type,sum(CAST(t.AmountDiscount as int)) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
+                        string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),1) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", pid.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -262,7 +263,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,pe.Check_Result,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].Period pe left join(SELECT [ID],[UID],[Period_ID],[Receive], create_date, Create_By FROM[dbo].[Poll]) p on pe.ID = p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,pe.Check_Result,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),1) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].Period pe left join(SELECT [ID],[UID],[Period_ID],[Receive], create_date, Create_By FROM[dbo].[Poll]) p on pe.ID = p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -382,7 +383,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as int)END) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
+                        string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN ROUND(CAST(LS.AmountDiscount as float),1) END) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -579,7 +580,7 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                return View(db.Period.ToList());
+                return View(db.Period.OrderByDescending(x=> x.ID).ToList());
             }
             else if((string)Session["Role"] == "User")
             {
@@ -849,7 +850,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive";
+                        string query = "SELECT p.[ID],p.[Receive],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),1) as discount FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@UID", id.ToString()); // user ID
                         cmd.Parameters.AddWithValue("@period", P.ID.ToString());
@@ -1443,8 +1444,10 @@ namespace Lotto.Controllers
         public ActionResult addPoll(PollData Data, string UID, string PID)
         {
             dynamic discount_rate;
+            var user_id = Session["ID"].ToString();
+            var id = Int32.Parse(user_id);
             Period P = db.Period.Where(s => s.Status == "1").FirstOrDefault<Period>();
-            Discount D = db.Discount.Where(x => x.Account.ID == 2).FirstOrDefault<Discount>(); //-----user-----id//
+            Discount D = db.Discount.Where(x => x.Account.ID == id).FirstOrDefault<Discount>(); //-----user-----id//
             if (D != null)
             {
                 discount_rate = D;
@@ -1458,7 +1461,7 @@ namespace Lotto.Controllers
             int uid = Int32.Parse(UID);
             int pollID;
 
-            if (PID != null)
+            if (PID != "")
             {
                 pollID = Int32.Parse(PID);
                 List<LottoMain> main = db.LottoMain.Where(m => m.Poll_ID == pollID).ToList<LottoMain>();
@@ -1509,9 +1512,9 @@ namespace Lotto.Controllers
                     {
                         char[] num = item.Number.ToCharArray();
                         string[] amt = amount.Split('x');
-                        var totalDiscount = 0;
-                        int iamt = 0;
-                        int d = 0;
+                        var totalDiscount = 0.00;
+                        var iamt = 0.00;
+                        var d = 0.00;
                         var typ = item.bType;
                         if (typ == "t" || typ == "b")
                         {
@@ -1601,9 +1604,9 @@ namespace Lotto.Controllers
                     {
                         char[] num = item.Number.ToCharArray();
                         string[] amt = amount.Split('x');
-                        var totalDiscount = 0;
-                        int iamt = 0;
-                        int d = 0;
+                        var totalDiscount = 0.00;
+                        var iamt = 0.00;
+                        var d = 0.00;
                         var typ = item.bType;
                         var sort = "";
                         var temp = 'l';
@@ -1861,9 +1864,9 @@ namespace Lotto.Controllers
                 {
                     if (NumLen == 1)
                     {
-                        var totalDiscount = 0;
-                        int iamt = 0;
-                        int d = 0;
+                        var totalDiscount = 0.00;
+                        var iamt = 0.00;
+                        var d = 0.00;
                         var typ = item.bType;
                         if (typ == "t" || typ == "b")
                         {
@@ -1901,9 +1904,9 @@ namespace Lotto.Controllers
                     }
                     else if (NumLen == 2)
                     {
-                        var totalDiscount = 0;
-                        int iamt = 0;
-                        int d = 0;
+                        var totalDiscount = 0.00;
+                        var iamt = 0.00;
+                        var d = 0.00;
                         var typ = item.bType;
                         if (typ == "t" || typ == "b")
                         {
@@ -1944,9 +1947,9 @@ namespace Lotto.Controllers
                     }
                     else if (NumLen == 3)
                     {
-                        var totalDiscount = 0;
-                        int iamt = 0;
-                        int d = 0;
+                        var totalDiscount = 0.00;
+                        var iamt = 0.00;
+                        var d = 0.00;
                         var typ = item.bType;
                         if (typ == "t" || typ == "b" || typ == "f")
                         {
@@ -2009,7 +2012,7 @@ namespace Lotto.Controllers
             }
             return Json("ss");
         }
-        public void InsertLottoSub(int lid, string Type, string number, string amount, int totalDiscount,int NumLen)
+        public void InsertLottoSub(int lid, string Type, string number, string amount, double totalDiscount,int NumLen)
         {
             var lottosub = new LottoSub();
             lottosub.Lotto_ID = lid;
@@ -2188,23 +2191,24 @@ namespace Lotto.Controllers
             }
             var list = new List<totalResult>
             {
-                new totalResult { Type = "Up", AmountDiscount = 0, Win = 0,total=0 },
-                new totalResult { Type = "Down", AmountDiscount = 0, Win = 0 ,total=0},
-                new totalResult { Type = "FirstThree", AmountDiscount = 0, Win = 0 ,total=0},
-                new totalResult { Type = "FirstThreeOod", AmountDiscount = 0, Win = 0 ,total=0},
-                new totalResult { Type = "ThreeUp", AmountDiscount = 0, Win = 0 ,total=0},
-                new totalResult { Type = "ThreeUPOod", AmountDiscount = 0, Win =0 ,total=0},
-                new totalResult { Type = "ThreeDown", AmountDiscount = 0, Win = 0 ,total=0},
-                new totalResult { Type = "TwoUp", AmountDiscount = 0, Win = 0 ,total=0},
-                new totalResult { Type = "TwoDown", AmountDiscount = 0, Win = 0 ,total=0},
-                new totalResult { Type = "TwoOod", AmountDiscount = 0, Win = 0 ,total=0}
+                new totalResult { Type = "Up", AmountDiscount = 0.00, Win = 0,total=0 },
+                new totalResult { Type = "Down", AmountDiscount = 0.00, Win = 0 ,total=0},
+                new totalResult { Type = "FirstThree", AmountDiscount = 0.00, Win = 0 ,total=0},
+                new totalResult { Type = "FirstThreeOod", AmountDiscount = 0.00, Win = 0 ,total=0},
+                new totalResult { Type = "ThreeUp", AmountDiscount = 0.00, Win = 0 ,total=0},
+                new totalResult { Type = "ThreeUPOod", AmountDiscount = 0.00, Win =0 ,total=0},
+                new totalResult { Type = "ThreeDown", AmountDiscount = 0.00, Win = 0 ,total=0},
+                new totalResult { Type = "TwoUp", AmountDiscount = 0.00, Win = 0 ,total=0},
+                new totalResult { Type = "TwoDown", AmountDiscount = 0.00, Win = 0 ,total=0},
+                new totalResult { Type = "TwoOod", AmountDiscount = 0.00, Win = 0 ,total=0}
            }; 
             foreach (var idata in data)
             {
                 if (idata.ID!="")
                 {
                     int amount_ = Int32.Parse(idata.Amount);
-                    int amountDis = Int32.Parse(idata.AmountDiscount);
+                    float amountDis = float.Parse(idata.AmountDiscount, CultureInfo.InvariantCulture);
+                    //int amountDis = Int32.Parse(idata.AmountDiscount);
                     if (idata.NumLen == "1")
                     {
                         if (idata.Type == "t" && idata.Number == UP)
@@ -2213,7 +2217,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.up);
                             list[0].Win = list[0].Win + (amount_ * rate);
                             list[0].AmountDiscount = list[0].AmountDiscount + amountDis;
-                            list[0].total = list[0].AmountDiscount + list[0].Win;
+                            list[0].total = Convert.ToInt32(list[0].AmountDiscount) + list[0].Win;
                         }
                         else if (idata.Type == "b" && idata.Number == DOWN)
                         {
@@ -2221,17 +2225,17 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.down);
                             list[1].Win = list[1].Win + (amount_ * rate);
                             list[1].AmountDiscount = list[1].AmountDiscount + amountDis;
-                            list[1].total = list[1].AmountDiscount + list[1].Win;
+                            list[1].total = Convert.ToInt32(list[1].AmountDiscount) + list[1].Win;
                         }
                         else if(idata.Type == "t")
                         {
                             list[0].AmountDiscount = list[0].AmountDiscount + amountDis;
-                            list[0].total = list[0].AmountDiscount + list[0].Win;
+                            list[0].total = Convert.ToInt32(list[0].AmountDiscount) + list[0].Win;
                         }
                         else if(idata.Type == "b")
                         {
                             list[1].AmountDiscount = list[1].AmountDiscount + amountDis;
-                            list[1].total = list[1].AmountDiscount + list[1].Win;
+                            list[1].total = Convert.ToInt32(list[1].AmountDiscount) + list[1].Win;
                         }
                         else { }
                     }
@@ -2243,7 +2247,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.two_up);
                             list[7].Win = list[7].Win + (amount_ * rate);
                             list[7].AmountDiscount = list[7].AmountDiscount + amountDis;
-                            list[7].total = list[7].AmountDiscount + list[7].Win;
+                            list[7].total = Convert.ToInt32(list[7].AmountDiscount) + list[7].Win;
                         }
                         else if (idata.Type == "b" && idata.Number == TD)
                         {
@@ -2251,7 +2255,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.two_down);
                             list[8].Win = list[8].Win + (amount_ * rate);
                             list[8].AmountDiscount = list[8].AmountDiscount + amountDis;
-                            list[8].total = list[8].AmountDiscount + list[8].Win;
+                            list[8].total = Convert.ToInt32(list[8].AmountDiscount) + list[8].Win;
                         }
                         else if (idata.Type == "t_" && (idata.Number == Tw_up_ood || idata.Number == TwUP))
                         {
@@ -2259,7 +2263,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.two_ood);
                             list[9].Win = list[9].Win + (amount_ * rate);
                             list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
-                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                            list[9].total = Convert.ToInt32(list[9].AmountDiscount) + list[9].Win;
                         }
                         else if (idata.Type == "b_" && (idata.Number == TDO1 || idata.Number == TD))
                         {
@@ -2267,27 +2271,27 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.two_ood);
                             list[9].Win = list[9].Win + (amount_ * rate);
                             list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
-                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                            list[9].total = Convert.ToInt32(list[9].AmountDiscount) + list[9].Win;
                         }
                         else if(idata.Type == "t")
                         {
                             list[7].AmountDiscount = list[7].AmountDiscount + amountDis;
-                            list[7].total = list[7].AmountDiscount + list[7].Win;
+                            list[7].total = Convert.ToInt32(list[7].AmountDiscount) + list[7].Win;
                         }
                         else if (idata.Type == "b")
                         {
                             list[8].AmountDiscount = list[8].AmountDiscount + amountDis;
-                            list[8].total = list[8].AmountDiscount + list[8].Win;
+                            list[8].total = Convert.ToInt32(list[8].AmountDiscount) + list[8].Win;
                         }
                         else if (idata.Type == "t_")
                         {
                             list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
-                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                            list[9].total = Convert.ToInt32(list[9].AmountDiscount) + list[9].Win;
                         }
                         else if (idata.Type == "b_")
                         {
                             list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
-                            list[9].total = list[9].AmountDiscount + list[9].Win;
+                            list[9].total = Convert.ToInt32(list[9].AmountDiscount) + list[9].Win;
                         }
                         else { }
                     }
@@ -2299,7 +2303,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.three_up);
                             list[4].Win = list[4].Win + (amount_ * rate);
                             list[4].AmountDiscount = list[4].AmountDiscount + amountDis;
-                            list[4].total = list[4].AmountDiscount + list[4].Win;
+                            list[4].total = Convert.ToInt32(list[4].AmountDiscount) + list[4].Win;
                         }
                         else if (idata.Type == "b" && (idata.Number == ThDown1 || idata.Number == ThDown2 || idata.Number == ThDown3 || idata.Number == ThDown4))
                         {
@@ -2307,7 +2311,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.three_down);
                             list[6].Win = list[6].Win + (amount_ * rate);
                             list[6].AmountDiscount = list[6].AmountDiscount + amountDis;
-                            list[6].total = list[6].AmountDiscount + list[6].Win;
+                            list[6].total = Convert.ToInt32(list[6].AmountDiscount) + list[6].Win;
                         }
                         else if (idata.Type == "t_" && (idata.Number == TU || idata.Number == TUO1 || idata.Number == TUO2 || idata.Number == TUO3 || idata.Number == TUO4 || idata.Number == TUO5))
                         {
@@ -2315,7 +2319,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.three_ood);
                             list[5].Win = list[5].Win + (amount_ * rate);
                             list[5].AmountDiscount = list[5].AmountDiscount + amountDis;
-                            list[5].total = list[5].AmountDiscount + list[5].Win;
+                            list[5].total = Convert.ToInt32(list[5].AmountDiscount) + list[5].Win;
                         }
                         else if (idata.Type == "f" && idata.Number == FT)
                         {
@@ -2323,7 +2327,7 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.first_three);
                             list[2].Win = list[2].Win + (amount_ * rate);
                             list[2].AmountDiscount = list[2].AmountDiscount + amountDis;
-                            list[2].total = list[2].AmountDiscount + list[2].Win;
+                            list[2].total = Convert.ToInt32(list[2].AmountDiscount) + list[2].Win;
                         }
                         else if (idata.Type == "f_" && (idata.Number == FT || idata.Number == FTO1 || idata.Number == FTO2 || idata.Number == FTO3 || idata.Number == FTO4 || idata.Number == FTO5))
                         {
@@ -2331,32 +2335,32 @@ namespace Lotto.Controllers
                             int rate = Int32.Parse(idata.first_three_ood);
                             list[3].Win = list[3].Win + (amount_ * rate);
                             list[3].AmountDiscount = list[3].AmountDiscount + amountDis;
-                            list[3].total = list[3].AmountDiscount + list[3].Win;
+                            list[3].total = Convert.ToInt32(list[3].AmountDiscount) + list[3].Win;
                         }
                         else if(idata.Type == "t")
                         {
                             list[4].AmountDiscount = list[4].AmountDiscount + amountDis;
-                            list[4].total = list[4].AmountDiscount + list[4].Win;
+                            list[4].total = Convert.ToInt32(list[4].AmountDiscount) + list[4].Win;
                         }
                         else if (idata.Type == "b")
                         {
                             list[6].AmountDiscount = list[6].AmountDiscount + amountDis;
-                            list[6].total = list[6].AmountDiscount + list[6].Win;
+                            list[6].total = Convert.ToInt32(list[6].AmountDiscount) + list[6].Win;
                         }
                         else if (idata.Type == "t_")
                         {
                             list[5].AmountDiscount = list[5].AmountDiscount + amountDis;
-                            list[5].total = list[5].AmountDiscount + list[5].Win;
+                            list[5].total = Convert.ToInt32(list[5].AmountDiscount) + list[5].Win;
                         }
                         else if (idata.Type == "f")
                         {
                             list[2].AmountDiscount = list[2].AmountDiscount + amountDis;
-                            list[2].total = list[2].AmountDiscount + list[2].Win;
+                            list[2].total = Convert.ToInt32(list[2].AmountDiscount) + list[2].Win;
                         }
                         else if (idata.Type == "f_")
                         {
                             list[3].AmountDiscount = list[3].AmountDiscount + amountDis;
-                            list[3].total = list[3].AmountDiscount + list[3].Win;
+                            list[3].total = Convert.ToInt32(list[3].AmountDiscount) + list[3].Win;
                         }
                         else { }
                     }

@@ -22,10 +22,10 @@ namespace Lotto.Controllers
             {
                 int maxpid = db.Period.Max(p => p.ID);
                 Period P = db.Period.Where(x => x.ID == maxpid).FirstOrDefault<Period>();
-                if (P != null)
+                if (P != null && P.Status=="1")
                 {
                     if (P.Date == t.Date)
-                    {                        
+                    {                            
                         P.update_date = DateTime.Now;
                         P.Status = "0";
                         P.BetStatus = "0";

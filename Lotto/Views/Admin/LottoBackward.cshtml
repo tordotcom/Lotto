@@ -23,14 +23,19 @@
                         @foreach (var item in Model)
                         {
                             var status = "";
-                            if(item.Status=="1")
+                            if(item.Check_Result=="1")
                             {
-                                status = "เสร็จ";
+                                status = "ตรวจแล้ว";
                             }
-                            else
+                            else if(item.Status=="1")
+                            {
+                                status = "เปิดรับ";
+                            }
+                            else if(item.Status == "0")
                             {
                                 status = "ปิดรับ";
                             }
+                            else { }
                             <tr>
                                 <td>รัฐบาล</td>
                                 <td>@String.Format("{0:d}", item.Date)</td>
@@ -112,7 +117,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="col-md-12/">
+                        @*<div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     เลขเต็ม
@@ -131,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12/">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     เลขอั้น
@@ -144,8 +149,8 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-12/">
+                        </div>*@
+                        <div class="col-md-12">
                             <button type="button" class="btn btn-block btn-primary btn-sm">ใบสรุปยอดเงิน</button>
                             <button type="button" class="btn btn-block btn-warning btn-sm">ใบสรุปยอดเก็บ</button>
                         </div>

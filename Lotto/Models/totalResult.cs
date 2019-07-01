@@ -8,7 +8,7 @@ namespace Lotto.Models
     public class totalResult
     {
         public string Type { get; set; }
-        public int AmountDiscount { get; set; }
+        public double AmountDiscount { get; set; }
         public int Win { get; set; }
         public int total { get; set; }
     }
