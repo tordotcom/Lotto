@@ -1,5 +1,6 @@
 ﻿function initialPoll(){
     $(".showPoll").click(function () {
+        //alert(JSON.stringify($(this)));
         var create_by = $(this).attr("data-cBy");
         var create_date = $(this).attr("data-cDate");
         var discount = $(this).attr("data-discount");
@@ -15,9 +16,9 @@
 
         $("#poll_number").html(poll_number);
         $("#receive_status").html(receive);
-        $("#amount").html(amount);
-        $("#receive").html(amount_receive);
-        $("#discount").html(discount);
+        $("#amount").html(nwc(amount));
+        $("#receive").html(nwc(amount_receive));
+        $("#discount").html(nwc(discount));
         $("#poll_date").html(create_date);
         $("#poll_by").html(create_by);
         $("#receive_date").html(create_date);
@@ -93,21 +94,21 @@
                     htmlString += '<div class="col-lg-4">';
                 }
                 if (parseInt(data[i].Result_Status) > 0) {
-                    htmlString += '<div class="bet-cell">' +
-                        '<div class="bet-no">' + (i + 1) + '</div>' +
-                        '<div class="bet-type"><div style="background-color:lightgreen" class="form-control form-control-sm input-bet-type" data-type="t">' + type + '</div></div>' +
-                        '<div class="bet-lotto"><input style="background-color:lightgreen" type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Number + '"></div>' +
-                        '<div class="bet-equal">=</div>' +
-                        '<div class="bet-price"><input style="background-color:lightgreen" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
+                    htmlString += '<div class="row bet-cell">' +
+                        '<div class="col-xs-1 bet-no">' + (i + 1) + '&nbsp;</div>' +
+                        '<div class="col-xs-3 bet-type"><div style="background-color:lightgreen" class="form-control form-control-sm input-bet-type" data-type="t">' + type + '</div></div>' +
+                        '<div class="col-xs-3 bet-lotto"><input style="background-color:lightgreen" type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Number + '"></div>' +
+                        '<div class="col-xs-1 bet-equal">&nbsp;=&nbsp;</div>' +
+                        '<div class="col-xs-4 bet-price"><input style="background-color:lightgreen" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
                         '</div>';
                 }
                 else {
-                    htmlString += '<div class="bet-cell">' +
-                        '<div class="bet-no">' + (i + 1) + '</div>' +
-                        '<div class="bet-type"><div  class="form-control form-control-sm input-bet-type" data-type="t">' + type + '</div></div>' +
-                        '<div class="bet-lotto"><input type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Number + '"></div>' +
-                        '<div class="bet-equal">=</div>' +
-                        '<div class="bet-price"><input type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
+                    htmlString += '<div class="row bet-cell">' +
+                        '<div class="col-xs-1 bet-no">' + (i + 1) + '&nbsp;</div>' +
+                        '<div class="col-xs-3 bet-type"><div  class="form-control form-control-sm input-bet-type" data-type="t">' + type + '</div></div>' +
+                        '<div class="col-xs-3 bet-lotto"><input type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Number + '"></div>' +
+                        '<div class="col-xs-1 bet-equal">&nbsp;=&nbsp;</div>' +
+                        '<div class="col-xs-4 bet-price"><input type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
                         '</div>';
                 }
                 if (i == 29 || i == 59 || i == 89) {

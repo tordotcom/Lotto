@@ -71,9 +71,9 @@
                             <tr>
                                 <td>@pollCount</td>
                                 <td>@receive</td>
-                                <td>@amount</td>
-                                <td>@amount_receive</td>
-                                <td>@discount</td>
+                                <td>@String.Format("{0:n0}", amount)</td>
+                                <td>@String.Format("{0:n0}", amount_receive)</td>
+                                <td>@String.Format("{0:n0}", discount)</td>
                                 <td>@win</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@item.create_date</td>
                                 <td>@item.create_date</td>
@@ -85,9 +85,9 @@
                         <tr>
                             <th>รวม</th>
                             <th>@pollCount ใบ</th>
-                            <th>@total_amount</th>
-                            <th>@total_receive</th>
-                            <th>@total_discount</th>
+                            <th>@String.Format("{0:n0}", total_amount)</th>
+                            <th>@String.Format("{0:n0}", total_receive)</th>
+                            <th>@String.Format("{0:n0}", total_discount)</th>
                             <th>@totalwin</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <th>สรุป</th>
                             <th>@(total_discount - totalwin)</th>
