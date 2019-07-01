@@ -382,9 +382,9 @@ namespace Lotto.Controllers
                         {
                             char[] num = item.Number.ToCharArray();
                             string[] amt = amount.Split('x');
-                            var totalDiscount = 0;
-                            int iamt = 0;
-                            int d = 0;
+                            var totalDiscount = 0.00;
+                            var iamt = 0.00;
+                            var d = 0.00;
                             var typ = item.bType;
                             if (typ == "t" || typ == "b")
                             {
@@ -474,9 +474,9 @@ namespace Lotto.Controllers
                         {
                             char[] num = item.Number.ToCharArray();
                             string[] amt = amount.Split('x');
-                            var totalDiscount = 0;
-                            int iamt = 0;
-                            int d = 0;
+                            var totalDiscount = 0.00;
+                            var iamt = 0.00;
+                            var d = 0.00;
                             var typ = item.bType;
                             var sort = "";
                             var temp = 'l';
@@ -734,9 +734,9 @@ namespace Lotto.Controllers
                     {
                         if (NumLen == 1)
                         {
-                            var totalDiscount = 0;
-                            int iamt = 0;
-                            int d = 0;
+                            var totalDiscount = 0.00;
+                            var iamt = 0.00;
+                            var d = 0.00;
                             var typ = item.bType;
                             if (typ == "t" || typ == "b")
                             {
@@ -774,9 +774,9 @@ namespace Lotto.Controllers
                         }
                         else if (NumLen == 2)
                         {
-                            var totalDiscount = 0;
-                            int iamt = 0;
-                            int d = 0;
+                            var totalDiscount = 0.00;
+                            var iamt = 0.00;
+                            var d = 0.00;
                             var typ = item.bType;
                             if (typ == "t" || typ == "b")
                             {
@@ -817,9 +817,9 @@ namespace Lotto.Controllers
                         }
                         else if (NumLen == 3)
                         {
-                            var totalDiscount = 0;
-                            int iamt = 0;
-                            int d = 0;
+                            var totalDiscount = 0.00;
+                            var iamt = 0.00;
+                            var d = 0.00;
                             var typ = item.bType;
                             if (typ == "t" || typ == "b" || typ == "f")
                             {
@@ -887,7 +887,7 @@ namespace Lotto.Controllers
             }
             return Json("ss");
         }
-        public void InsertLottoSub(int lid,string Type, string number, string amount,int totalDiscount,int NumLen)
+        public void InsertLottoSub(int lid,string Type, string number, string amount,double totalDiscount,int NumLen)
         {
             var lottosub = new LottoSub();
             lottosub.Lotto_ID = lid;
