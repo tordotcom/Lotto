@@ -7,36 +7,39 @@
     });
 $(document).on('click', '.bet-type', function () {
 //$(".bet-type").click(function () {
-    $(this).find(".input-bet-type").fadeOut(0, function () {
-        $(this).css('cursor', 'default').css('text-decoration', 'none');
 
-        var text = $(this).text();
-        if (text == 'บ') {
-            $(this).html('ล').fadeIn();
-            document.getElementById(this.id).setAttribute('data-type', "b");
-        }
-        if (text == 'ล') {
-            $(this).html('บ+ล').fadeIn();
-            document.getElementById(this.id).setAttribute('data-type', "tb");
-        }
-        if (text == 'บ+ล') {
-            $(this).html('ห').fadeIn();
-            document.getElementById(this.id).setAttribute('data-type', "f");
-        }
-        if (text == 'ห') {
-            $(this).html('ห+ท').fadeIn();
-            document.getElementById(this.id).setAttribute('data-type', "ft");
-        }
-        if (text == 'ห+ท') {
-            $(this).html('บ').fadeIn();
-            document.getElementById(this.id).setAttribute('data-type', "t");
-        }
-        var id = (this.id).replace("t", "");
-        if ($('#n' + id).val() != "" && $('#b' + id).val() != "") {
-            SumAmountPoll();
-        }
+    if($(".showPoll").data('type') != 0){
+        $(this).find(".input-bet-type").fadeOut(0, function () {
+            $(this).css('cursor', 'default').css('text-decoration', 'none');
 
-    })
+            var text = $(this).text();
+            if (text == 'บ') {
+                $(this).html('ล').fadeIn();
+                document.getElementById(this.id).setAttribute('data-type', "b");
+            }
+            if (text == 'ล') {
+                $(this).html('บ+ล').fadeIn();
+                document.getElementById(this.id).setAttribute('data-type', "tb");
+            }
+            if (text == 'บ+ล') {
+                $(this).html('ห').fadeIn();
+                document.getElementById(this.id).setAttribute('data-type', "f");
+            }
+            if (text == 'ห') {
+                $(this).html('ห+ท').fadeIn();
+                document.getElementById(this.id).setAttribute('data-type', "ft");
+            }
+            if (text == 'ห+ท') {
+                $(this).html('บ').fadeIn();
+                document.getElementById(this.id).setAttribute('data-type', "t");
+            }
+            var id = (this.id).replace("t", "");
+            if ($('#n' + id).val() != "" && $('#b' + id).val() != "") {
+                SumAmountPoll();
+            }
+
+        })
+    }
 });
 
 $("#clear").click(function () {

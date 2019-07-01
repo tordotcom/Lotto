@@ -106,7 +106,7 @@
                                 <td>@discount</td>
                                 <td>@win</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@item.create_date</td>
-                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
+                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="">ดูโพย</button></td>
                             </tr>
                         }
                     </tbody>
@@ -266,7 +266,7 @@
 
             newWin.document.open();
 
-            newWin.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"></head><body onload="window.print()">'+printContents.innerHTML+'</body></html>');
+            newWin.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"><style>.bet-no{float: left;width: 10%;padding: 2px;padding-top: 10px}.bet-type{float: left;width: 20%;padding: 2px;text-align: center}.bt{float: left;width: 20%;padding: 2px;text-align: center}.bet-lotto{float: left;width: 20%;padding: 2px}.bet-equal{float: left;width: 5%;padding: 2px;padding-top: 10px}.bet-price{float: left;width: 40%;padding: 2px}</style></head><body onload="window.print()">'+printContents.innerHTML+'</body></html>');
 
             newWin.document.close();
 
