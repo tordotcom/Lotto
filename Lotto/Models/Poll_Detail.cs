@@ -19,5 +19,6 @@ namespace Lotto.Models
         public string update_date { get; set; }
         public string UID { get; set; }
         public string Win { get; set; }
+        public string Status { get; set; }
     }
 }

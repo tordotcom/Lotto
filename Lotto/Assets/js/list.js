@@ -13,8 +13,8 @@
     var total_discount = $("#total_discount").val();
     var reject_amount = $("#reject").val();
 
-    console.log(poll_count);
-    console.log(receive);
+    //console.log(poll_count);
+    //console.log(receive);
 	$("#poll_number").html(poll_count);
 	$("#receive_status").html(receive);
 	$("#amount").html(amount);
@@ -63,13 +63,25 @@
                 {
                     htmlString += '<div class="col-lg-4">';
                 }
-                htmlString+='<div class="bet-cell">'+
-                    '<div class="bet-no">' + (i+1) + '</div>' +
-                    '<div class="bet-type"><div  class="form-control form-control-sm input-bet-type" data-type="t">' + type+'</div></div>'+
-                    '<div class="bet-lotto"><input type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled value="'+data[i].Number+'"></div>'+
-                    '<div class="bet-equal">=</div>'+
-                    '<div class="bet-price"><input type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="'+data[i].Amount+'"></div>'+
-                '</div>'
+                if (parseInt(data[i].Result_Status) > 0) {
+                    htmlString += '<div class="bet-cell">' +
+                        '<div class="bet-no">' + (i + 1) + '</div>' +
+                        '<div class="bet-type"><div style="background-color:lightgreen" class="form-control form-control-sm input-bet-type" data-type="t">' + type + '</div></div>' +
+                        '<div class="bet-lotto"><input style="background-color:lightgreen" type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Number + '"></div>' +
+                        '<div class="bet-equal">=</div>' +
+                        '<div class="bet-price"><input style="background-color:lightgreen" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
+                        '</div>';
+                }
+                else {
+                    htmlString += '<div class="bet-cell">' +
+                        '<div class="bet-no">' + (i + 1) + '</div>' +
+                        '<div class="bet-type"><div  class="form-control form-control-sm input-bet-type" data-type="t">' + type + '</div></div>' +
+                        '<div class="bet-lotto"><input type="text" maxlength="3" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Number + '"></div>' +
+                        '<div class="bet-equal">=</div>' +
+                        '<div class="bet-price"><input type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
+                        '</div>';
+                }
+                
                 if (i == 29 || i == 59 || i == 89)
                 {
                     htmlString +='</div>'

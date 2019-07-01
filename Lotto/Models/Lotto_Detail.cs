@@ -10,5 +10,6 @@ namespace Lotto.Models
         public string Type { get; set; }
         public string Number { get; set; }
         public string Amount { get; set; }
+        public string Result_Status { get; set; }
     }
 }

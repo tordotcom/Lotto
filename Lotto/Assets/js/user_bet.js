@@ -457,6 +457,17 @@ $("#sendLotto").click(function () {
                         }
                     });
                 }
+                else if (data == "timeout") {
+                    Swal.fire({
+                        type: 'danger',
+                        title: 'หวยงวดนี้ปิดแล้ว',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onAfterClose: () => {
+                            location.reload();
+                        }
+                    });
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");
