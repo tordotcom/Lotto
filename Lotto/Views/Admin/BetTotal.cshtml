@@ -40,8 +40,8 @@
                                     <td>@item.AmountDiscount</td>
                                     <td>0</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
-                                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบแจ้งยอด</button>
+                                        <button type="button" class="btn btn-sm btn-primary get-balance" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
+                                        <button type="button" class="btn btn-sm btn-success get-keep" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบแจ้งยอด</button>
                                         <button type="button" class="btn btn-sm btn-warning get-user-poll" data-uid="@item.UID" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false">ดูโพย</button>
                                     </td>
                                 </tr>
@@ -67,7 +67,7 @@
                 <table class="table table-striped table-bordered user-poll-data-table">
                     <thead></thead>
                     <tbody></tbody>
-                    <!--<tfoot>
+                    <tfoot>
                         <tr>
                             <th>รวม</th>
                             <th><span id="pollCount"></span> ใบ</th>
@@ -78,11 +78,121 @@
                             <th><span id="total_discount"></span></th>
                             <th>0</th>
                             <th>สรุป</th>
-                            <th><span id="total_discount"></span></th>
+                            <th><span id="total_discount_2"></span></th>
                         </tr>
-                    </tfoot>-->
+                    </tfoot>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="checkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:90%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close x-modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>สรุปโพย</h3>
+                    </div>
+                    <div class="col-md-6 right">
+                        <button type="button" class="btn btn-sm btn-warning hidden" id="editPoll">แก้ไข</button>
+                        <button type="button" class="btn btn-sm btn-danger hidden" id="reject">คืนทั้งใบ</button>
+                        <button type="button" class="btn btn-sm btn-default" id="printPoll">พิมพ์</button>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="printPollArea">
+                        <hr />
+                        <div class="col-md-12">
+                            <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">โพยใบที่</label></div>
+                                            <div class="col-12 col-md-7"><div id="poll_number" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">สถานะ</label></div>
+                                            <div class="col-12 col-md-7"><div id="receive_status" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">ยอดแทงใบนี้</label></div>
+                                            <div class="col-12 col-md-7"><div id="amount" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">ยอดรับใบนี้</label></div>
+                                            <div class="col-12 col-md-7"><div id="receive" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">ยอดหัก%ใบนี้</label></div>
+                                            <div class="col-12 col-md-7"><div id="discount" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">วันที่แทง</label></div>
+                                            <div class="col-12 col-md-7"><div id="poll_date" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">แทงโดย</label></div>
+                                            <div class="col-12 col-md-7"><div id="poll_by" class="form-control-label bold"></div></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">วันที่รับ</label></div>
+                                            <div class="col-12 col-md-7"><div id="receive_date" class="form-control-label bold"></div></div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">โพยหมายเลข</label></div>
+                                            <div class="col-12 col-md-7"><div id="poll_id" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">จำนวนโพย</label></div>
+                                            <div class="col-12 col-md-7"><div id="total_poll" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">รับแล้ว</label></div>
+                                            <div class="col-12 col-md-7"><div id="receive_poll" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">ยอดคืนงวดนี้</label></div>
+                                            <div class="col-12 col-md-7"><div id="r_amount" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">ยอดรับงวดนี้</label></div>
+                                            <div class="col-12 col-md-7"><div id="receive_amount" class="form-control-label bold"></div></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label class="form-control-label">ยอดหัก%งวดนี้</label></div>
+                                            <div class="col-12 col-md-7"><div id="t_discount" class="form-control-label bold"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <hr />
+                        <div class="col-md-12">
+                            <div class="row" id="poll">
+
+                            </div>
+                        </div>
+                        </div>
+                        <div id="action-area" class="col-md-12 right hidden">
+                            <button type="button" class="btn btn-sm btn-success x-modal" id="sendPoll" data-dismiss="modal">ยืนยันการแก้ไข</button>
+                            <button type="button" class="btn btn-sm btn-danger x-modal" data-dismiss="modal">ยกเลิก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-primary">ตรวจ</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                </div>*@
         </div>
     </div>
 </div>
@@ -90,167 +200,94 @@
 <div class="modal fade" id="totalBalance" tabindex="-1" role="dialog" aria-labelledby="totalBalanceLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="totalBalanceLabel">ใบสรุปยอดเงิน</h5>
+           <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="printBalanceArea">
+                <br />
+                <h4 class="center">ใบสรุปยอดเงิน <span id="balanceUser"></span> งวดวันที่ <span id="balancePeriod"></span></h4><hr/>
                 <table class="table table-bordered" style="text-align:center;">
                     <thead style="color:white;background-color:blue;">
                         <tr>
                             <th rowspan="2">ชนิด</th>
                             <th colspan="3">ยอดทั้งหมด</th>
-                            <th colspan="3">แทงออก</th>
-                            <th colspan="3">รับไว้</th>
                         </tr>
                         <tr>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
-                            <th>แทงหัก %</th>
+                            <th>ยอดแทงหัก %</th>
                             <th>ถูก</th>
                             <th>สุทธิ</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>2 บน</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3 บน</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3 โต๊ด</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2 โต๊ด</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3 หน้า</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3 หน้าโต๊ด</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
                             <td>วิ่ง บน</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="udis"></td>
+                            <td id="uwin"></td>
+                            <td id="utotal"></td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="ddis"></td>
+                            <td id="dwin"></td>
+                            <td id="dtotal"></td>
                         </tr>
                         <tr>
-                            <td>2 ล่าง</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>3 หน้า</td>
+                            <td id="f3dis"></td>
+                            <td id="f3win"></td>
+                            <td id="f3total"></td>
+                        </tr>
+                        <tr>
+                            <td>3 หน้าโต๊ด</td>
+                            <td id="f3odis"></td>
+                            <td id="f3owin"></td>
+                            <td id="f3ototal"></td>
+                        </tr>
+                        <tr>
+                            <td>3 บน</td>
+                            <td id="u3dis"></td>
+                            <td id="u3win"></td>
+                            <td id="u3total"></td>
+                        </tr>
+                        <tr>
+                            <td>3 โต๊ด</td>
+                            <td id="u3odis"></td>
+                            <td id="u3owin"></td>
+                            <td id="u3ototal"></td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="d3dis"></td>
+                            <td id="d3win"></td>
+                            <td id="d3total"></td>
+                        </tr>
+                        <tr>
+                            <td>2 บน</td>
+                            <td id="u2dis"></td>
+                            <td id="u2win"></td>
+                            <td id="u2total"></td>
+                        </tr>
+                        <tr>
+                            <td>2 ล่าง</td>
+                            <td id="d2dis"></td>
+                            <td id="d2win"></td>
+                            <td id="d2total"></td>
+                        </tr>
+                        <tr>
+                            <td>2 โต๊ด</td>
+                            <td id="o2dis"></td>
+                            <td id="o2win"></td>
+                            <td id="o2total"></td>
                         </tr>
                     </tbody>
                     <tfoot style="color:white;background-color:blue;">
                         <tr>
                             <td>รวม</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="tdis"></td>
+                            <td id="twin"></td>
+                            <td id="ttotal"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -266,75 +303,57 @@
 <div class="modal fade" id="totalKeep" tabindex="-1" role="dialog" aria-labelledby="totalKeepLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="totalKeepLabel">ใบสรุปยอดเก็บ</h5>
+           <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="printKeepArea">
-                <div class="row">
-                    <div class="col-md-3">
-                        หวยรัฐบาล
-                    </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        80000
-                    </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        60000
-                    </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        คน
-                    </div>
+                <br />
+                <h4 class="center">ใบสรุปยอดเก็บ <span id="keepUser"></span></h4><hr />
+                 <div class="row">
                     <div class="col-md-12">
-                        <hr />
-                        <table class="table table-bordered" style="text-align:center;">
-                            <thead style="color:white;background-color:blue;">
-                                <tr>
-                                    <th>ยอดเก็บ</th>
-                                    <th>ยอดจ่าย</th>
-                                    <th>หมายเลข - ชื่อ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                            <tfoot style="color:white;background-color:blue;">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">หวยรัฐบาล</label></div>
+                            <div class="col-12 col-md-7"><div id="keepPeriod" class="form-control-label bold"></div></div>
+                        </div>
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">ยอดเก็บ</label></div>
+                            <div class="col-12 col-md-7"><div id="keepSum" class="form-control-label bold"></div></div>
+                        </div>
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">ยอดจ่าย</label></div>
+                            <div class="col-12 col-md-7"><div id="keepSumw" class="form-control-label bold"></div></div>
+                        </div>
+                         <div class="row form-group">
+                            <div class="col col-md-5"><label class="form-control-label">รวมทั้งหมด</label></div>
+                            <div class="col-12 col-md-7"><div id="keepSum_last" class="form-control-label bold"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="printKeep">เปิด</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" id="printKeep">พิมพ์</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
             </div>
         </div>
     </div>
 </div>
 
+<script src="~/Assets/js/admin_list.js"></script>
+<script src="~/Assets/js/admin_list_edit.js"></script>
+<script src="~/Assets/js/sweetalert2.all.min.js"></script>
+
 <script>
     (function ($) {
 
         getUserPoll = '@Url.Action("List", "Admin")';
+        getPoll = '@Url.Action("getPoll", "User")';
+        getPollHeadDetail = '@Url.Action("getPoll", "Admin")';
+        RejectPoll = '@Url.Action("RejectPoll", "Admin")';
+        addPoll = '@Url.Action("AddPoll", "Admin")';
+        getUserBetResult = '@Url.Action("GetUserBetResult", "Admin")';
+        getUserTotalBalance = '@Url.Action("GetUserTotalBalance", "Admin")';
 
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
@@ -388,17 +407,217 @@
                 "data": "create_date"
             },
             {
-                "title": "วันที่ส่ง",
+                "title": "",
                 "data": null,
-                "defaultContent": "<button type='button' class='btn btn-sm btn-primary get-poll'>ดูโพย</button>"
-            },
-            {
-                "title": "user",
-                "visible": false,
-                "searchable": false,
-                "data":"UID"
+                "render": function ( data, type, row, meta ) {
+                    return '<button type="button" class="btn btn-sm btn-primary showPoll" '+
+                    'data-uid="'+row.UID+'" '+
+                    'data-pollNumber="'+row.poll_number+'" '+
+                    'data-cBy="'+row.Create_By+'" '+
+                    'data-cDate="'+row.create_date+'" '+
+                    'data-discount="'+row.Discount+'" '+
+                    'data-areceiv="'+row.Amount+'" '+
+                    'data-amount="'+row.Amount+'" '+
+                    'data-receive="'+row.Receive+'" '+
+                    'data-pCount="'+row.pollCount+'" '+
+                    'data-id="'+row.ID+'" '+
+                    'data-toggle="modal" data-target="#checkModal"  data-backdrop="static" data-keyboard="false">ดูโพย</button';
+                }
             }
             ]
+        });
+
+        $('.get-balance').click(function () {
+            $('#balanceUser').html($(this).data("uname"));
+            $('#balancePeriod').html($("#todayDate").html());
+            var id = $(this).data('uid');
+            $.ajax({
+                url: getUserTotalBalance,
+                data: { uID: id },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    //alert(JSON.stringify(data));
+                    var udis = 0;
+                    var uwin = 0;
+                    var utotal = 0;
+                    var ddis = 0;
+                    var dwin = 0;
+                    var dtotal = 0;
+                    var f3dis = 0;
+                    var f3win = 0;
+                    var f3total = 0;
+                    var f3odis = 0;
+                    var f3owin = 0;
+                    var f3ototal = 0;
+                    var u3dis = 0;
+                    var u3win = 0;
+                    var u3total = 0;
+                    var u3odis = 0;
+                    var u3owin = 0;
+                    var u3ototal = 0;
+                    var d3dis = 0;
+                    var d3win = 0;
+                    var d3total = 0;
+                    var u2dis = 0;
+                    var u2win = 0;
+                    var u2total = 0;
+                    var d2dis = 0;
+                    var d2win = 0;
+                    var d2total = 0;
+                    var o2dis = 0;
+                    var o2win = 0;
+                    var o2total = 0;
+                    var tdis = 0;
+                    var twin = 0;
+                    var ttotal = 0;
+                    $.each(data, function (index, value) {
+                        if (value.Type == "Up")
+                        {
+                            udis = parseInt(value.Amount_Discount);
+                            uwin = parseInt(value.Amount_Win);
+                            utotal = udis - uwin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "Down")
+                        {
+                            ddis = parseInt(value.Amount_Discount);
+                            dwin = parseInt(value.Amount_Win);
+                            dtotal = ddis - dwin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "FirstThree")
+                        {
+                            f3dis = parseInt(value.Amount_Discount);
+                            f3win = parseInt(value.Amount_Win);
+                            f3total = f3dis - f3win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "FirstThreeOod")
+                        {
+                            f3odis = parseInt(value.Amount_Discount);
+                            f3owin = parseInt(value.Amount_Win);
+                            f3ototal = f3odis - f3owin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "ThreeUp")
+                        {
+                            u3dis = parseInt(value.Amount_Discount);
+                            u3win = parseInt(value.Amount_Win);
+                            u3total = u3dis - u3win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "ThreeUPOod")
+                        {
+                            u3odis = parseInt(value.Amount_Discount);
+                            u3owin = parseInt(value.Amount_Win);
+                            u3ototal = u3odis - u3owin;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "ThreeDown")
+                        {
+                            d3dis = parseInt(value.Amount_Discount);
+                            d3win = parseInt(value.Amount_Win);
+                            d3total = d3dis - d3win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "TwoUp")
+                        {
+                            u2dis = parseInt(value.Amount_Discount);
+                            u2win = parseInt(value.Amount_Win);
+                            u2total = u2dis - u2win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "TwoDown")
+                        {
+                            d2dis = parseInt(value.Amount_Discount);
+                            d2win = parseInt(value.Amount_Win);
+                            d2total = d2dis - d2win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                        else if (value.Type == "TwoOod")
+                        {
+                            o2dis = parseInt(value.Amount_Discount);
+                            o2win = parseInt(value.Amount_Win);
+                            o2total = o2dis - o2win;
+                            tdis += parseInt(value.Amount_Discount);
+                            twin += parseInt(value.Amount_Win);
+                        }
+                    });
+                    $('#udis').html(udis);
+                    $('#uwin').html(uwin);
+                    $('#utotal').html(utotal);
+                    $('#ddis').html(ddis);
+                    $('#dwin').html(dwin);
+                    $('#dtotal').html(dtotal);
+                    $('#f3dis').html(f3dis);
+                    $('#f3win').html(f3win);
+                    $('#f3total').html(f3total);
+                    $('#f3odis').html(f3odis);
+                    $('#f3owin').html(f3owin);
+                    $('#f3ototal').html(f3ototal);
+                    $('#u3dis').html(u3dis);
+                    $('#u3win').html(u3win);
+                    $('#u3total').html(u3total);
+                    $('#u3odis').html(u3odis);
+                    $('#u3owin').html(u3owin);
+                    $('#u3ototal').html(u3ototal);
+                    $('#d3dis').html(d3dis);
+                    $('#d3win').html(d3win);
+                    $('#d3total').html(d3total);
+                    $('#u2dis').html(u2dis);
+                    $('#u2win').html(u2win);
+                    $('#u2total').html(u2total);
+                    $('#d2dis').html(d2dis);
+                    $('#d2win').html(d2win);
+                    $('#d2total').html(d2total);
+                    $('#o2dis').html(o2dis);
+                    $('#o2win').html(o2win);
+                    $('#o2total').html(o2total);
+                    $('#tdis').html(tdis);
+                    $('#twin').html(twin);
+                    $('#ttotal').html(tdis-twin);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
+        });
+
+         $('.get-keep').click(function () {
+            $('#keepUser').html($(this).data("uname"));
+            $('#keepPeriod').html($("#todayDate").html());
+            var id = $(this).data('uid');
+            var keepSum = 0;
+            var keepSumw = 0;
+            $.ajax({
+                url: getUserBetResult,
+                data: { uID: id },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    //alert(JSON.stringify(data));
+                    $.each(data, function (index, value) {
+                        keepSum += parseInt(value.Discount);
+                        keepSumw += parseInt(value.Win);
+                    });
+                    $('#keepSum').html(keepSum);
+                    $('#keepSumw').html(keepSumw);
+                    $('#keepSum_last').html(Math.abs(keepSum-keepSumw));
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
         });
 
         $(".get-user-poll").click(function () {
@@ -412,41 +631,39 @@
                     //alert(JSON.stringify(data));
 
                     var pollCount = 0;
-                    var receive = "รับแล้ว";
-                    var amount = 0;
                     var total_amount = 0;
-                    var amount_receive = 0;
                     var total_receive = 0;
-                    var discount = 0;
                     var total_discount = 0;
                     var reject_amount = 0;
 
                     pollTable.clear();
                     $.each(data, function (index, value) {
-                        //console.log(value.Receive);
+                        pollCount += 1;
                         if (value.Receive == "1")
                         {
                             value.Receive = "รับแล้ว";
-                            //amount = value.Amount;
-                            //amount_receive = value.Amount;
-                            //discount = value.Discount;
-                            //value.total_amount += amount;
-                            //value.total_receive += amount_receive;
-                            //value.total_discount += discount;
+                            total_amount += parseInt(value.Amount);
+                            total_receive += parseInt(value.Amount);
+                            total_discount += parseInt(value.Discount);
                         }
                         else
                         {
                             value.Receive = "คืนทั้งใบ";
-                            //amount = value.Amount;
-                            //amount_receive = 0;
-                            //value.discount = 0;
-                            //value.total_amount += amount;
-                            //value.total_receive += amount_receive;
-                            //value.reject_amount += amount;
+                            total_amount += parseInt(value.Amount);
+                            total_receive += 0;
+                            reject_amount += parseInt(value.Amount);
+                            value.Discount = 0
                         }
+                        //alert(JSON.stringify(value));
                         pollTable.row.add(value);
                     });
                     pollTable.draw();
+                    $('#pollCount').html(pollCount);
+                    $('#total_amount').html(total_amount);
+                    $('#total_receive').html(total_receive);
+                    $('#total_discount').html(total_discount);
+                    $('#total_discount_2').html(total_discount);
+                    initialPoll();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert("error");
@@ -454,8 +671,48 @@
             });
         });
 
-        $(".get-poll").click(function () {
+        $('#printPoll').click(function () {
 
+            var printContents = document.getElementById('printPollArea');
+
+            var newWin = window.open('','Print-Window');
+
+            newWin.document.open();
+
+            newWin.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"></head><body onload="window.print()">'+printContents.innerHTML+'</body></html>');
+
+            newWin.document.close();
+
+            setTimeout(function(){newWin.close();},10);
+        });
+
+         $('#printBalance').click(function () {
+
+              var printContents = document.getElementById('printBalanceArea');
+
+              var newWin = window.open('','Print-Window');
+
+              newWin.document.open();
+
+              newWin.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"></head><body onload="window.print()">'+printContents.innerHTML+'</body></html>');
+
+              newWin.document.close();
+
+              setTimeout(function(){newWin.close();},10);
+        });
+
+         $('#printKeep').click(function () {
+            var printContents = document.getElementById('printKeepArea');
+
+              var newWin = window.open('','Print-Window');
+
+              newWin.document.open();
+
+              newWin.document.write('<html><head><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"></head><body onload="window.print()">'+printContents.innerHTML+'</body></html>');
+
+              newWin.document.close();
+
+              setTimeout(function(){newWin.close();},10);
         });
     })(jQuery);
 </script>

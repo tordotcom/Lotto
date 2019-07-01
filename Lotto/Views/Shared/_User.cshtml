@@ -374,14 +374,7 @@
                         </div>
                     </div>
                     <div class="dropdown for-username">
-                        @if (Session["Username"] != null)
-                        {
-                            <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
-                        }
-                        else
-                        {
-                            <b>Unknown</b>
-                        }
+                        <b id="profile"></b>
                     </div>
 
                     <div class="user-area dropdown float-right">
@@ -437,7 +430,7 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count" id="totalBetCount"></span></div>
+                                            <div class="stat-text"><span class="" id="totalBetCount"></span></div>
                                             <div class="stat-heading">ยอดแทง</div>
                                         </div>
                                     </div>
@@ -587,13 +580,21 @@
         getPeriod = '@Url.Action("GetCurrentPeriod", "Admin")';
         getSetting = '@Url.Action("GetSetting", "Admin")';
         UpdateRateDiscount = '@Url.Action("UpdateRateDiscount", "Admin")';
+        getTotalBet = '@Url.Action("GetTotalBet", "Admin")';
     </script>
 
     <script>
         (function ($) {
             clock();
-            $('#totalBetCount').html("134");
-
+            var user = '@Session["Username"]';
+            if (user != '')
+            {
+                $('#profile').html(user.toUpperCase());
+            }
+            else
+            {
+                window.location.href = '@Url.Action("Login", "Login")';
+            }
         })(jQuery);
 
         function clock() {
@@ -608,7 +609,7 @@
             $(".digital-clock").text(h + " : " + m + " : " + s);
             setTimeout(function () { clock() }, 500);
         }
-         
+
          $.ajax({
 			url: getPeriod,
 			type: "POST",
@@ -652,6 +653,22 @@
 			error: function (xhr, ajaxOptions, thrownError) {
 				alert("error");
 			}
+        });
+
+         $.ajax({
+            url: getTotalBet,
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                if (data == "fail") {
+                }
+                else{
+                    $('#totalBetCount').html(data);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
         });
 
         $(document.body)

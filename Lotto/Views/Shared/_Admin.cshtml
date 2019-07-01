@@ -145,6 +145,21 @@
            line-height:10px!important; 
         }
 
+        .table-fixed2 th, .table-fixed2 td {
+           font-size:10px!important; 
+           padding-left:2px!important; 
+           padding-right:2px!important;
+           vertical-align: top!important; 
+           border-spacing: 1px !important;
+           line-height:10px!important; 
+        }
+
+        .table-fixed2 .btn {
+            font-size:10px!important; 
+            padding-left:2px!important; 
+           padding-right:2px!important;
+        }
+
         .hidden {
             display:none;
         }
@@ -411,14 +426,7 @@
                         </div>
                     </div>
                     <div class="dropdown for-username">
-                        @if (Session["Username"] != null)
-                        {
-                            <b>@Html.Raw(HttpContext.Current.Session["Username"].ToString().ToUpper())</b>
-                        }
-                        else
-                        {
-                            <b>Unknown</b>
-                        }
+                        <b id="profile"></b>
                     </div>
 
                     <div class="user-area dropdown float-right">
@@ -474,7 +482,7 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><span class="count" id="totalBetCount"></span></div>
+                                            <div class="stat-text"><span class="" id="totalBetCount"></span></div>
                                             <div class="stat-heading">ยอดแทง</div>
                                         </div>
                                     </div>
@@ -633,12 +641,21 @@
         getPeriod = '@Url.Action("GetCurrentPeriod", "Admin")';
         getSetting = '@Url.Action("GetSetting", "Admin")';
         UpdateRateDiscount = '@Url.Action("UpdateRateDiscount", "Admin")';
+        getTotalBet = '@Url.Action("GetTotalBet", "Admin")';
     </script>
 
     <script type="text/javascript">
         (function ($) {
             clock();
-            $('#totalBetCount').html("134");
+            var user = '@Session["Username"]';
+            if (user != '')
+            {
+                $('#profile').html(user.toUpperCase());
+            }
+            else
+            {
+                window.location.href = '@Url.Action("Login", "Login")';
+            }
         })(jQuery);
 
         function clock() {
@@ -705,11 +722,15 @@
         });
 
         $.ajax({
-            url: getSetting,
+            url: getTotalBet,
             type: "POST",
             dataType: "json",
             success: function (data) {
-                $('#closeTime').html(data['Setting'][1].Value);
+                if (data == "fail") {
+                }
+                else{
+                    $('#totalBetCount').html(data);
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");

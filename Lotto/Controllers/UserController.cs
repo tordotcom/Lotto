@@ -17,11 +17,11 @@ namespace Lotto.Controllers
         // GET: User
         public ActionResult Index() //หน้าแรก
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 return View();
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -33,7 +33,7 @@ namespace Lotto.Controllers
 
         public ActionResult Bet() //แทงโพย
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 Period P = db.Period.Where(x => x.BetStatus == "1").FirstOrDefault<Period>();
                 if(P != null)
@@ -87,7 +87,7 @@ namespace Lotto.Controllers
                     return View(pollDetail);
                 }
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -99,7 +99,7 @@ namespace Lotto.Controllers
 
         public ActionResult List() //ดูโพย
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 //Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
                 int id = db.Period.Max(p => p.ID);
@@ -186,7 +186,7 @@ namespace Lotto.Controllers
                 }
                 return View();
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -198,7 +198,7 @@ namespace Lotto.Controllers
 
         public ActionResult Return() //เลขคืน
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 int id = db.Period.Max(p => p.ID);
                 if (id != 0)
@@ -247,7 +247,7 @@ namespace Lotto.Controllers
                 }
                 return View();
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -259,12 +259,12 @@ namespace Lotto.Controllers
 
         public ActionResult Result() //ดูผล
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 List<Result> r = db.Result.OrderByDescending(x=>x.ID).ToList();
                 return View(r);
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -276,13 +276,13 @@ namespace Lotto.Controllers
 
         public ActionResult Password() //รหัสผ่าน
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 var id = Int32.Parse(Session["ID"].ToString());
                 Account a = db.Account.Where(x => x.ID == id).FirstOrDefault<Account>();
                 return View(a);
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -294,11 +294,11 @@ namespace Lotto.Controllers
 
         public ActionResult Howto() //วิธีแทง
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 return View();
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -310,11 +310,11 @@ namespace Lotto.Controllers
 
         public ActionResult Contact() //ติดต่อเจ้ามือ
         {
-            if (Session["Role"] == "User")
+            if ((string)Session["Role"] == "User")
             {
                 return View();
             }
-            else if (Session["Role"] == "Administrator")
+            else if ((string)Session["Role"] == "Administrator")
             {
                 return RedirectToAction("Index", "Admin");
             }
