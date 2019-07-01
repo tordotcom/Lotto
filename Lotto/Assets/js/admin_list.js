@@ -16,9 +16,9 @@
 
         $("#poll_number").html(poll_number);
         $("#receive_status").html(receive);
-        $("#amount").html(amount);
-        $("#receive").html(amount_receive);
-        $("#discount").html(discount);
+        $("#amount").html(nwc(amount));
+        $("#receive").html(nwc(amount_receive));
+        $("#discount").html(nwc(discount));
         $("#poll_date").html(create_date);
         $("#poll_by").html(create_by);
         $("#receive_date").html(create_date);

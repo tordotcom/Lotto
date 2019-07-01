@@ -663,9 +663,10 @@
             dataType: "json",
             success: function (data) {
                 if (data == "fail") {
+                    $('#totalBetCount').html(0);
                 }
                 else{
-                    $('#totalBetCount').html(data);
+                    $('#totalBetCount').html(nwc(data));
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -716,6 +717,9 @@
             return (w1 - w2);
         };
 
+        function nwc(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
     </script>
 
 </body>
