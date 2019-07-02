@@ -113,7 +113,11 @@ namespace Lotto.Controllers
             ViewBag.Message = "Fail";
             return View();
         }
-
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login", "Login");
+        }
         public bool Check_Role(string plainText, string hashValue)
         {
             bool verify = VerifyHash(plainText, hashValue);
