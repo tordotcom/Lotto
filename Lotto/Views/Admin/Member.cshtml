@@ -189,7 +189,7 @@
     });*/
 
     $(".add-member").click(function () {
-        $("btnEdit").val(0);
+        $("#btnEdit").val(0);
         $("#editMemberModalLabel").html("เพิ่มข้อมูลสมาชิก");
         $("#txtUsername").prop("disabled", false);
 
@@ -207,7 +207,7 @@
     });
 
     $(".edit").click(function () {
-        $("btnEdit").val(1);
+        $("#btnEdit").val(1);
         $("#editMemberModalLabel").html("แก้ไขข้อมูลสมาชิก");
         $("#txtUsername").prop("disabled", true);
         $("#txtCreateDateArea").show();

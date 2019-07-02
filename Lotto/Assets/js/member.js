@@ -53,19 +53,24 @@ $("#btnEdit").click(function () {
             type: "POST",
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 if (data == "ss") {
                     Swal.fire({
                         type: 'success',
                         title: 'บันทึกเรียบร้อย',
                         showConfirmButton: false,
                         timer: 1500
-					});
-					$('.modal-backdrop').remove();
-					$(".close").trigger('click');
-					setTimeout(function () {
-						location.reload(true);
-					}, 2000);
-                }    
+                    });
+                    $('.modal-backdrop').remove();
+                    $(".close").trigger('click');
+                    setTimeout(function () {
+                        location.reload(true);
+                    }, 2000);
+                }
+                else if (data == "dup") {
+                    Swal.fire('Username นี้มีผู้ใช้แล้ว');
+                }
+                else {}
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");
