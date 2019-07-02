@@ -19,11 +19,11 @@ namespace Lotto.Controllers
         // GET: Admin
         public ActionResult Index() //หน้าแรก
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 return View();
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -35,7 +35,7 @@ namespace Lotto.Controllers
 
         public ActionResult AllBet() //ดูเลขทั้งหมด
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 int id = db.Period.Max(p => p.ID);
                 if (id != 0)
@@ -81,7 +81,7 @@ namespace Lotto.Controllers
                 }
                 return View();
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -93,11 +93,11 @@ namespace Lotto.Controllers
 
         public ActionResult Close() //ปิดหวย
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
-                var pid=0;
-                if (P!=null)
+                var pid = 0;
+                if (P != null)
                 {
                     pid = P.ID;
                 }
@@ -133,7 +133,7 @@ namespace Lotto.Controllers
                                 CreateDate = Reader["create_date"].ToString(),
                                 CloseDate = Reader["update_date"].ToString(),
                                 BetStatus = Reader["BetStatus"].ToString(),
-                                CheckResult= Reader["Check_Result"].ToString()
+                                CheckResult = Reader["Check_Result"].ToString()
                             });
                         }
                         cnn.Close();
@@ -154,8 +154,8 @@ namespace Lotto.Controllers
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
                     string query = "SELECT po.UID,a.Name,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe " +
-                                    "left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID "+
-                                    "left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID "+
+                                    "left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID " +
+                                    "left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID " +
                                     "left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period group by po.UID,a.Name";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@period", pid.ToString());
@@ -184,13 +184,13 @@ namespace Lotto.Controllers
                 {
 
                 }
-                if (all[0].CheckResult=="1")
+                if (all[0].CheckResult == "1")
                 {
                     List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
                     ViewData["TAR"] = TAR;
                     ViewData["UBET"] = user_bet;
                 }
-                else if(all[0].CheckResult == "0")
+                else if (all[0].CheckResult == "0")
                 {
                     var total_type_bet = new List<Total_Amount_Result>();
                     try
@@ -230,7 +230,7 @@ namespace Lotto.Controllers
                 else { }
                 return View(all);
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -242,7 +242,7 @@ namespace Lotto.Controllers
 
         public ActionResult List(String UID) //ดูโพย
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 string param;
                 if (UID != null)
@@ -283,8 +283,8 @@ namespace Lotto.Controllers
                                     create_date = Reader["create_date"].ToString(),
                                     poll_number = Reader["rNumber"].ToString(),
                                     UID = Reader["UID"].ToString(),
-                                    Win= Reader["AmountWin"].ToString(),
-                                    Status= Reader["Check_Result"].ToString(),
+                                    Win = Reader["AmountWin"].ToString(),
+                                    Status = Reader["Check_Result"].ToString(),
                                 });
                             }
                             cnn.Close();
@@ -310,7 +310,7 @@ namespace Lotto.Controllers
                 }
                 return View();
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -321,7 +321,7 @@ namespace Lotto.Controllers
         }
         public ActionResult Bet() //แทงโพย
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 string connetionString = null;
                 var data = new List<admin_bet>();
@@ -358,9 +358,9 @@ namespace Lotto.Controllers
                 {
 
                 }
-                return View(data);  
+                return View(data);
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -371,7 +371,7 @@ namespace Lotto.Controllers
         }
         public ActionResult BetTotal() //ยอดสรุปเป็นใบ
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 int id = db.Period.Max(p => p.ID);
                 if (id != 0)
@@ -418,7 +418,7 @@ namespace Lotto.Controllers
                 }
                 return View();
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -444,7 +444,7 @@ namespace Lotto.Controllers
         }
         public ActionResult Cut() //ตัดเลข
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 int id = db.Period.Max(p => p.ID);
                 if (id != 0)
@@ -490,7 +490,7 @@ namespace Lotto.Controllers
                 }
                 return View();
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -505,7 +505,7 @@ namespace Lotto.Controllers
             {
                 return View();
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -516,7 +516,7 @@ namespace Lotto.Controllers
         }
         public ActionResult ListBackward() //ดูโพยย้อนหลัง
         {
-            if((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator")
             {
                 List<Period> pr = db.Period.ToList<Period>();
                 string connetionString = null;
@@ -567,7 +567,7 @@ namespace Lotto.Controllers
                 }
                 return View(pollDetail);
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -580,9 +580,9 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                return View(db.Period.OrderByDescending(x=> x.ID).ToList());
+                return View(db.Period.OrderByDescending(x => x.ID).ToList());
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -597,7 +597,7 @@ namespace Lotto.Controllers
             {
                 return View(db.Result.ToList());
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -612,7 +612,7 @@ namespace Lotto.Controllers
             {
                 return View();
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -667,18 +667,18 @@ namespace Lotto.Controllers
                 }
                 if (user.Count > 0)
                 {
-                    for(int i=0;i<user.Count;i++)
+                    for (int i = 0; i < user.Count; i++)
                     {
                         bool role = Check_Role("user", user[i].Role);
-                        if(!role)
+                        if (!role)
                         {
                             user.RemoveAt(i);
                         }
                     }
-                }                
+                }
                 return View(user);
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -811,7 +811,7 @@ namespace Lotto.Controllers
                 }
                 return View(user);
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -840,7 +840,7 @@ namespace Lotto.Controllers
             if ((string)Session["Role"] == "Administrator")
             {
                 int maxpid = db.Period.Max(p => p.ID);
-                Period P = db.Period.Where(x => x.ID == maxpid).Where(y=> y.Check_Result=="0").FirstOrDefault<Period>();
+                Period P = db.Period.Where(x => x.ID == maxpid).Where(y => y.Check_Result == "0").FirstOrDefault<Period>();
                 if (P != null)
                 {
                     string connetionString = null;
@@ -892,7 +892,7 @@ namespace Lotto.Controllers
                     return View(pollDetail);
                 }
             }
-            else if((string)Session["Role"] == "User")
+            else if ((string)Session["Role"] == "User")
             {
                 return RedirectToAction("Index", "User");
             }
@@ -1035,7 +1035,7 @@ namespace Lotto.Controllers
             catch
             {
 
-            }            
+            }
             return Json(data);
         }
 
@@ -1085,7 +1085,7 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult UpdateUserRateDiscount(User_Rate_Discount User_Rate_Discount)
         {
-            if(User_Rate_Discount.rateID != "null")
+            if (User_Rate_Discount.rateID != "null")
             {
                 int rateID = Int32.Parse(User_Rate_Discount.rateID);
                 int discountID = Int32.Parse(User_Rate_Discount.discountID);
@@ -1167,21 +1167,21 @@ namespace Lotto.Controllers
             }
         }
 
-         //-------------------------------------Add User data --------------------------------//
+        //-------------------------------------Add User data --------------------------------//
         [HttpPost]
         public ActionResult AddUser(Account User)
         {
             if (User != null)
             {
-                
+
                 var A = new Account();
                 A.Username = User.Username;
                 A.Name = User.Name;
                 A.Password = ComputeHash(User.Password, null);
                 A.Status = User.Status;
-                A.Description = User.Description; 
-                A.Create_By_UID = Convert.ToString(Session["ID"]); 
-                A.Last_Login = DateTime.Now; 
+                A.Description = User.Description;
+                A.Create_By_UID = Convert.ToString(Session["ID"]);
+                A.Last_Login = DateTime.Now;
                 A.create_date = DateTime.Now;
                 A.update_date = DateTime.Now;
                 db.Account.Add(A);
@@ -1212,7 +1212,7 @@ namespace Lotto.Controllers
             if (A != null)
             {
                 if (User.Password != null)
-                {                   
+                {
                     A.Password = ComputeHash(User.Password, null);
                 }
                 A.update_date = DateTime.Now;
@@ -1329,9 +1329,9 @@ namespace Lotto.Controllers
         public ActionResult GetCurrentPeriod()
         {
             Period current = db.Period.Where(s => s.Status == "1").SingleOrDefault();
-            if(current!=null)
+            if (current != null)
             {
-                return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy") , Status = current.Status });
+                return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy"), Status = current.Status });
             }
             int id = db.Period.Max(p => p.ID);
             current = db.Period.Where(s => s.ID == id).First();
@@ -1370,8 +1370,8 @@ namespace Lotto.Controllers
             }
         }
         //---------------------------------- get poll header detail Admin/bet------------------------------------------//
-       [HttpPost]
-       public ActionResult getPoll(string UID)
+        [HttpPost]
+        public ActionResult getPoll(string UID)
         {
             int id = db.Period.Max(p => p.ID);
             if (id != 0)
@@ -2012,12 +2012,12 @@ namespace Lotto.Controllers
             }
             return Json("ss");
         }
-        public void InsertLottoSub(int lid, string Type, string number, string amount, double totalDiscount,int NumLen)
+        public void InsertLottoSub(int lid, string Type, string number, string amount, double totalDiscount, int NumLen)
         {
             var lottosub = new LottoSub();
             lottosub.Lotto_ID = lid;
             lottosub.Type = Type;
-            lottosub.NumLen= NumLen.ToString();
+            lottosub.NumLen = NumLen.ToString();
             lottosub.Number = number;
             lottosub.Amount = amount;
             lottosub.AmountDiscount = totalDiscount.ToString();
@@ -2051,14 +2051,14 @@ namespace Lotto.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateBetStatus(string Status,string PID)
+        public ActionResult UpdateBetStatus(string Status, string PID)
         {
             int id = Int32.Parse(PID);
-            if(Status== "close")
+            if (Status == "close")
             {
                 Status = "0";
             }
-            else if(Status == "open")
+            else if (Status == "open")
             {
                 Status = "1";
             }
@@ -2071,7 +2071,7 @@ namespace Lotto.Controllers
         }
 
         [HttpPost]
-        public ActionResult CloseLotto( string PID)
+        public ActionResult CloseLotto(string PID)
         {
             int id = Int32.Parse(PID);
             Period p = db.Period.Where(s => s.ID == id).FirstOrDefault<Period>();
@@ -2084,11 +2084,11 @@ namespace Lotto.Controllers
             return Json("ss");
         }
         [HttpPost]
-        public ActionResult CheckResult(string PID,DateTime DAY,string FT,string FTO1,string FTO2,string FTO3,string FTO4,string FTO5,string TU,string TUO1,string TUO2,string TUO3,string TUO4,string TUO5,string TD,string TDO1,string ThDown1,string ThDown2,string ThDown3,string ThDown4,string TwUP,string Tw_up_ood,string UP,string DOWN)
+        public ActionResult CheckResult(string PID, DateTime DAY, string FT, string FTO1, string FTO2, string FTO3, string FTO4, string FTO5, string TU, string TUO1, string TUO2, string TUO3, string TUO4, string TUO5, string TD, string TDO1, string ThDown1, string ThDown2, string ThDown3, string ThDown4, string TwUP, string Tw_up_ood, string UP, string DOWN)
         {
             int perID = Int32.Parse(PID);
-            Period pe= db.Period.Where(s => s.Check_Result == "1").Where(x => x.ID == perID).FirstOrDefault<Period>();
-            if (pe!=null)
+            Period pe = db.Period.Where(s => s.Check_Result == "1").Where(x => x.ID == perID).FirstOrDefault<Period>();
+            if (pe != null)
             {
                 string connetionString1 = null;
                 var update = new List<LottoSub>();
@@ -2122,7 +2122,7 @@ namespace Lotto.Controllers
                 {
 
                 }
-                foreach(var item in update)
+                foreach (var item in update)
                 {
                     LottoSub ls = db.LottoSub.Where(s => s.ID == item.ID).FirstOrDefault<LottoSub>();
                     ls.AmountWin = "0";
@@ -2201,10 +2201,10 @@ namespace Lotto.Controllers
                 new totalResult { Type = "TwoUp", AmountDiscount = 0.00, Win = 0 ,total=0},
                 new totalResult { Type = "TwoDown", AmountDiscount = 0.00, Win = 0 ,total=0},
                 new totalResult { Type = "TwoOod", AmountDiscount = 0.00, Win = 0 ,total=0}
-           }; 
+           };
             foreach (var idata in data)
             {
-                if (idata.ID!="")
+                if (idata.ID != "")
                 {
                     int amount_ = Int32.Parse(idata.Amount);
                     float amountDis = float.Parse(idata.AmountDiscount, CultureInfo.InvariantCulture);
@@ -2227,12 +2227,12 @@ namespace Lotto.Controllers
                             list[1].AmountDiscount = list[1].AmountDiscount + amountDis;
                             list[1].total = Convert.ToInt32(list[1].AmountDiscount) + list[1].Win;
                         }
-                        else if(idata.Type == "t")
+                        else if (idata.Type == "t")
                         {
                             list[0].AmountDiscount = list[0].AmountDiscount + amountDis;
                             list[0].total = Convert.ToInt32(list[0].AmountDiscount) + list[0].Win;
                         }
-                        else if(idata.Type == "b")
+                        else if (idata.Type == "b")
                         {
                             list[1].AmountDiscount = list[1].AmountDiscount + amountDis;
                             list[1].total = Convert.ToInt32(list[1].AmountDiscount) + list[1].Win;
@@ -2273,7 +2273,7 @@ namespace Lotto.Controllers
                             list[9].AmountDiscount = list[9].AmountDiscount + amountDis;
                             list[9].total = Convert.ToInt32(list[9].AmountDiscount) + list[9].Win;
                         }
-                        else if(idata.Type == "t")
+                        else if (idata.Type == "t")
                         {
                             list[7].AmountDiscount = list[7].AmountDiscount + amountDis;
                             list[7].total = Convert.ToInt32(list[7].AmountDiscount) + list[7].Win;
@@ -2337,7 +2337,7 @@ namespace Lotto.Controllers
                             list[3].AmountDiscount = list[3].AmountDiscount + amountDis;
                             list[3].total = Convert.ToInt32(list[3].AmountDiscount) + list[3].Win;
                         }
-                        else if(idata.Type == "t")
+                        else if (idata.Type == "t")
                         {
                             list[4].AmountDiscount = list[4].AmountDiscount + amountDis;
                             list[4].total = Convert.ToInt32(list[4].AmountDiscount) + list[4].Win;
@@ -2398,17 +2398,18 @@ namespace Lotto.Controllers
             r.three_down_1 = ThDown1;
             r.three_down_2 = ThDown2;
             r.three_down_3 = ThDown3;
-            r.three_down_4 = ThDown4;           
+            r.three_down_4 = ThDown4;
             r.update_date = DateTime.Now;
             r.create_date = DateTime.Now;
             db.Result.Add(r);
             db.SaveChanges();
 
-            foreach(var ilist in list)
+            foreach (var ilist in list)
             {
+                var discount = Convert.ToInt32(ilist.AmountDiscount);
                 var tr = new Total_Amount_Result();
                 tr.Type = ilist.Type;
-                tr.Amount_Discount = ilist.AmountDiscount.ToString();
+                tr.Amount_Discount = discount.ToString();
                 tr.Period_ID = PID;
                 tr.Amount_Win = ilist.Win.ToString();
                 tr.create_date = DateTime.Now;
@@ -2420,7 +2421,7 @@ namespace Lotto.Controllers
             return Json("ss");
         }
 
-        public void UpdateLottoSub( string Amount, string Rate, string ID)
+        public void UpdateLottoSub(string Amount, string Rate, string ID)
         {
             int id = Int32.Parse(ID);
             var amount = Int32.Parse(Amount);
@@ -2492,8 +2493,8 @@ namespace Lotto.Controllers
         public ActionResult GetUserBetResult(string uID)
         {
             Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
-            var pid=0;
-            if (P!=null)
+            var pid = 0;
+            if (P != null)
             {
                 pid = P.ID;
             }
@@ -2503,17 +2504,17 @@ namespace Lotto.Controllers
                 pid = id;
             }
             string connetionString = null;
-            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString; 
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
             var user_bet = new List<User_Bet_Result>();
             try
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "SELECT po.UID,a.Name,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe "+
+                string query = "SELECT po.UID,a.Name,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe " +
                             "left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1' and UID=" + uID + ") po on pe.ID=po.Period_ID " +
-                            "left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID "+
-                            "left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID "+
-                            "left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID="+pid+" group by po.UID,a.Name";
+                            "left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID " +
+                            "left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID " +
+                            "left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=" + pid + " group by po.UID,a.Name";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 SqlDataReader Reader = cmd.ExecuteReader();
                 Console.Write(Reader);
@@ -2563,9 +2564,9 @@ namespace Lotto.Controllers
         public ActionResult GetTotalBet()
         {
             Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
-            var pid=0;
+            var pid = 0;
             var totalbet = 0;
-            if (P!=null)
+            if (P != null)
             {
                 pid = P.ID;
             }
@@ -2581,7 +2582,7 @@ namespace Lotto.Controllers
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "select t1.amount from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID="+pid+" and p.[Receive] = 1 group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                string query = "select t1.amount from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=" + pid + " and p.[Receive] = 1 group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 SqlDataReader Reader = cmd.ExecuteReader();
                 Console.Write(Reader);
@@ -2589,7 +2590,7 @@ namespace Lotto.Controllers
                 {
                     while (Reader.Read())
                     {
-                        totalbet+= Int32.Parse(Reader["amount"].ToString());
+                        totalbet += Int32.Parse(Reader["amount"].ToString());
                     }
                     cnn.Close();
 
@@ -2604,6 +2605,138 @@ namespace Lotto.Controllers
 
             }
             return Json(totalbet);
+        }
+        [HttpPost]
+        public JsonResult LottoBackwardTotalBalance(string PID)
+        {
+            int id = Int32.Parse(PID);
+            var tar = new List<Total_Amount_Result>();
+            Period P = db.Period.Where(x => x.ID == id).FirstOrDefault<Period>();
+            string connetionString = null;
+            var all = new List<Close>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT pe.ID,pe.Check_Result,pe.create_date,pe.update_date,pe.Date,case when pe.BetStatus='0' then 'ปิดรับ' else 'เปิดรับ' end as BetStatus,pe.Close_BY,sum(ISNULL(CAST(ls.Amount as int), 0 )) as Amount,ISNULL(cr.crR, 0 ) as crR,ISNULL(cu.countu , 0 ) as countu FROM [dbo].[Period] pe left join(SELECT [ID],Period_ID,Receive,update_date,create_date FROM [dbo].[Poll] where Receive='1') p on p.Period_ID=pe.ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join (SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT Period_ID as crPID,COUNT(Receive) as crR,Receive as crRe FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID) cr on p.Period_ID=cr.crPID and p.Receive=cr.crRe left join(SELECT COUNT(distinct UID) as countu,Period_ID as cuPID,Receive as cuR FROM [dbo].[Poll] where Receive='1' group by Receive,Period_ID,Receive) cu on p.Period_ID=cu.cuPID and p.Receive=cu.cuR where pe.ID=@period group by pe.ID,pe.create_date,pe.Date,pe.Close_BY,pe.Check_Result,pe.update_date,cr.crR,cu.countu,pe.BetStatus";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", id.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        all.Add(new Close
+                        {
+                            PID = Reader["ID"].ToString(),
+                            Date = Convert.ToDateTime(Reader["Date"]),
+                            Amount = Reader["Amount"].ToString(),
+                            CountReceive = Reader["crR"].ToString(),
+                            CountUser = Reader["countu"].ToString(),
+                            CloseBy = Reader["Close_BY"].ToString(),
+                            CreateDate = Reader["create_date"].ToString(),
+                            CloseDate = Reader["update_date"].ToString(),
+                            BetStatus = Reader["BetStatus"].ToString(),
+                            CheckResult= Reader["Check_Result"].ToString()
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            var user_bet = new List<User_Bet_Result>();
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT po.UID,a.Name,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(ls.AmountWin as int)) as AmountWin FROM [dbo].[Period] pe " +
+                                "left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID "+
+                                "left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on po.UID=a.ID "+
+                                "left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period group by po.UID,a.Name";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", id.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        user_bet.Add(new User_Bet_Result
+                        {
+                            ID = Reader["UID"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Discount = Reader["AmountDiscount"].ToString(),
+                            Win = Reader["AmountWin"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            if (all[0].CheckResult=="1")
+            {
+                List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == id.ToString()).ToList();
+                ViewData["TAR"] = TAR;
+                ViewData["UBET"] = user_bet;
+                tar = TAR;
+            }
+            else if(all[0].CheckResult == "0")
+            {
+                var total_type_bet = new List<Total_Amount_Result>();
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", id.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            total_type_bet.Add(new Total_Amount_Result
+                            {
+                                Type = Reader["Type"].ToString(),
+                                Amount_Discount = Reader["AmountDiscount"].ToString(),
+                                Amount_Win = Reader["Win"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                ViewData["TAR"] = total_type_bet;
+                ViewData["UBET"] = user_bet;
+                tar = total_type_bet;
+            }
+            else { }
+            return Json(new { all, TAR = tar, UBET = user_bet });
         }
     }
 }

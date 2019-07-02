@@ -440,6 +440,7 @@
     <Content Include="Assets\js\lib\gmap\gmaps.js" />
     <Content Include="Assets\js\lib\gmap\gmaps.min.js" />
     <Content Include="Assets\js\list.js" />
+    <Content Include="Assets\js\lotto_backward.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\member.js" />
     <Content Include="Assets\js\member_price.js" />

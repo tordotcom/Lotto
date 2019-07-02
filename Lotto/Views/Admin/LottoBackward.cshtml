@@ -42,7 +42,7 @@
                                 <td>@status</td>
                                 <td>@item.update_date</td>
                                 <td>
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#showLottoModal">สรุปยอด</button>
+                                  <button type="button" class="btn btn-primary lottoDetail" data-toggle="modal" data-pid="@item.ID" data-target="#showLottoModal">สรุปยอด</button>
                                 </td>
                             </tr>
                         }
@@ -70,15 +70,15 @@
                                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
-                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold" id="total">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
-                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold" id="receive"></div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
-                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold" id="countuser">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
@@ -94,11 +94,11 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
-                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold"id="betstatus">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
-                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold"id="open">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
@@ -106,11 +106,11 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
-                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold"id="close">#</div></div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
-                                        <div class="col-12 col-md-7"><div class="form-control-label bold">#</div></div>
+                                        <div class="col-12 col-md-7"><div class="form-control-label bold"id="closeby">#</div></div>
                                     </div>
                                 </form>
                             </div>
@@ -156,71 +156,71 @@
                     <tbody>
                         <tr>
                             <td>วิ่ง บน</td>
-                            <td id="udis"></td>
-                            <td id="uwin"></td>
-                            <td id="utotal"></td>
+                            <td id="udis">0</td>
+                            <td id="uwin">0</td>
+                            <td id="utotal">0</td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
-                            <td id="ddis"></td>
-                            <td id="dwin"></td>
-                            <td id="dtotal"></td>
+                            <td id="ddis">0</td>
+                            <td id="dwin">0</td>
+                            <td id="dtotal">0</td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
-                            <td id="f3dis"></td>
-                            <td id="f3win"></td>
-                            <td id="f3total"></td>
+                            <td id="f3dis">0</td>
+                            <td id="f3win">0</td>
+                            <td id="f3total">0</td>
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
-                            <td id="f3odis"></td>
-                            <td id="f3owin"></td>
-                            <td id="f3ototal"></td>
+                            <td id="f3odis">0</td>
+                            <td id="f3owin">0</td>
+                            <td id="f3ototal">0</td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
-                            <td id="u3dis"></td>
-                            <td id="u3win"></td>
-                            <td id="u3total"></td>
+                            <td id="u3dis">0</td>
+                            <td id="u3win">0</td>
+                            <td id="u3total">0</td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
-                            <td id="u3odis"></td>
-                            <td id="u3owin"></td>
-                            <td id="u3ototal"></td>
+                            <td id="u3odis">0</td>
+                            <td id="u3owin">0</td>
+                            <td id="u3ototal">0</td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td id="d3dis"></td>
-                            <td id="d3win"></td>
-                            <td id="d3total"></td>
+                            <td id="d3dis">0</td>
+                            <td id="d3win">0</td>
+                            <td id="d3total">0</td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
-                            <td id="u2dis"></td>
-                            <td id="u2win"></td>
-                            <td id="u2total"></td>
+                            <td id="u2dis">0</td>
+                            <td id="u2win">0</td>
+                            <td id="u2total">0</td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td id="d2dis"></td>
-                            <td id="d2win"></td>
-                            <td id="d2total"></td>
+                            <td id="d2dis">0</td>
+                            <td id="d2win">0</td>
+                            <td id="d2total">0</td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
-                            <td id="o2dis"></td>
-                            <td id="o2win"></td>
-                            <td id="o2total"></td>
+                            <td id="o2dis">0</td>
+                            <td id="o2win">0</td>
+                            <td id="o2total">0</td>
                         </tr>
                     </tbody>
                     <tfoot style="color:white;background-color:blue;">
                         <tr>
                             <td>รวม</td>
-                            <td id="tdis"></td>
-                            <td id="twin"></td>
-                            <td id="ttotal"></td>
+                            <td id="tdis">0</td>
+                            <td id="twin">0</td>
+                            <td id="ttotal">0</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -252,20 +252,20 @@
                     <div class="col-md-1">
                         -
                     </div>
-                    <div class="col-md-2">
-                        #
+                    <div class="col-md-2" id="amount">
+                        
+                    </div>
+                    <div class="col-md-1">
+                        -
+                    </div>
+                    <div class="col-md-2" id="count">
+                        
                     </div>
                     <div class="col-md-1">
                         -
                     </div>
                     <div class="col-md-2">
-                        #
-                    </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        #
+                        คน
                     </div>
                     <div class="col-md-12">
                         <hr />
@@ -277,18 +277,14 @@
                                     <th>หมายเลข - ชื่อ</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#</td>
-                                    <td>#</td>
-                                    <td>#</td>
-                                </tr>
+                            <tbody id="detail">
+                                
                             </tbody>
                             <tfoot style="color:white;background-color:blue;">
                                 <tr>
-                                    <td>#</td>
-                                    <td>#</td>
-                                    <td>#</td>
+                                    <td id="usertotal"></td>
+                                    <td id="totalwin"></td>
+                                    <td id="sum"></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -303,8 +299,11 @@
     </div>
 </div>
 
+<script src="~/Assets/js/lotto_backward.js"></script>
 <script>
+    getDetail = '@Url.Action("LottoBackwardTotalBalance", "Admin")';
     (function ($) {
+
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
