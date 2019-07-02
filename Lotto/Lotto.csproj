@@ -309,6 +309,8 @@
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\fonts\icomoon\icomoon.svg" />
     <Content Include="Assets\fonts\icomoon\index.html" />
+    <Content Include="Assets\images\user.png" />
+    <Content Include="Assets\images\User_Circle.png" />
     <Content Include="Assets\images\w_load.gif" />
     <Content Include="Assets\js\admin_bet.js" />
     <Content Include="Assets\js\admin_list.js" />
