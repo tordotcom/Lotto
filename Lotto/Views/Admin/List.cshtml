@@ -116,12 +116,12 @@
                             <th>@pollCount ใบ</th>
                             <th></th>
                             <th></th>
-                            <th>@String.Format("{0:n0}", total_amount)</th>
-                            <th>@String.Format("{0:n0}", total_receive)</th>
-                            <th>@String.Format("{0:n0}", total_discount)</th>
+                            <th>@String.Format("{0:n}", total_amount)</th>
+                            <th>@String.Format("{0:n}", total_receive)</th>
+                            <th>@String.Format("{0:n}", total_discount)</th>
                             <th>@totalwin</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <th>สรุป</th>
-                            <th>@(total_discount-totalwin)</th>
+                            <th>@String.Format("{0:n}", (total_discount-totalwin))</th>
                         </tr>
                     </tfoot>
                 </table>

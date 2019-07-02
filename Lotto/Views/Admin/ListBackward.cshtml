@@ -4,15 +4,15 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @{
-    var pollCount = 0;
+    double  pollCount = 0;
     var receive = "รับแล้ว";
-    var amount = 0;
-    var total_amount = 0;
-    var amount_receive = 0;
-    var total_receive = 0;
-    var discount = 0;
-    var total_discount = 0;
-    var reject_amount = 0;
+    double  amount = 0;
+    double  total_amount = 0;
+    double  amount_receive = 0;
+    double  total_receive = 0;
+    double  discount = 0;
+    double  total_discount = 0;
+    double  reject_amount = 0;
     var Status = "";
 }
 
@@ -49,8 +49,8 @@
                                 receive = "รับแล้ว";
                                 if (item.Amount != "")
                                 {
-                                    amount = Int32.Parse(item.Amount);
-                                    amount_receive = Int32.Parse(item.Amount);
+                                    amount = Double.Parse(item.Amount);
+                                    amount_receive = Double.Parse(item.Amount);
                                 }
                                 else
                                 {
@@ -59,7 +59,7 @@
                                 }
                                 if (item.Discount != "")
                                 {
-                                    discount = Int32.Parse(item.Discount);
+                                    discount = Double.Parse(item.Discount);
                                 }
                                 else
                                 {
@@ -74,7 +74,7 @@
                                 receive = "คืนทั้งใบ";
                                 if (item.Amount != "")
                                 {
-                                    amount = Int32.Parse(item.Amount);
+                                    amount = Double.Parse(item.Amount);
                                 }
                                 else
                                 {
@@ -92,9 +92,9 @@
                             <td>@item.poll_number</td>
                             <td>@item.ID</td>
                             <td>@receive</td>
-                            <td>@String.Format("{0:n0}", amount)</td>
-                            <td>@String.Format("{0:n0}", amount_receive)</td>
-                            <td>@String.Format("{0:n0}", discount)</td>
+                            <td>@String.Format("{0:n}", amount)</td>
+                            <td>@String.Format("{0:n}", amount_receive)</td>
+                            <td>@String.Format("{0:n}", discount)</td>
                             <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <td>@item.create_date</td>
                             <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-type="0" data-target="#checkModal"  data-backdrop="static" data-keyboard="false">ดูโพย</button></td>

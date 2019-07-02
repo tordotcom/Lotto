@@ -43,7 +43,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.Lotto_day</td>
+                                <td>@String.Format("{0:d}", item.Lotto_day)</td>
                                 <td>@item.Name</td>
                                 <td>@item.first_three</td>
                                 <td>@item.last_three</td>
