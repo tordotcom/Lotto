@@ -13,6 +13,7 @@ namespace Lotto.Models
         [Required]
         public string Password { get; set; }
         public string ID { get; set; }
+        public string Last_Login{ get; set; }
         public string Role { get; set; }
         public bool Remember { get; set; }
     }

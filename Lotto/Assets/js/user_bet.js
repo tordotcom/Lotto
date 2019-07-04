@@ -455,7 +455,7 @@ function SumAmountPoll() {
             }           
         }
     }
-    $("#thisTotal").val(sum + " ฿");
+    $("#thisTotal").val(nwc(sum) + " ฿");
 }
 $("#sendLotto").click(function () {
     var state = false;

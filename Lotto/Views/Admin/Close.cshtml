@@ -29,7 +29,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Amount</div></div>
+                        <div class="col-12 col-md-9"><div class="form-control-label bold">@String.Format("{0:n}", Double.Parse(Model[0].Amount))</div></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
