@@ -66,7 +66,7 @@ function keyPress2(obj, id, evt) {
         $("#n" + id).removeClass("input-color");
         return true;  // Number 0-9
     }
-    else if (code == 8 || code == 46 || code == 9) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+    else if (code == 42 ||code == 8 || code == 46 || code == 9 || code == 88 || code == 120) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
     else if (code >= 37 && code <= 40) return true;  // left, up, right, down
     else return false;
 }
@@ -114,11 +114,11 @@ function checkNumber(id) {
     $('#n' + id).val(sNum);
 
     // Check format
-    var numFormat = /^\d{1,3}?$/;
+    var numFormat = /^\d{1,3}[x]?$/;
     if (!numFormat.test(sNum)) {
         Swal.fire({
             type: 'error',
-            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบเลขที่แทง  ต้องเป็นตัวเลข 1 - 3 ตัวเท่านั้น',
+            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบเลขที่แทง  ต้องเป็นตัวเลข 1 - 3 ตัวเท่านั้น และใส่ * ได้ที่ตำแหน่งสุดท้ายของเลข 3 ตัวสำหรับ 3 กลับ 6 กลับเท่านั้น',
             showConfirmButton: true,
             onAfterClose: () => {
                 $("#b" + id).focus();
@@ -128,6 +128,21 @@ function checkNumber(id) {
     }
 
     var iPosA = sNum.indexOf('x');
+    if (iPosA >= 0) {
+        if (iPosA != 3) {
+            Swal.fire({
+                type: 'error',
+                title: 'ช่องที่ ' + id + ': โปรดตรวจสอบเลขที่แทง  ใส่ * ได้ที่ตำแหน่งสุดท้ายของเลข 3 ตัว สำหรับ 3 กลับ 6 กลับเท่านั้น',
+                showConfirmButton: true,
+                onAfterClose: () => {
+                    $("#b" + id).focus();
+                }
+            });
+            return false;
+        } else {
+            iLen = 3;
+        }
+    }
     if (iLen > 3) {
         Swal.fire({
             type: 'error',
@@ -231,7 +246,12 @@ function checkAmount(id) {
         bValid = true;
 
         // 3 โต๊ด
-    } else if ((sTyp == 't') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
+    }
+    else if ((sTyp == 't') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+    }
+    else if ((sTyp == 't') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
         bValid = true;
 
         // 3 บน  3 โต๊ด
@@ -254,6 +274,10 @@ function checkAmount(id) {
         // 3 ล่าง
     } else if ((sTyp == 'b') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;    
+    }
+    else if ((sTyp == 'b') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
     }
         // วิ่งบน + วิ่งล่าง
     else if ((sTyp == 'tb') && (iNumLen == 1) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
@@ -283,12 +307,21 @@ function checkAmount(id) {
     } else if ((sTyp == 'tb') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 2) && (iAmtPosS > iAmtPosA) && (iAmtPosS < iAmtLen - 1)) {
         bValid = true;   
     }
+    else if ((sTyp == 'tb') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+    }
         // 3 หน้า
     else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
 
         // 3 หน้าโต๊ด
-    } else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
+    }
+    else if ((sTyp == 'f') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
+    }
+    else if ((sTyp == 'f') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
         bValid = true;
 
         // 3 หน้า  3 หน้าโต๊ด
@@ -302,6 +335,10 @@ function checkAmount(id) {
     // 3 หน้า  3 ท้าย โต๊ด
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
         bValid = true;
+    }
+    else if ((sTyp == 'ft') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
+        bValid = true;
+
     }
         // 3 หน้า  3 หน้าโต๊ด 3 หลัง 3 หลังโต๊ด
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
@@ -360,7 +397,11 @@ function SumAmountPoll() {
         NumLen = NumLen.length;
         Amt = bet[i]["Amount"].replace("X", "x");
         Amt = bet[i]["Amount"].replace("*", "x");
-        var AmtCountX = Amt.split("x").length - 1
+        var numx = bet[i]["Number"].replace("X", "x");
+        numx = bet[i]["Number"].replace("*", "x");
+
+        var AmtCountX = Amt.split("x").length - 1;
+        var NumCountX = numx.split("x").length - 1;
         if (AmtCountX > 0) {
             var amount = Amt.split("x");
             if (amount[0] != "") {
@@ -376,12 +417,42 @@ function SumAmountPoll() {
             }
         }
         else {
-            if (bet[i]["type"] == "tb") {
-                sum = sum + (parseInt(bet[i]["Amount"]) * 2);
+            if (NumCountX > 0) {
+                var nnum = numx.split("x");
+                var charnum = nnum[0].split("");
+                if (bet[i]["type"] == "tb" || bet[i]["type"] == "ft") {
+                    if (charnum[0] == charnum[1] && charnum[0] == charnum[2]) {
+                        sum = sum + parseInt(bet[i]["Amount"] *2);
+                    }
+                    else if (charnum[0] != charnum[1] && charnum[0] != charnum[2] && charnum[1] != charnum[2]) {
+                        sum = sum + (parseInt(bet[i]["Amount"]) * 12);
+                    }
+                    else if (charnum[0] == charnum[1] || charnum[0] == charnum[2] || charnum[1] == charnum[2]) {
+                        sum = sum + (parseInt(bet[i]["Amount"]) * 6);
+                    }
+                    else { }
+                }
+                else {
+                    if (charnum[0] == charnum[1] && charnum[0] == charnum[2]) {
+                        sum = sum + parseInt(bet[i]["Amount"]);
+                    }
+                    else if (charnum[0] != charnum[1] && charnum[0] != charnum[2] && charnum[1] != charnum[2]) {
+                        sum = sum + (parseInt(bet[i]["Amount"]) * 6);
+                    }
+                    else if (charnum[0] == charnum[1] || charnum[0] == charnum[2] || charnum[1] == charnum[2]) {
+                        sum = sum + (parseInt(bet[i]["Amount"]) * 3);
+                    }
+                    else { }
+                }
             }
             else {
-                sum = sum + parseInt(bet[i]["Amount"]);
-            }
+                if (bet[i]["type"] == "tb") {
+                    sum = sum + (parseInt(bet[i]["Amount"]) * 2);
+                }
+                else {
+                    sum = sum + parseInt(bet[i]["Amount"]);
+                }
+            }           
         }
     }
     $("#thisTotal").val(sum + " ฿");
