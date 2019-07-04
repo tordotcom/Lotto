@@ -436,71 +436,71 @@
                         }
                         <tr>
                             <td>วิ่ง บน</td>
-                            <td id="udis">@Convert.ToInt32(up)</td>
-                            <td id="uwin">@wup</td>
-                            <td id="utotal">@tup</td>
+                            <td id="udis">@String.Format("{0:n}", Convert.ToInt32(up))</td>
+                            <td id="uwin">@String.Format("{0:n}", wup)</td>
+                            <td id="utotal">@String.Format("{0:n}", tup)</td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
-                            <td id="ddis">@Convert.ToInt32(down)</td>
-                            <td id="dwin">@wdown</td>
-                            <td id="dtotal">@tdown</td>
+                            <td id="ddis">@String.Format("{0:n}", Convert.ToInt32(down))</td>
+                            <td id="dwin">@String.Format("{0:n}", wdown)</td>
+                            <td id="dtotal">@String.Format("{0:n}", tdown)</td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
-                            <td id="f3dis">@Convert.ToInt32(fthree)</td>
-                            <td id="f3win">@wfthree</td>
-                            <td id="f3total">@tfthree</td>
+                            <td id="f3dis">@String.Format("{0:n}", Convert.ToInt32(fthree))</td>
+                            <td id="f3win">@String.Format("{0:n}", wfthree)</td>
+                            <td id="f3total">@String.Format("{0:n}", tfthree)</td>
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
-                            <td id="f3odis">@Convert.ToInt32(fthreeood)</td>
-                            <td id="f3owin">@wfthreeood</td>
-                            <td id="f3ototal">@tfthreeood</td>
+                            <td id="f3odis">@String.Format("{0:n}", Convert.ToInt32(fthreeood))</td>
+                            <td id="f3owin">@String.Format("{0:n}", wfthreeood)</td>
+                            <td id="f3ototal">@String.Format("{0:n}", tfthreeood)</td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
-                            <td id="u3dis">@Convert.ToInt32(threeup)</td>
-                            <td id="u3win">@wthreeup</td>
-                            <td id="u3total">@tthreeup</td>
+                            <td id="u3dis">@String.Format("{0:n}", Convert.ToInt32(threeup))</td>
+                            <td id="u3win">@String.Format("{0:n}", wthreeup)</td>
+                            <td id="u3total">@String.Format("{0:n}", tthreeup)</td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
-                            <td id="u3odis">@Convert.ToInt32(threeupood)</td>
-                            <td id="u3owin">@wthreeupood</td>
-                            <td id="u3ototal">@tthreeupood</td>
+                            <td id="u3odis">@String.Format("{0:n}", Convert.ToInt32(threeupood))</td>
+                            <td id="u3owin">@String.Format("{0:n}", wthreeupood)</td>
+                            <td id="u3ototal">@String.Format("{0:n}", tthreeupood)</td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td id="d3dis">@Convert.ToInt32(threedown)</td>
-                            <td id="d3win">@wthreedown</td>
-                            <td id="d3total">@tthreedown</td>
+                            <td id="d3dis">@String.Format("{0:n}", Convert.ToInt32(threedown))</td>
+                            <td id="d3win">@String.Format("{0:n}", wthreedown)</td>
+                            <td id="d3total">@String.Format("{0:n}", tthreedown)</td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
-                            <td id="u2dis">@Convert.ToInt32(twoup)</td>
-                            <td id="u2win">@wtwoup</td>
-                            <td id="u2total">@ttwoup</td>
+                            <td id="u2dis">@String.Format("{0:n}", Convert.ToInt32(twoup))</td>
+                            <td id="u2win">@String.Format("{0:n}", wtwoup)</td>
+                            <td id="u2total">@String.Format("{0:n}", ttwoup)</td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td id="d2dis">@Convert.ToInt32(twodown)</td>
-                            <td id="d2win">@wtwodown</td>
-                            <td id="d2total">@ttwodown</td>
+                            <td id="d2dis">@String.Format("{0:n}", Convert.ToInt32(twodown))</td>
+                            <td id="d2win">@String.Format("{0:n}", wtwodown)</td>
+                            <td id="d2total">@String.Format("{0:n}", ttwodown)</td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
-                            <td id="o2dis">@Convert.ToInt32(twoood)</td>
-                            <td id="o2win">@wtwoood</td>
-                            <td id="o2total">@ttwoood</td>
+                            <td id="o2dis">@String.Format("{0:n}", Convert.ToInt32(twoood))</td>
+                            <td id="o2win">@String.Format("{0:n}", wtwoood)</td>
+                            <td id="o2total">@String.Format("{0:n}", ttwoood)</td>
                         </tr>
                     </tbody>
                     <tfoot style="color:white;background-color:blue;">
                         <tr>
                             <td>รวม</td>
-                            <td id="tdis">@totaldis</td>
-                            <td id="twin">@toralwin</td>
-                            <td id="ttotal">@(totaldis - toralwin)</td>
+                            <td id="tdis">@String.Format("{0:n}", totaldis)</td>
+                            <td id="twin">@String.Format("{0:n}", toralwin)</td>
+                            <td id="ttotal">@String.Format("{0:n}", (totaldis - toralwin))</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -546,7 +546,7 @@
                         -
                     </div>
                     <div class="col-md-2">
-                        @Convert.ToInt32(sum)
+                        @String.Format("{0:n}", Convert.ToInt32(sum))
                     </div>
                     <div class="col-md-1">
                         -
@@ -574,17 +574,17 @@
                                 @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
                                 {
                                     <tr>
-                                        <td>@item.Discount</td>
-                                        <td>@item.Win</td>
+                                        <td>@String.Format("{0:n}", item.Discount)</td>
+                                        <td>@String.Format("{0:n}", item.Win)</td>
                                         <td>@item.Name</td>
                                     </tr>
                                 }
                             </tbody>
                             <tfoot style="color:white;background-color:blue;">
                                 <tr>
-                                    <td>@sum</td>
-                                    <td>@sumw</td>
-                                    <td>@(sum- sumw)</td>
+                                    <td>@String.Format("{0:n}", sum)</td>
+                                    <td>@String.Format("{0:n}", sumw)</td>
+                                    <td>@String.Format("{0:n}", (sum- sumw))</td>
                                 </tr>
                             </tfoot>
                         </table>

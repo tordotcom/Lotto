@@ -80,7 +80,7 @@
                                 <th style="color:white;background-color:red;">3 หน้า</th>
                                 <th style="color:white;background-color:black;">3 หน้าโต๊ด</th>
                                 <th style="color:white;background-color:red;">วิ่ง บน</th>
-                                <th style="color:white;background-color:black;">วื่ง ล่าง</th>
+                                <th style="color:white;background-color:black;">วิ่ง ล่าง</th>
                                 <th style="color:white;background-color:red;">2 ล่าง</th>
                                 <th style="color:white;background-color:black;">3 ล่าง</th>
                             </tr>
@@ -240,16 +240,16 @@
     var twodown = @Html.Raw(twodown);
     var threedown = @Html.Raw(threedown);
     console.log(threedown);
-    $("#twoup").html(twoup);
-    $("#threeup").html(threeup);
-    $("#threedown").html(threedown);
-    $("#three_").html(three_);
-    $("#two_").html(two_);
-    $("#fthree").html(fthree);
-    $("#fthree_").html(fthree_);
-    $("#up").html(up);
-    $("#down").html(down);
-    $("#twodown").html(twodown);
+    $("#twoup").html(nwc(twoup));
+    $("#threeup").html(nwc(threeup));
+    $("#threedown").html(nwc(threedown));
+    $("#three_").html(nwc(three_));
+    $("#two_").html(nwc(two_));
+    $("#fthree").html(nwc(fthree));
+    $("#fthree_").html(nwc(fthree_));
+    $("#up").html(nwc(up));
+    $("#down").html(nwc(down));
+    $("#twodown").html(nwc(twodown));
     (function ($) {
         $('#allLotto').html('18675');
     })(jQuery);

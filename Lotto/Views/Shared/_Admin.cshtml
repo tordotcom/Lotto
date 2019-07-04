@@ -298,6 +298,11 @@
             }
         }
     </style>
+    <script type="text/javascript">
+        function nwc(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    </script>
 </head>
 <body>
     <div class="loader" id="AjaxLoader" style="display:none;">
@@ -731,10 +736,6 @@
 
             return (w1 - w2);
         };
-
-        function nwc(x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
     </script>
 </body>
 </html>

@@ -47,6 +47,9 @@ else
             pollCount = 0;
         }
     }
+    string s_total_amount = String.Format("{0:n}", total_amount);
+    string s_reject_amount = String.Format("{0:n}", reject_amount);
+    string s_discount = String.Format("{0:n}", discount);
     var currentPoll = pollCount + 1;
 
 
@@ -81,15 +84,15 @@ else
                         <div class="col-md-6">
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืนงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm" value="@reject_amount ฿" style="text-align:right" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm" value="@s_reject_amount ฿" style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทงงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm" value="@total_amount ฿" style="text-align:right" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm" value="@s_total_amount ฿" style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่ายงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm" value="@discount ฿" style="text-align:right" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm" value="@s_discount ฿" style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"></div>

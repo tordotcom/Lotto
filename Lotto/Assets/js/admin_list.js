@@ -48,10 +48,10 @@
                     }
                 }
                 $("#total_poll").html(pollCount);
-                $("#receive_poll").html(total_receive);
-                $("#receive_amount").html(total_amount);
-                $("#t_discount").html(total_discount);
-                $("#r_amount").html(reject_amount);
+                $("#receive_poll").html(nwc(total_receive));
+                $("#receive_amount").html(nwc(total_amount));
+                $("#t_discount").html(nwc(total_discount));
+                $("#r_amount").html(nwc(reject_amount));
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");

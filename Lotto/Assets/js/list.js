@@ -17,18 +17,18 @@
     //console.log(receive);
 	$("#poll_number").html(poll_count);
 	$("#receive_status").html(receive);
-	$("#amount").html(amount);
-	$("#receive").html(amount_receive);
-	$("#discount").html(discount);
+	$("#amount").html(nwc(amount));
+	$("#receive").html(nwc(amount_receive));
+	$("#discount").html(nwc(discount));
 	$("#poll_date").html(create_date);
 	$("#poll_by").html(create_by);
 	$("#receive_date").html(create_date);
 	$("#poll_id").html(poll_id);
 	$("#total_poll").html(totalPollcount);
-	$("#receive_poll").html(total_receive);
-	$("#r_amount").html(reject_amount);
-	$("#receive_amount").html(total_amount);
-	$("#t_discount").html(total_discount);
+	$("#receive_poll").html(nwc(total_receive));
+	$("#r_amount").html(nwc(reject_amount));
+	$("#receive_amount").html(nwc(total_amount));
+	$("#t_discount").html(nwc(total_discount));
 
     $.ajax({
         url: getPoll,

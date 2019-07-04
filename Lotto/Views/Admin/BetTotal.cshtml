@@ -34,10 +34,10 @@
                                 <tr>
                                     <td>@item.Name</td>
                                     <td>@totalPoll</td>
-                                    <td>@item.Receive</td>
-                                    <td>@item.Amount</td>
-                                    <td>@item.AmountReceive</td>
-                                    <td>@item.AmountDiscount</td>
+                                    <td>@String.Format("{0:n}", item.Receive)</td>
+                                    <td>@String.Format("{0:n}", item.Amount)</td>
+                                    <td>@String.Format("{0:n}", item.AmountReceive)</td>
+                                    <td>@String.Format("{0:n}", item.AmountDiscount)</td>
                                     <td>0</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary get-balance" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
@@ -387,15 +387,24 @@
             },
             {
                 "title": "ยอดแทง",
-                "data": "Amount"
+                "data": null,
+                "render": function ( data, type, row, meta ) {
+                    return nwc(row.Amount);
+                }
             },
             {
                 "title": "ยอดรับ",
-                "data": "Amount"
+                "data": null,
+                "render": function ( data, type, row, meta ) {
+                    return nwc(row.Amount);
+                }
             },
             {
                 "title": "ยอดหัก%",
-                "data": "Discount"
+                "data": null,
+                "render": function ( data, type, row, meta ) {
+                    return nwc(row.Discount);
+                }
             },
             {
                 "title": "ยอดถูก",
@@ -554,39 +563,39 @@
                             twin += parseInt(value.Amount_Win);
                         }
                     });
-                    $('#udis').html(udis);
-                    $('#uwin').html(uwin);
-                    $('#utotal').html(utotal);
-                    $('#ddis').html(ddis);
-                    $('#dwin').html(dwin);
-                    $('#dtotal').html(dtotal);
-                    $('#f3dis').html(f3dis);
-                    $('#f3win').html(f3win);
-                    $('#f3total').html(f3total);
-                    $('#f3odis').html(f3odis);
-                    $('#f3owin').html(f3owin);
-                    $('#f3ototal').html(f3ototal);
-                    $('#u3dis').html(u3dis);
-                    $('#u3win').html(u3win);
-                    $('#u3total').html(u3total);
-                    $('#u3odis').html(u3odis);
-                    $('#u3owin').html(u3owin);
-                    $('#u3ototal').html(u3ototal);
-                    $('#d3dis').html(d3dis);
-                    $('#d3win').html(d3win);
-                    $('#d3total').html(d3total);
-                    $('#u2dis').html(u2dis);
-                    $('#u2win').html(u2win);
-                    $('#u2total').html(u2total);
-                    $('#d2dis').html(d2dis);
-                    $('#d2win').html(d2win);
-                    $('#d2total').html(d2total);
-                    $('#o2dis').html(o2dis);
-                    $('#o2win').html(o2win);
-                    $('#o2total').html(o2total);
-                    $('#tdis').html(tdis);
-                    $('#twin').html(twin);
-                    $('#ttotal').html(tdis-twin);
+                    $('#udis').html(nwc(udis));
+                    $('#uwin').html(nwc(uwin));
+                    $('#utotal').html(nwc(utotal));
+                    $('#ddis').html(nwc(ddis));
+                    $('#dwin').html(nwc(dwin));
+                    $('#dtotal').html(nwc(dtotal));
+                    $('#f3dis').html(nwc(f3dis));
+                    $('#f3win').html(nwc(f3win));
+                    $('#f3total').html(nwc(f3total));
+                    $('#f3odis').html(nwc(f3odis));
+                    $('#f3owin').html(nwc(f3owin));
+                    $('#f3ototal').html(nwc(f3ototal));
+                    $('#u3dis').html(nwc(u3dis));
+                    $('#u3win').html(nwc(u3win));
+                    $('#u3total').html(nwc(u3total));
+                    $('#u3odis').html(nwc(u3odis));
+                    $('#u3owin').html(nwc(u3owin));
+                    $('#u3ototal').html(nwc(u3ototal));
+                    $('#d3dis').html(nwc(d3dis));
+                    $('#d3win').html(nwc(d3win));
+                    $('#d3total').html(nwc(d3total));
+                    $('#u2dis').html(nwc(u2dis));
+                    $('#u2win').html(nwc(u2win));
+                    $('#u2total').html(nwc(u2total));
+                    $('#d2dis').html(nwc(d2dis));
+                    $('#d2win').html(nwc(d2win));
+                    $('#d2total').html(nwc(d2total));
+                    $('#o2dis').html(nwc(o2dis));
+                    $('#o2win').html(nwc(o2win));
+                    $('#o2total').html(nwc(o2total));
+                    $('#tdis').html(nwc(tdis));
+                    $('#twin').html(nwc(twin));
+                    $('#ttotal').html(nwc(tdis-twin));
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert("error");
@@ -611,9 +620,9 @@
                         keepSum += parseInt(value.Discount);
                         keepSumw += parseInt(value.Win);
                     });
-                    $('#keepSum').html(keepSum);
-                    $('#keepSumw').html(keepSumw);
-                    $('#keepSum_last').html(Math.abs(keepSum-keepSumw));
+                    $('#keepSum').html(nwc(keepSum));
+                    $('#keepSumw').html(nwc(keepSumw));
+                    $('#keepSum_last').html(nwc(Math.abs(keepSum-keepSumw)));
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert("error");
@@ -660,10 +669,10 @@
                     });
                     pollTable.draw();
                     $('#pollCount').html(pollCount);
-                    $('#total_amount').html(total_amount);
-                    $('#total_receive').html(total_receive);
-                    $('#total_discount').html(total_discount);
-                    $('#total_discount_2').html(total_discount);
+                    $('#total_amount').html(nwc(total_amount));
+                    $('#total_receive').html(nwc(total_receive));
+                    $('#total_discount').html(nwc(total_discount));
+                    $('#total_discount_2').html(nwc(total_discount));
                     initialPoll();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

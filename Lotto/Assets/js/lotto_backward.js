@@ -8,7 +8,7 @@
         success: function (data) {
             //console.log(data);
             //var date = new Date(parseInt(data.all[0]..substr(6)));
-            $("#total").html(data.all[0].Amount);
+            $("#total").html(nwc(data.all[0].Amount));
             $("#receive").html(data.all[0].CountReceive);
             $("#countuser").html(data.all[0].CountUser);
             $("#betstatus").html(data.all[0].BetStatus);
@@ -21,60 +21,60 @@
                 tdis = tdis + parseInt(data.TAR[i].Amount_Discount);
                 twin = twin + parseInt(data.TAR[i].Amount_Win);
                 if (data.TAR[i].Type == "Up") {
-                    $("#udis").html(data.TAR[i].Amount_Discount);
-                    $("#uwin").html(data.TAR[i].Amount_Win);
-                    $("#utotal").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#udis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#uwin").html(nwc(data.TAR[i].Amount_Win));
+                    $("#utotal").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "Down") {
-                    $("#ddis").html(data.TAR[i].Amount_Discount);
-                    $("#dwin").html(data.TAR[i].Amount_Win);
-                    $("#dtotal").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#ddis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#dwin").html(nwc(data.TAR[i].Amount_Win));
+                    $("#dtotal").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "FirstThree") {
-                    $("#f3dis").html(data.TAR[i].Amount_Discount);
-                    $("#f3win").html(data.TAR[i].Amount_Win);
-                    $("#f3total").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#f3dis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#f3win").html(nwc(data.TAR[i].Amount_Win));
+                    $("#f3total").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "FirstThreeOod") {
-                    $("#f3odis").html(data.TAR[i].Amount_Discount);
-                    $("#f3owin").html(data.TAR[i].Amount_Win);
-                    $("#f3ototal").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#f3odis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#f3owin").html(nwc(data.TAR[i].Amount_Win));
+                    $("#f3ototal").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "ThreeUp") {
-                    $("#u3dis").html(data.TAR[i].Amount_Discount);
-                    $("#u3win").html(data.TAR[i].Amount_Win);
-                    $("#u3total").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#u3dis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#u3win").html(nwc(data.TAR[i].Amount_Win));
+                    $("#u3total").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "ThreeUPOod") {
-                    $("#u3odis").html(data.TAR[i].Amount_Discount);
-                    $("#u3owin").html(data.TAR[i].Amount_Win);
-                    $("#u3ototal").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#u3odis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#u3owin").html(nwc(data.TAR[i].Amount_Win));
+                    $("#u3ototal").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "ThreeDown") {
-                    $("#d3dis").html(data.TAR[i].Amount_Discount);
-                    $("#d3win").html(data.TAR[i].Amount_Win);
-                    $("#d3total").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#d3dis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#d3win").html(nwc(data.TAR[i].Amount_Win));
+                    $("#d3total").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "TwoUp") {
-                    $("#u2dis").html(data.TAR[i].Amount_Discount);
-                    $("#u2win").html(data.TAR[i].Amount_Win);
-                    $("#u2total").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#u2dis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#u2win").html(nwc(data.TAR[i].Amount_Win));
+                    $("#u2total").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "TwoDown") {
-                    $("#d2dis").html(data.TAR[i].Amount_Discount);
-                    $("#d2win").html(data.TAR[i].Amount_Win);
-                    $("#d2total").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#d2dis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#d2win").html(nwc(data.TAR[i].Amount_Win));
+                    $("#d2total").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else if (data.TAR[i].Type == "TwoOod") {
-                    $("#o2dis").html(data.TAR[i].Amount_Discount);
-                    $("#o2win").html(data.TAR[i].Amount_Win);
-                    $("#o2total").html(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win));
+                    $("#o2dis").html(nwc(data.TAR[i].Amount_Discount));
+                    $("#o2win").html(nwc(data.TAR[i].Amount_Win));
+                    $("#o2total").html(nwc(parseInt(data.TAR[i].Amount_Discount) - parseInt(data.TAR[i].Amount_Win)));
                 }
                 else {}
             }
-            $("#tdis").html(tdis);
-            $("#twin").html(twin);
-            $("#ttotal").html(tdis - twin);
+            $("#tdis").html(nwc(tdis));
+            $("#twin").html(nwc(twin));
+            $("#ttotal").html(nwc(tdis - twin));
             var str = "";
             var win = 0;
             var dis = 0;
@@ -83,14 +83,14 @@
                 count += 1;
                 dis += parseInt(data.UBET[i].Discount);
                 win += parseInt(data.UBET[i].Win);
-                str += "<tr><td>" + data.UBET[i].Discount + "</td><td>" + data.UBET[i].Win + "</td ><td>" + data.UBET[i].Name +"</td></tr>";
+                str += "<tr><td>" + nwc(data.UBET[i].Discount) + "</td><td>" + nwc(data.UBET[i].Win) + "</td ><td>" + data.UBET[i].Name +"</td></tr>";
             }
-            $("#amount").html(dis);
-            $("#count").html(count);
+            $("#amount").html(nwc(dis));
+            $("#count").html(nwc(count));
             $("#detail").html(str);
-            $("#usertotal").html(dis);
-            $("#totalwin").html(win);
-            $("#sum").html(dis - win);
+            $("#usertotal").html(nwc(dis));
+            $("#totalwin").html(nwc(win));
+            $("#sum").html(nwc(dis - win));
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert("error");

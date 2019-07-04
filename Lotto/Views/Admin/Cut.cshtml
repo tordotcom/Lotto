@@ -345,19 +345,16 @@
         });
     });
     
-    $("#twoup").html(twoup);
-    $("#threeup").html(threeup);
-    $("#threedown").html(threedown);
-    $("#three_").html(three_);
-    $("#two_").html(two_);
-    $("#fthree").html(fthree);
-    $("#fthree_").html(fthree_);
-    $("#up").html(up);
-    $("#down").html(down);
-    $("#twodown").html(twodown);
-    (function ($) {
-        $('#allLotto').html('18675');
-    })(jQuery);
+    $("#twoup").html(nwc(twoup));
+    $("#threeup").html(nwc(threeup));
+    $("#threedown").html(nwc(threedown));
+    $("#three_").html(nwc(three_));
+    $("#two_").html(nwc(two_));
+    $("#fthree").html(nwc(fthree));
+    $("#fthree_").html(nwc(fthree_));
+    $("#up").html(nwc(up));
+    $("#down").html(nwc(down));
+    $("#twodown").html(nwc(twodown));
 
     $("#select").change(function () {
         $("#t2up").html("");

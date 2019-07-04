@@ -258,6 +258,11 @@
             }
         }
     </style>
+    <script type="text/javascript">
+        function nwc(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    </script>
 </head>
 <body>
 
@@ -657,10 +662,6 @@
 
             return (w1 - w2);
         };
-
-        function nwc(x) {
-            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
     </script>
 
 </body>
