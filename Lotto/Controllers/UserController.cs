@@ -374,6 +374,9 @@ namespace Lotto.Controllers
                     var NumLen = item.Number.Length;
                     var amount = item.Amount.Replace("X", "x");
                     amount = item.Amount.Replace("*", "x");
+                    var numx= item.Number.Replace("X", "x");
+                    numx = item.Number.Replace("*", "x");
+                    var NumCountX = numx.Split('x').Length - 1;
                     var AmtCountX = amount.Split('x').Length - 1;
                     if (AmtCountX > 0)
                     {
@@ -558,7 +561,7 @@ namespace Lotto.Controllers
                                 }
                                 if (typ == "f")
                                 {
-                                    d = Int32.Parse(discount_rate.first_three);
+                                    d = Int32.Parse(discount_rate.first_three_);
                                     iamt = Int32.Parse(amt[0]);
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     //---------------------- 3 หน้าเต็ง -------------------------------//
@@ -817,6 +820,7 @@ namespace Lotto.Controllers
                         }
                         else if (NumLen == 3)
                         {
+
                             var totalDiscount = 0.00;
                             var iamt = 0.00;
                             var d = 0.00;
@@ -865,17 +869,482 @@ namespace Lotto.Controllers
                             else if (typ == "ft")
                             {
                                 //------------------------ 3 บน -------------------------------//
-                                d = Int32.Parse(discount_rate.two_up);
+                                d = Int32.Parse(discount_rate.three_up);
                                 iamt = Int32.Parse(item.Amount) / 2;
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "t", item.Number, iamt.ToString(), totalDiscount, NumLen);
                                 //---------------------- 3 หน้า -------------------------------//
-                                d = Int32.Parse(discount_rate.two_down);
+                                d = Int32.Parse(discount_rate.first_three);
                                 iamt = Int32.Parse(item.Amount) / 2;
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "f", item.Number, iamt.ToString(), totalDiscount, NumLen);
                             }
                             else { return Json("Fail"); }
+                        }
+                        else if(NumLen == 4)
+                        {
+                            if (NumCountX > 0)
+                            {
+                                char[] num = item.Number.ToCharArray();
+                                var totalDiscount = 0.00;
+                                var iamt = 0.00;
+                                var d = 0.00;
+                                var typ = item.bType;
+                                var swapNumber = "";
+                                var len = 3;
+                                if (typ == "t" || typ == "b" || typ == "f")
+                                {
+                                    if (num[0] == num[1] && num[0] == num[2])
+                                    {
+                                        if (typ == "t")
+                                        {
+                                            //------------------------ 3 บน -------------------------------//
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else if (typ == "f")
+                                        {
+                                            //------------------------ 3 หน้า -------------------------------//
+                                            d = Int32.Parse(discount_rate.first_three);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else
+                                        {
+                                            //---------------------- 3 ล่าง -------------------------------//
+                                            d = Int32.Parse(discount_rate.three_down);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                    }
+                                    else if (num[0] != num[1] && num[0] != num[2] && num[1] != num[2])
+                                    {
+                                        if (typ == "t")
+                                        {
+                                            //------------------------ 3 บน -------------------------------//
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[1].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+
+                                        }
+                                        else if (typ == "f")
+                                        {
+                                            //------------------------ 3 หน้า -------------------------------//
+                                            d = Int32.Parse(discount_rate.first_three);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[1].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else
+                                        {
+                                            //---------------------- 3 ล่าง -------------------------------//
+                                            d = Int32.Parse(discount_rate.three_down);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[1].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                    }
+                                    else if (num[0] == num[1] || num[0] == num[2] || num[1] == num[2])
+                                    {
+                                        if (typ == "t")
+                                        {
+                                            //------------------------ 3 บน -------------------------------//
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            if(num[0]==num[1])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else if(num[0] == num[2])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else if(num[1] == num[2])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else { }
+                                        }
+                                        else if (typ == "f")
+                                        {
+                                            //------------------------ 3 หน้า -------------------------------//
+                                            d = Int32.Parse(discount_rate.first_three);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            if (num[0] == num[1])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else if (num[0] == num[2])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else if (num[1] == num[2])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else { }
+                                        }
+                                        else
+                                        {
+                                            //---------------------- 3 ล่าง -------------------------------//
+                                            d = Int32.Parse(discount_rate.three_down);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            if (num[0] == num[1])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else if (num[0] == num[2])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else if (num[1] == num[2])
+                                            {
+                                                swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                                swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                                InsertLottoSub(lID, typ, swapNumber, item.Amount, totalDiscount, len);
+                                            }
+                                            else { }
+                                        }
+                                    }
+                                    else { return Json("Fail"); }
+                                }
+                                else if (typ == "tb")
+                                {
+                                    if (num[0] == num[1] && num[0] == num[2])
+                                    {
+                                        //------------------------ 3 บน -------------------------------//
+                                        d = Int32.Parse(discount_rate.three_up);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                        //---------------------- 3 ล่าง -------------------------------//
+                                        d = Int32.Parse(discount_rate.three_down);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                    }
+                                    else if (num[0] != num[1] && num[0] != num[2] && num[1] != num[2])
+                                    {
+                                        d = Int32.Parse(discount_rate.three_up);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[1].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                        d = Int32.Parse(discount_rate.three_down);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[1].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                    }
+                                    else if (num[0] == num[1] || num[0] == num[2] || num[1] == num[2])
+                                    {
+                                        if (num[0] == num[1])
+                                        {
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                            d = Int32.Parse(discount_rate.three_down);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else if (num[0] == num[2])
+                                        {
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                            d = Int32.Parse(discount_rate.three_down);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else if (num[1] == num[2])
+                                        {
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                            d = Int32.Parse(discount_rate.three_down);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, "b", swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else { }
+                                    }
+                                    else { return Json("Fail"); }
+                                }
+                                else if (typ == "ft")
+                                {
+                                    if (num[0] == num[1] && num[0] == num[2])
+                                    {
+                                        //------------------------ 3 บน -------------------------------//
+                                        d = Int32.Parse(discount_rate.three_up);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                        //---------------------- 3 ล่าง -------------------------------//
+                                        d = Int32.Parse(discount_rate.first_three);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                    }
+                                    else if (num[0] != num[1] && num[0] != num[2] && num[1] != num[2])
+                                    {
+                                        d = Int32.Parse(discount_rate.three_up);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[1].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                        d = Int32.Parse(discount_rate.first_three);
+                                        iamt = Int32.Parse(item.Amount);
+                                        totalDiscount = (iamt - (iamt * d) / 100);
+                                        swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                        InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                        InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        swapNumber = num[2].ToString() + num[1].ToString() + num[0].ToString();
+                                        InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                    }
+                                    else if (num[0] == num[1] || num[0] == num[2] || num[1] == num[2])
+                                    {
+                                        if (num[0] == num[1])
+                                        {
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                            d = Int32.Parse(discount_rate.first_three);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[2].ToString() + num[0].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else if (num[0] == num[2])
+                                        {
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                            d = Int32.Parse(discount_rate.first_three);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[0].ToString() + num[2].ToString() + num[1].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else if (num[1] == num[2])
+                                        {
+                                            d = Int32.Parse(discount_rate.three_up);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, "t", swapNumber, item.Amount, totalDiscount, len);
+
+                                            d = Int32.Parse(discount_rate.first_three);
+                                            iamt = Int32.Parse(item.Amount);
+                                            totalDiscount = (iamt - (iamt * d) / 100);
+                                            swapNumber = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[0].ToString() + num[2].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                            swapNumber = num[1].ToString() + num[2].ToString() + num[0].ToString();
+                                            InsertLottoSub(lID, "f", swapNumber, item.Amount, totalDiscount, len);
+                                        }
+                                        else { }
+                                    }
+                                    else { return Json("Fail"); }
+                                }
+                                else { return Json("Fail"); }
+                            }
                         }
                         else { return Json("Fail"); }
                     }
