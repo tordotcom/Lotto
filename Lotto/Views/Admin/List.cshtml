@@ -106,7 +106,7 @@
                                 <td>@String.Format("{0:n}", discount)</td>
                                 <td>@win</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@item.create_date</td>
-                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="">ดูโพย</button></td>
+                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="0">ดูโพย</button></td>
                             </tr>
                         }
                     </tbody>
@@ -274,6 +274,7 @@
         });
 
         $('#editPoll').click(function () {
+            $(".showPoll").data('type', 1);
             $(".bet-cell").each(function(){
                 $(this).find('input').prop( "disabled", false );
             });
@@ -281,6 +282,7 @@
         });
 
         $('.x-modal').click(function () {
+            $(".showPoll").data('type', 0);
             $("#action-area").addClass('hidden');
         });
 

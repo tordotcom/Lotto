@@ -45,16 +45,16 @@
                         type = "บ";
                         break;
                     case "b":
-                        type = "ล";
+                        type = '<font color="red">ล</font>';
                         break;
                     case "tb":
-                        type = "บ+ล";
+                        type = 'บ+<font color="red">ล</font>';
                         break;
                     case "f":
-                        type = "ห";
+                        type = '<font color="blue">ห</font>';
                         break;
                     case "ft":
-                        type = "ห+ท";
+                        type = '<font color="blue">ห</font>+<font color="green">ท</font>';
                         break;
                     default:
                         type = "บ";

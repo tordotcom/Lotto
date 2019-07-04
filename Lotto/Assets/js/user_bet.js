@@ -11,19 +11,19 @@ $(".bet-type").click(function () {
 
         var text = $(this).text();
         if (text == 'บ') {
-            $(this).html('ล').fadeIn();
+            $(this).html('<font color="red">ล</font>').fadeIn();
             document.getElementById(this.id).setAttribute('data-type', "b");
         }
         if (text == 'ล') {
-            $(this).html('บ+ล').fadeIn();
+            $(this).html('บ+<font color="red">ล</font>').fadeIn();
             document.getElementById(this.id).setAttribute('data-type', "tb");
         }
         if (text == 'บ+ล') {
-            $(this).html('ห').fadeIn();
+            $(this).html('<font color="blue">ห</font>').fadeIn();
             document.getElementById(this.id).setAttribute('data-type', "f");
         }
         if (text == 'ห') {
-            $(this).html('ห+ท').fadeIn();
+            $(this).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn();
             document.getElementById(this.id).setAttribute('data-type', "ft");
         }
         if (text == 'ห+ท') {
