@@ -42,7 +42,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT u.ID,u.Username,u.Password,r.Role FROM[dbo].[Account] u left join(SELECT[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on u.ID=ar.UID left join(select ID, Role from [dbo].[Role]) r on ar.Role_ID=r.ID where u.Username=@username and u.Status=1";
+                    string query = "SELECT u.ID,u.Username,u.Password,u.Last_Login,r.Role FROM[dbo].[Account] u left join(SELECT[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on u.ID=ar.UID left join(select ID, Role from [dbo].[Role]) r on ar.Role_ID=r.ID where u.Username=@username and u.Status=1";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@username", objUser.Username.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
@@ -56,6 +56,7 @@ namespace Lotto.Controllers
                                 ID = Reader["ID"].ToString(),
                                 Username = Reader["Username"].ToString(),
                                 Password = Reader["Password"].ToString(),
+                                Last_Login = Reader["Last_Login"].ToString(),
                                 Role = Reader["Role"].ToString(),
                             });
                         }
@@ -81,6 +82,7 @@ namespace Lotto.Controllers
                             Session["ID"] = user[0].ID;
                             Session["Username"] = user[0].Username;
                             Session["Role"] = "Administrator";
+                            Session["Last_Login"] = user[0].Last_Login;
                             return RedirectToAction("Index", "Admin");                            
                         }
                         else
@@ -91,6 +93,7 @@ namespace Lotto.Controllers
                                 Session["ID"] = user[0].ID;
                                 Session["Username"] = user[0].Username;
                                 Session["Role"] = "User";
+                                Session["Last_Login"] = user[0].Last_Login;
                                 int id = Int32.Parse(user[0].ID);
                                 Account A = db.Account.Where(s => s.ID == id).FirstOrDefault<Account>();
                                 if (A != null)
