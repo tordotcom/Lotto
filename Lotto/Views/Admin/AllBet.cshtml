@@ -103,9 +103,9 @@
                                         @foreach (var item in Model)
                                         {
                                             if (item.nLen == "2" && item.Type == "t")
-                                            {
+                                            { 
                                                 twoup += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -117,7 +117,7 @@
                                             if (item.nLen == "3" && item.Type == "t")
                                             {
                                                 threeup += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -129,7 +129,7 @@
                                             if (item.nLen == "3" && item.Type == "t_")
                                             {
                                                 three_ += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -141,7 +141,7 @@
                                             if (item.nLen == "2" && item.Type == "t_")
                                             {
                                                 two_ += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -153,7 +153,7 @@
                                             if (item.nLen == "3" && item.Type == "f")
                                             {
                                                 fthree += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -165,7 +165,7 @@
                                             if (item.nLen == "3" && item.Type == "f_")
                                             {
                                                 fthree_ += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -177,7 +177,7 @@
                                             if (item.nLen == "1" && item.Type == "t")
                                             {
                                                 up += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -189,7 +189,7 @@
                                             if (item.nLen == "1" && item.Type == "b")
                                             {
                                                 down += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -201,7 +201,7 @@
                                             if (item.nLen == "2" && item.Type == "b")
                                             {
                                                 twodown += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>
@@ -213,7 +213,7 @@
                                             if (item.nLen == "3" && item.Type == "b")
                                             {
                                                 threedown += Int32.Parse(item.Amount);
-                                                <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                <tr><td nowrap>@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
                                             }
                                         }
                                     </table>

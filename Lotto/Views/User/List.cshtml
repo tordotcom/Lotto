@@ -74,7 +74,7 @@
                                 <td>@String.Format("{0:n0}", amount)</td>
                                 <td>@String.Format("{0:n0}", amount_receive)</td>
                                 <td>@String.Format("{0:n0}", discount)</td>
-                                <td>@win</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                                <td>@String.Format("{0:n0}", win) </td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@item.create_date</td>
                                 <td>@item.create_date</td>
                                 <td><button type="button" class="btn btn-sm btn-primary showPoll" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal">ดูโพย</button></td>
@@ -88,9 +88,9 @@
                             <th>@String.Format("{0:n0}", total_amount)</th>
                             <th>@String.Format("{0:n0}", total_receive)</th>
                             <th>@String.Format("{0:n0}", total_discount)</th>
-                            <th>@totalwin</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                            <th>@String.Format("{0:n0}", totalwin) </th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <th>สรุป</th>
-                            <th>@(total_discount - totalwin)</th>
+                            <th>@String.Format("{0:n0}", total_discount - totalwin)</th>
                             <th><button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#totalBalance" data-backdrop="static">สรุปยอด</button></th>
                         </tr>
                     </tfoot>
