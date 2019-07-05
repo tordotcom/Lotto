@@ -457,7 +457,7 @@ namespace Lotto.Controllers
                                 InsertLottoSub(lID, "t", num[1].ToString() + num[0].ToString(), amt[1], totalDiscount, NumLen);
 
                                 //------------------- 2 ล่าง ---------------------------//
-                                d = Int32.Parse(discount_rate.down);
+                                d = Int32.Parse(discount_rate.two_down);
                                 iamt = Int32.Parse(amt[0]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "b", num[0].ToString() + num[1].ToString(), amt[0], totalDiscount, NumLen);
