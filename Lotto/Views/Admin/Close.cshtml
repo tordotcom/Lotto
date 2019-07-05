@@ -574,8 +574,8 @@
                                 @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
                                 {
                                     <tr>
-                                        <td>@String.Format("{0:n}", item.Discount)</td>
-                                        <td>@String.Format("{0:n}", item.Win)</td>
+                                        <td>@String.Format("{0:n}",Int32.Parse(item.Discount))</td>
+                                        <td>@String.Format("{0:n}",Int32.Parse(item.Win))</td>
                                         <td>@item.Name</td>
                                     </tr>
                                 }

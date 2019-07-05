@@ -34,11 +34,11 @@
                                 <tr>
                                     <td>@item.Name</td>
                                     <td>@totalPoll</td>
-                                    <td>@String.Format("{0:n}", item.Receive)</td>
-                                    <td>@String.Format("{0:n}", item.Amount)</td>
-                                    <td>@String.Format("{0:n}", item.AmountReceive)</td>
-                                    <td>@String.Format("{0:n}", item.AmountDiscount)</td>
-                                    <td>0</td>
+                                    <td>@item.Receive</td>
+                                    <td>@String.Format("{0:n}", Int32.Parse(item.Amount))</td>
+                                    <td>@String.Format("{0:n}", Int32.Parse(item.AmountReceive))</td>
+                                    <td>@String.Format("{0:n}", Int32.Parse(item.AmountDiscount))</td>
+                                    <td>@String.Format("{0:n}", Int32.Parse(item.AmountWin))</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary get-balance" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
                                         <button type="button" class="btn btn-sm btn-success get-keep" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบแจ้งยอด</button>
@@ -563,6 +563,7 @@
                             twin += parseInt(value.Amount_Win);
                         }
                     });
+                    console.log(twin);
                     $('#udis').html(nwc(udis));
                     $('#uwin').html(nwc(uwin));
                     $('#utotal').html(nwc(utotal));
@@ -622,7 +623,7 @@
                     });
                     $('#keepSum').html(nwc(keepSum));
                     $('#keepSumw').html(nwc(keepSumw));
-                    $('#keepSum_last').html(nwc(Math.abs(keepSum-keepSumw)));
+                    $('#keepSum_last').html(nwc(keepSum-keepSumw));
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert("error");

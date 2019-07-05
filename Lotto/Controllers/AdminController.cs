@@ -383,7 +383,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,ROUND(sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as float) END),0) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
+                        string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CAST(LS.AmountWin as int)) as AmountWin,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,ROUND(sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as float) END),0) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount],AmountWin FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -401,6 +401,7 @@ namespace Lotto.Controllers
                                     AmountReceive = Reader["AmountReceive"].ToString(),
                                     Receive = Reader["poll_receive"].ToString(),
                                     Reject = Reader["poll_reject"].ToString(),
+                                    AmountWin = Reader["AmountWin"].ToString(),
                                 });
                             }
                             cnn.Close();
@@ -2931,10 +2932,10 @@ namespace Lotto.Controllers
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe " +
+                string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Amount_Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,ls.AmountWin as Win FROM [dbo].[Period] pe " +
                 "left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1' and UID=" + uID + ") po on pe.ID=po.Period_ID " +
                 "left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID " +
-                "left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID " +
+                "left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount],AmountWin FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID " +
                 "where pe.ID=" + pid + ")t group by t.Type";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 SqlDataReader Reader = cmd.ExecuteReader();
@@ -2947,7 +2948,7 @@ namespace Lotto.Controllers
                         {
                             Type = Reader["Type"].ToString(),
                             Amount_Discount = Reader["AmountDiscount"].ToString(),
-                            Amount_Win = Reader["Win"].ToString(),
+                            Amount_Win = Reader["Amount_Win"].ToString(),
                         });
                     }
                     cnn.Close();
