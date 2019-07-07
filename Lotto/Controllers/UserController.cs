@@ -1443,6 +1443,54 @@ namespace Lotto.Controllers
                 return Json("fail");
             }
         }
+
+        [HttpPost]
+        public ActionResult GetTotalBet()
+        {
+            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            var pid = 0;
+            var totalbet = 0;
+            if (P != null)
+            {
+                pid = P.ID;
+            }
+            else
+            {
+                int id = db.Period.Max(p => p.ID);
+                pid = id;
+            }
+            string connetionString = null;
+            //var pollDetail = new List<Poll_Detail>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "select t1.amount from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=" + pid + " and p.[Receive] = 1 and p.UID = "+Session["ID"]+" group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        totalbet += Int32.Parse(Reader["amount"].ToString());
+                    }
+                    cnn.Close();
+
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            return Json(totalbet);
+        }
+
         public bool VerifyHash(string plainText, string hashValue)
         {
             byte[] hashWithSaltBytes = Convert.FromBase64String(hashValue);

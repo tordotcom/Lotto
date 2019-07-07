@@ -29,8 +29,6 @@
     (function ($) {
         $.getJSON("http://jsonip.com?callback=?", function (data) {
             $("#ip").text(data.ip);
-            $("#lastIp").text(data.ip);
         });
-        $('#lastSignout').html('2019-01-01 13:00:00');
     })(jQuery);
 </script>
