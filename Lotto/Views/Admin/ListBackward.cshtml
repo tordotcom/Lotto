@@ -31,6 +31,7 @@
                             <th>สมาชิก</th>
                             <th>ใบที่</th>
                             <th>หมายเลขโพย</th>
+                            <th>ชื่อโพย</th>
                             <th>สถานะโพย</th>
                             <th>ยอดแทง</th>
                             <th>ยอดรับ</th>
@@ -91,13 +92,14 @@
                             <td>@item.name</td>
                             <td>@item.poll_number</td>
                             <td>@item.ID</td>
+                            <td>@item.Poll_Name</td>
                             <td>@receive</td>
                             <td>@String.Format("{0:n}", amount)</td>
                             <td>@String.Format("{0:n}", amount_receive)</td>
                             <td>@String.Format("{0:n}", discount)</td>
                             <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <td>@item.create_date</td>
-                            <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-type="0" data-target="#checkModal"  data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
+                            <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-type="0" data-target="#checkModal"  data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
                         </tr>
                         }
                     </tbody>
@@ -131,6 +133,14 @@
                             <hr />
                             <div class="col-md-12">
                                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
+                                                <div class="col col-md-7"><div id="poll_name" class="form-control-label bold"></div></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="row form-group">
@@ -213,6 +223,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var editable = false;
+</script>
 <script src="~/Assets/js/admin_list.js"></script>
 <script src="~/Assets/js/admin_list_edit.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>

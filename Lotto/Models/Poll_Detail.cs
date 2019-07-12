@@ -11,6 +11,7 @@ namespace Lotto.Models
         public string PeriodDate { get; set; }
         public string name { get; set; }
         public string poll_number { get; set; }
+        public string Poll_Name { get; set; }
         public string Receive { get; set; }
         public string Amount { get; set; }
         public string Discount { get; set; }

@@ -73,6 +73,7 @@
                             <th><span id="pollCount"></span> ใบ</th>
                             <th></th>
                             <th></th>
+                            <th></th>
                             <th><span id="total_amount"></span></th>
                             <th><span id="total_receive"></span></th>
                             <th><span id="total_discount"></span></th>
@@ -110,6 +111,14 @@
                         <hr />
                         <div class="col-md-12">
                             <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
+                                            <div class="col col-md-7"><div id="poll_name" class="form-control-label bold"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row form-group">
@@ -339,7 +348,9 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    var editable = false;
+</script>
 <script src="~/Assets/js/admin_list.js"></script>
 <script src="~/Assets/js/admin_list_edit.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
@@ -382,6 +393,10 @@
                 "data": "ID"
             },
             {
+                "title": "ชื่อโพย",
+                "data": "Poll_Name"
+            },
+            {
                 "title": "สถานะ",
                 "data": "Receive"
             },
@@ -422,6 +437,7 @@
                     return '<button type="button" class="btn btn-sm btn-primary showPoll" '+
                     'data-uid="'+row.UID+'" '+
                     'data-pollNumber="'+row.poll_number+'" '+
+                    'data-pollName="'+row.Poll_Name+'" '+
                     'data-cBy="'+row.Create_By+'" '+
                     'data-cDate="'+row.create_date+'" '+
                     'data-discount="'+row.Discount+'" '+

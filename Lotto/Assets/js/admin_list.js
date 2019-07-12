@@ -8,6 +8,7 @@
         var amount = $(this).attr("data-amount");
         var receive = $(this).attr("data-receive");
         var poll_number = $(this).attr("data-pollNumber");
+        var poll_name = $(this).attr("data-pollName");
         var poll_id = $(this).attr("data-id");
     	var uid = $(this).attr("data-UID");
 
@@ -15,6 +16,12 @@
     	document.getElementById('sendPoll').setAttribute('data-pid', poll_id);
 
         $("#poll_number").html(poll_number);
+        if(editable == true){
+            $("#poll_name").val(poll_name);
+        }
+        else{
+            $("#poll_name").html(poll_name);
+        }
         $("#receive_status").html(receive);
         $("#amount").html(nwc(amount));
         $("#receive").html(nwc(amount_receive));

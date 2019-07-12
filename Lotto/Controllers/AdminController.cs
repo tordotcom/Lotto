@@ -263,7 +263,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,pe.Check_Result,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].Period pe left join(SELECT [ID],[UID],[Period_ID],[Receive], create_date, Create_By FROM[dbo].[Poll]) p on pe.ID = p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,p.Poll_Name,pe.Check_Result,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].Period pe left join(SELECT [ID],[UID],[Poll_Name],[Period_ID],[Receive], create_date, Create_By FROM[dbo].[Poll]) p on pe.ID = p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Poll_Name,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -282,6 +282,7 @@ namespace Lotto.Controllers
                                     Create_By = Reader["Create_By"].ToString(),
                                     create_date = Reader["create_date"].ToString(),
                                     poll_number = Reader["rNumber"].ToString(),
+                                    Poll_Name = Reader["Poll_Name"].ToString(),
                                     UID = Reader["UID"].ToString(),
                                     Win = Reader["AmountWin"].ToString(),
                                     Status = Reader["Check_Result"].ToString(),
@@ -530,7 +531,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t1.ID,t1.UID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,p.Poll_Name,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Poll_Name,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", poo.ID.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -550,6 +551,7 @@ namespace Lotto.Controllers
                                     Create_By = Reader["Create_By"].ToString(),
                                     create_date = Reader["create_date"].ToString(),
                                     poll_number = Reader["rNumber"].ToString(),
+                                    Poll_Name = Reader["Poll_Name"].ToString(),
                                     UID = Reader["UID"].ToString(),
                                 }); ;
                             }
@@ -1449,7 +1451,7 @@ namespace Lotto.Controllers
         }
 
         [HttpPost]
-        public ActionResult addPoll(PollData Data, string UID, string PID)
+        public ActionResult addPoll(String PollName, PollData Data, string UID, string PID)
         {
             dynamic discount_rate;
             var user_id = Session["ID"].ToString();
@@ -1472,6 +1474,18 @@ namespace Lotto.Controllers
             if (PID != "")
             {
                 pollID = Int32.Parse(PID);
+                if (PollName != "")
+                {
+                    Poll poll = db.Poll.Find(pollID);
+                    if (poll != null)
+                    {
+                        poll.update_date = DateTime.Now;
+                        poll.Poll_Name = PollName;
+                        db.Entry(poll).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
+
                 List<LottoMain> main = db.LottoMain.Where(m => m.Poll_ID == pollID).ToList<LottoMain>();
                 foreach (LottoMain moo in main)
                 {
@@ -1483,9 +1497,11 @@ namespace Lotto.Controllers
             }
             else
             {
+                Period Last = db.Period.OrderByDescending(u => u.ID).FirstOrDefault();
                 var poll = new Poll();
                 poll.UID = uid; //----------- user id-----------//
-                poll.Period_ID = P.ID;
+                poll.Poll_Name = PollName;
+                poll.Period_ID = Last.ID;
                 poll.Receive = "1";
                 poll.Create_By = "Admin"; //--------- Admin --------//
                 poll.create_date = DateTime.Now;

@@ -114,7 +114,7 @@ namespace Lotto.Controllers
                         
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT p.[ID],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as Win,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive,p.create_date,p.[Create_By]";
+                        string query = "SELECT p.[ID],p.[Poll_Name],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as Win,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Poll_Name,p.Receive,p.create_date,p.[Create_By]";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@UID", user_id); // user ID
                         cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -127,6 +127,7 @@ namespace Lotto.Controllers
                                 pollDetail.Add(new Poll_Detail
                                 {
                                     ID = Reader["ID"].ToString(),
+                                    Poll_Name = Reader["Poll_Name"].ToString(),
                                     Receive = Reader["Receive"].ToString(),
                                     Amount = Reader["amount"].ToString(),
                                     Discount = Reader["discount"].ToString(),
@@ -211,7 +212,7 @@ namespace Lotto.Controllers
                         var user_id = Session["ID"].ToString();
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT p.[ID],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,p.create_date,p.update_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID  group by p.ID,p.Receive,p.create_date,p.[Create_By],p.update_date";
+                        string query = "SELECT p.[ID],p.[Poll_Name],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,p.create_date,p.update_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID  group by p.ID,p.Poll_Name,p.Receive,p.create_date,p.[Create_By],p.update_date";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@UID", user_id); // user ID
                         cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -224,6 +225,7 @@ namespace Lotto.Controllers
                                 pollDetail.Add(new Poll_Detail
                                 {
                                     ID = Reader["ID"].ToString(),
+                                    Poll_Name = Reader["Poll_Name"].ToString(),
                                     Receive = Reader["Receive"].ToString(),
                                     Amount = Reader["amount"].ToString(),
                                     Discount = Reader["discount"].ToString(),
@@ -328,7 +330,7 @@ namespace Lotto.Controllers
         //---------------------------------------------------------------------------------------------------//
         //---------------------------------------- แทงโพย ---------------------------------------------------//
         [HttpPost]
-        public ActionResult addPoll(PollData Data) 
+        public ActionResult addPoll(String PollName, PollData Data) 
         {
             var user_id = Session["ID"].ToString();
             var id = Int32.Parse(user_id);
@@ -349,6 +351,7 @@ namespace Lotto.Controllers
             {
                 var poll = new Poll();
                 poll.UID = id; //----------- user id-----------//
+                poll.Poll_Name = PollName;
                 poll.Period_ID = P.ID;
                 poll.Receive = "1";
                 poll.Create_By = username; //--------- username --------//

@@ -133,6 +133,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UID" Type="int" />
+          <Property Name="Poll_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Period_ID" Type="int" />
           <Property Name="Receive" Type="nvarchar" MaxLength="50" />
           <Property Name="Create_By" Type="nvarchar" MaxLength="50" />
@@ -493,6 +494,7 @@
           <NavigationProperty Name="Account" Relationship="Self.FK_Poll_Account" FromRole="Poll" ToRole="Account" />
           <NavigationProperty Name="LottoMain" Relationship="Self.FK_Lotto_Poll" FromRole="Poll" ToRole="LottoMain" />
           <NavigationProperty Name="Period" Relationship="Self.FK_Poll_Period" FromRole="Poll" ToRole="Period" />
+          <Property Name="Poll_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -840,6 +842,7 @@
           <EntitySetMapping Name="Poll">
             <EntityTypeMapping TypeName="ltfomModel.Poll">
               <MappingFragment StoreEntitySet="Poll">
+                <ScalarProperty Name="Poll_Name" ColumnName="Poll_Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="Period_ID" ColumnName="Period_ID" />

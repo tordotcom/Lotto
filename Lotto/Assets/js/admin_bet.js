@@ -461,7 +461,7 @@ function SumAmountPoll() {
 $("#sendLotto").click(function () {
     var state = false;
     var bet = [];
-    
+    var name = $('#poll_name').val();
     for (var i = 1; i <= 90; i++) {
         var n = $('#n' + i).val();
         var b = $('#b' + i).val();
@@ -515,7 +515,7 @@ $("#sendLotto").click(function () {
     if (state) {
         $.ajax({
             url: addPoll,
-            data: { poll: bet, UID: uid , PID: null},
+            data: { PollName: name, poll: bet, UID: uid , PID: null},
             type: "POST",
             dataType: "json",
             success: function (data) {
