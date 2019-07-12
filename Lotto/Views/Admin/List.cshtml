@@ -106,7 +106,7 @@
                                 <td>@String.Format("{0:n}", amount)</td>
                                 <td>@String.Format("{0:n}", amount_receive)</td>
                                 <td>@String.Format("{0:n}", discount)</td>
-                                <td>@win</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                                <td>@String.Format("{0:n}", win )</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@item.create_date</td>
                                 <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="0">ดูโพย</button></td>
                             </tr>
@@ -115,16 +115,17 @@
                     <tfoot>
                         <tr>
                             <th>รวม</th>
-                            <th>@pollCount ใบ</th>
+                            <th></th>
+                            @*<th>@pollCount ใบ</th>*@
                             <th></th>
                             <th></th>
                             <th></th>
                             <th>@String.Format("{0:n}", total_amount)</th>
                             <th>@String.Format("{0:n}", total_receive)</th>
                             <th>@String.Format("{0:n}", total_discount)</th>
-                            <th>@String.Format("{0:n}", totalwin )</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                            <th>@String.Format("{0:n}", totalwin)</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                             <th>สรุป</th>
-                            <th>@String.Format("{0:n}", (total_discount-totalwin))</th>
+                            <th>@String.Format("{0:n}", (total_discount - totalwin))</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -269,6 +270,46 @@
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
             fixedHeader: {
                 footer: true
+            },
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+                var sumCol4Filtered = display.map(el => data[el][5]).reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                // Update footer
+                $(api.column(5).footer()).html(
+                    nwc(sumCol4Filtered)
+                );
+
+                var sumCol4Filtered = display.map(el => data[el][6]).reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                // Update footer
+                $(api.column(6).footer()).html(
+                    nwc(sumCol4Filtered)
+                );
+
+                var sumCol4Filtered7 = display.map(el => data[el][7]).reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                // Update footer
+                $(api.column(7).footer()).html(
+                    nwc(sumCol4Filtered7)
+                );
+                var sumCol4Filtered8 = display.map(el => data[el][8]).reduce((a, b) => intVal(a) + intVal(b), 0);
+
+                // Update footer
+                $(api.column(8).footer()).html(
+                    nwc(sumCol4Filtered8)
+                );
+                $(api.column(10).footer()).html(
+                    nwc(sumCol4Filtered7-sumCol4Filtered8)
+                );
             }
         });
 
@@ -304,5 +345,10 @@
         });
 
     })(jQuery);
+    $(document).ready(function () {
+        var table = $('#bootstrap-data-table').DataTable();
+        console.log(JSON.stringify(table.page.info()));
+
+    });
 </script>
 

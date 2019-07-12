@@ -83,6 +83,7 @@ namespace Lotto.Controllers
                             Session["Username"] = user[0].Username;
                             Session["Role"] = "Administrator";
                             Session["Last_Login"] = user[0].Last_Login;
+                            //Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
                             return RedirectToAction("Index", "Admin");                            
                         }
                         else
@@ -94,11 +95,13 @@ namespace Lotto.Controllers
                                 Session["Username"] = user[0].Username;
                                 Session["Role"] = "User";
                                 Session["Last_Login"] = user[0].Last_Login;
+                                Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
                                 int id = Int32.Parse(user[0].ID);
                                 Account A = db.Account.Where(s => s.ID == id).FirstOrDefault<Account>();
                                 if (A != null)
                                 {
-                                    A.Last_Login = DateTime.Now;                                   
+                                    A.Last_Login = DateTime.Now;      
+                                    A.SessionID= System.Web.HttpContext.Current.Session.SessionID;
                                     db.Entry(A).State = System.Data.Entity.EntityState.Modified;
                                     db.SaveChanges();
                                 }

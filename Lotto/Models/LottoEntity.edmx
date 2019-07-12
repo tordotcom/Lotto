@@ -17,6 +17,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="Create_By_UID" Type="nvarchar" MaxLength="50" />
           <Property Name="Last_Login" Type="datetime" />
+          <Property Name="SessionID" Type="nvarchar" MaxLength="200" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -367,6 +368,7 @@
           <NavigationProperty Name="Discount" Relationship="Self.FK_Discount_Account" FromRole="Account" ToRole="Discount" />
           <NavigationProperty Name="Poll" Relationship="Self.FK_Poll_Account" FromRole="Account" ToRole="Poll" />
           <NavigationProperty Name="Rate" Relationship="Self.FK_Rate_Account" FromRole="Account" ToRole="Rate" />
+          <Property Name="SessionID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Account_Role">
           <Key>
@@ -712,6 +714,7 @@
           <EntitySetMapping Name="Account">
             <EntityTypeMapping TypeName="ltfomModel.Account">
               <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

@@ -96,6 +96,80 @@ function keyPress(obj, id, evt) {
     else if (code >= 37 && code <= 40) return true;  // left, up, right, down
     else return false;
 }
+function nextNode(obj, id) {
+    var currentObj = obj;
+    var currentTyp = $("#t" + id).text();
+    var NumberOfCell = 90;
+    var MaxNodeNumber = 89;
+    if (currentObj.id.indexOf('n') >= 0) {
+        if (currentObj.value == null || currentObj.value == '') {
+            Swal.fire({
+                type: 'error',
+                title: 'กรุณากรอกข้อมูล',
+                showConfirmButton: true,
+            });
+        } else {
+            $("#b" + id).focus();
+        }
+    } else if (currentObj.id.indexOf('b') >= 0) {
+        if (currentObj.value == null || currentObj.value == '' || parseInt(currentObj.value) == 0) {
+            if (id == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'กรุณากรอกข้อมูล',
+                    showConfirmButton: true,
+                });
+            }
+            else {
+                var newId = parseInt(id) + 1;
+                if (id <= 89) {
+                    currentObj.value = document.getElementById('b' + (id - 1)).value;
+
+                    $("#n" + newId).focus();
+                    setType(newId, currentTyp);
+                }
+            }
+        }
+        else {
+            var newId = parseInt(id) + 1;
+            if (id <= 89) {
+                $("#n" + newId).focus();
+                setType(newId, currentTyp);
+            }
+
+        }
+    }
+
+    //if (runSumTotal == true) {
+    SumAmountPoll();
+    //}
+}
+function setType(id, type) {
+    if (type == 'ล') {
+        $("#t" + id).html('<font color="red">ล</font>').fadeIn(10);
+        document.getElementById('t' + id).setAttribute('data-type', "b");
+    }
+    if (type == 'บ+ล') {
+        $("#t" + id).html('บ+<font color="red">ล</font>').fadeIn(10);
+        document.getElementById('t' + id).setAttribute('data-type', "tb");
+    }
+    if (type == 'ห') {
+        $("#t" + id).html('<font color="blue">ห</font>').fadeIn(10);
+        document.getElementById('t' + id).setAttribute('data-type', "f");
+    }
+    if (type == 'ห+ท') {
+        $("#t" + id).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(10);
+        document.getElementById('t' + id).setAttribute('data-type', "ft");
+    }
+    if (type == 'บ') {
+        $("#t" + id).html('บ').fadeIn(10);
+        document.getElementById('t' + id).setAttribute('data-type', "t");
+    }
+    //var id = (this.id).replace("t", "");
+    if ($('#n' + id).val() != "" && $('#b' + id).val() != "") {
+        SumAmountPoll();
+    }
+}
 function updateType(id) {
     $("#t" + id).click();
 }
