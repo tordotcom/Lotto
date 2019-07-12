@@ -571,13 +571,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
-                                {
-                                    <tr>
-                                        <td>@String.Format("{0:n}",Int32.Parse(item.Discount))</td>
-                                        <td>@String.Format("{0:n}",Int32.Parse(item.Win))</td>
-                                        <td>@item.Name</td>
-                                    </tr>
+                                @if(!((List<User_Bet_Result>)ViewData["UBET"]).Any()){
+                                    foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
+                                    {
+                                        <tr>
+                                            <td>@String.Format("{0:n}",Int32.Parse(item.Discount))</td>
+                                            <td>@String.Format("{0:n}",Int32.Parse(item.Win))</td>
+                                            <td>@item.Name</td>
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                             <tfoot style="color:white;background-color:blue;">

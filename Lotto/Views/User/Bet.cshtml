@@ -65,39 +65,51 @@ else
                         <div class="col-md-6">
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
-                                <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm" value="@currentPoll" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm right" value="@currentPoll" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm" disabled value="0 ฿" style="text-align:right"></div>
+                                <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm right" disabled value="0 ฿" style="text-align:right"></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
-                                <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm" value="@pollCount ใบ" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm right" value="@pollCount ใบ" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
-                                <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm" value="@receive ใบ" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm right" value="@receive ใบ" disabled></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืนงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm" value="@s_reject_amount ฿" style="text-align:right" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm right" value="@s_reject_amount ฿" style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทงงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm" value="@s_total_amount ฿" style="text-align:right" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm right" value="@s_total_amount ฿" style="text-align:right" disabled></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่ายงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm" value="@s_discount ฿" style="text-align:right" disabled></div>
+                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm right" value="@s_discount ฿" style="text-align:right" disabled></div>
                             </div>
-                            <div class="row form-group">
-                                <div class="col col-md-5"></div>
-                                <div class="col col-md-7 ">
-                                    <button type="button" class="btn btn-primary" id="sendLotto">ส่งโพย</button>
-                                    <button type="button" class="btn btn-secondary" id="clear">เคลียร์</button>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
+                                        <div class="col col-md-7"><input type="text" id="poll_name" name="text-input" class="form-control form-control-sm" value="" placeholder="ชื่อโพย"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row form-group">
+                                        <div class="col col-md-5"></div>
+                                        <div class="col col-md-7 ">
+                                            <button type="button" class="btn btn-primary" id="sendLotto">ส่งโพย</button>
+                                            <button type="button" class="btn btn-secondary" id="clear">เคลียร์</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

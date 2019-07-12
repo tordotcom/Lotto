@@ -29,6 +29,7 @@
 	$("#r_amount").html(nwc(reject_amount));
 	$("#receive_amount").html(nwc(total_amount));
 	$("#t_discount").html(nwc(total_discount));
+    $("#poll_name").prop( "disabled", true );
 
     $.ajax({
         url: getPoll,
@@ -61,7 +62,7 @@
                 }
                 if (i == 30 || i == 60 || i == 0)
                 {
-                    htmlString += '<div class="col-lg-4">';
+                    htmlString += '<div class="col-md-4">';
                 }
                 if (parseInt(data[i].Result_Status) > 0) {
                     htmlString += '<div class="row bet-cell">' +
@@ -81,7 +82,6 @@
                         '<div class="col-xs-4 bet-price"><input type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
                         '</div>';
                 }
-                
                 if (i == 29 || i == 59 || i == 89)
                 {
                     htmlString +='</div>'

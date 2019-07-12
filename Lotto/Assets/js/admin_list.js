@@ -91,7 +91,7 @@
                         type = "บ";
                 }
                 if (i == 30 || i == 60 || i == 0) {
-                    htmlString += '<div class="col-lg-4">';
+                    htmlString += '<div class="col-md-4">';
                 }
                 if (parseInt(data[i].Result_Status) > 0) {
                     htmlString += '<div class="row bet-cell">' +

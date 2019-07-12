@@ -151,80 +151,88 @@
                     </div>
                     <div class="col-md-12">
                         <div id="printPollArea">
-                        <hr />
-                        <div class="col-md-12">
-                            <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">โพยใบที่</label></div>
-                                            <div class="col-12 col-md-7"><div id="poll_number" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">สถานะ</label></div>
-                                            <div class="col-12 col-md-7"><div id="receive_status" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">ยอดแทงใบนี้</label></div>
-                                            <div class="col-12 col-md-7"><div id="amount" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">ยอดรับใบนี้</label></div>
-                                            <div class="col-12 col-md-7"><div id="receive" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">ยอดหัก%ใบนี้</label></div>
-                                            <div class="col-12 col-md-7"><div id="discount" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">วันที่แทง</label></div>
-                                            <div class="col-12 col-md-7"><div id="poll_date" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">แทงโดย</label></div>
-                                            <div class="col-12 col-md-7"><div id="poll_by" class="form-control-label bold"></div></div>
+                            <hr />
+                            <div class="col-md-12">
+                                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
+                                                <div class="col col-md-7"><input type="text" id="poll_name" name="text-input" class="form-control form-control-sm" value="" placeholder="ชื่อโพย" disabled></div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">วันที่รับ</label></div>
-                                            <div class="col-12 col-md-7"><div id="receive_date" class="form-control-label bold"></div></div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">โพยใบที่</label></div>
+                                                <div class="col-12 col-md-7"><div id="poll_number" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">สถานะ</label></div>
+                                                <div class="col-12 col-md-7"><div id="receive_status" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">ยอดแทงใบนี้</label></div>
+                                                <div class="col-12 col-md-7"><div id="amount" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">ยอดรับใบนี้</label></div>
+                                                <div class="col-12 col-md-7"><div id="receive" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">ยอดหัก%ใบนี้</label></div>
+                                                <div class="col-12 col-md-7"><div id="discount" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">วันที่แทง</label></div>
+                                                <div class="col-12 col-md-7"><div id="poll_date" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">แทงโดย</label></div>
+                                                <div class="col-12 col-md-7"><div id="poll_by" class="form-control-label bold"></div></div>
+                                            </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">วันที่รับ</label></div>
+                                                <div class="col-12 col-md-7"><div id="receive_date" class="form-control-label bold"></div></div>
+                                            </div>
 
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">โพยหมายเลข</label></div>
-                                            <div class="col-12 col-md-7"><div id="poll_id" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">จำนวนโพย</label></div>
-                                            <div class="col-12 col-md-7"><div id="total_poll" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">รับแล้ว</label></div>
-                                            <div class="col-12 col-md-7"><div id="receive_poll" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">ยอดคืนงวดนี้</label></div>
-                                            <div class="col-12 col-md-7"><div id="r_amount" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">ยอดรับงวดนี้</label></div>
-                                            <div class="col-12 col-md-7"><div id="receive_amount" class="form-control-label bold"></div></div>
-                                        </div>
-                                        <div class="row form-group">
-                                            <div class="col col-md-5"><label class="form-control-label">ยอดหัก%งวดนี้</label></div>
-                                            <div class="col-12 col-md-7"><div id="t_discount" class="form-control-label bold"></div></div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">โพยหมายเลข</label></div>
+                                                <div class="col-12 col-md-7"><div id="poll_id" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">จำนวนโพย</label></div>
+                                                <div class="col-12 col-md-7"><div id="total_poll" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">รับแล้ว</label></div>
+                                                <div class="col-12 col-md-7"><div id="receive_poll" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">ยอดคืนงวดนี้</label></div>
+                                                <div class="col-12 col-md-7"><div id="r_amount" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">ยอดรับงวดนี้</label></div>
+                                                <div class="col-12 col-md-7"><div id="receive_amount" class="form-control-label bold"></div></div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-5"><label class="form-control-label">ยอดหัก%งวดนี้</label></div>
+                                                <div class="col-12 col-md-7"><div id="t_discount" class="form-control-label bold"></div></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <hr />
-                        <div class="col-md-12">
-                            <div class="row" id="poll">
-
+                                </form>
                             </div>
-                        </div>
+                            <hr />
+                            <div class="col-md-12">
+                                <div class="row" id="poll">
+
+                                </div>
+                            </div>
                         </div>
                         <div id="action-area" class="col-md-12 right hidden">
                             <button type="button" class="btn btn-sm btn-success x-modal" id="sendPoll" data-dismiss="modal">ยืนยันการแก้ไข</button>
@@ -275,6 +283,7 @@
 
         $('#editPoll').click(function () {
             $(".showPoll").data('type', 1);
+            $("#poll_name").prop( "disabled", false );
             $(".bet-cell").each(function(){
                 $(this).find('input').prop( "disabled", false );
             });
@@ -284,6 +293,8 @@
         $('.x-modal').click(function () {
             $(".showPoll").data('type', 0);
             $("#action-area").addClass('hidden');
+            $("#poll_name").val("");
+            $("#poll_name").prop( "disabled", true );
         });
 
     })(jQuery);
