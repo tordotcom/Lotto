@@ -12,23 +12,23 @@ $(document).on('click', '.bet-type', function () {
 
         var text = $(this).text();
         if (text == 'บ') {
-            $(this).html('<font color="red">ล</font>').fadeIn();
+            $(this).html('<font color="red">ล</font>').fadeIn(10);
             document.getElementById(this.id).setAttribute('data-type', "b");
         }
         if (text == 'ล') {
-            $(this).html('บ+<font color="red">ล</font>').fadeIn();
+            $(this).html('บ+<font color="red">ล</font>').fadeIn(10);
             document.getElementById(this.id).setAttribute('data-type', "tb");
         }
         if (text == 'บ+ล') {
-            $(this).html('<font color="blue">ห</font>').fadeIn();
+            $(this).html('<font color="blue">ห</font>').fadeIn(10);
             document.getElementById(this.id).setAttribute('data-type', "f");
         }
         if (text == 'ห') {
-            $(this).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn();
+            $(this).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(10);
             document.getElementById(this.id).setAttribute('data-type', "ft");
         }
         if (text == 'ห+ท') {
-            $(this).html('บ').fadeIn();
+            $(this).html('บ').fadeIn(10);
             document.getElementById(this.id).setAttribute('data-type', "t");
         }
         var id = (this.id).replace("t", "");
