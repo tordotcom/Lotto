@@ -42,7 +42,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT u.ID,u.Username,u.Password,u.Last_Login,r.Role FROM[dbo].[Account] u left join(SELECT[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on u.ID=ar.UID left join(select ID, Role from [dbo].[Role]) r on ar.Role_ID=r.ID where u.Username=@username and u.Status=1";
+                    string query = "SELECT u.ID,u.Username,u.Password,u.Last_Login,r.Role FROM[dbo].[Account] u left join(SELECT[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on u.ID=ar.UID left join(select ID, Role from [dbo].[Role]) r on ar.Role_ID=r.ID where u.Username=@username and u.Status=1 and Delete_Status=0";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@username", objUser.Username.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
