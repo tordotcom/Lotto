@@ -33,6 +33,7 @@ namespace Lotto.Models
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
         public string SessionID { get; set; }
+        public string Delete_Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Discount> Discount { get; set; }

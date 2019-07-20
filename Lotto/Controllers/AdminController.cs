@@ -331,7 +331,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID],a.[Name],a.[Description],a.[Status],count(p.Period_ID) as poll_count FROM [dbo].[Account] a left join(SELECT [ID],[UID],[Period_ID] FROM [dbo].[Poll]) p on a.ID=p.UID where a.Name !='administrator' group by a.[ID],a.[Name],a.[Description],a.[Status] order by count(p.Period_ID) desc";
+                    string query = "SELECT a.[ID],a.[Name],a.[Description],a.[Status],count(p.Period_ID) as poll_count FROM [dbo].[Account] a left join(SELECT [ID],[UID],[Period_ID] FROM [dbo].[Poll]) p on a.ID=p.UID where a.Name !='administrator' and a.Status = '1' and a.Delete_Status = '0' group by a.[ID],a.[Name],a.[Description],a.[Status] order by count(p.Period_ID) desc";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     SqlDataReader Reader = cmd.ExecuteReader();
                     Console.Write(Reader);
@@ -635,7 +635,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID";
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where a.Status = '1' and a.Delete_Status = '0'";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     SqlDataReader Reader = cmd.ExecuteReader();
                     Console.Write(Reader);
@@ -701,7 +701,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.[first_three_ood],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.[first_three_ood] as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Discount]) d on a.ID = d.UID where ra.UID is not null";
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.[first_three_ood],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.[first_three_ood] as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Discount]) d on a.ID = d.UID where a.Status = '1' and a.Delete_Status = '0' and ra.UID is not null";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     SqlDataReader Reader = cmd.ExecuteReader();
                     //Console.Write(Reader);
@@ -754,7 +754,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where rate.UID is null";
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where a.Status = '1' and a.Delete_Status = '0' and rate.UID is null";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     SqlDataReader Reader = cmd.ExecuteReader();
                     //Console.Write(Reader);
@@ -1244,14 +1244,12 @@ namespace Lotto.Controllers
         public ActionResult DeleteUser(Account User)
         {
             Account A = db.Account.Where(s => s.ID == User.ID).FirstOrDefault<Account>();
-            Account_Role AR = db.Account_Role.Where(s => s.UID == User.ID).First();
             if (A != null)
             {
-                if (AR != null) {
-                    db.Account_Role.Remove(AR);
-                    db.SaveChanges();
-                }
-                db.Account.Remove(A);
+                A.update_date = DateTime.Now;
+                A.Status = "0";
+                A.Delete_Status = "1";
+                db.Entry(A).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return Json("ss");
             }

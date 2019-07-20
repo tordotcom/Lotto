@@ -20,6 +20,7 @@
           <Property Name="SessionID" Type="nvarchar" MaxLength="200" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
+          <Property Name="Delete_Status" Type="nvarchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Account_Role">
           <Key>
@@ -369,6 +370,7 @@
           <NavigationProperty Name="Poll" Relationship="Self.FK_Poll_Account" FromRole="Account" ToRole="Poll" />
           <NavigationProperty Name="Rate" Relationship="Self.FK_Rate_Account" FromRole="Account" ToRole="Rate" />
           <Property Name="SessionID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Delete_Status" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Account_Role">
           <Key>
@@ -714,6 +716,7 @@
           <EntitySetMapping Name="Account">
             <EntityTypeMapping TypeName="ltfomModel.Account">
               <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Delete_Status" ColumnName="Delete_Status" />
                 <ScalarProperty Name="SessionID" ColumnName="SessionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
