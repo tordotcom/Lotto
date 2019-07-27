@@ -1184,6 +1184,7 @@ namespace Lotto.Controllers
                     A.Name = User.Name;
                     A.Password = ComputeHash(User.Password, null);
                     A.Status = User.Status;
+                    A.Delete_Status = "0";
                     A.Description = User.Description;
                     A.Create_By_UID = Convert.ToString(Session["ID"]);
                     A.Last_Login = DateTime.Now;
