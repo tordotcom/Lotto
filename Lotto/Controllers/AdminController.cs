@@ -1529,7 +1529,7 @@ namespace Lotto.Controllers
                         poll.update_date = DateTime.Now;
                         poll.Poll_Name = PollName;
                         db.Entry(poll).State = EntityState.Modified;
-                        db.SaveChanges();
+                        //db.SaveChanges();
                     }
                 }
 
@@ -1554,7 +1554,7 @@ namespace Lotto.Controllers
                 poll.create_date = DateTime.Now;
                 poll.update_date = DateTime.Now;
                 db.Poll.Add(poll);
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 pollID = poll.ID;
             }
@@ -1569,7 +1569,7 @@ namespace Lotto.Controllers
                 lotto.create_date = DateTime.Now;
                 lotto.update_date = DateTime.Now;
                 db.LottoMain.Add(lotto);
-                db.SaveChanges();
+                //db.SaveChanges();
                 int lID = lotto.ID;
 
                 var NumLen = item.Number.Length;
@@ -2549,6 +2549,7 @@ namespace Lotto.Controllers
                     else { return Json("Fail"); }
                 }
             }
+            db.SaveChanges();
             return Json("ss");
         }
         public void InsertLottoSub(int lid, string Type, string number, string amount, double totalDiscount, int NumLen)
@@ -2565,7 +2566,7 @@ namespace Lotto.Controllers
             lottosub.create_date = DateTime.Now;
             lottosub.update_date = DateTime.Now;
             db.LottoSub.Add(lottosub);
-            db.SaveChanges();
+            //db.SaveChanges();
         }
         [HttpPost]
         public ActionResult addPeroid(DateTime Date)
