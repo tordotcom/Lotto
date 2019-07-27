@@ -674,22 +674,22 @@
             success: function (data) {
                 globalSetting = data['Setting'];
                 //alert(JSON.stringify(globalSetting));
-
-                for (i = 0; i < globalSetting.length; i++) {
-                    if (globalSetting[i].Name == "auto_poll_accept") {
-                        $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
-                    }
-                    if (globalSetting[i].Name == "auto_close_time") {
-                        $('#closeTime').html(globalSetting[i].Value);
-                        $('#settingAutoCloseTime').val(globalSetting[i].Value);
-                    }
-                    if (globalSetting[i].Name == "dealer_phone") {
-                        $('#dealerPhone').val(globalSetting[i].Value);
-                    }
-                    if (globalSetting[i].Name == "dealer_line") {
-                        $('#dealerLine').val(globalSetting[i].Value);
-                    }
-                }
+                console.log(globalSetting);
+                //for (i = 0; i < globalSetting.length; i++) {
+                //    if (globalSetting[i].Name == "auto_poll_accept") {
+                //        $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
+                //    }
+                //    if (globalSetting[i].Name == "auto_close_time") {
+                //        $('#closeTime').html(globalSetting[i].Value);
+                //        $('#settingAutoCloseTime').val(globalSetting[i].Value);
+                //    }
+                //    if (globalSetting[i].Name == "dealer_phone") {
+                //        $('#dealerPhone').val(globalSetting[i].Value);
+                //    }
+                //    if (globalSetting[i].Name == "dealer_line") {
+                //        $('#dealerLine').val(globalSetting[i].Value);
+                //    }
+                //}
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");
