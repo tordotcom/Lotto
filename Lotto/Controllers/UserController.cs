@@ -433,6 +433,7 @@ namespace Lotto.Controllers
                 db.SaveChanges();
                 int pID = poll.ID;
 
+                
                 foreach (var item in Data.poll)
                 {
                     var lotto = new LottoMain();
@@ -1422,8 +1423,9 @@ namespace Lotto.Controllers
                             }
                         }
                         else { return Json("Fail"); }
-                    }
+                    }                    
                 }
+                db.SaveChanges();
             }
             else
             {
@@ -1445,7 +1447,7 @@ namespace Lotto.Controllers
             lottosub.create_date = DateTime.Now;
             lottosub.update_date = DateTime.Now;
             db.LottoSub.Add(lottosub);
-            db.SaveChanges();
+            //db.SaveChanges();
         }
         [HttpPost]
         public ActionResult getPoll(string id)
