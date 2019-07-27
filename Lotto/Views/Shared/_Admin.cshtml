@@ -340,7 +340,7 @@
                     @*<li class=""><a href="@Url.Action("OutTotal", "Admin")"><i class="menu-icon fa fa-tasks"></i>ยอดแทงออก</a></li>*@
 
                     <li class="menu-title">รายงาน</li><!-- /.menu-title -->
-                    <li class=""><a href="@Url.Action("ListBackward", "Admin")"><i class="menu-icon fa fa-clock-o"></i>ดูโพยย้อนหลัง</a></li>
+                    <li class=""><a href="@Url.Action("ListBackward", "Admin", new { PID = 0 })"><i class="menu-icon fa fa-clock-o"></i>ดูโพยย้อนหลัง</a></li>
                     <li class=""><a href="@Url.Action("LottoBackward", "Admin")"><i class="menu-icon fa fa-spinner"></i>ดูสรุปหวยย้อนหลัง</a></li>
                     <li class=""><a href="@Url.Action("Result", "Admin")"><i class="menu-icon fa fa-star-o"></i>ดูผลหวยย้อนหลัง</a></li>
                     @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-bar-chart-o"></i>รายงาน</a></li>*@
@@ -396,12 +396,12 @@
                                 <img class="user-avatar rounded-circle" src="~/Assets/images/user.png" alt="User Avatar">
                             </a>
 
-                        <div class="user-menu dropdown-menu">
-                            @*<a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
+                            <div class="user-menu dropdown-menu">
+                                @*<a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
 
-                               <!--  <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a> -->
+                                       <!--  <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a> -->
 
-                            <a class="nav-link" href="@Url.Action("Setting", "Admin")"><i class="fa fa -cog"></i>Settings</a>*@
+                                    <a class="nav-link" href="@Url.Action("Setting", "Admin")"><i class="fa fa -cog"></i>Settings</a>*@
 
                                 <a class="nav-link" href="@Url.Action("Logout", "Login")"><i class="fa fa-power -off"></i>Logout</a>
                             </div>
@@ -606,7 +606,20 @@
         getTotalBet = '@Url.Action("GetTotalBet", "Admin")';
     </script>
 
+    <script>
+        //session end
+        var sessionTimeoutWarning = @Session.Timeout- 1; //when session end 1 minute before this code makes redirect
+
+        var sTimeout = parseInt(sessionTimeoutWarning) * 60 * 1000;
+        setTimeout('SessionEnd()', sTimeout);
+
+        function SessionEnd() {
+            window.location = '@Url.Action("Logout", "Login")'; //Redirect to LogOff, and then redirect to Login
+        }
+    </script>
+
     <script type="text/javascript">
+
         (function ($) {
             clock();
             var user = '@Session["Username"]';

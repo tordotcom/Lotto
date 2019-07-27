@@ -86,7 +86,7 @@
                 }
                 if (i == 29 || i == 59 || i == 89)
                 {
-                    htmlString +='</div>'
+					htmlString += '</div>';
                 }
             }
             $("#poll").html(htmlString);

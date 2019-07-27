@@ -1,6 +1,6 @@
 ﻿@model IList<Lotto.Models.Poll_Detail>
 @{
-    ViewBag.Title = "BetBackward";
+    ViewBag.Title = "ListBackward";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 @{
@@ -24,86 +24,115 @@
                 <strong class="card-title">ดูโพยย้อนหลัง</strong>
             </div>
             <div class="card-body">
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>งวดวันที่</th>
-                            <th>สมาชิก</th>
-                            <th>ใบที่</th>
-                            <th>หมายเลขโพย</th>
-                            <th>ชื่อโพย</th>
-                            <th>สถานะโพย</th>
-                            <th>ยอดแทง</th>
-                            <th>ยอดรับ</th>
-                            <th>ยอดหัก%</th>
-                            <th>ยอดถูก</th>
-                            <th>วันที่รับ</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            pollCount += 1;
-                            if (item.Receive == "1")
-                            {
-                                receive = "รับแล้ว";
-                                if (item.Amount != "")
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="@Url.Action("ListBackward", "Admin")" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row form-group">
+                                                <div class="col col-md-2"><label for="text-input" class="form-control-label">เลือกงวด</label></div>
+                                                <div class="col-12 col-md-8">
+                                                    <select name="PID" id="select_period" class="form-control form-control-sm">
+                                                        <option value="0">ทั้งหมด</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-md-2">
+                                                    <button type="submit" class="btn btn-sm btn-warning" id="btn-period">แสดง</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>งวดวันที่</th>
+                                    <th>สมาชิก</th>
+                                    <th>ใบที่</th>
+                                    <th>หมายเลขโพย</th>
+                                    <th>ชื่อโพย</th>
+                                    <th>สถานะโพย</th>
+                                    <th>ยอดแทง</th>
+                                    <th>ยอดรับ</th>
+                                    <th>ยอดหัก%</th>
+                                    <th>ยอดถูก</th>
+                                    <th>วันที่รับ</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
                                 {
-                                    amount = Double.Parse(item.Amount);
-                                    amount_receive = Double.Parse(item.Amount);
+                                    pollCount += 1;
+                                    if (item.Receive == "1")
+                                    {
+                                        receive = "รับแล้ว";
+                                        if (item.Amount != "")
+                                        {
+                                            amount = Double.Parse(item.Amount);
+                                            amount_receive = Double.Parse(item.Amount);
+                                        }
+                                        else
+                                        {
+                                            amount = 0;
+                                            amount_receive = 0;
+                                        }
+                                        if (item.Discount != "")
+                                        {
+                                            discount = Double.Parse(item.Discount);
+                                        }
+                                        else
+                                        {
+                                            discount = 0;
+                                        }
+                                        total_amount += amount;
+                                        total_receive += amount_receive;
+                                        total_discount += discount;
+                                    }
+                                    else
+                                    {
+                                        receive = "คืนทั้งใบ";
+                                        if (item.Amount != "")
+                                        {
+                                            amount = Double.Parse(item.Amount);
+                                        }
+                                        else
+                                        {
+                                            amount = 0;
+                                        }
+                                        total_amount += amount;
+                                        amount_receive = 0;
+                                        total_receive += amount_receive;
+                                        reject_amount += amount;
+                                        discount = 0;
+                                    }
+                                    <tr>
+                                        <td>@item.PeriodDate</td>
+                                        <td>@item.name</td>
+                                        <td>@item.poll_number</td>
+                                        <td>@item.ID</td>
+                                        <td>@item.Poll_Name</td>
+                                        <td>@receive</td>
+                                        <td>@String.Format("{0:n}", amount)</td>
+                                        <td>@String.Format("{0:n}", amount_receive)</td>
+                                        <td>@String.Format("{0:n}", discount)</td>
+                                        <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                                        <td>@item.create_date</td>
+                                        <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-type="0" data-target="#checkModal" data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
+                                    </tr>
                                 }
-                                else
-                                {
-                                    amount = 0;
-                                    amount_receive = 0;
-                                }
-                                if (item.Discount != "")
-                                {
-                                    discount = Double.Parse(item.Discount);
-                                }
-                                else
-                                {
-                                    discount = 0;
-                                }
-                                total_amount += amount;
-                                total_receive += amount_receive;
-                                total_discount += discount;
-                            }
-                            else
-                            {
-                                receive = "คืนทั้งใบ";
-                                if (item.Amount != "")
-                                {
-                                    amount = Double.Parse(item.Amount);
-                                }
-                                else
-                                {
-                                    amount = 0;
-                                }
-                                total_amount += amount;
-                                amount_receive = 0;
-                                total_receive += amount_receive;
-                                reject_amount += amount;
-                                discount = 0;
-                            }
-                        <tr>
-                            <td>@item.PeriodDate</td>
-                            <td>@item.name</td>
-                            <td>@item.poll_number</td>
-                            <td>@item.ID</td>
-                            <td>@item.Poll_Name</td>
-                            <td>@receive</td>
-                            <td>@String.Format("{0:n}", amount)</td>
-                            <td>@String.Format("{0:n}", amount_receive)</td>
-                            <td>@String.Format("{0:n}", discount)</td>
-                            <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
-                            <td>@item.create_date</td>
-                            <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-type="0" data-target="#checkModal"  data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -234,6 +263,8 @@
     getPollHeadDetail = '@Url.Action("getPoll", "Admin")';
     RejectPoll = '@Url.Action("RejectPoll", "Admin")';
     addPoll = '@Url.Action("AddPoll", "Admin")';
+    getAllPeriod = '@Url.Action("GetAllPeriod", "Admin")';
+
     var rowPoll = 0;
     (function ($) {
         initialPoll();
@@ -243,6 +274,27 @@
                 footer: true
             }
         });
+
+         $.ajax({
+            url: getAllPeriod,
+            type: "POST",
+            dataType: "json",
+             success: function (data) {
+                var period = data['Period'];
+                var select = $('#select_period');
+
+                for(let i = 0; i < period.length; i++)
+                {
+                    var dateAr = period[i].Date.split(' ')[0].split('/');
+                    var newDate = ("0" +dateAr[1]).slice(-2) + '/' + ("0" +dateAr[0]).slice(-2) + '/' + dateAr[2];
+                    var option = '<option value="' + period[i].ID + '">' + newDate +'</option>';
+                    select.append(option);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+         });
 
         $('#printPoll').click(function () {
 

@@ -516,11 +516,20 @@ namespace Lotto.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
-        public ActionResult ListBackward() //ดูโพยย้อนหลัง
+        public ActionResult ListBackward(int? PID) //ดูโพยย้อนหลัง
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                List<Period> pr = db.Period.ToList<Period>();
+                List<Period> pr;
+                if(PID != 0)
+                {
+                    pr = db.Period.Where(x => x.ID == PID).ToList<Period>();
+
+                }
+                else
+                {
+                    pr = db.Period.ToList<Period>();
+                }
                 string connetionString = null;
                 var pollDetail = new List<Poll_Detail>();
                 connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
@@ -1352,6 +1361,43 @@ namespace Lotto.Controllers
         public ActionResult GetSetting()
         {
             return Json(new { Setting = db.Setting }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetAllPeriod()
+        {
+            System.Collections.ArrayList period = new System.Collections.ArrayList();
+            string connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT ID, Date FROM [dbo].[Period]";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+
+                        period.Add(new {
+                            ID = Reader["ID"].ToString(),
+                            Date = Reader["Date"].ToString()
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            return Json(new { Period = period }, JsonRequestBehavior.AllowGet);
         }
 
         //-------------------------------------Update Setting --------------------------------//

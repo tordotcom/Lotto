@@ -10,10 +10,10 @@
         var poll_number = $(this).attr("data-pollNumber");
         var poll_name = $(this).attr("data-pollName");
         var poll_id = $(this).attr("data-id");
-    	var uid = $(this).attr("data-UID");
+		var uid = $(this).attr("data-UID");
 
-    	document.getElementById('sendPoll').setAttribute('data-uid', uid);
-    	document.getElementById('sendPoll').setAttribute('data-pid', poll_id);
+		document.getElementById('sendPoll').setAttribute('data-uid', uid);
+		document.getElementById('sendPoll').setAttribute('data-pid', poll_id);
 
         $("#poll_number").html(poll_number);
         if(editable == true){
@@ -119,7 +119,7 @@
                         '</div>';
                 }
                 if (i == 29 || i == 59 || i == 89) {
-                    htmlString += '</div>'
+					htmlString += '</div>';
                 }
             }
 			$("#poll").html(htmlString);
@@ -132,38 +132,38 @@
 
     $("#reject").click(function () {
         var pid = $(this).attr("data-pid");
-        Swal.fire({
-            title: 'ต้องการคืนเลข?',
-            text: "กรุณายืนยันการคืนเลข",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'คืนเลข',
-            cancelButtonText: 'ยกเลิก'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: RejectPoll,
-                    data: { PollID: pid },
-                    type: "POST",
-                    dataType: "json",
-                    success: function (data) {
-                        Swal.fire({
-                            type: 'success',
-                            title: 'คืนเรียบร้อย',
-                            showConfirmButton: false,
-                            timer: 1500,
-                            onAfterClose: () => {
-                                location.reload();
-                            }
-                        });
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert("error");
-                    }
-                });
-            }
-        })
+		Swal.fire({
+			title: 'ต้องการคืนเลข?',
+			text: "กรุณายืนยันการคืนเลข",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'คืนเลข',
+			cancelButtonText: 'ยกเลิก'
+		}).then((result) => {
+			if (result.value) {
+				$.ajax({
+					url: RejectPoll,
+					data: { PollID: pid },
+					type: "POST",
+					dataType: "json",
+					success: function (data) {
+						Swal.fire({
+							type: 'success',
+							title: 'คืนเรียบร้อย',
+							showConfirmButton: false,
+							timer: 1500,
+							onAfterClose: () => {
+								location.reload();
+							}
+						});
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						alert("error");
+					}
+				});
+			}
+		});
     });
 }
