@@ -289,7 +289,9 @@
                     var newDate = ("0" +dateAr[1]).slice(-2) + '/' + ("0" +dateAr[0]).slice(-2) + '/' + dateAr[2];
                     var option = '<option value="' + period[i].ID + '">' + newDate +'</option>';
                     select.append(option);
-                }
+                 }
+
+                 $("#select_period option[value='@Session["SelectPeriod"]']").attr('selected', 'selected');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");

@@ -84,6 +84,7 @@ namespace Lotto.Controllers
                             Session["Role"] = "Administrator";
                             Session["Last_Login"] = user[0].Last_Login;
                             //Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
+                            Session["SelectPeriod"] = 0;
                             return RedirectToAction("Index", "Admin");                            
                         }
                         else
@@ -96,6 +97,7 @@ namespace Lotto.Controllers
                                 Session["Role"] = "User";
                                 Session["Last_Login"] = user[0].Last_Login;
                                 Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
+                                Session["SelectPeriod"] = 0;
                                 int id = Int32.Parse(user[0].ID);
                                 Account A = db.Account.Where(s => s.ID == id).FirstOrDefault<Account>();
                                 if (A != null)

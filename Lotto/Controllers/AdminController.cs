@@ -523,11 +523,13 @@ namespace Lotto.Controllers
                 List<Period> pr;
                 if(PID != 0)
                 {
+                    Session["SelectPeriod"] = PID;
                     pr = db.Period.Where(x => x.ID == PID).ToList<Period>();
 
                 }
                 else
                 {
+                    Session["SelectPeriod"] = 0;
                     pr = db.Period.ToList<Period>();
                 }
                 string connetionString = null;
