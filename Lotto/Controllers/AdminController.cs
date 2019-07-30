@@ -1529,7 +1529,7 @@ namespace Lotto.Controllers
                         poll.update_date = DateTime.Now;
                         poll.Poll_Name = PollName;
                         db.Entry(poll).State = EntityState.Modified;
-                        //db.SaveChanges();
+                        db.SaveChanges();
                     }
                 }
 
@@ -1537,7 +1537,7 @@ namespace Lotto.Controllers
                 foreach (LottoMain moo in main)
                 {
                     db.LottoSub.RemoveRange(db.LottoSub.Where(x => x.Lotto_ID == moo.ID));
-                    db.SaveChanges();
+                    //db.SaveChanges();
                 }
                 db.LottoMain.RemoveRange(db.LottoMain.Where(m => m.Poll_ID == pollID));
                 db.SaveChanges();
@@ -1554,7 +1554,7 @@ namespace Lotto.Controllers
                 poll.create_date = DateTime.Now;
                 poll.update_date = DateTime.Now;
                 db.Poll.Add(poll);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 pollID = poll.ID;
             }
@@ -1569,7 +1569,7 @@ namespace Lotto.Controllers
                 lotto.create_date = DateTime.Now;
                 lotto.update_date = DateTime.Now;
                 db.LottoMain.Add(lotto);
-                //db.SaveChanges();
+                db.SaveChanges();
                 int lID = lotto.ID;
 
                 var NumLen = item.Number.Length;

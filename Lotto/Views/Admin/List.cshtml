@@ -107,7 +107,7 @@
                                 <td>@String.Format("{0:n}", amount_receive)</td>
                                 <td>@String.Format("{0:n}", discount)</td>
                                 <td>@String.Format("{0:n}", win )</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
-                                <td>@item.create_date</td>
+                                <td>@String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.create_date)</td>
                                 <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="0">ดูโพย</button></td>
                             </tr>
                         }
