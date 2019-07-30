@@ -104,18 +104,18 @@
                     htmlString += '<div class="row bet-cell">' +
                         '<div class="col-xs-1 bet-no">' + (i + 1) + '&nbsp;</div>' +
                         '<div class="col-xs-3 bet-type"><div style="background-color:lightgreen" id="' + type_id + '" class="form-control form-control-sm input-bet-type" data-type="' + data[i].Type+'">' + type + '</div></div>' +
-                        '<div class="col-xs-3 bet-lotto"><input style="background-color:lightgreen" id="' + lotto_id + '" type="text" maxlength="4" class="form-control form-control-sm input-color" placeholder="" disabled onchange="checkNumber(' + (i + 1) + ')" onkeypress="return keyPress2(this,' + (i + 1)+' , event);" value="' + data[i].Number + '"></div>' +
+                        '<div class="col-xs-3 bet-lotto"><input style="background-color:lightgreen" id="' + lotto_id + '" type="text" maxlength="4" class="form-control form-control-sm input-lotto" placeholder="" disabled onchange="checkNumber(' + (i + 1) + ')" onkeypress="return keyPress2(this,' + (i + 1)+' , event);" value="' + data[i].Number + '"></div>' +
                         '<div class="col-xs-1 bet-equal">&nbsp;=&nbsp;</div>' +
-                        '<div class="col-xs-4 bet-price"><input style="background-color:lightgreen" id="' + price_id + '" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" onchange="checkAmount(' + (i + 1) + ')" onkeypress="return keyPress(this, ' + (i + 1) +', event)" disabled value="' + data[i].Amount + '"></div>' +
+                        '<div class="col-xs-4 bet-price"><input style="background:lightgreen" id="' + price_id + '" type="text" maxlength="12" class="form-control form-control-sm input-price" placeholder="" onchange="checkAmount(' + (i + 1) + ')" onkeypress="return keyPress(this, ' + (i + 1) +', event)" disabled value="' + data[i].Amount + '"></div>' +
                         '</div>';
                 }
                 else {
                     htmlString += '<div class="row bet-cell">' +
                         '<div class="col-xs-1 bet-no">' + (i + 1) + '&nbsp;</div>' +
                         '<div class="col-xs-3 bet-type"><div id="' + type_id + '" class="form-control form-control-sm input-bet-type" data-type="' + data[i].Type+'">' + type + '</div></div>' +
-                        '<div class="col-xs-3 bet-lotto"><input id="' + lotto_id + '" type="text" maxlength="4" class="form-control form-control-sm input-color" placeholder="" disabled onchange="checkNumber(' + (i + 1) + ')" onkeypress="return keyPress2(this,' + (i + 1)+' , event);" value="' + data[i].Number + '"></div>' +
+                        '<div class="col-xs-3 bet-lotto"><input id="' + lotto_id + '" type="text" maxlength="4" class="form-control form-control-sm input-lotto" placeholder="" disabled onchange="checkNumber(' + (i + 1) + ')" onkeypress="return keyPress2(this,' + (i + 1)+' , event);" value="' + data[i].Number + '"></div>' +
                         '<div class="col-xs-1 bet-equal">&nbsp;=&nbsp;</div>' +
-                        '<div class="col-xs-4 bet-price"><input id="' + price_id + '" type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" onchange="checkAmount(' + (i + 1) + ')" onkeypress="return keyPress(this, ' + (i + 1) +', event)" disabled value="' + data[i].Amount + '"></div>' +
+                        '<div class="col-xs-4 bet-price"><input id="' + price_id + '" type="text" maxlength="12" class="form-control form-control-sm input-price" placeholder="" onchange="checkAmount(' + (i + 1) + ')" onkeypress="return keyPress(this, ' + (i + 1) +', event)" disabled value="' + data[i].Amount + '"></div>' +
                         '</div>';
                 }
                 if (i == 29 || i == 59 || i == 89) {

@@ -329,10 +329,20 @@
         });
 
         $('#editPoll').click(function () {
+            var i = 1;
             $(".showPoll").data('type', 1);
             $("#poll_name").prop( "disabled", false );
             $(".bet-cell").each(function(){
                 $(this).find('input').prop( "disabled", false );
+                if (i % 2 == 0){
+                    $(this).find('.input-lotto').addClass('input-color-even');
+                    $(this).find('.input-price').addClass('input-color-even');
+                }
+                else{
+                    $(this).find('.input-lotto').addClass('input-color-ood');
+                    $(this).find('.input-price').addClass('input-color-ood');
+                }
+                i++;
             });
             $("#action-area").removeClass('hidden');
         });
