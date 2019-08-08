@@ -63,57 +63,6 @@ else
             <div class="card-body">
                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="row form-group">
-                                <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
-                                <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm right" value="@currentPoll" disabled></div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm right" disabled value="0 ฿" style="text-align:right"></div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
-                                <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm right" value="@pollCount ใบ" disabled></div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
-                                <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm right" value="@receive ใบ" disabled></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row form-group">
-                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืนงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm right" value="@s_reject_amount ฿" style="text-align:right" disabled></div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทงงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm right" value="@s_total_amount ฿" style="text-align:right" disabled></div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่ายงวดนี้</label></div>
-                                <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm right" value="@s_discount ฿" style="text-align:right" disabled></div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row form-group">
-                                        <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
-                                        <div class="col col-md-7"><input type="text" id="poll_name" name="text-input" class="form-control form-control-sm" value="" placeholder="ชื่อโพย"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row form-group">
-                                        <div class="col col-md-5"></div>
-                                        <div class="col col-md-7 ">
-                                            <button type="button" class="btn btn-primary" id="sendLotto" data-id="@ViewBag.UID">ส่งโพย</button>
-                                            <button type="button" class="btn btn-secondary" id="clear">เคลียร์</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-12">
                             <div class="row">
                                 @for (int i = 1; i <= 75; i++)
@@ -144,12 +93,78 @@ else
 
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <hr/>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-block btn-primary" id="sendLotto" data-id="@ViewBag.UID">ส่งโพย</button>
+                                </div>
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-3" style="text-align:right;">
+                                    <button type="button" class="btn btn-block btn-danger" id="clear">เคลียร์</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script id="bet_info_template" type="text/html">
+    <li class="menu-title">แทงโพย</li>
+    <li class="">&nbsp;</li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
+            <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm right" value="@currentPoll" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
+            <div class="col col-md-7"><input type="text" id="poll_name" name="text-input" class="form-control form-control-sm" value="" placeholder="ชื่อโพย"></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
+            <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm right" disabled value="0 ฿" style="text-align:right"></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
+            <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm right" value="@pollCount ใบ" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
+            <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm right" value="@receive ใบ" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืน</label></div>
+            <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm right" value="@s_reject_amount ฿" style="text-align:right" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทง</label></div>
+            <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm right" value="@s_total_amount ฿" style="text-align:right" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่าย</label></div>
+            <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm right" value="@s_discount ฿" style="text-align:right" disabled></div>
+        </div>
+    </li>
+</script>
 }
 
 <script src="~/Assets/js/admin_bet.js"></script>
@@ -157,8 +172,13 @@ else
 <script>
     addPoll = '@Url.Action("AddPoll", "Admin")';
     (function ($) {
+        var value;
+
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
+
+        $('#bet_info_template').tmpl(value).appendTo('#bet_info_area');
+
     })(jQuery);
 </script>

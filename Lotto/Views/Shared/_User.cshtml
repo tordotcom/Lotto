@@ -57,6 +57,8 @@
     <script src="~/Assets/js/init/datatables-init.js"></script>
     <script src="~/Assets/js/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="~/Assets/js/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.th.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+
     <style>
         body {
             background-color: #eee;
@@ -277,6 +279,7 @@
                 padding: 0 0px;
             }
         }
+}
     </style>
     <script type="text/javascript">
         function nwc(x) {
@@ -302,6 +305,7 @@
                     <li class="">
                         <a href="@Url.Action("Index", "User")"><i class="menu-icon fa fa-home"></i>หน้าแรก</a>
                     </li>
+                    <li id="bet_info_area"></li>
                     <li class="menu-title">User</li><!-- /.menu-title -->
                     <li class=""><a href="@Url.Action("Bet", "User")"><i class="menu-icon fa fa-pencil-square-o"></i>แทงโพย</a></li>
                     <li class=""><a href="@Url.Action("List", "User")"><i class="menu-icon fa fa-check-square-o"></i>ดูโพย</a></li>
@@ -590,6 +594,9 @@
             var h = today.getHours();
             var m = today.getMinutes();
             var s = today.getSeconds();
+            if (m < 10) {
+                m = "0" + m;
+            }
             if (s < 10) {
                 s = "0" + s;
             }

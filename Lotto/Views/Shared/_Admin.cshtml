@@ -45,6 +45,7 @@
     <script src="~/Assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="~/Assets/js/init/datatables-init.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
 
     <style>
         body {
@@ -326,6 +327,7 @@
                     <li class="">
                         <a href="@Url.Action("Index", "Admin")"><i class="menu-icon fa fa-home"></i>หน้าแรก</a>
                     </li>
+                    <li id="bet_info_area"></li>
                     <li class="menu-title">Admin</li><!-- /.menu-title -->
                     <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-list-ul"></i>ดูเลขทั้งหมด</a></li>
                     <li class=""><a href="@Url.Action("Close", "Admin")"><i class="menu-icon fa fa-times-circle-o"></i>เปิด-ปิดหวย</a></li>
@@ -646,6 +648,9 @@
             var h = today.getHours();
             var m = today.getMinutes();
             var s = today.getSeconds();
+            if (m < 10) {
+                m = "0" + m;
+            }
             if (s < 10) {
                 s = "0" + s;
             }
