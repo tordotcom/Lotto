@@ -116,7 +116,7 @@ else
                         </div>
                         <div class="col-md-12">
                             <div class="row">
-                                @for (int i = 1; i <= 90; i++)
+                                @for (int i = 1; i <= 75; i++)
                                 {
                                     var type_id = "t" + i.ToString();
                                     var lotto_id = "n" + i.ToString();
@@ -125,7 +125,7 @@ else
                                     if (i % 2 == 0){
                                         color = "input-color-even";
                                     }
-                                    if (i == 31 || i == 61 || i == 1)
+                                    if (i == 26 || i == 51 || i == 1)
                                     {
                                         @:<div class="col-lg-4">
                                         }
@@ -136,7 +136,7 @@ else
                                             <div class="bet-equal">=</div>
                                             <div class="bet-price"><input id="@price_id" type="text" maxlength="12" class="form-control form-control-sm @color" placeholder="" onchange="checkAmount('@i')" onkeypress="return keyPress(this, '@i', event)"></div>
                                         </div>
-                                    if (i == 30 || i == 60 || i == 90)
+                                    if (i == 25 || i == 50 || i == 75)
                                     {
                                         @:</div>
                                     }

@@ -12,23 +12,23 @@ $(document).on('click', '.bet-type', function () {
 
         var text = $(this).text();
         if (text == 'บ') {
-            $(this).html('<font color="red">ล</font>').fadeIn(10);
+            $(this).html('<font color="red">ล</font>').fadeIn(0);
             document.getElementById(this.id).setAttribute('data-type', "b");
         }
         if (text == 'ล') {
-            $(this).html('บ+<font color="red">ล</font>').fadeIn(10);
+            $(this).html('บ+<font color="red">ล</font>').fadeIn(0);
             document.getElementById(this.id).setAttribute('data-type', "tb");
         }
         if (text == 'บ+ล') {
-            $(this).html('<font color="blue">ห</font>').fadeIn(10);
+            $(this).html('<font color="blue">ห</font>').fadeIn(0);
             document.getElementById(this.id).setAttribute('data-type', "f");
         }
         if (text == 'ห') {
-            $(this).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(10);
+            $(this).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(0);
             document.getElementById(this.id).setAttribute('data-type', "ft");
         }
         if (text == 'ห+ท') {
-            $(this).html('บ').fadeIn(10);
+            $(this).html('บ').fadeIn(0);
             document.getElementById(this.id).setAttribute('data-type', "t");
         }
         var id = (this.id).replace("t", "");
@@ -118,7 +118,7 @@ function nextNode(obj, id) {
             }
             else {
                 var newId = parseInt(id) + 1;
-                if (id <= 89) {
+                if (id <= 74) {
                     currentObj.value = document.getElementById('b' + (id - 1)).value;
 
                     $("#n" + newId).focus();
@@ -128,7 +128,7 @@ function nextNode(obj, id) {
         }
         else {
             var newId = parseInt(id) + 1;
-            if (id <= 89) {
+            if (id <= 74) {
                 $("#n" + newId).focus();
                 setType(newId, currentTyp);
             }
@@ -142,23 +142,23 @@ function nextNode(obj, id) {
 }
 function setType(id, type) {
     if (type == 'ล') {
-        $("#t" + id).html('<font color="red">ล</font>').fadeIn(10);
+        $("#t" + id).html('<font color="red">ล</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "b");
     }
     if (type == 'บ+ล') {
-        $("#t" + id).html('บ+<font color="red">ล</font>').fadeIn(10);
+        $("#t" + id).html('บ+<font color="red">ล</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "tb");
     }
     if (type == 'ห') {
-        $("#t" + id).html('<font color="blue">ห</font>').fadeIn(10);
+        $("#t" + id).html('<font color="blue">ห</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "f");
     }
     if (type == 'ห+ท') {
-        $("#t" + id).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(10);
+        $("#t" + id).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "ft");
     }
     if (type == 'บ') {
-        $("#t" + id).html('บ').fadeIn(10);
+        $("#t" + id).html('บ').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "t");
     }
     //var id = (this.id).replace("t", "");
@@ -453,7 +453,7 @@ function SumAmountPoll() {
     sum = 0;
     var bet = {};
     var j = 1;
-    for (var i = 1; i <= 90; i++) {
+    for (var i = 1; i <= 75; i++) {
         var n = $('#n' + i).val();
         var b = $('#b' + i).val();
         if (n.length > 0 && b.length > 0) {
@@ -536,7 +536,7 @@ $("#sendLotto").click(function () {
     var state = false;
     var bet = [];
     var name = $('#poll_name').val();
-    for (var i = 1; i <= 90; i++) {
+    for (var i = 1; i <= 75; i++) {
         var n = $('#n' + i).val();
         var b = $('#b' + i).val();
         b = b.replace("X", "x");
@@ -584,7 +584,7 @@ $("#sendLotto").click(function () {
         }
         else { }
     }
-    console.log(bet);
+    //console.log(bet);
     var uid = $(this).attr("data-id");
     if (state) {
         $.ajax({

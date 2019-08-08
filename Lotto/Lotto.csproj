@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-	<MvcBuildViews>true</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -298,6 +298,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\cs-skin-elastic.css" />
+    <Content Include="Assets\css\ex\bootstrap.min.css" />
+    <Content Include="Assets\css\ex\flag-icon.min.css" />
+    <Content Include="Assets\css\ex\font-awesome.min.css" />
+    <Content Include="Assets\css\ex\font.css" />
+    <Content Include="Assets\css\ex\normalize.min.css" />
+    <Content Include="Assets\css\ex\pe-icon-7-stroke.min.css" />
+    <Content Include="Assets\css\ex\themify-icons.css" />
     <Content Include="Assets\css\jquery.Wload.css" />
     <Content Include="Assets\css\lib\chosen\chosen-sprite%402x.png" />
     <Content Include="Assets\css\lib\chosen\chosen-sprite.png" />
@@ -409,6 +416,7 @@
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.vi.min.js" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.zh-CN.min.js" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.zh-TW.min.js" />
+    <Content Include="Assets\js\bootstrap.min.js" />
     <Content Include="Assets\js\close.js" />
     <Content Include="Assets\js\dashboard.js" />
     <Content Include="Assets\js\dateformat.js" />
@@ -420,6 +428,8 @@
     <Content Include="Assets\js\init\peitychart-init.js" />
     <Content Include="Assets\js\init\vector-init.js" />
     <Content Include="Assets\js\init\weather-init.js" />
+    <Content Include="Assets\js\jquery.matchHeight.min.js" />
+    <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.Wload.js" />
     <Content Include="Assets\js\lib\all_bet.js" />
     <Content Include="Assets\js\lib\chosen\chosen.jquery.js" />
@@ -447,7 +457,9 @@
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\member.js" />
     <Content Include="Assets\js\member_price.js" />
+    <Content Include="Assets\js\moment.min.js" />
     <Content Include="Assets\js\password.js" />
+    <Content Include="Assets\js\popper.min.js" />
     <Content Include="Assets\js\rate.js" />
     <Content Include="Assets\js\result.js" />
     <Content Include="Assets\js\sweetalert2.all.min.js" />
