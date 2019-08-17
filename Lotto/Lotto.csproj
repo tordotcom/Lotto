@@ -288,6 +288,7 @@
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\total_bet.cs" />
+    <Compile Include="Models\UserAllBet.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\User_Bet_Result.cs" />
     <Compile Include="Models\User_Rate_Discount.cs" />
@@ -323,6 +324,7 @@
     <Content Include="Assets\js\admin_bet.js" />
     <Content Include="Assets\js\admin_list.js" />
     <Content Include="Assets\js\admin_list_edit.js" />
+    <Content Include="Assets\js\allbet.js" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.css" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.min.css" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\css\bootstrap-datepicker.standalone.css" />
@@ -432,6 +434,7 @@
     <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.Wload.js" />
     <Content Include="Assets\js\lib\all_bet.js" />
+    <Content Include="Assets\js\bet_total.js" />
     <Content Include="Assets\js\lib\chosen\chosen.jquery.js" />
     <Content Include="Assets\js\lib\chosen\chosen.jquery.min.js" />
     <Content Include="Assets\js\lib\chosen\chosen.proto.js" />
@@ -453,6 +456,7 @@
     <Content Include="Assets\js\lib\gmap\gmaps.js" />
     <Content Include="Assets\js\lib\gmap\gmaps.min.js" />
     <Content Include="Assets\js\list.js" />
+    <Content Include="Assets\js\list_backward.js" />
     <Content Include="Assets\js\lotto_backward.js" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\js\member.js" />

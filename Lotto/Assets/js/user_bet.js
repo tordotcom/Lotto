@@ -1,4 +1,5 @@
-﻿$(document)
+﻿
+$(document)
     .ajaxStart(function () {
         $('#AjaxLoader').show();
     })
@@ -87,7 +88,7 @@ function keyPress(obj, id, evt) {
         $("#b" + id).removeClass("input-color");
         return true;  // Number 0-9
     }
-    else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+    else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120 || code==47) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
     else if (code >= 37 && code <= 40) return true;  // left, up, right, down
     else return false;
 }
@@ -262,7 +263,7 @@ function checkAmount(id) {
     if (!amtFormat.test(sAmt)) {
         Swal.fire({
             type: 'error',
-            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องเป็นตัวเลข หรือ x เท่านั้น',
+            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องเป็นตัวเลข หรือ x หรือ / เท่านั้น',
             showConfirmButton: true,
             onAfterClose: () => {
                 $("#b" + id).focus();
@@ -271,7 +272,7 @@ function checkAmount(id) {
         return false;
     }
 
-    var iAmtCountA = sAmt.split("x").length - 1
+    var iAmtCountA = sAmt.split("x").length - 1;
     if (iAmtCountA > 1) {
         Swal.fire({
             type: 'error',
@@ -283,7 +284,18 @@ function checkAmount(id) {
         });
         return false;
     }
-
+    var iAmtCountS = sAmt.split("/").length - 1;
+    if (iAmtCountS > 1) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องมี / ได้ 1 ตัวเท่านั้น',
+            showConfirmButton: true,
+            onAfterClose: () => {
+                $("#b" + id).focus();
+            }
+        });
+        return false;
+    }
     // Check number
     if (iNumLen == 0) {
         Swal.fire({
@@ -308,14 +320,14 @@ function checkAmount(id) {
     }
         // 2 บน
     else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
-        bValid = true;
-
+        bValid = true;       
+    }
         // 2 โต๊ด
-    } else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
-        bValid = true;
-
+    //else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
+    //    bValid = true;        
+    //}
         // 2 บน และ ตัวกลับ
-    } else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
+    else if ((sTyp == 't') && (iNumLen == 2) && (iNumPosA == -1) && (iAmtPosA > 0) && (iAmtPosA < iAmtLen - 1) && (iAmtPosS == -1)) {
         bValid = true;
 
         // 3 บน
@@ -409,10 +421,15 @@ function checkAmount(id) {
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
     }
-    // 3 หน้า  3 ท้าย โต๊ด
+        // 3หัว + 3ท้าย (124 = 100/50)
+    else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS > 0) && (iAmtPosS < iAmtLen - 1)) {
+        bValid = true;
+    }
+    // 3 หน้าโต๊ด  3 ท้ายโต๊ด
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
         bValid = true;
     }
+        // 3 หน้า  3 ท้าย  3 กลับ และ 6 กลับ
     else if ((sTyp == 'ft') && (iNumLen == 4) && (iNumPosA == 3) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
 
@@ -479,10 +496,21 @@ function SumAmountPoll() {
 
         var AmtCountX = Amt.split("x").length - 1;
         var NumCountX = numx.split("x").length - 1;
-        if (AmtCountX > 0) {
+        var AmtcountSlash = Amt.split("/").length - 1;
+        if (AmtCountX > 0 && AmtcountSlash >0) {
+            var amount = Amt.split(/[x/]+/);
+            sum = sum + parseInt(amount[0]) + parseInt(amount[1]) + parseInt(amount[2]);
+        }
+        else if (AmtcountSlash > 0)
+        {
+            var amount = Amt.split("/");
+            sum = sum + parseInt(amount[0]) + parseInt(amount[1]);
+        }
+        else if (AmtCountX > 0)
+        {
             var amount = Amt.split("x");
             if (amount[0] != "") {
-                if (bet[i]["type"] == "tb") {
+                if (bet[i]["type"] == "tb" || bet[i]["type"] == "ft") {
                     sum = sum + (parseInt(amount[0]) * 2) + (parseInt(amount[1]) * 2);
                 }
                 else {
@@ -490,7 +518,13 @@ function SumAmountPoll() {
                 }
             }
             else {
-                sum = sum +  parseInt(amount[1]);
+                if (bet[i]["type"] == "ft") {
+                    sum = sum + (parseInt(amount[1]) * 2);
+                }
+                else {
+                    sum = sum + parseInt(amount[1]);
+                }
+
             }
         }
         else {
@@ -499,7 +533,7 @@ function SumAmountPoll() {
                 var charnum = nnum[0].split("");
                 if (bet[i]["type"] == "tb" || bet[i]["type"] == "ft") {
                     if (charnum[0] == charnum[1] && charnum[0] == charnum[2]) {
-                        sum = sum + parseInt(bet[i]["Amount"] *2);
+                        sum = sum + parseInt(bet[i]["Amount"] * 2);
                     }
                     else if (charnum[0] != charnum[1] && charnum[0] != charnum[2] && charnum[1] != charnum[2]) {
                         sum = sum + (parseInt(bet[i]["Amount"]) * 12);
@@ -523,7 +557,7 @@ function SumAmountPoll() {
                 }
             }
             else {
-                if (bet[i]["type"] == "tb") {
+                if (bet[i]["type"] == "tb" || bet[i]["type"] == "ft") {
                     sum = sum + (parseInt(bet[i]["Amount"]) * 2);
                 }
                 else {
@@ -534,8 +568,15 @@ function SumAmountPoll() {
     }
     $("#thisTotal").val(nwc(sum) + " ฿");
 }
+var ipadd;
+(function ($) {
+    $.getJSON("http://jsonip.com?callback=?", function (data) {
+        ipadd = data.ip;
+    });
+})(jQuery);
 $("#sendLotto").click(function () {
-    var state = false;
+
+    var state = false;   
     var bet = [];
     var name = $('#poll_name').val();
     for (var i = 1; i <= 75; i++) {
@@ -587,12 +628,15 @@ $("#sendLotto").click(function () {
         }
         else { }       
     }
-    console.log(bet);  
+    
+    //console.log(ipadd);
+
     if (state) {
         $.ajax({
             url: addPoll,
             data: {
                 PollName: name,
+                IPAddress: ipadd,
                 poll: bet
             },
             type: "POST",

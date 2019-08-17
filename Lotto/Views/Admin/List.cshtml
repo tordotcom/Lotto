@@ -39,6 +39,7 @@
                             <th>ยอดหัก%</th>
                             <th>ยอดถูก</th>
                             <th>วันที่ส่ง</th>
+                            <th>IP Address</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -108,6 +109,7 @@
                                 <td>@String.Format("{0:n}", discount)</td>
                                 <td>@String.Format("{0:n}", win )</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.create_date)</td>
+                                <td>@item.IP</td>
                                 <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="0">ดูโพย</button></td>
                             </tr>
                         }
@@ -124,6 +126,7 @@
                             <th>@String.Format("{0:n}", total_receive)</th>
                             <th>@String.Format("{0:n}", total_discount)</th>
                             <th>@String.Format("{0:n}", totalwin)</th>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                            <th></th>
                             <th>สรุป</th>
                             <th>@String.Format("{0:n}", (total_discount - totalwin))</th>
                         </tr>
@@ -307,7 +310,7 @@
                 $(api.column(8).footer()).html(
                     nwc(sumCol4Filtered8)
                 );
-                $(api.column(10).footer()).html(
+                $(api.column(11).footer()).html(
                     nwc(sumCol4Filtered7-sumCol4Filtered8)
                 );
             }

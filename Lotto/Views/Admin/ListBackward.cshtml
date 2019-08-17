@@ -124,9 +124,9 @@
                                         <td>@String.Format("{0:n}", amount)</td>
                                         <td>@String.Format("{0:n}", amount_receive)</td>
                                         <td>@String.Format("{0:n}", discount)</td>
-                                        <td>0</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
+                                        <td>@String.Format("{0:n}", Int32.Parse(item.Win))</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                         <td>@item.create_date</td>
-                                        <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-type="0" data-target="#checkModal" data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
+                                        <td><button type="button" class="btn btn-sm btn-primary showPoll" data-pid="@item.PeroidID" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-type="0" data-target="#checkModal" data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
                                     </tr>
                                 }
                             </tbody>
@@ -255,7 +255,7 @@
 <script type="text/javascript">
     var editable = false;
 </script>
-<script src="~/Assets/js/admin_list.js"></script>
+<script src="~/Assets/js/list_backward.js"></script>
 <script src="~/Assets/js/admin_list_edit.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>

@@ -50,7 +50,7 @@
                                 <td>@item.three_down_1 @item.three_down_2 @item.three_down_3 @item.three_down_4</td>
                                 <td>@item.two_down</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-pid="@item.Period_ID" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
+                                    <button class="btn btn-primary edit" data-id="@item.ID" data-pid="@item.Period_ID" data-toggle="modal" data-target="#checkResultLotto" data-backdrop="static" data-keyboard="false">แก้ไข</button>
                                     @*<button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Lotto_day" data-toggle="modal" data-target="#deleteResultLotto" data-backdrop="static" data-keyboard="false">ลบ</button>*@
                                 </td>
                             </tr>
@@ -154,6 +154,7 @@
     o = @Html.Raw(Json.Encode(Model));
 
     (function ($) {
+        initialPoll();
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
@@ -175,30 +176,33 @@
         $("btnEdit").val(0);
         $("#checkResultLottoLabel").html("เพิ่มข้อมูลผลหวย");
     });
+    function initialPoll() {
+        $(".edit").click(function () {
+            $("btnEdit").val(1);
+            $("#checkResultLottoLabel").html("แก้ไขข้อมูลผลหวย");
 
-     $(".edit").click(function () {
-        $("btnEdit").val(1);
-        $("#checkResultLottoLabel").html("แก้ไขข้อมูลผลหวย");
-
-         var id = $(this).attr("data-id");
-         var pid = $(this).attr("data-pid");
-        for (var i = 0; i < o.length;i++) {
-            if (id == o[i].ID) {
-                var date = new Date(parseInt(o[i].Lotto_day.substr(6)));
-                document.getElementById('check_result').setAttribute('data-id', pid);
-                document.getElementById('check_result').setAttribute('data-day', dateFormat(date, "yyyy-mm-dd"));
-                $("#insert_datepicker").html(dateFormat(date, "dd-mm-yyyy"));
-                $("#lotto_name").html(o[i].Name);
-                $("#ft").val(o[i].first_three);
-                $("#tt").val(o[i].last_three);
-                $("#tb1").val(o[i].three_down_1);
-                $("#tb2").val(o[i].three_down_2);
-                $("#tb3").val(o[i].three_down_3);
-                $("#tb4").val(o[i].three_down_4);
-                $("#twob").val(o[i].two_down);
+            var id = $(this).attr("data-id");
+            var pid = $(this).attr("data-pid");
+            for (var i = 0; i < o.length; i++) {
+                if (id == o[i].ID) {
+                    console.log(o[i].Name);
+                    var date = new Date(parseInt(o[i].Lotto_day.substr(6)));
+                    document.getElementById('check_result').setAttribute('data-id', pid);
+                    document.getElementById('check_result').setAttribute('data-day', dateFormat(date, "yyyy-mm-dd"));
+                    $("#insert_datepicker").html(dateFormat(date, "dd-mm-yyyy"));
+                    $("#lotto_name").html(o[i].Name);
+                    $("#ft").val(o[i].first_three);
+                    $("#tt").val(o[i].last_three);
+                    $("#tb1").val(o[i].three_down_1);
+                    $("#tb2").val(o[i].three_down_2);
+                    $("#tb3").val(o[i].three_down_3);
+                    $("#tb4").val(o[i].three_down_4);
+                    $("#twob").val(o[i].two_down);
+                }
             }
-        }
-    });
+        });
+    }
+     
 
     $(".delete").click(function () {
         var id = $(this).attr("data-id");

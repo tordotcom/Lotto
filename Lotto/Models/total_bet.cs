@@ -15,5 +15,6 @@ namespace Lotto.Models
         public string AmountReceive { get; set; }
         public string AmountDiscount { get; set; }
         public string AmountWin { get; set; }
+        public string AmountBetWin { get; set; }
     }
 }

@@ -21,5 +21,7 @@ namespace Lotto.Models
         public string UID { get; set; }
         public string Win { get; set; }
         public string Status { get; set; }
+        public string IP { get; set; }
+        public string PeroidID { get; set; }
     }
 }

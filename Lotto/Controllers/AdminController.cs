@@ -47,7 +47,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t1.Type,t1.Number,t1.Amount,t1.nLen,t2.max from (SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,ls.Number) t1 left join(select MAX(tt.num) as max from(select t.Type,t.nLen,COUNT(*) as num from(SELECT ls.Type,LEN(ls.Number) as nLen,ls.number  FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type,LEN(ls.Number),ls.number) t group by t.Type,t.nLen) tt) t2 on 1=1 order by t1.Type , t1.Number";
+                        string query = "select t1.Type, t1.Number,t1.Amount,t1.nLen,t2.max,t1.Result_Status from(SELECT ls.Type, ls.Number, ls.Result_Status, sum(CAST(LS.Amount as int)) as Amount, LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount], Result_Status FROM[dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type, ls.Number, ls.Result_Status) t1 left join(select MAX(tt.num) as max from(select t.Type, t.nLen, COUNT(*) as num from(SELECT ls.Type, LEN(ls.Number) as nLen, ls.number FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM[dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @period group by ls.Type, LEN(ls.Number), ls.number) t group by t.Type, t.nLen) tt) t2 on 1 = 1 order by t1.Type , t1.Number";
                         //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -64,6 +64,7 @@ namespace Lotto.Controllers
                                     Amount = Reader["Amount"].ToString(),
                                     nLen = Reader["nLen"].ToString(),
                                     Max = Reader["max"].ToString(),
+                                    Result = Reader["Result_Status"].ToString(),
                                 });
                             }
                             cnn.Close();
@@ -263,7 +264,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,p.Poll_Name,pe.Check_Result,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].Period pe left join(SELECT [ID],[UID],[Poll_Name],[Period_ID],[Receive], create_date, Create_By FROM[dbo].[Poll]) p on pe.ID = p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Poll_Name,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,t1.IP,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,p.Poll_Name,pe.Check_Result,a.Name,p.[Receive],p.[Create_By],p.IP,sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].Period pe left join(SELECT [ID],[UID],[Poll_Name],[Period_ID],[Receive],IP, create_date, Create_By FROM[dbo].[Poll]) p on pe.ID = p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Poll_Name,p.IP,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -286,6 +287,7 @@ namespace Lotto.Controllers
                                     UID = Reader["UID"].ToString(),
                                     Win = Reader["AmountWin"].ToString(),
                                     Status = Reader["Check_Result"].ToString(),
+                                    IP = Reader["IP"].ToString(),
                                 });
                             }
                             cnn.Close();
@@ -384,7 +386,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CAST(LS.AmountWin as int)) as AmountWin,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,ROUND(sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as float) END),0) as AmountDiscount FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount],AmountWin FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
+                        string query = "SELECT ISNULL(po.UID,0) as UID,a.Name,ISNULL(r.poll_receive, 0 ) as poll_receive,ISNULL(rr.poll_reject, 0 ) as poll_reject,sum(CAST(LS.Amount as int)) as Amount,sum(CAST(LS.AmountWin as int)) as AmountWin,sum(CASE WHEN po.Receive ='0' THEN 0WHEN po.Receive = '1' THEN CAST(LS.Amount as int)END) as AmountReceive,ROUND(sum(CASE WHEN po.Receive ='0' THEN 0 WHEN po.Receive = '1' THEN CAST(LS.AmountDiscount as float) END),0) as AmountDiscount,sum(CASE WHEN ls.Result_Status = '0' THEN 0 WHEN ls.Result_Status = '1' THEN CAST(LS.Amount as int) END) as AmountBetWin FROM [dbo].[Period] p left join(SELECT [ID],[UID],[Period_ID],[Receive] FROM [dbo].[Poll]) po on p.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[Number],[Amount],[AmountDiscount],AmountWin,Result_Status FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[Name] FROM [dbo].[Account] where Status='1') a on po.UID=a.ID left join(SELECT Period_ID,UID,count(*) as poll_receive FROM [dbo].[Poll] where [Receive]='1' group by [UID],[Period_ID],[Receive] ) r on p.ID=r.Period_ID and po.UID=r.UID left join(SELECT UID,Period_ID,count(*) as poll_reject FROM [dbo].[Poll] where [Receive]='0' group by [UID],[Period_ID],[Receive] ) rr on p.ID=rr.Period_ID and po.UID=rr.UID where p.id=@period group by po.UID,a.Name,r.poll_receive,rr.poll_reject";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -403,6 +405,7 @@ namespace Lotto.Controllers
                                     Receive = Reader["poll_receive"].ToString(),
                                     Reject = Reader["poll_reject"].ToString(),
                                     AmountWin = Reader["AmountWin"].ToString(),
+                                    AmountBetWin= Reader["AmountBetWin"].ToString(),
                                 });
                             }
                             cnn.Close();
@@ -542,7 +545,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,p.Poll_Name,a.Name,p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Poll_Name,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Period_ID,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.create_date,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,p.Poll_Name,a.Name,p.[Receive],p.[Create_By],p.Period_ID,sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(LS.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],AmountWin FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period group by p.ID,p.Poll_Name,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,p.Period_ID) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", poo.ID.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -564,6 +567,8 @@ namespace Lotto.Controllers
                                     poll_number = Reader["rNumber"].ToString(),
                                     Poll_Name = Reader["Poll_Name"].ToString(),
                                     UID = Reader["UID"].ToString(),
+                                    Win = Reader["AmountWin"].ToString(),
+                                    PeroidID = Reader["Period_ID"].ToString(),
                                 }); ;
                             }
                             cnn.Close();
@@ -1428,9 +1433,17 @@ namespace Lotto.Controllers
         }
         //---------------------------------- get poll header detail Admin/bet------------------------------------------//
         [HttpPost]
-        public ActionResult getPoll(string UID)
+        public ActionResult getPoll(string UID ,string PID)
         {
-            int id = db.Period.Max(p => p.ID);
+            int id = 0;
+            if (PID!=null)
+            {
+                id = Int32.Parse(PID);
+            }
+            else
+            {
+                id = db.Period.Max(p => p.ID);
+            }            
             if (id != 0)
             {
                 string connetionString = null;
@@ -1440,7 +1453,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT p.[ID],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,sum(CAST(ls.AmountDiscount as int)) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive,p.create_date,p.[Create_By]";
+                    string query = "SELECT p.[ID],p.[Receive],p.[Create_By],sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,p.create_date FROM [dbo].[Poll] p left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID where p.Period_ID=@period and p.UID=@UID group by p.ID,p.Receive,p.create_date,p.[Create_By]";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@UID", UID.ToString()); // user ID
                     cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -1498,7 +1511,7 @@ namespace Lotto.Controllers
         }
 
         [HttpPost]
-        public ActionResult addPoll(String PollName, PollData Data, string UID, string PID)
+        public ActionResult addPoll(String PollName,string IPAddress, PollData Data, string UID, string PID)
         {
             dynamic discount_rate;
             var user_id = Session["ID"].ToString();
@@ -1551,6 +1564,7 @@ namespace Lotto.Controllers
                 poll.Period_ID = Last.ID;
                 poll.Receive = "1";
                 poll.Create_By = "Admin"; //--------- Admin --------//
+                poll.IP = IPAddress;
                 poll.create_date = DateTime.Now;
                 poll.update_date = DateTime.Now;
                 db.Poll.Add(poll);
@@ -1579,7 +1593,117 @@ namespace Lotto.Controllers
                 numx = item.Number.Replace("*", "x");
                 var NumCountX = numx.Split('x').Length - 1;
                 var AmtCountX = amount.Split('x').Length - 1;
-                if (AmtCountX > 0)
+                var AmtCountSlash = amount.Split('/').Length - 1;
+                if (AmtCountX > 0 && AmtCountSlash > 0)
+                {
+                    char[] num = item.Number.ToCharArray();
+                    string[] amt = amount.Split(new char[] { 'x', '/' }, StringSplitOptions.RemoveEmptyEntries);
+                    var totalDiscount = 0.00;
+                    var iamt = 0.00;
+                    var d = 0.00;
+                    var typ = item.bType;
+                    var sort = "";
+                    var temp = 'l';
+
+
+                    d = Int32.Parse(discount_rate.three_up);
+                    iamt = Int32.Parse(amt[0]);
+                    totalDiscount = (iamt - (iamt * d) / 100);
+                    //---------------------- 3 เต็ง -------------------------------//
+                    InsertLottoSub(lID, "t", item.Number, amt[0], totalDiscount, NumLen);
+
+                    //-------------------- 3 โต๊ด -------------------------------//
+                    d = Int32.Parse(discount_rate.three_ood);
+                    iamt = Int32.Parse(amt[1]);
+                    totalDiscount = (iamt - (iamt * d) / 100);
+                    if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
+                    {
+                        temp = num[0];
+                        num[0] = num[2];
+                        num[2] = temp;
+                    }
+                    if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[1].ToString()))
+                    {
+                        temp = num[0];
+                        num[0] = num[1];
+                        num[1] = temp;
+                    }
+                    if (Int32.Parse(num[1].ToString()) > Int32.Parse(num[2].ToString()))
+                    {
+                        temp = num[1];
+                        num[1] = num[2];
+                        num[2] = temp;
+                    }
+                    sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                    InsertLottoSub(lID, "t_", sort, amt[1], totalDiscount, NumLen);
+                    //----------------------3ล่าง--------------------------------------//
+                    d = Int32.Parse(discount_rate.three_down);
+                    iamt = Int32.Parse(amt[2]);
+                    totalDiscount = (iamt - (iamt * d) / 100);
+                    InsertLottoSub(lID, "b", item.Number, amt[2], totalDiscount, NumLen);
+                }
+                else if (AmtCountSlash > 0)
+                {
+                    char[] num = item.Number.ToCharArray();
+                    string[] amt = amount.Split('/');
+                    var totalDiscount = 0.00;
+                    var iamt = 0.00;
+                    var d = 0.00;
+                    var typ = item.bType;
+                    var sort = "";
+                    var temp = 'l';
+                    //----------------------2 ตัว-------------------------//
+                    if (NumLen == 2)
+                    {
+                        //------------------------ 2 บน -------------------------------//
+                        d = Int32.Parse(discount_rate.two_up);
+                        iamt = Int32.Parse(amt[0]);
+                        totalDiscount = (iamt - (iamt * d) / 100);
+                        InsertLottoSub(lID, "t", item.Number, amt[0], totalDiscount, NumLen);
+
+                        //---------------------- 2 ล่าง -------------------------------//
+                        d = Int32.Parse(discount_rate.two_down);
+                        iamt = Int32.Parse(amt[1]);
+                        totalDiscount = (iamt - (iamt * d) / 100);
+                        InsertLottoSub(lID, "b", item.Number, amt[1], totalDiscount, NumLen);
+                    }
+                    //----------------------3 ตัว-------------------------//
+                    else
+                    {
+                        if (typ == "tb")
+                        {
+                            //------------------------ 3 บน -------------------------------//
+                            d = Int32.Parse(discount_rate.three_up);
+                            iamt = Int32.Parse(amt[0]);
+                            totalDiscount = (iamt - (iamt * d) / 100);
+                            InsertLottoSub(lID, "t", item.Number, amt[0], totalDiscount, NumLen);
+
+                            //---------------------- 3 ล่าง -------------------------------//
+                            d = Int32.Parse(discount_rate.three_down);
+                            iamt = Int32.Parse(amt[1]);
+                            totalDiscount = (iamt - (iamt * d) / 100);
+                            InsertLottoSub(lID, "b", item.Number, amt[1], totalDiscount, NumLen);
+                        }
+                        else if (typ == "ft")
+                        {
+                            //------------------------ 3 บน -------------------------------//
+                            d = Int32.Parse(discount_rate.three_up);
+                            iamt = Int32.Parse(amt[1]);
+                            totalDiscount = (iamt - (iamt * d) / 100);
+                            InsertLottoSub(lID, "t", item.Number, amt[1], totalDiscount, NumLen);
+                            //---------------------- 3 หน้า -------------------------------//
+                            d = Int32.Parse(discount_rate.first_three);
+                            iamt = Int32.Parse(amt[0]);
+                            totalDiscount = (iamt - (iamt * d) / 100);
+                            InsertLottoSub(lID, "f", item.Number, amt[0], totalDiscount, NumLen);
+                        }
+                        else
+                        {
+                            return Json("Fail");
+                        }
+                    }
+                }
+                else if (AmtCountX > 0)
                 {
                     //------------------------2 ตัว ----------------------------//
                     if (NumLen == 2)
@@ -1832,17 +1956,17 @@ namespace Lotto.Controllers
                             {
                                 //---------------------- 3 หน้าเต็ง -------------------------------//
                                 d = Int32.Parse(discount_rate.first_three);
-                                iamt = Int32.Parse(amt[0]) / 2;
+                                iamt = Int32.Parse(amt[0]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "f", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount, NumLen);
                                 //---------------------- 3 บนเต็ง -------------------------------//
                                 d = Int32.Parse(discount_rate.three_up);
-                                iamt = Int32.Parse(amt[0]) / 2;
+                                iamt = Int32.Parse(amt[0]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "t", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount, NumLen);
                                 //-------------------- 3 หน้าโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.first_three_ood);
-                                iamt = Int32.Parse(amt[1]) / 2;
+                                iamt = Int32.Parse(amt[1]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
                                 {
@@ -1867,7 +1991,7 @@ namespace Lotto.Controllers
 
                                 //-------------------- 3 บนโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.three_ood);
-                                iamt = Int32.Parse(amt[1]) / 2;
+                                iamt = Int32.Parse(amt[1]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "t_", sort, iamt.ToString(), totalDiscount, NumLen);
                             }
@@ -1875,7 +1999,7 @@ namespace Lotto.Controllers
                             {
                                 //-------------------- 3 หน้าโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.first_three_ood);
-                                iamt = Int32.Parse(amt[1]) / 2;
+                                iamt = Int32.Parse(amt[1]);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
                                 {
@@ -1900,7 +2024,7 @@ namespace Lotto.Controllers
 
                                 //-------------------- 3 บนโต๊ด -------------------------------//
                                 d = Int32.Parse(discount_rate.three_ood);
-                                iamt = Int32.Parse(amt[1]) / 2;
+                                iamt = Int32.Parse(amt[1]) ;
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
                                 {
@@ -2070,12 +2194,12 @@ namespace Lotto.Controllers
                         {
                             //------------------------ 3 บน -------------------------------//
                             d = Int32.Parse(discount_rate.three_up);
-                            iamt = Int32.Parse(item.Amount) / 2;
+                            iamt = Int32.Parse(item.Amount) ;
                             totalDiscount = (iamt - (iamt * d) / 100);
                             InsertLottoSub(lID, "t", item.Number, iamt.ToString(), totalDiscount, NumLen);
                             //---------------------- 3 หน้า -------------------------------//
                             d = Int32.Parse(discount_rate.first_three);
-                            iamt = Int32.Parse(item.Amount) / 2;
+                            iamt = Int32.Parse(item.Amount) ;
                             totalDiscount = (iamt - (iamt * d) / 100);
                             InsertLottoSub(lID, "f", item.Number, iamt.ToString(), totalDiscount, NumLen);
                         }
@@ -2669,8 +2793,9 @@ namespace Lotto.Controllers
                     ls.Result_Status = "0";
                     ls.update_date = DateTime.Now;
                     db.Entry(ls).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
+                    
                 }
+                db.SaveChanges();
                 var tar = db.Total_Amount_Result.Where(q => q.Period_ID == PID).ToList();
                 foreach (var item in tar)
                 {
@@ -2955,9 +3080,9 @@ namespace Lotto.Controllers
                 tr.create_date = DateTime.Now;
                 tr.update_date = DateTime.Now;
                 db.Total_Amount_Result.Add(tr);
-                db.SaveChanges();
+                
             }
-
+            db.SaveChanges();
             return Json("ss");
         }
 
@@ -3087,17 +3212,21 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult RemoveRate(int RID)
         {
-            Rate R = db.Rate.Where(s => s.ID == RID).First();
+            Rate R = db.Rate.Where(s => s.UID == RID).First();
             if (R != null)
             {
-                db.Rate.Remove(R);
+                db.Rate.RemoveRange(db.Rate.Where(x => x.UID == RID));
                 db.SaveChanges();
-                return Json("ss");
+                
             }
-            else
+            Discount d = db.Discount.Where(s => s.UID == RID).First();
+            if (d != null)
             {
-                return Json("fail");
+                db.Discount.RemoveRange(db.Discount.Where(x => x.UID == RID));
+                db.SaveChanges();
+
             }
+            return Json("ss");
         }
 
         [HttpPost]
@@ -3277,6 +3406,174 @@ namespace Lotto.Controllers
             }
             else { }
             return Json(new { all, TAR = tar, UBET = user_bet });
+        }
+        //--------------------------------ดึงข้อมูลไปแสดงใน moddal หน้า ดูเลขทั้งหมด------------------------------------------///
+        [HttpPost]
+        public ActionResult getUserPoll(string Number, string Type, string NumLen)
+        {
+            int id = db.Period.Max(p => p.ID);
+
+            string connetionString = null;
+            var data = new List<UserAllBet>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "select a.ID, a.Username,a.Name,sum(CAST(ls.Amount as int)) as Amount,COUNT(*) as CPoll from(SELECT [ID],[UID],[Period_ID],[Receive] FROM[dbo].[Poll] where Period_ID = @period and Receive = '1') t1 left join(SELECT[ID],[Username],[Name] FROM[dbo].[Account]) a on t1.UID = a.ID left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on t1.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[LottoSub] where Number=@number and Type = @type and NumLen = @nlen) ls on lm.ID = ls.Lotto_ID where ls.Number is not null group by a.ID,a.Username,a.Name";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", id.ToString());
+                cmd.Parameters.AddWithValue("@number", Number);
+                cmd.Parameters.AddWithValue("@type", Type);
+                cmd.Parameters.AddWithValue("@nLen", NumLen);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        data.Add(new UserAllBet
+                        {
+                            UID = Reader["ID"].ToString(),
+                            Username = Reader["Username"].ToString(),
+                            Name = Reader["Name"].ToString(),
+                            Amount = Reader["Amount"].ToString(),
+                            poll_count = Reader["CPoll"].ToString(),
+                            Number = Number,
+                            Type = Type,
+                            nLen = NumLen
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return Json(data);
+        }
+        //--------------------------------ดึงข้อมูลไปแสดงใน moddal หน้า ดูเลขทั้งหมด------------------------------------------///
+        [HttpPost]
+        public ActionResult getUserPollDetail(string UID,string Number, string Type, string NumLen)
+        {
+            int id = db.Period.Max(p => p.ID);
+
+            string connetionString = null;
+            var data = new List<Poll_Detail>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "select t.ID,t.poll_id,t.Username, t.Poll_Name,t.Receive,sum(CAST(LS.Amount as int)) as Amount,ROUND(sum(CAST(ls.AmountDiscount as float)), 0) as AmountDiscount " +
+                               ",sum(CAST(LS.AmountWin as int)) as AmountWin,t.IP,t.create_date,t.Create_By,rn.rNumber from(select a.ID, a.Username, a.Name, ls.Amount, t1.Poll_Name, t1.Receive, t1.ID as poll_id " +
+                               ", t1.IP, t1.create_date,t1.Create_By from(SELECT[ID],[UID], Poll_Name,[Period_ID],[Receive], IP, create_date,Create_By FROM[dbo].[Poll] where Period_ID = @period and Receive = '1') t1 " +
+                               "left join(SELECT[ID],[Username],[Name] FROM[dbo].[Account] where ID = @uid) a on t1.UID = a.ID left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm "+
+                               "on t1.ID = lm.Poll_ID left join(SELECT[ID],[Lotto_ID],[Type],[NumLen],[Number],[Amount] FROM[dbo].[LottoSub] where Number = @number and Type = @type "+
+                               "and NumLen = @nLen) ls on lm.ID = ls.Lotto_ID where ls.Number is not null and a.ID is not null) t left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm "+
+                               "on t.poll_id = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Amount], [AmountDiscount], [AmountWin] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID "+
+                               "left join(SELECT [ID], Row_Number() OVER(Partition BY UID ORDER BY UID) as rNumber FROM[dbo].[Poll] where Period_ID = @period and UID = @uid) rn " +
+                                "on t.poll_id = rn.ID group by t.ID,t.poll_id,t.Username,t.Poll_Name,t.Receive,t.IP,t.create_date,rn.rNumber,t.Create_By";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", id.ToString());
+                cmd.Parameters.AddWithValue("@uid", UID);
+                cmd.Parameters.AddWithValue("@number", Number);
+                cmd.Parameters.AddWithValue("@type", Type);
+                cmd.Parameters.AddWithValue("@nLen", NumLen);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        data.Add(new Poll_Detail
+                        {
+                            UID = Reader["ID"].ToString(),
+                            ID = Reader["poll_id"].ToString(),
+                            name = Reader["Username"].ToString(),
+                            Poll_Name = Reader["Poll_Name"].ToString(),
+                            Receive = Reader["Receive"].ToString(),
+                            Amount = Reader["Amount"].ToString(),
+                            Discount = Reader["AmountDiscount"].ToString(),
+                            Win = Reader["AmountWin"].ToString(),
+                            IP = Reader["IP"].ToString(),
+                            create_date= Reader["create_date"].ToString(),
+                            poll_number = Reader["rNumber"].ToString(),
+                            Create_By = Reader["Create_By"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return Json(data);
+        }
+        //--------------------------------ดึงข้อมูลไปแสดงใน moddal หน้า สรุปยอดเป็นใบ------------------------------------------///
+        [HttpPost]
+        public ActionResult getUserPoll2(string uid)
+        {
+            int id = db.Period.Max(p => p.ID);
+
+            string connetionString = null;
+            var data = new List<Poll_Detail>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "select * from(select p.poll_id, p.id, a.Username, p.[Poll_Name], p.[Period_ID], p.[Receive], p.[Create_By], p.[IP], p.[create_date], rn.rNumber, sum(CAST(LS.Amount as int)) as Amount , ROUND(sum(CAST(ls.AmountDiscount as float)), 0) as AmountDiscount, sum(CAST(LS.AmountWin as int)) as AmountWin, sum(CAST(LS.Result_Status as int)) as result from(SELECT [ID] as poll_id,[UID] as id,[Poll_Name],[Period_ID],[Receive],[Create_By],[IP],[create_date] FROM[dbo].[Poll] where Period_ID = @period and UID = @uid and Receive = '1') p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.poll_id = lm.Poll_ID left join(SELECT[ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin],[Result_Status] FROM[dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID left join(SELECT[ID],[Username] FROM[dbo].[Account]) a on p.id = a.ID left join(SELECT[ID], Row_Number() OVER(Partition BY UID ORDER BY UID) as rNumber FROM[dbo].[Poll] where Period_ID = @period and UID = @uid) rn on p.poll_id = rn.ID group by p.poll_id, p.id, a.Username, p.[Poll_Name], p.[Period_ID], p.[Receive], p.[Create_By], p.[IP], p.[create_date], rn.rNumber) t where result > 0";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", id.ToString());
+                cmd.Parameters.AddWithValue("@uid", uid);
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        data.Add(new Poll_Detail
+                        {
+                            UID = Reader["ID"].ToString(),
+                            ID = Reader["poll_id"].ToString(),
+                            name = Reader["Username"].ToString(),
+                            Poll_Name = Reader["Poll_Name"].ToString(),
+                            Receive = Reader["Receive"].ToString(),
+                            Amount = Reader["Amount"].ToString(),
+                            Discount = Reader["AmountDiscount"].ToString(),
+                            Win = Reader["AmountWin"].ToString(),
+                            IP = Reader["IP"].ToString(),
+                            create_date= Reader["create_date"].ToString(),
+                            poll_number = Reader["rNumber"].ToString(),
+                            Create_By = Reader["Create_By"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return Json(data);
         }
     }
 }

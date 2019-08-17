@@ -92,7 +92,7 @@ function keyPress(obj, id, evt) {
         $("#b" + id).removeClass("input-color");
         return true;  // Number 0-9
     }
-    else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+    else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120 || code == 47) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
     else if (code >= 37 && code <= 40) return true;  // left, up, right, down
     else return false;
 }
@@ -122,7 +122,7 @@ function nextNode(obj, id) {
             }
             else {
                 var newId = parseInt(id) + 1;
-                if (id <= 89) {
+                if (id <= 74) {
                     currentObj.value = document.getElementById('b' + (id - 1)).value;
 
                     $("#n" + newId).focus();
@@ -132,7 +132,7 @@ function nextNode(obj, id) {
         }
         else {
             var newId = parseInt(id) + 1;
-            if (id <= 89) {
+            if (id <= 74) {
                 $("#n" + newId).focus();
                 setType(newId, currentTyp);
             }
@@ -146,23 +146,23 @@ function nextNode(obj, id) {
 }
 function setType(id, type) {
     if (type == 'ล') {
-        $("#t" + id).html('<font color="red">ล</font>').fadeIn(10);
+        $("#t" + id).html('<font color="red">ล</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "b");
     }
     if (type == 'บ+ล') {
-        $("#t" + id).html('บ+<font color="red">ล</font>').fadeIn(10);
+        $("#t" + id).html('บ+<font color="red">ล</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "tb");
     }
     if (type == 'ห') {
-        $("#t" + id).html('<font color="blue">ห</font>').fadeIn(10);
+        $("#t" + id).html('<font color="blue">ห</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "f");
     }
     if (type == 'ห+ท') {
-        $("#t" + id).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(10);
+        $("#t" + id).html('<font color="blue">ห</font>+<font color="green">ท</font>').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "ft");
     }
     if (type == 'บ') {
-        $("#t" + id).html('บ').fadeIn(10);
+        $("#t" + id).html('บ').fadeIn(0);
         document.getElementById('t' + id).setAttribute('data-type', "t");
     }
     //var id = (this.id).replace("t", "");
@@ -264,7 +264,7 @@ function checkAmount(id) {
     if (!amtFormat.test(sAmt)) {
         Swal.fire({
             type: 'error',
-            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องเป็นตัวเลข หรือ x เท่านั้น',
+            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องเป็นตัวเลข หรือ x หรือ / เท่านั้น',
             showConfirmButton: true,
             onAfterClose: () => {
                 $("#b" + id).focus();
@@ -285,7 +285,18 @@ function checkAmount(id) {
         });
         return false;
     }
-
+    var iAmtCountS = sAmt.split("/").length - 1;
+    if (iAmtCountS > 1) {
+        Swal.fire({
+            type: 'error',
+            title: 'ช่องที่ ' + id + ' โปรดตรวจสอบจำนวนเงินที่แทง  ต้องมี / ได้ 1 ตัวเท่านั้น',
+            showConfirmButton: true,
+            onAfterClose: () => {
+                $("#b" + id).focus();
+            }
+        });
+        return false;
+    }
     // Check number
     if (iNumLen == 0) {
         Swal.fire({
@@ -410,6 +421,10 @@ function checkAmount(id) {
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS == -1)) {
         bValid = true;
     }
+    // 3หัว + 3ท้าย (124 = 100/50)
+    else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == -1) && (iAmtPosS > 0) && (iAmtPosS < iAmtLen - 1)) {
+        bValid = true;
+    }
     // 3 หน้า  3 ท้าย โต๊ด
     else if ((sTyp == 'ft') && (iNumLen == 3) && (iNumPosA == -1) && (iAmtPosA == 0) && (iAmtPosS == -1)) {
         bValid = true;
@@ -479,10 +494,19 @@ function SumAmountPoll() {
         numx = bet[i]["Number"].replace("*", "x");
         var AmtCountX = Amt.split("x").length - 1;
         var NumCountX = numx.split("x").length - 1;
-        if (AmtCountX > 0) {
+        var AmtcountSlash = Amt.split("/").length - 1;
+        if (AmtCountX > 0 && AmtcountSlash > 0) {
+            var amount = Amt.split(/[x/]+/);
+            sum = sum + parseInt(amount[0]) + parseInt(amount[1]) + parseInt(amount[2]);
+        }
+        else if (AmtcountSlash > 0) {
+            var amount = Amt.split("/");
+            sum = sum + parseInt(amount[0]) + parseInt(amount[1]);
+        }
+        else if (AmtCountX > 0) {
             var amount = Amt.split("x");
             if (amount[0] != "") {
-                if (bet[i]["type"] == "tb") {
+                if (bet[i]["type"] == "tb" || bet[i]["type"] == "ft") {
                     sum = sum + (parseInt(amount[0]) * 2) + (parseInt(amount[1]) * 2);
                 }
                 else {
@@ -490,7 +514,12 @@ function SumAmountPoll() {
                 }
             }
             else {
-                sum = sum + parseInt(amount[1]);
+                if (bet[i]["type"] == "ft") {
+                    sum = sum + (parseInt(amount[1]) * 2);
+                }
+                else {
+                    sum = sum + parseInt(amount[1]);
+                }
             }
         }
         else {
@@ -523,7 +552,7 @@ function SumAmountPoll() {
                 }
             }
             else {
-                if (bet[i]["type"] == "tb") {
+                if (bet[i]["type"] == "tb" || bet[i]["type"] == "ft") {
                     sum = sum + (parseInt(bet[i]["Amount"]) * 2);
                 }
                 else {
@@ -534,6 +563,12 @@ function SumAmountPoll() {
     }
 	$("#amount").html(sum);
 }
+var ipadd;
+(function ($) {
+    $.getJSON("http://jsonip.com?callback=?", function (data) {
+        ipadd = data.ip;
+    });
+})(jQuery);
 $("#sendPoll").click(function () {
     var state = false;
     var bet = [];
@@ -593,7 +628,7 @@ $("#sendPoll").click(function () {
     if (state) {
         $.ajax({
             url: addPoll,
-            data: { PollName: name, poll: bet, UID: uid , PID: pid},
+            data: { PollName: name, IPAddress: ipadd, poll: bet, UID: uid , PID: pid},
             type: "POST",
             dataType: "json",
             success: function (data) {

@@ -12,5 +12,6 @@ namespace Lotto.Models
         public string Amount { get; set; }
         public string nLen { get; set; }
         public string Max { get; set; }
+        public string Result { get; set; }
     }
 }

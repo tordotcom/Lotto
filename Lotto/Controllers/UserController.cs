@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -402,7 +403,7 @@ namespace Lotto.Controllers
         //---------------------------------------------------------------------------------------------------//
         //---------------------------------------- แทงโพย ---------------------------------------------------//
         [HttpPost]
-        public ActionResult addPoll(String PollName, PollData Data) 
+        public ActionResult addPoll(String PollName,string IPAddress, PollData Data) 
         {
             var user_id = Session["ID"].ToString();
             var id = Int32.Parse(user_id);
@@ -427,6 +428,7 @@ namespace Lotto.Controllers
                 poll.Period_ID = P.ID;
                 poll.Receive = "1";
                 poll.Create_By = username; //--------- username --------//
+                poll.IP = IPAddress;
                 poll.create_date = DateTime.Now;
                 poll.update_date = DateTime.Now;
                 db.Poll.Add(poll);
@@ -454,7 +456,117 @@ namespace Lotto.Controllers
                     numx = item.Number.Replace("*", "x");
                     var NumCountX = numx.Split('x').Length - 1;
                     var AmtCountX = amount.Split('x').Length - 1;
-                    if (AmtCountX > 0)
+                    var AmtCountSlash = amount.Split('/').Length - 1;
+                    if (AmtCountX > 0 && AmtCountSlash > 0)
+                    {
+                        char[] num = item.Number.ToCharArray();
+                        string[] amt = amount.Split(new char[] { 'x', '/' }, StringSplitOptions.RemoveEmptyEntries);
+                        var totalDiscount = 0.00;
+                        var iamt = 0.00;
+                        var d = 0.00;
+                        var typ = item.bType;
+                        var sort = "";
+                        var temp = 'l';
+
+                        
+                        d = Int32.Parse(discount_rate.three_up);
+                        iamt = Int32.Parse(amt[0]);
+                        totalDiscount = (iamt - (iamt * d) / 100);
+                        //---------------------- 3 เต็ง -------------------------------//
+                        InsertLottoSub(lID, "t", item.Number, amt[0], totalDiscount, NumLen);
+
+                        //-------------------- 3 โต๊ด -------------------------------//
+                        d = Int32.Parse(discount_rate.three_ood);
+                        iamt = Int32.Parse(amt[1]);
+                        totalDiscount = (iamt - (iamt * d) / 100);
+                        if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
+                        {
+                            temp = num[0];
+                            num[0] = num[2];
+                            num[2] = temp;
+                        }
+                        if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[1].ToString()))
+                        {
+                            temp = num[0];
+                            num[0] = num[1];
+                            num[1] = temp;
+                        }
+                        if (Int32.Parse(num[1].ToString()) > Int32.Parse(num[2].ToString()))
+                        {
+                            temp = num[1];
+                            num[1] = num[2];
+                            num[2] = temp;
+                        }
+                        sort = num[0].ToString() + num[1].ToString() + num[2].ToString();
+                        InsertLottoSub(lID, "t_", sort, amt[1], totalDiscount, NumLen);
+                        //----------------------3ล่าง--------------------------------------//
+                        d = Int32.Parse(discount_rate.three_down);
+                        iamt = Int32.Parse(amt[2]);
+                        totalDiscount = (iamt - (iamt * d) / 100);
+                        InsertLottoSub(lID, "b", item.Number, amt[2], totalDiscount, NumLen);
+                    }
+                    else if(AmtCountSlash > 0)
+                    {
+                        char[] num = item.Number.ToCharArray();
+                        string[] amt = amount.Split('/');
+                        var totalDiscount = 0.00;
+                        var iamt = 0.00;
+                        var d = 0.00;
+                        var typ = item.bType;
+                        var sort = "";
+                        var temp = 'l';
+                        //----------------------2 ตัว-------------------------//
+                        if (NumLen == 2)
+                        {
+                            //------------------------ 2 บน -------------------------------//
+                            d = Int32.Parse(discount_rate.two_up);
+                            iamt = Int32.Parse(amt[0]);
+                            totalDiscount = (iamt - (iamt * d) / 100);
+                            InsertLottoSub(lID, "t", item.Number, amt[0], totalDiscount, NumLen);
+
+                            //---------------------- 2 ล่าง -------------------------------//
+                            d = Int32.Parse(discount_rate.two_down);
+                            iamt = Int32.Parse(amt[1]);
+                            totalDiscount = (iamt - (iamt * d) / 100);
+                            InsertLottoSub(lID, "b", item.Number, amt[1], totalDiscount, NumLen);
+                        }
+                        //----------------------3 ตัว-------------------------//
+                        else
+                        {
+                            if(typ=="tb")
+                            {
+                                //------------------------ 3 บน -------------------------------//
+                                d = Int32.Parse(discount_rate.three_up);
+                                iamt = Int32.Parse(amt[0]);
+                                totalDiscount = (iamt - (iamt * d) / 100);
+                                InsertLottoSub(lID, "t", item.Number, amt[0], totalDiscount, NumLen);
+
+                                //---------------------- 3 ล่าง -------------------------------//
+                                d = Int32.Parse(discount_rate.three_down);
+                                iamt = Int32.Parse(amt[1]);
+                                totalDiscount = (iamt - (iamt * d) / 100);
+                                InsertLottoSub(lID, "b", item.Number, amt[1], totalDiscount, NumLen);
+                            }
+                            else if(typ == "ft")
+                            {
+                                //------------------------ 3 บน -------------------------------//
+                                d = Int32.Parse(discount_rate.three_up);
+                                iamt = Int32.Parse(amt[1]);
+                                totalDiscount = (iamt - (iamt * d) / 100);
+                                InsertLottoSub(lID, "t", item.Number, amt[1], totalDiscount, NumLen);
+                                //---------------------- 3 หน้า -------------------------------//
+                                d = Int32.Parse(discount_rate.first_three);
+                                iamt = Int32.Parse(amt[0]);
+                                totalDiscount = (iamt - (iamt * d) / 100);
+                                InsertLottoSub(lID, "f", item.Number, amt[0], totalDiscount, NumLen);
+                            }
+                            else
+                            {
+                                return Json("Fail");
+                            }
+                        }
+                    }
+                    else if (AmtCountX > 0)
                     {
                         //------------------------2 ตัว ----------------------------//
                         if (NumLen == 2)
@@ -637,7 +749,7 @@ namespace Lotto.Controllers
                                 }
                                 if (typ == "f")
                                 {
-                                    d = Int32.Parse(discount_rate.first_three_);
+                                    d = Int32.Parse(discount_rate.first_three);
                                     iamt = Int32.Parse(amt[0]);
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     //---------------------- 3 หน้าเต็ง -------------------------------//
@@ -707,17 +819,17 @@ namespace Lotto.Controllers
                                 {
                                     //---------------------- 3 หน้าเต็ง -------------------------------//
                                     d = Int32.Parse(discount_rate.first_three);
-                                    iamt = Int32.Parse(amt[0]) / 2;
+                                    iamt = Int32.Parse(amt[0]) ;
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     InsertLottoSub(lID, "f", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount, NumLen);
                                     //---------------------- 3 บนเต็ง -------------------------------//
                                     d = Int32.Parse(discount_rate.three_up);
-                                    iamt = Int32.Parse(amt[0]) / 2;
+                                    iamt = Int32.Parse(amt[0]);
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     InsertLottoSub(lID, "t", num[0].ToString() + num[1].ToString() + num[2].ToString(), iamt.ToString(), totalDiscount, NumLen);
                                     //-------------------- 3 หน้าโต๊ด -------------------------------//
                                     d = Int32.Parse(discount_rate.first_three_ood);
-                                    iamt = Int32.Parse(amt[1]) / 2;
+                                    iamt = Int32.Parse(amt[1]);
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
                                     {
@@ -742,7 +854,7 @@ namespace Lotto.Controllers
 
                                     //-------------------- 3 บนโต๊ด -------------------------------//
                                     d = Int32.Parse(discount_rate.three_ood);
-                                    iamt = Int32.Parse(amt[1]) / 2;
+                                    iamt = Int32.Parse(amt[1]);
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     InsertLottoSub(lID, "t_", sort, iamt.ToString(), totalDiscount, NumLen);
                                 }
@@ -750,7 +862,7 @@ namespace Lotto.Controllers
                                 {
                                     //-------------------- 3 หน้าโต๊ด -------------------------------//
                                     d = Int32.Parse(discount_rate.first_three_ood);
-                                    iamt = Int32.Parse(amt[1]) / 2;
+                                    iamt = Int32.Parse(amt[1]);
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
                                     {
@@ -775,7 +887,7 @@ namespace Lotto.Controllers
 
                                     //-------------------- 3 บนโต๊ด -------------------------------//
                                     d = Int32.Parse(discount_rate.three_ood);
-                                    iamt = Int32.Parse(amt[1]) / 2;
+                                    iamt = Int32.Parse(amt[1]);
                                     totalDiscount = (iamt - (iamt * d) / 100);
                                     if (Int32.Parse(num[0].ToString()) > Int32.Parse(num[2].ToString()))
                                     {
@@ -946,12 +1058,12 @@ namespace Lotto.Controllers
                             {
                                 //------------------------ 3 บน -------------------------------//
                                 d = Int32.Parse(discount_rate.three_up);
-                                iamt = Int32.Parse(item.Amount) / 2;
+                                iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "t", item.Number, iamt.ToString(), totalDiscount, NumLen);
                                 //---------------------- 3 หน้า -------------------------------//
                                 d = Int32.Parse(discount_rate.first_three);
-                                iamt = Int32.Parse(item.Amount) / 2;
+                                iamt = Int32.Parse(item.Amount);
                                 totalDiscount = (iamt - (iamt * d) / 100);
                                 InsertLottoSub(lID, "f", item.Number, iamt.ToString(), totalDiscount, NumLen);
                             }

@@ -3,7 +3,13 @@
     ViewBag.Title = "BuyTotal";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-
+<style>
+    td.gn:hover {
+        background-color: #008000 !important;
+        ;
+        cursor: pointer;
+    }
+</style>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -21,6 +27,7 @@
                             <th>ยอดแทง</th>
                             <th>ยอดรับ</th>
                             <th>ยอดหัก%</th>
+                            <th>ถูก</th>
                             <th>ยอดถูก</th>
                             <th></th>
                         </tr>
@@ -31,13 +38,21 @@
                             if (item.UID != "0")
                             {
                                 var totalPoll = Int32.Parse(item.Reject) + Int32.Parse(item.Receive);
-                                <tr>
+                                <tr >
                                     <td>@item.Name</td>
                                     <td>@totalPoll</td>
                                     <td>@item.Receive</td>
                                     <td>@String.Format("{0:n}", Int32.Parse(item.Amount))</td>
                                     <td>@String.Format("{0:n}", Int32.Parse(item.AmountReceive))</td>
                                     <td>@String.Format("{0:n}", Int32.Parse(item.AmountDiscount))</td>
+                                    @if (item.AmountBetWin == "0")
+                                    {
+                                        <td>@String.Format("{0:n}", Int32.Parse(item.AmountBetWin))</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="gn" onclick="WinPoll('@item.UID')" data-toggle="modal" data-target="#checkModal2" data-backdrop="static" data-keyboard="false" style="background:#00FF00;cursor:pointer;">@String.Format("{0:n}", Int32.Parse(item.AmountWin))</td>
+                                    }      
                                     <td>@String.Format("{0:n}", Int32.Parse(item.AmountWin))</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary get-balance" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
@@ -53,7 +68,51 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="checkModal2" tabindex="-1" role="dialog" aria-labelledby="checkModal2Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:90%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="display:inline-block" id="checkPollModalLabel">ดูโพย</h5>
+                <button type="button" class="close x-modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered user-poll-detail-data-table">
+                    <thead>
+                        <tr>
+                            <th>สมาชิก</th>
+                            <th>ชื่อโพย</th>
+                            <th>สถานะ</th>
+                            <th>ยอดแทง</th>
+                            <th>ยอดรับ</th>
+                            <th>ยอดหัก%</th>
+                            <th>ยอดถูก</th>
+                            <th>วันที่ส่ง</th>
+                            <th>IP Adress</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <th>รวม</th>
+                            <th></th>
+                            <th></th>
+                            <th><span id="total_amount3"></span></th>
+                            <th><span id="total_recieve3"></span></th>
+                            <th><span id="total_discount3"></span></th>
+                            <th><span id="total_win3"></span></th>
+                            <th></th>
+                            <th>สรุป</th>
+                            <th><span id="total_sum3"></span></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="checkPollModal" tabindex="-1" role="dialog" aria-labelledby="checkPollModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width:90%;">
         <div class="modal-content">
@@ -77,7 +136,7 @@
                             <th><span id="total_amount"></span></th>
                             <th><span id="total_receive"></span></th>
                             <th><span id="total_discount"></span></th>
-                            <th>0</th>
+                            <th><span id="total_win"></span></th>
                             <th>สรุป</th>
                             <th><span id="total_discount_2"></span></th>
                         </tr>
@@ -354,6 +413,7 @@
 <script src="~/Assets/js/admin_list.js"></script>
 <script src="~/Assets/js/admin_list_edit.js"></script>
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
+<script src="~/Assets/js/bet_total.js"></script>
 
 <script>
     (function ($) {
@@ -365,7 +425,7 @@
         addPoll = '@Url.Action("AddPoll", "Admin")';
         getUserBetResult = '@Url.Action("GetUserBetResult", "Admin")';
         getUserTotalBalance = '@Url.Action("GetUserTotalBalance", "Admin")';
-
+        getUserPoll2='@Url.Action("getUserPoll2", "Admin")';
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
@@ -423,8 +483,10 @@
             },
             {
                 "title": "ยอดถูก",
-                "data": "gg",
-                "defaultContent": "0"
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return nwc(row.Win);
+                }
             },
             {
                 "title": "วันที่ส่ง",
@@ -452,7 +514,7 @@
             }
             ]
         });
-
+        
         $('.get-balance').click(function () {
             $('#balanceUser').html($(this).data("uname"));
             $('#balancePeriod').html($("#todayDate").html());
@@ -662,6 +724,7 @@
                     var total_receive = 0;
                     var total_discount = 0;
                     var reject_amount = 0;
+                    var total_win = 0;
 
                     pollTable.clear();
                     $.each(data, function (index, value) {
@@ -672,6 +735,7 @@
                             total_amount += parseInt(value.Amount);
                             total_receive += parseInt(value.Amount);
                             total_discount += parseInt(value.Discount);
+                            total_win += parseInt(value.Win);
                         }
                         else
                         {
@@ -689,7 +753,8 @@
                     $('#total_amount').html(nwc(total_amount));
                     $('#total_receive').html(nwc(total_receive));
                     $('#total_discount').html(nwc(total_discount));
-                    $('#total_discount_2').html(nwc(total_discount));
+                    $('#total_discount_2').html(nwc(total_discount - total_win));
+                    $('#total_win').html(nwc(total_win));
                     initialPoll();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -742,5 +807,92 @@
               setTimeout(function(){newWin.close();},10);
         });
     })(jQuery);
+    var pollDetailTable = $('.user-poll-detail-data-table').DataTable({
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "data": [],
+        "columns": [
+            {
+                "title": "สมาชิก",
+                "data": "name"
+            },
+            {
+                "title": "ชื่อโพย",
+                "data": "Poll_Name"
+            },
+            {
+                "title": "สถานะ",
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return row.Receive;
+                }
+            },
+            {
+                "title": "ยอดแทง",
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return nwc(row.Amount);
+                }
+            },
+            {
+                "title": "ยอดรับ",
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    if (row.Receive == "รับแล้ว") {
+                        return nwc(row.Amount);
+                    }
+                    else {
+                        return nwc("0");
+                    }
+                }
+            },
+            {
+                "title": "ยอดหัก%",
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return nwc(row.Discount);
+                }
+            },
+            {
+                "title": "ยอดถูก",
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return nwc(row.Win);
+                }
+            },
+            {
+                "title": "วันที่ส่ง",
+                "data": "create_date"
+            },
+            {
+                "title": "IP Adress",
+                "data": "IP"
+            },
+            {
+                "title": "",
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    return '<button type="button" class="btn btn-sm btn-primary showPoll" ' +
+                        'data-uid="' + row.UID + '" ' +
+                        'data-pollNumber="' + row.poll_number + '" ' +
+                        'data-pollName="' + row.Poll_Name + '" ' +
+                        'data-cBy="' + row.Create_By + '" ' +
+                        'data-cDate="' + row.create_date + '" ' +
+                        'data-discount="' + row.Discount + '" ' +
+                        'data-areceiv="' + row.Amount + '" ' +
+                        'data-amount="' + row.Amount + '" ' +
+                        'data-receive="' + row.Receive + '" ' +
+                        'data-id="' + row.ID + '" ' +
+                        'data-type="0" ' +
+                        'data-toggle="modal" data-target="#checkModal"  data-backdrop="static" data-keyboard="false">ดูโพย</button';
+                }
+            }
+        ]
+    });
 </script>
 
