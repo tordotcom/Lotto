@@ -145,7 +145,7 @@
 			if (result.value) {
 				$.ajax({
 					url: RejectPoll,
-					data: { PollID: pid ,PID:null},
+					data: { PollID: pid },
 					type: "POST",
 					dataType: "json",
 					success: function (data) {
