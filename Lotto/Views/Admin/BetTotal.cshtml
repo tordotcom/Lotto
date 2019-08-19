@@ -807,6 +807,13 @@
               setTimeout(function(){newWin.close();},10);
         });
     })(jQuery);
+    $(document).on('show.bs.modal', '.modal', function (event) {
+        var zIndex = 1040 + (10 * $('.modal:visible').length);
+        $(this).css('z-index', zIndex);
+        setTimeout(function () {
+            $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+        }, 0);
+    });
     var pollDetailTable = $('.user-poll-detail-data-table').DataTable({
         "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
         "paging": true,
