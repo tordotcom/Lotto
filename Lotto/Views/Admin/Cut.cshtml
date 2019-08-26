@@ -308,6 +308,43 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="mr-2 fa fa-bar-chart"></i>
+                    <strong class="card-title">กราฟ</strong>
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <canvas id="two_up_chart" data-name="กราฟ 2 บน"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="three_up_chart" data-name="กราฟ 3 บน"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="three_ood_chart" data-name="กราฟ 3 โต๊ด"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="first_three_chart" data-name="กราฟ 3 หน้า"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="first_three_ood_chart" data-name="กราฟ 3 หน้าโต๊ด"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="up_chart" data-name="กราฟ วิ่ง บน"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="down_chart" data-name="กราฟ วื่ง ล่าง"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="two_down_chart" data-name="กราฟ 2 ล่าง"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <canvas id="three_down_chart" data-name="กราฟ 3 ล่าง"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 <script>
     getRate = '@Url.Action("getRate", "Admin")';
@@ -323,6 +360,27 @@
     var down = @Html.Raw(down);
     var twodown = @Html.Raw(twodown);
     var threedown = @Html.Raw(threedown);
+
+    var two_up_val = [];
+    var three_up_val = [];
+    var three_ood_val = [];
+    var first_three_val = [];
+    var first_three_ood_val = [];
+    var up_val = [];
+    var down_val = [];
+    var two_down_val = [];
+    var three_down_val = [];
+
+    var two_up_label = [];
+    var three_up_label = [];
+    var three_ood_label = [];
+    var first_three_label = [];
+    var first_three_ood_label = [];
+    var up_label = [];
+    var down_label = [];
+    var two_down_label = [];
+    var three_down_label = [];
+
     console.log(up);
     $(document).ready(function () {
         $.ajax({
@@ -331,14 +389,182 @@
             dataType: "json",
             success: function (data) {
                 rate = data;
-                
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");
             }
         });
+
+        $.each(model,function(key,value){
+            //alert(JSON.stringify(value));
+            if (value.nLen == "2" && value.Type == "t"){
+                two_up_val.push(value.Amount);
+                two_up_label.push(value.Number);
+            }
+            if (value.nLen == "3" && value.Type == "t"){
+                three_up_val.push(value.Amount);
+                three_up_label.push(value.Number);
+            }
+            if (value.nLen == "3" && value.Type == "t_"){
+                three_ood_val.push(value.Amount);
+                three_ood_label.push(value.Number);
+            }
+            if (value.nLen == "3" && value.Type == "f"){
+                first_three_val.push(value.Amount);
+                first_three_label.push(value.Number);
+
+            }
+            if (value.nLen == "3" && value.Type == "f_"){
+                first_three_ood_val.push(value.Amount);
+                first_three_ood_label.push(value.Number);
+            }
+            if (value.nLen == "1" && value.Type == "t"){
+                up_val.push(value.Amount);
+                up_label.push(value.Number);
+            }
+            if (value.nLen == "1" && value.Type == "b"){
+                down_val.push(value.Amount);
+                down_label.push(value.Number);
+
+            }
+            if (value.nLen == "2" && value.Type == "b"){
+                two_down_val.push(value.Amount);
+                two_down_label.push(value.Number);
+
+            }
+            if (value.nLen == "3" && value.Type == "b"){
+                three_down_val.push(value.Amount);
+                three_down_label.push(value.Number);
+            }
+        });
+
+        var two_up_chart = document.getElementById("two_up_chart").getContext('2d');
+        var three_up_chart = document.getElementById("three_up_chart").getContext('2d');
+        var three_ood_chart = document.getElementById("three_ood_chart").getContext('2d');
+        var first_three_chart = document.getElementById("first_three_chart").getContext('2d');
+        var first_three_ood_chart = document.getElementById("first_three_ood_chart").getContext('2d');
+        var up_chart = document.getElementById("up_chart").getContext('2d');
+        var down_chart = document.getElementById("down_chart").getContext('2d');
+        var two_down_chart = document.getElementById("two_down_chart").getContext('2d');
+        var three_down_chart = document.getElementById("three_down_chart").getContext('2d');
+
+        $("canvas").each(function(){
+            var chart = $(this).attr('id');
+            var name = $(this).data('name');
+            var data;
+            if(chart == 'two_up_chart'){
+                data = {
+                    labels: two_up_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: two_up_val
+                    }]
+                };
+            }
+            if(chart == 'three_up_chart'){
+                data = {
+                    labels: three_up_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: three_up_val
+                    }]
+                };
+            }
+            if(chart == 'three_ood_chart'){
+                data = {
+                    labels: three_ood_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: three_ood_val
+                    }]
+                };
+            }
+            if(chart == 'first_three_chart'){
+                data = {
+                    labels: first_three_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: first_three_val
+                    }]
+                };
+            }
+            if(chart == 'first_three_ood_chart'){
+                data = {
+                    labels: first_three_ood_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: first_three_ood_val
+                    }]
+                };
+            }
+            if(chart == 'up_chart'){
+                data = {
+                    labels: up_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: up_val
+                    }]
+                };
+            }
+            if(chart == 'down_chart'){
+                data = {
+                    labels: down_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: down_val
+                    }]
+                };
+            }
+            if(chart == 'two_down_chart'){
+                data = {
+                    labels: two_down_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: two_down_val
+                    }]
+                };
+            }
+            if(chart == 'three_down_chart'){
+                data = {
+                    labels: three_down_label,
+                    datasets: [{
+                        backgroundColor: randomColor(),
+                        data: three_down_val
+                    }]
+                };
+            }
+            var myBarChart = new Chart(chart, {
+                type: 'bar',
+                data: data,
+                options: {
+                    title: {
+                              display: true,
+                              text: name,
+                              position: 'top'
+                          },
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+
     });
-    
+    function randomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
     $("#twoup").html(nwc(twoup));
     $("#threeup").html(nwc(threeup));
     $("#threedown").html(nwc(threedown));
@@ -380,33 +606,51 @@
             });
             for (var i = 0; i < Object.keys(model).length; i++) {
                 if (model[i].Type == "t" && model[i].nLen == "2") {
+                    two_up_val.push(model[i].Amount);
+                    two_up_label.push(model[i].Number);
                     $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "t") {
+                    three_up_val.push(model[i].Amount);
+                    three_up_label.push(model[i].Number);
                     $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "t_") {
+                    three_ood_val.push(model[i].Amount);
+                    three_ood_label.push(model[i].Number);
                     $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 //else if (model[i].nLen == "2" && model[i].Type == "t_") {
                 //    $("#t2_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 //}
                 else if (model[i].nLen == "3" && model[i].Type == "f") {
+                    first_three_val.push(model[i].Amount);
+                    first_three_label.push(model[i].Number);
                     $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "f_") {
+                    first_three_ood_val.push(model[i].Amount);
+                    first_three_ood_label.push(model[i].Number);
                     $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else if (model[i].nLen == "1" && model[i].Type == "t") {
+                    up_val.push(model[i].Amount);
+                    up_label.push(model[i].Number);
                     $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else if (model[i].nLen == "1" && model[i].Type == "b") {
+                    down_val.push(model[i].Amount);
+                    down_label.push(model[i].Number);
                     $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else if (model[i].nLen == "2" && model[i].Type == "b") {
+                    two_down_val.push(model[i].Amount);
+                    two_down_label.push(model[i].Number);
                     $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "b") {
+                    three_down_val.push(model[i].Amount);
+                    three_down_label.push(model[i].Number);
                     $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                 }
                 else {
@@ -433,33 +677,51 @@
             for (var i = 0; i < Object.keys(model).length; i++) {
                 for (var i = 0; i < Object.keys(model).length; i++) {
                     if (model[i].Type == "t" && model[i].nLen == "2") {
+                        two_up_val.push(model[i].Amount);
+                        two_up_label.push(model[i].Number);
                         $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "t") {
+                        three_up_val.push(model[i].Amount);
+                        three_up_label.push(model[i].Number);
                         $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "t_") {
+                        three_ood_val.push(model[i].Amount);
+                        three_ood_label.push(model[i].Number);
                         $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     //else if (model[i].nLen == "2" && model[i].Type == "t_") {
                     //    $("#t2_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     //}
                     else if (model[i].nLen == "3" && model[i].Type == "f") {
+                        first_three_val.push(model[i].Amount);
+                        first_three_label.push(model[i].Number);
                         $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "f_") {
+                        first_three_ood_val.push(model[i].Amount);
+                        first_three_ood_label.push(model[i].Number);
                         $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else if (model[i].nLen == "1" && model[i].Type == "t") {
+                        up_val.push(model[i].Amount);
+                        up_label.push(model[i].Number);
                         $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else if (model[i].nLen == "1" && model[i].Type == "b") {
+                        down_val.push(model[i].Amount);
+                        down_label.push(model[i].Number);
                         $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else if (model[i].nLen == "2" && model[i].Type == "b") {
+                        two_down_val.push(model[i].Amount);
+                        two_down_label.push(model[i].Number);
                         $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "b") {
+                        three_down_val.push(model[i].Amount);
+                        three_down_label.push(model[i].Number);
                         $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
                     }
                     else {
