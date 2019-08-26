@@ -401,6 +401,23 @@ namespace Lotto.Controllers
         //---------------------------------------------------------------------------------------------------//
         //-------------------------------------------function------------------------------------------------//
         //---------------------------------------------------------------------------------------------------//
+        //---------------------------------------- อัพโหลดรูป ---------------------------------------------------//
+        public JsonResult UploadIMG()
+        {
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                            //Use the following properties to get file's name, size and MIMEType
+                int fileSize = file.ContentLength;
+                string fileName = Request.Form["PID"].ToString()+".jpg";
+                string mimeType = file.ContentType;
+                System.IO.Stream fileContent = file.InputStream;
+                //To save file, use SaveAs method
+                file.SaveAs(Server.MapPath("~/PollIMG/") + fileName); //File will be saved in application root
+            }
+            return Json("ss");
+        }
+
         //---------------------------------------- แทงโพย ---------------------------------------------------//
         [HttpPost]
         public ActionResult addPoll(String PollName,string IPAddress, PollData Data) 
@@ -409,6 +426,7 @@ namespace Lotto.Controllers
             var id = Int32.Parse(user_id);
             var username = Session["Username"].ToString();
             dynamic discount_rate;
+            var returnPollID=0;
             Period P = db.Period.Where(s => s.Status == "1").Where(x=> x.BetStatus=="1").FirstOrDefault<Period>();
             Discount D = db.Discount.Where(x => x.Account.ID == id).FirstOrDefault<Discount>(); //-----user-----id//
             if(D!=null)
@@ -434,8 +452,9 @@ namespace Lotto.Controllers
                 db.Poll.Add(poll);
                 db.SaveChanges();
                 int pID = poll.ID;
+                returnPollID = pID;
 
-                
+
                 foreach (var item in Data.poll)
                 {
                     var lotto = new LottoMain();
@@ -1543,7 +1562,7 @@ namespace Lotto.Controllers
             {
                 return Json("timeout");
             }
-            return Json("ss");
+            return Json(new { PollID = returnPollID });
         }
         public void InsertLottoSub(int lid,string Type, string number, string amount,double totalDiscount,int NumLen)
         {

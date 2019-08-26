@@ -98,9 +98,18 @@ else
                                 <div class="col-md-3">
                                     <button type="button" class="btn btn-block btn-primary" id="sendLotto">ส่งโพย</button>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <label class="input-group-btn">
+                                            <span class="btn btn-warning">
+                                                Browse&hellip; <input type="file" style="display: none;"id="uploadEditorImage">
+                                            </span>
+                                        </label>
+                                        <input type="text" class="form-control" readonly>
+                                    </div>
+                                    @*<input type="file" id="uploadEditorImage" />*@
                                 </div>
-                                <div class="col-md-3" style="text-align:right;">
+                                <div class="col-md-3 offset-2" style="text-align:right;">
                                     <button type="button" class="btn btn-block btn-danger" id="clear">เคลียร์</button>
                                 </div>
                             </div>
@@ -170,6 +179,7 @@ else
 <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
     addPoll = '@Url.Action("AddPoll", "User")';
+    upload = '@Url.Action("UploadIMG", "User")';
     (function ($) {
         var value;
 
@@ -179,4 +189,37 @@ else
 
         $('#bet_info_template').tmpl(value).appendTo('#bet_info_area');
     })(jQuery);
+    $(document).on('change', ':file', function () {
+        var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        if (input.get(0).files[0].type == "image/jpeg") {
+            input.trigger('fileselect', [numFiles, label]);
+        }
+        else {
+            $(uploadEditorImage).val("");
+            //console.log($(this).get(0).files[0]);
+            Swal.fire({
+                type: 'error',
+                title: 'รูปภาพต้องเป็นไฟล์ประเภท jpg หรือ jpeg เท่านั้น',
+                showConfirmButton: true,
+            });
+        }
+    });
+
+    // We can watch for our custom `fileselect` event like this
+    $(document).ready(function () {
+        $(':file').on('fileselect', function (event, numFiles, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+
+        });
+    });
 </script>

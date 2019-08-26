@@ -632,6 +632,13 @@ $("#sendLotto").click(function () {
     //console.log(ipadd);
 
     if (state) {
+        var dataIMG = new FormData();
+        var files = $("#uploadEditorImage").get(0).files;
+        if (files.length > 0) {
+            //console.log(files[0].type);
+            dataIMG.append("HelpSectionImages", files[0]);
+        }
+
         $.ajax({
             url: addPoll,
             data: {
@@ -642,20 +649,48 @@ $("#sendLotto").click(function () {
             type: "POST",
             dataType: "json",
             success: function (data) {
-                if (data == "ss") {
-                    Swal.fire({
-                        type: 'success',
-                        title: 'บันทึกเรียบร้อย',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        onAfterClose: () => {
-                            location.reload();
+                console.log(data.PollID);
+                if (data != null) {
+                    dataIMG.append("PID", data.PollID);
+                    $.ajax({
+                        url: upload,
+                        data: dataIMG,
+                        type: "POST",
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data == "ss") {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'บันทึกเรียบร้อย',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    onAfterClose: () => {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                            else {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    onAfterClose: () => {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert("error");
                         }
-                    });
+                    });                   
                 }
                 else if (data == "timeout") {
                     Swal.fire({
-                        type: 'danger',
+                        type: 'error',
                         title: 'หวยงวดนี้ปิดแล้ว',
                         showConfirmButton: false,
                         timer: 1500,
@@ -672,7 +707,7 @@ $("#sendLotto").click(function () {
     }
     else {
         Swal.fire({
-            type: 'danger',
+            type: 'error',
             title: 'กรอกข้อมูลให้ถูกต้อง',
             showConfirmButton: true,
         });

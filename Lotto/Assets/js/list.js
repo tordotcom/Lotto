@@ -62,7 +62,7 @@
                     default:
                         type = "บ";
                 }
-                if (i == 30 || i == 60 || i == 0)
+                if (i == 25 || i == 50 || i == 0)
                 {
                     htmlString += '<div class="col-md-4">';
                 }
@@ -84,7 +84,7 @@
                         '<div class="col-xs-4 bet-price"><input type="text" maxlength="12" class="form-control form-control-sm input-color" placeholder="" disabled value="' + data[i].Amount + '"></div>' +
                         '</div>';
                 }
-                if (i == 29 || i == 59 || i == 89)
+                if (i == 24 || i == 49 || i == 74)
                 {
 					htmlString += '</div>';
                 }

@@ -288,6 +288,7 @@
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\total_bet.cs" />
+    <Compile Include="Models\UploadIMG.cs" />
     <Compile Include="Models\UserAllBet.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\User_Bet_Result.cs" />
@@ -651,6 +652,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="PollIMG\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
