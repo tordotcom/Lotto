@@ -12,21 +12,12 @@ namespace Lotto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Main_Rate
+    public partial class Poll_Image
     {
         public int ID { get; set; }
-        public string three_up { get; set; }
-        public string three_ood { get; set; }
-        public string three_down { get; set; }
-        public string two_up { get; set; }
-        public string two_ood { get; set; }
-        public string two_down { get; set; }
-        public string up { get; set; }
-        public string down { get; set; }
-        public string first_three { get; set; }
-        public string first_three_ood { get; set; }
+        public string Poll_ID { get; set; }
+        public string Name { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
-        public string admin_id { get; set; }
     }
 }

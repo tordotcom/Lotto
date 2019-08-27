@@ -27,5 +27,6 @@ namespace Lotto.Models
         public string first_three_ood { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
+        public string admin_id { get; set; }
     }
 }

@@ -404,16 +404,42 @@ namespace Lotto.Controllers
         //---------------------------------------- อัพโหลดรูป ---------------------------------------------------//
         public JsonResult UploadIMG()
         {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[12];
+            var random = new Random();
+
+            for (int j = 0; j < stringChars.Length; j++)
+            {
+                stringChars[j] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
             for (int i = 0; i < Request.Files.Count; i++)
             {
-                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                            //Use the following properties to get file's name, size and MIMEType
-                int fileSize = file.ContentLength;
-                string fileName = Request.Form["PID"].ToString()+".jpg";
-                string mimeType = file.ContentType;
-                System.IO.Stream fileContent = file.InputStream;
-                //To save file, use SaveAs method
-                file.SaveAs(Server.MapPath("~/PollIMG/") + fileName); //File will be saved in application root
+                try
+                {
+                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                    //Use the following properties to get file's name, size and MIMEType
+                    int fileSize = file.ContentLength;
+                    //(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+                    string fileName = finalString + ".jpg";
+                    //string fileName = Request.Form["PID"].ToString()+".jpg";
+                    string mimeType = file.ContentType;
+                    System.IO.Stream fileContent = file.InputStream;
+                    //To save file, use SaveAs method
+                    file.SaveAs(Server.MapPath("~/PollIMG/") + fileName); //File will be saved in application root
+                
+                    var img = new Poll_Image();
+                    img.Poll_ID = Request.Form["PID"].ToString(); //----------- user id-----------//
+                    img.Name = fileName;
+                    img.create_date = DateTime.Now;
+                    img.update_date = DateTime.Now;
+                    db.Poll_Image.Add(img);
+                    db.SaveChanges();
+                }
+                catch {
+                    return Json("fail");
+                }
             }
             return Json("ss");
         }
@@ -1697,6 +1723,24 @@ namespace Lotto.Controllers
 
             }
             return Json(totalbet);
+        }
+        //---------------------------------------- get รูปภาพแสดงในหน้าดูโพย ---------------------------------------------------//
+        [HttpPost]
+        public ActionResult getImage(string PID)
+        {
+            try
+            {
+                Poll_Image img = db.Poll_Image.Where(x => x.Poll_ID == PID).FirstOrDefault<Poll_Image>();
+                if (img != null)
+                {
+                    return Json(img);
+                }
+            }
+            catch
+            {
+                return Json("empty");
+            }
+            return Json("empty");
         }
 
         public bool VerifyHash(string plainText, string hashValue)

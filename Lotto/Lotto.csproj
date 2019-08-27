@@ -269,6 +269,9 @@
     </Compile>
     <Compile Include="Models\PollData.cs" />
     <Compile Include="Models\Poll_Detail.cs" />
+    <Compile Include="Models\Poll_Image.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Poll_Result.cs" />
     <Compile Include="Models\Rate.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>

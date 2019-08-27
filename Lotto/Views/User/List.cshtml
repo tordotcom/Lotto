@@ -123,6 +123,7 @@
                         <h3>สรุปโพย</h3>
                     </div>
                     <div class="col-md-6 right">
+                        <button type="button" class="btn btn-sm btn-warning imgPoll">ดูรูปโพย</button>
                         <button type="button" class="btn btn-sm btn-default" id="printPoll">พิมพ์</button>
                     </div>
                     <div class="col-md-12">
@@ -487,6 +488,7 @@
 <script src="~/Assets/js/list.js"></script>
 <script>
     getPoll = '@Url.Action("getPoll", "User")';
+    getImg = '@Url.Action("getImage", "User")';
     (function ($) {
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],

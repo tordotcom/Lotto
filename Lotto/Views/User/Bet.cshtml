@@ -102,7 +102,7 @@ else
                                     <div class="input-group">
                                         <label class="input-group-btn">
                                             <span class="btn btn-warning">
-                                                Browse&hellip; <input type="file" style="display: none;"id="uploadEditorImage">
+                                                เลือกรูปภาพ&hellip; <input type="file" style="display: none;"id="uploadEditorImage">
                                             </span>
                                         </label>
                                         <input type="text" class="form-control" readonly>
@@ -192,12 +192,14 @@ else
     $(document).on('change', ':file', function () {
         var input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+
         if (input.get(0).files[0].type == "image/jpeg") {
             input.trigger('fileselect', [numFiles, label]);
         }
         else {
             $(uploadEditorImage).val("");
+            input.trigger('fileselect', [0, ""]);
             //console.log($(this).get(0).files[0]);
             Swal.fire({
                 type: 'error',
