@@ -632,7 +632,7 @@ $("#sendPoll").click(function () {
             type: "POST",
             dataType: "json",
             success: function (data) {
-                if (data == "ss") {
+                if (data != "fail") {
                     Swal.fire({
                         type: 'success',
                         title: 'บันทึกเรียบร้อย',

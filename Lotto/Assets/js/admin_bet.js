@@ -623,16 +623,60 @@ $("#sendLotto").click(function () {
     //console.log(bet);
     var uid = $(this).attr("data-id");
     if (state) {
+        var dataIMG = new FormData();
+        var files = $("#uploadEditorImage").get(0).files;
+        if (files.length > 0) {
+            //console.log(files[0].type);
+            dataIMG.append("HelpSectionImages", files[0]);
+        }
         $.ajax({
             url: addPoll,
             data: { PollName: name, IPAddress: ipadd, poll: bet, UID: uid , PID: null},
             type: "POST",
             dataType: "json",
             success: function (data) {
-                if (data == "ss") {
+                if (data != null) {
+                    dataIMG.append("PID", data.PollID);
+                    $.ajax({
+                        url: upload,
+                        data: dataIMG,
+                        type: "POST",
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data == "ss") {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: 'บันทึกเรียบร้อย',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    onAfterClose: () => {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                            else {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'เกิดข้อผิดพลาดในการอัพโหลดรูปภาพ',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    onAfterClose: () => {
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert("error");
+                        }
+                    });
+                }
+                else if (data == "timeout") {
                     Swal.fire({
-                        type: 'success',
-                        title: 'บันทึกเรียบร้อย',
+                        type: 'error',
+                        title: 'หวยงวดนี้ปิดแล้ว',
                         showConfirmButton: false,
                         timer: 1500,
                         onAfterClose: () => {
@@ -640,6 +684,7 @@ $("#sendLotto").click(function () {
                         }
                     });
                 }
+                else { }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");

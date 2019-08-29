@@ -22,6 +22,9 @@
         background: #008000 !important;
         cursor: pointer;
     }
+    .modal {
+        overflow-y: auto;
+    }
 </style>
 <div class="row">
     <div class="col-md-12">
@@ -397,6 +400,7 @@
                         <h3>สรุปโพย</h3>
                     </div>
                     <div class="col-md-6 right">
+                        <button type="button" class="btn btn-sm btn-info imgPoll" pid="">ดูรูปโพย</button>
                         <button type="button" class="btn btn-sm btn-warning hidden" id="editPoll">แก้ไข</button>
                         <button type="button" class="btn btn-sm btn-danger hidden" id="reject">คืนทั้งใบ</button>
                         <button type="button" class="btn btn-sm btn-default" id="printPoll">พิมพ์</button>
@@ -517,7 +521,7 @@
     addPoll = '@Url.Action("AddPoll", "Admin")';
     getUserBetResult = '@Url.Action("GetUserBetResult", "Admin")';
     getUserTotalBalance = '@Url.Action("GetUserTotalBalance", "Admin")';
-
+    getImg = '@Url.Action("getImage", "User")';
     var model = @Html.Raw(Json.Encode(Model));
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);

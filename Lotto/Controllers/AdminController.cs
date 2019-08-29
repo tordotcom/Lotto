@@ -923,6 +923,49 @@ namespace Lotto.Controllers
         //---------------------------------------------------------------------------------------------------//
         //-------------------------------------------function------------------------------------------------//
         //---------------------------------------------------------------------------------------------------//
+        //---------------------------------------- อัพโหลดรูป ---------------------------------------------------//
+        public JsonResult UploadIMG()
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[12];
+            var random = new Random();
+
+            for (int j = 0; j < stringChars.Length; j++)
+            {
+                stringChars[j] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                try
+                {
+                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                    //Use the following properties to get file's name, size and MIMEType
+                    int fileSize = file.ContentLength;
+                    //(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
+                    string fileName = finalString + ".jpg";
+                    //string fileName = Request.Form["PID"].ToString()+".jpg";
+                    string mimeType = file.ContentType;
+                    System.IO.Stream fileContent = file.InputStream;
+                    //To save file, use SaveAs method
+                    file.SaveAs(Server.MapPath("~/PollIMG/") + fileName); //File will be saved in application root
+
+                    var img = new Poll_Image();
+                    img.Poll_ID = Request.Form["PID"].ToString(); //----------- user id-----------//
+                    img.Name = fileName;
+                    img.create_date = DateTime.Now;
+                    img.update_date = DateTime.Now;
+                    db.Poll_Image.Add(img);
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    return Json("fail");
+                }
+            }
+            return Json("ss");
+        }
         //----------------------------------------check role-------------------------------------------------//
         public bool Check_Role(string plainText, string hashValue)
         {
@@ -1516,6 +1559,7 @@ namespace Lotto.Controllers
             dynamic discount_rate;
             var user_id = Session["ID"].ToString();
             var id = Int32.Parse(user_id);
+            var returnPollID = 0;
             Period P = db.Period.Where(s => s.Status == "1").FirstOrDefault<Period>();
             Discount D = db.Discount.Where(x => x.Account.ID == id).FirstOrDefault<Discount>(); //-----user-----id//
             if (D != null)
@@ -1571,6 +1615,7 @@ namespace Lotto.Controllers
                 db.SaveChanges();
 
                 pollID = poll.ID;
+                returnPollID = pollID;
             }
 
             foreach (var item in Data.poll)
@@ -2674,7 +2719,7 @@ namespace Lotto.Controllers
                 }
             }
             db.SaveChanges();
-            return Json("ss");
+            return Json(new { PollID = returnPollID });
         }
         public void InsertLottoSub(int lid, string Type, string number, string amount, double totalDiscount, int NumLen)
         {

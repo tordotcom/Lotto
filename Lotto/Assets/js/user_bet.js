@@ -649,7 +649,7 @@ $("#sendLotto").click(function () {
             type: "POST",
             dataType: "json",
             success: function (data) {
-                console.log(data.PollID);
+                //console.log(data.PollID);
                 if (data != null) {
                     dataIMG.append("PID", data.PollID);
                     $.ajax({
@@ -686,7 +686,7 @@ $("#sendLotto").click(function () {
                         error: function (xhr, ajaxOptions, thrownError) {
                             alert("error");
                         }
-                    });                   
+                    });
                 }
                 else if (data == "timeout") {
                     Swal.fire({
@@ -699,6 +699,7 @@ $("#sendLotto").click(function () {
                         }
                     });
                 }
+                else {}
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("error");

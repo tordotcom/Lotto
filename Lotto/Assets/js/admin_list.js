@@ -11,7 +11,7 @@
         var poll_name = $(this).attr("data-pollName");
         var poll_id = $(this).attr("data-id");
 		var uid = $(this).attr("data-UID");
-
+        $(".imgPoll").attr("pid", poll_id);
 		document.getElementById('sendPoll').setAttribute('data-uid', uid);
 		document.getElementById('sendPoll').setAttribute('data-pid', poll_id);
 
@@ -166,4 +166,37 @@
 			}
 		});
     });
+    
 }
+var myWindow;
+$(".imgPoll").click(function () {
+    console.log("function");
+    var poll_id = $(this).attr("pid");
+
+    //console.log(poll_id);
+    $.ajax({
+        url: getImg,
+        data: { PID: poll_id },
+        type: "POST",
+        dataType: "json",
+        success: function (data) {
+            if (data == "empty") {
+                Swal.fire({
+                    type: 'warning',
+                    title: 'ไม่มีรูปภาพ',
+                });
+            }
+            else {
+                console.log(myWindow);
+                if (myWindow) {
+                    myWindow.close();
+                }
+                myWindow = window.open("", "", "width=600,height=450");
+                myWindow.document.write("<p><img src='../PollIMG/" + data.Name + "' /></p>");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("error");
+        }
+    })
+});

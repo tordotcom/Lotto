@@ -6,8 +6,11 @@
 <style>
     td.gn:hover {
         background-color: #008000 !important;
-        ;
+        
         cursor: pointer;
+    }
+    .modal {
+        overflow-y: auto;
     }
 </style>
 <div class="row">
@@ -161,6 +164,7 @@
                         <h3>สรุปโพย</h3>
                     </div>
                     <div class="col-md-6 right">
+                        <button type="button" class="btn btn-sm btn-info imgPoll" pid="">ดูรูปโพย</button>
                         <button type="button" class="btn btn-sm btn-warning hidden" id="editPoll">แก้ไข</button>
                         <button type="button" class="btn btn-sm btn-danger hidden" id="reject">คืนทั้งใบ</button>
                         <button type="button" class="btn btn-sm btn-default" id="printPoll">พิมพ์</button>
@@ -425,7 +429,8 @@
         addPoll = '@Url.Action("AddPoll", "Admin")';
         getUserBetResult = '@Url.Action("GetUserBetResult", "Admin")';
         getUserTotalBalance = '@Url.Action("GetUserTotalBalance", "Admin")';
-        getUserPoll2='@Url.Action("getUserPoll2", "Admin")';
+        getUserPoll2 = '@Url.Action("getUserPoll2", "Admin")';
+        getImg = '@Url.Action("getImage", "User")';
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
         });
