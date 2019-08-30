@@ -186,7 +186,8 @@
                                                         if (item.nLen == "2" && item.Type == "t")
                                                         {
                                                             twoup += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum= (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].TwoUp))- Int32.Parse(ViewBag.Rate[0].TwoUp_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -198,7 +199,8 @@
                                                         if (item.nLen == "3" && item.Type == "t")
                                                         {
                                                             threeup += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].ThreeUP)) - Int32.Parse(ViewBag.Rate[0].ThreeUP_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -210,7 +212,8 @@
                                                         if (item.nLen == "3" && item.Type == "t_")
                                                         {
                                                             three_ += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].ThreeOod)) - Int32.Parse(ViewBag.Rate[0].ThreeOod_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -234,7 +237,8 @@
                                                         if (item.nLen == "3" && item.Type == "f")
                                                         {
                                                             fthree += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].FirstThree)) - Int32.Parse(ViewBag.Rate[0].FirstThree_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -246,7 +250,8 @@
                                                         if (item.nLen == "3" && item.Type == "f_")
                                                         {
                                                             fthree_ += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].FirstThreeOod)) - Int32.Parse(ViewBag.Rate[0].FirstThreeOod_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -258,7 +263,8 @@
                                                         if (item.nLen == "1" && item.Type == "t")
                                                         {
                                                             up += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].Up)) - Int32.Parse(ViewBag.Rate[0].Up_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -270,7 +276,8 @@
                                                         if (item.nLen == "1" && item.Type == "b")
                                                         {
                                                             down += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].Down)) - Int32.Parse(ViewBag.Rate[0].Down_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -282,7 +289,8 @@
                                                         if (item.nLen == "2" && item.Type == "b")
                                                         {
                                                             twodown += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].TwoDown)) - Int32.Parse(ViewBag.Rate[0].TwoDown_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -294,7 +302,8 @@
                                                         if (item.nLen == "3" && item.Type == "b")
                                                         {
                                                             threedown += Int32.Parse(item.Amount);
-                                                            <tr><td nowrap>@item.Number = @item.Amount</td></tr>
+                                                            var sum = (Int32.Parse(item.Amount) * Int32.Parse(ViewBag.Rate[0].ThreeDown)) - Int32.Parse(ViewBag.Rate[0].ThreeDown_discount);
+                                                            <tr><td nowrap>@item.Number = @item.Amount <span style="color:red">(@String.Format("{0:0,0}", sum))</span></td></tr>
                                                         }
                                                     }
                                                 </table>
@@ -350,6 +359,7 @@
     getRate = '@Url.Action("getRate", "Admin")';
     var rate;
     var model = @Html.Raw(Json.Encode(Model));
+    var modelRate = @Html.Raw(Json.Encode(ViewBag.Rate));
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);
     var three_ = @Html.Raw(three_);
@@ -651,17 +661,20 @@
                 if (model[i].Type == "t" && model[i].nLen == "2") {
                     //two_up_val.push(model[i].Amount);
                     //two_up_label.push(model[i].Number);
-                    $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].TwoUp)) - modelRate[0].TwoUp_discount;
+                    $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "t") {
                     //three_up_val.push(model[i].Amount);
                     //three_up_label.push(model[i].Number);
-                    $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeUP)) - modelRate[0].ThreeUP_discount;
+                    $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "t_") {
                     //three_ood_val.push(model[i].Amount);
                     //three_ood_label.push(model[i].Number);
-                    $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeOod)) - modelRate[0].ThreeOod_discount;
+                    $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 //else if (model[i].nLen == "2" && model[i].Type == "t_") {
                 //    $("#t2_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
@@ -669,32 +682,38 @@
                 else if (model[i].nLen == "3" && model[i].Type == "f") {
                     //first_three_val.push(model[i].Amount);
                     //first_three_label.push(model[i].Number);
-                    $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].FirstThree)) - modelRate[0].FirstThree_discount;
+                    $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "f_") {
                     //first_three_ood_val.push(model[i].Amount);
                     //first_three_ood_label.push(model[i].Number);
-                    $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].FirstThreeOod)) - modelRate[0].FirstThreeOod_discount;
+                    $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else if (model[i].nLen == "1" && model[i].Type == "t") {
                     //up_val.push(model[i].Amount);
                     //up_label.push(model[i].Number);
-                    $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].Up)) - modelRate[0].Up_discount;
+                    $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else if (model[i].nLen == "1" && model[i].Type == "b") {
                     //down_val.push(model[i].Amount);
                     //down_label.push(model[i].Number);
-                    $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].Down)) - modelRate[0].Down_discount;
+                    $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else if (model[i].nLen == "2" && model[i].Type == "b") {
                     //two_down_val.push(model[i].Amount);
                     //two_down_label.push(model[i].Number);
-                    $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].TwoDown)) - modelRate[0].TwoDown_discount;
+                    $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else if (model[i].nLen == "3" && model[i].Type == "b") {
                     //three_down_val.push(model[i].Amount);
                     //three_down_label.push(model[i].Number);
-                    $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                    var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeDown)) - modelRate[0].ThreeDown_discount;
+                    $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                 }
                 else {
 
@@ -722,17 +741,20 @@
                     if (model[i].Type == "t" && model[i].nLen == "2") {
                         //two_up_val.push(model[i].Amount);
                         //two_up_label.push(model[i].Number);
-                        $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].TwoUp)) - modelRate[0].TwoUp_discount;
+                        $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "t") {
                         //three_up_val.push(model[i].Amount);
                         //three_up_label.push(model[i].Number);
-                        $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeUP)) - modelRate[0].ThreeUP_discount;
+                        $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "t_") {
                         //three_ood_val.push(model[i].Amount);
                         //three_ood_label.push(model[i].Number);
-                        $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeOod)) - modelRate[0].ThreeOod_discount;
+                        $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     //else if (model[i].nLen == "2" && model[i].Type == "t_") {
                     //    $("#t2_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
@@ -740,32 +762,38 @@
                     else if (model[i].nLen == "3" && model[i].Type == "f") {
                         //first_three_val.push(model[i].Amount);
                         //first_three_label.push(model[i].Number);
-                        $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].FirstThree)) - modelRate[0].FirstThree_discount;
+                        $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "f_") {
                         //first_three_ood_val.push(model[i].Amount);
                         //first_three_ood_label.push(model[i].Number);
-                        $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].FirstThreeOod)) - modelRate[0].FirstThreeOod_discount;
+                        $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else if (model[i].nLen == "1" && model[i].Type == "t") {
                         //up_val.push(model[i].Amount);
                         //up_label.push(model[i].Number);
-                        $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].Up)) - modelRate[0].Up_discount;
+                        $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else if (model[i].nLen == "1" && model[i].Type == "b") {
                         //down_val.push(model[i].Amount);
                         //down_label.push(model[i].Number);
-                        $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].Down)) - modelRate[0].Down_discount;
+                        $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else if (model[i].nLen == "2" && model[i].Type == "b") {
                         //two_down_val.push(model[i].Amount);
                         //two_down_label.push(model[i].Number);
-                        $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].TwoDown)) - modelRate[0].TwoDown_discount;
+                        $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else if (model[i].nLen == "3" && model[i].Type == "b") {
                         //three_down_val.push(model[i].Amount);
                         //three_down_label.push(model[i].Number);
-                        $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                        var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeDown)) - modelRate[0].ThreeDown_discount;
+                        $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(sum) + ')</span></td></tr>');
                     }
                     else {
 
