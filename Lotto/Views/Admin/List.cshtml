@@ -6,6 +6,7 @@
 @{
     double pollCount = 0;
     var receive = "รับแล้ว";
+    var checkClass = "";
     double amount = 0;
     double total_amount = 0;
     double amount_receive = 0;
@@ -50,6 +51,7 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
+
                             if(item.Status=="1")
                             {
                                 Status = "hidden";
@@ -57,7 +59,16 @@
                             pollCount += 1;
                             if (item.Receive == "1")
                             {
-                                receive = "รับแล้ว";
+                                if(item.Check_Status=="1")
+                                {
+                                    receive = "ตรวจแล้ว";
+                                    checkClass = "background-color:rgba(0,255,127,0.5);";
+                                }
+                                else{
+                                    receive = "รับแล้ว";
+                                    checkClass = "";
+                                }
+
                                 if (item.Amount != "")
                                 {
                                     amount = Double.Parse(item.Amount);
@@ -102,8 +113,8 @@
                                 reject_amount += amount;
                                 discount = 0;
                             }
-                            <tr>
-                                <td>@item.name</td>
+                            <tr style="@checkClass">
+                                <td >@item.name</td>
                                 <td>@item.poll_number</td>
                                 <td>@item.Poll_Name</td>
                                 <td>@item.ID</td>
@@ -114,7 +125,7 @@
                                 <td>@String.Format("{0:n}", win )</td>@*-------------------------- ตรวจเลขถูก  -----------------------------*@
                                 <td>@String.Format("{0:dd/MM/yyyy HH:mm:ss}", item.create_date)</td>
                                 <td>@item.IP</td>
-                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="0">ดูโพย</button></td>
+                                <td><button type="button" class="btn btn-sm btn-primary showPoll" data-uid="@item.UID" data-pollNumber="@item.poll_number" data-pollName="@item.Poll_Name" data-cBy="@item.Create_By" data-cDate="@item.create_date" data-toggle="modal" data-discount="@discount" data-areceiv="@amount_receive" data-amount="@amount" data-receive="@receive" data-check="@item.Check_Status" data-pCount="@pollCount" data-id="@item.ID" data-target="#checkModal"  data-backdrop="static" data-keyboard="false" data-type="0">ดูโพย</button></td>
                             </tr>
                         }
                     </tbody>
@@ -155,6 +166,7 @@
                         <h3>สรุปโพย</h3>
                     </div>
                     <div class="col-md-6 right" id="edit_reject">
+                        <button type="button" class="btn btn-sm btn-success" id="checkedPoll">ตรวจแล้ว</button>
                         <button type="button" class="btn btn-sm btn-info imgPoll">ดูรูปโพย</button>
                         <button type="button" class="btn btn-sm btn-warning @Status" id="editPoll">แก้ไข</button>
                         <button type="button" class="btn btn-sm btn-danger @Status" id="reject">คืนทั้งใบ</button>
@@ -269,9 +281,11 @@
 <script>
     getPoll = '@Url.Action("getPoll", "User")';
     getPollHeadDetail = '@Url.Action("getPoll", "Admin")';
-    RejectPoll = '@Url.Action("RejectPoll", "Admin")';
     addPoll = '@Url.Action("AddPoll", "Admin")';
     getImg = '@Url.Action("getImage", "User")';
+
+    RejectPoll = '@Url.Action("RejectPoll", "Admin")';
+    ConfirmCheckPoll = '@Url.Action("ConfirmCheckPoll", "Admin")';
     var rowPoll = 0;
     (function ($) {
         initialPoll();

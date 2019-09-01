@@ -142,6 +142,7 @@
           <Property Name="Receive" Type="nvarchar" MaxLength="50" />
           <Property Name="Create_By" Type="nvarchar" MaxLength="50" />
           <Property Name="IP" Type="nvarchar" MaxLength="100" />
+          <Property Name="Check_Status" Type="nvarchar" MaxLength="50" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -516,6 +517,7 @@
           <NavigationProperty Name="Period" Relationship="Self.FK_Poll_Period" FromRole="Poll" ToRole="Period" />
           <Property Name="Poll_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Check_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -878,6 +880,7 @@
           <EntitySetMapping Name="Poll">
             <EntityTypeMapping TypeName="ltfomModel.Poll">
               <MappingFragment StoreEntitySet="Poll">
+                <ScalarProperty Name="Check_Status" ColumnName="Check_Status" />
                 <ScalarProperty Name="IP" ColumnName="IP" />
                 <ScalarProperty Name="Poll_Name" ColumnName="Poll_Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
