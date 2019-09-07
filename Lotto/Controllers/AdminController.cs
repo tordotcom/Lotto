@@ -264,7 +264,21 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Name,t1.Receive,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,t1.IP,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber from(SELECT p.[ID],p.UID,p.Poll_Name,pe.Check_Result,a.Name,p.[Receive],p.[Create_By],p.IP,sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date FROM [dbo].Period pe left join(SELECT [ID],[UID],[Poll_Name],[Period_ID],[Receive],IP, create_date, Create_By FROM[dbo].[Poll]) p on pe.ID = p.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID  left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin] FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID  left join(SELECT [ID],[Name] FROM [dbo].[Account]) a on p.UID =a.ID where p.Period_ID=@period " + param + " group by p.ID,p.Poll_Name,p.IP,p.Receive,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result) t1 order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
+                        string query = "select t1.ID,t1.UID,t1.Poll_Name,t1.Name,t1.Receive,t1.Check_Status,t1.Create_By,t1.amount,t1.discount,t1.AmountWin,t1.Check_Result,t1.create_date,t1.IP,Row_Number() OVER (Partition BY t1.UID ORDER BY t1.UID) as rNumber"+
+                                " from("+
+                                " SELECT p.[ID],p.UID,p.Poll_Name,pe.Check_Result,a.Name,p.[Receive],p.[Check_Status],p.[Create_By],p.IP,sum(CAST(LS.Amount as int)) as amount,ROUND(sum(CAST(ls.AmountDiscount as float)),0) as discount,sum(CAST(ls.AmountWin as int)) as AmountWin,p.create_date"+
+                                    " FROM [dbo].Period pe"+
+                                    " left join(SELECT [ID],[UID],[Poll_Name],[Period_ID],[Receive],[Check_Status],IP, create_date, Create_By"+
+                                    " FROM[dbo].[Poll]) p on pe.ID = p.Period_ID"+
+                                    " left join(SELECT [ID],[Poll_ID]"+
+                                    " FROM [dbo].[LottoMain]) LM on p.ID=LM.Poll_ID"+
+                                    " left join(SELECT [ID],[Lotto_ID],[Amount],[AmountDiscount],[AmountWin]"+
+                                    " FROM [dbo].[LottoSub]) LS on LM.ID=LS.Lotto_ID"+
+                                    " left join(SELECT [ID],[Name]"+
+                                    " FROM [dbo].[Account]) a on p.UID =a.ID"+
+                                    " where p.Period_ID=@period " + param + " group by p.ID,p.Poll_Name,p.IP,p.Receive,p.Check_Status,p.create_date,p.[Create_By],a.Name,p.UID,pe.Check_Result"+
+                                " ) t1"+
+                                " order by Row_Number() OVER (Partition BY t1.Name ORDER BY t1.Name) desc";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
@@ -278,6 +292,7 @@ namespace Lotto.Controllers
                                     ID = Reader["ID"].ToString(),
                                     name = Reader["Name"].ToString(),
                                     Receive = Reader["Receive"].ToString(),
+                                    Check_Status = Reader["Check_Status"].ToString(),
                                     Amount = Reader["amount"].ToString(),
                                     Discount = Reader["discount"].ToString(),
                                     Create_By = Reader["Create_By"].ToString(),
@@ -1698,6 +1713,27 @@ namespace Lotto.Controllers
             {
                 P.update_date = DateTime.Now;
                 P.Receive = "0";
+                db.Entry(P).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json("ss");
+            }
+        }
+
+        //------------------------------------- Reject poll --------------------------------//
+        [HttpPost]
+        public ActionResult ConfirmCheckPoll(string PollID)
+        {
+            int PID = Int32.Parse(PollID);
+            Poll P = db.Poll.Find(PID);
+
+            if (P == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                P.update_date = DateTime.Now;
+                P.Check_Status = "1";
                 db.Entry(P).State = EntityState.Modified;
                 db.SaveChanges();
                 return Json("ss");

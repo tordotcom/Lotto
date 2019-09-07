@@ -13,6 +13,7 @@ namespace Lotto.Models
         public string poll_number { get; set; }
         public string Poll_Name { get; set; }
         public string Receive { get; set; }
+        public string Check_Status { get; set; }
         public string Amount { get; set; }
         public string Discount { get; set; }
         public string Create_By { get; set; }
