@@ -19,5 +19,6 @@ namespace Lotto.Models
         public string Value { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
+        public Nullable<int> UID { get; set; }
     }
 }

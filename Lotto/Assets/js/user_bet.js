@@ -650,7 +650,30 @@ $("#sendLotto").click(function () {
             dataType: "json",
             success: function (data) {
                 //console.log(data.PollID);
-                if (data != null) {
+                if (data == "timeout")
+                {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'หวยงวดนี้ปิดแล้ว',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onAfterClose: () => {
+                            location.reload();
+                        }
+                    });
+                }
+                else if (data == "fail") {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'เกิดข้อผิดพลาด',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onAfterClose: () => {
+                            location.reload();
+                        }
+                    });
+                }
+                else if (data != null) {
                     dataIMG.append("PID", data.PollID);
                     $.ajax({
                         url: upload,
@@ -685,17 +708,6 @@ $("#sendLotto").click(function () {
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             alert("error");
-                        }
-                    });
-                }
-                else if (data == "timeout") {
-                    Swal.fire({
-                        type: 'error',
-                        title: 'หวยงวดนี้ปิดแล้ว',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        onAfterClose: () => {
-                            location.reload();
                         }
                     });
                 }

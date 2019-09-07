@@ -42,7 +42,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT u.ID,u.Username,u.Password,u.Last_Login,r.Role FROM[dbo].[Account] u left join(SELECT[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on u.ID=ar.UID left join(select ID, Role from [dbo].[Role]) r on ar.Role_ID=r.ID where u.Username=@username and u.Status=1 and Delete_Status=0";
+                    string query = "SELECT u.ID,u.Username,u.Password,u.Last_Login,r.Role,u.Create_By_UID FROM[dbo].[Account] u left join(SELECT[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on u.ID=ar.UID left join(select ID, Role from [dbo].[Role]) r on ar.Role_ID=r.ID where u.Username=@username and u.Status=1 and Delete_Status=0";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@username", objUser.Username.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
@@ -58,6 +58,7 @@ namespace Lotto.Controllers
                                 Password = Reader["Password"].ToString(),
                                 Last_Login = Reader["Last_Login"].ToString(),
                                 Role = Reader["Role"].ToString(),
+                                ParentID = Reader["Create_By_UID"].ToString()
                             });
                         }
                         cnn.Close();
@@ -85,6 +86,7 @@ namespace Lotto.Controllers
                             Session["Last_Login"] = user[0].Last_Login;
                             //Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
                             Session["SelectPeriod"] = 0;
+                            Session["ParentID"] = user[0].ID;
                             return RedirectToAction("Index", "Admin");                            
                         }
                         else
@@ -98,6 +100,7 @@ namespace Lotto.Controllers
                                 Session["Last_Login"] = user[0].Last_Login;
                                 Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
                                 Session["SelectPeriod"] = 0;
+                                Session["ParentID"] = user[0].ParentID;
                                 int id = Int32.Parse(user[0].ID);
                                 Account A = db.Account.Where(s => s.ID == id).FirstOrDefault<Account>();
                                 if (A != null)

@@ -142,6 +142,7 @@
           <Property Name="Receive" Type="nvarchar" MaxLength="50" />
           <Property Name="Create_By" Type="nvarchar" MaxLength="50" />
           <Property Name="IP" Type="nvarchar" MaxLength="100" />
+          <Property Name="Check_Status" Type="nvarchar" MaxLength="50" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -222,6 +223,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="Value" Type="nvarchar" MaxLength="150" />
           <Property Name="create_date" Type="datetime" />
@@ -516,6 +518,7 @@
           <NavigationProperty Name="Period" Relationship="Self.FK_Poll_Period" FromRole="Poll" ToRole="Period" />
           <Property Name="Poll_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Check_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -589,6 +592,7 @@
           <Property Name="Value" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="UID" Type="Int32" />
         </EntityType>
         <Association Name="FK_Discount_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1">
@@ -878,6 +882,7 @@
           <EntitySetMapping Name="Poll">
             <EntityTypeMapping TypeName="ltfomModel.Poll">
               <MappingFragment StoreEntitySet="Poll">
+                <ScalarProperty Name="Check_Status" ColumnName="Check_Status" />
                 <ScalarProperty Name="IP" ColumnName="IP" />
                 <ScalarProperty Name="Poll_Name" ColumnName="Poll_Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -958,6 +963,7 @@
           <EntitySetMapping Name="Setting">
             <EntityTypeMapping TypeName="ltfomModel.Setting">
               <MappingFragment StoreEntitySet="Setting">
+                <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Value" ColumnName="Value" />

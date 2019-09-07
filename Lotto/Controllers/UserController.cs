@@ -53,7 +53,8 @@ namespace Lotto.Controllers
                 }
                 else
                 {
-                    Period P = db.Period.Where(x => x.BetStatus == "1").FirstOrDefault<Period>();
+                    var parentID = Int32.Parse((string)Session["ParentID"]);
+                    Period P = db.Period.Where(x => x.BetStatus == "1").Where(y=>y.UID== parentID).FirstOrDefault<Period>();
                     if (P != null)
                     {
                         string connetionString = null;
@@ -448,12 +449,14 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult addPoll(String PollName,string IPAddress, PollData Data) 
         {
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            var strparentID = (string)Session["ParentID"];
             var user_id = Session["ID"].ToString();
             var id = Int32.Parse(user_id);
             var username = Session["Username"].ToString();
             dynamic discount_rate;
             var returnPollID=0;
-            Period P = db.Period.Where(s => s.Status == "1").Where(x=> x.BetStatus=="1").FirstOrDefault<Period>();
+            Period P = db.Period.Where(s => s.Status == "1").Where(x=> x.BetStatus=="1").Where(y=>y.UID== parentID).FirstOrDefault<Period>();
             Discount D = db.Discount.Where(x => x.Account.ID == id).FirstOrDefault<Discount>(); //-----user-----id//
             if(D!=null)
             {
@@ -461,7 +464,7 @@ namespace Lotto.Controllers
             }
             else
             {
-                Main_Discount MD = db.Main_Discount.Where(x => 1 == 1).FirstOrDefault<Main_Discount>();
+                Main_Discount MD = db.Main_Discount.Where(x => x.admin_id== strparentID).FirstOrDefault<Main_Discount>();
                 discount_rate = MD;
             }
             if (P != null)

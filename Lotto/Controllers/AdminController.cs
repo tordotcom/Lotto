@@ -1097,55 +1097,115 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult getRate()
         {
-            string connetionString = null;
+            var uid = Int32.Parse((string)Session["ID"]);
+            Rate R = db.Rate.Where(s => s.UID == uid).FirstOrDefault<Rate>();
             var data = new List<Rate_Discount>();
-            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
-            try
+            if (R != null)
             {
-                SqlConnection cnn = new SqlConnection(connetionString);
-                cnn.Open();
-                string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr join(SELECT[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on 1 = 1";
-                SqlCommand cmd = new SqlCommand(query, cnn);
-                SqlDataReader Reader = cmd.ExecuteReader();
-                Console.Write(Reader);
+                string connetionString = null;               
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                 try
                 {
-                    while (Reader.Read())
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "select [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].Rate mr join(SELECT[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount ,UID FROM[dbo].Discount) md on mr.UID = md.UID where mr.UID=@UID";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@UID", uid.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
                     {
-                        data.Add(new Rate_Discount
+                        while (Reader.Read())
                         {
-                            ThreeUP = Reader["three_up"].ToString(),
-                            ThreeDown = Reader["three_down"].ToString(),
-                            FirstThree = Reader["first_three"].ToString(),
-                            FirstThreeOod = Reader["first_three_ood"].ToString(),
-                            ThreeOod = Reader["three_ood"].ToString(),
-                            TwoUp = Reader["two_up"].ToString(),
-                            TwoOod = Reader["two_ood"].ToString(),
-                            TwoDown = Reader["two_down"].ToString(),
-                            Up = Reader["up"].ToString(),
-                            Down = Reader["down"].ToString(),
-                            ThreeUP_discount = Reader["three_up_discount"].ToString(),
-                            ThreeDown_discount = Reader["three_down_discount"].ToString(),
-                            FirstThree_discount = Reader["first_three_discount"].ToString(),
-                            ThreeOod_discount = Reader["three_ood_discount"].ToString(),
-                            FirstThreeOod_discount = Reader["first_three_ood_discount"].ToString(),
-                            TwoUp_discount = Reader["two_up_discount"].ToString(),
-                            TwoOod_discount = Reader["two_ood_discount"].ToString(),
-                            TwoDown_discount = Reader["two_down_discount"].ToString(),
-                            Up_discount = Reader["up_discount"].ToString(),
-                            Down_discount = Reader["down_discount"].ToString()
-                        });
+                            data.Add(new Rate_Discount
+                            {
+                                ThreeUP = Reader["three_up"].ToString(),
+                                ThreeDown = Reader["three_down"].ToString(),
+                                FirstThree = Reader["first_three"].ToString(),
+                                FirstThreeOod = Reader["first_three_ood"].ToString(),
+                                ThreeOod = Reader["three_ood"].ToString(),
+                                TwoUp = Reader["two_up"].ToString(),
+                                TwoOod = Reader["two_ood"].ToString(),
+                                TwoDown = Reader["two_down"].ToString(),
+                                Up = Reader["up"].ToString(),
+                                Down = Reader["down"].ToString(),
+                                ThreeUP_discount = Reader["three_up_discount"].ToString(),
+                                ThreeDown_discount = Reader["three_down_discount"].ToString(),
+                                FirstThree_discount = Reader["first_three_discount"].ToString(),
+                                ThreeOod_discount = Reader["three_ood_discount"].ToString(),
+                                FirstThreeOod_discount = Reader["first_three_ood_discount"].ToString(),
+                                TwoUp_discount = Reader["two_up_discount"].ToString(),
+                                TwoOod_discount = Reader["two_ood_discount"].ToString(),
+                                TwoDown_discount = Reader["two_down_discount"].ToString(),
+                                Up_discount = Reader["up_discount"].ToString(),
+                                Down_discount = Reader["down_discount"].ToString()
+                            });
+                        }
+                        cnn.Close();
                     }
-                    cnn.Close();
+                    catch
+                    {
+
+                    }
                 }
                 catch
                 {
 
                 }
             }
-            catch
+            else
             {
+                string connetionString = null;
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr join(SELECT[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on 1 = 1 where mr.admin_id=@ParentID";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            data.Add(new Rate_Discount
+                            {
+                                ThreeUP = Reader["three_up"].ToString(),
+                                ThreeDown = Reader["three_down"].ToString(),
+                                FirstThree = Reader["first_three"].ToString(),
+                                FirstThreeOod = Reader["first_three_ood"].ToString(),
+                                ThreeOod = Reader["three_ood"].ToString(),
+                                TwoUp = Reader["two_up"].ToString(),
+                                TwoOod = Reader["two_ood"].ToString(),
+                                TwoDown = Reader["two_down"].ToString(),
+                                Up = Reader["up"].ToString(),
+                                Down = Reader["down"].ToString(),
+                                ThreeUP_discount = Reader["three_up_discount"].ToString(),
+                                ThreeDown_discount = Reader["three_down_discount"].ToString(),
+                                FirstThree_discount = Reader["first_three_discount"].ToString(),
+                                ThreeOod_discount = Reader["three_ood_discount"].ToString(),
+                                FirstThreeOod_discount = Reader["first_three_ood_discount"].ToString(),
+                                TwoUp_discount = Reader["two_up_discount"].ToString(),
+                                TwoOod_discount = Reader["two_ood_discount"].ToString(),
+                                TwoDown_discount = Reader["two_down_discount"].ToString(),
+                                Up_discount = Reader["up_discount"].ToString(),
+                                Down_discount = Reader["down_discount"].ToString()
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
 
+                    }
+                }
+                catch
+                {
+
+                }
             }
             return Json(data);
         }
@@ -1154,8 +1214,9 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult UpdateRateDiscount(Rate_Discount RateDiscountArr)
         {
-            Main_Rate MR = db.Main_Rate.Where(s => s.ID == 1).FirstOrDefault<Main_Rate>();
-            Main_Discount MD = db.Main_Discount.Where(s => s.ID == 1).FirstOrDefault<Main_Discount>();
+            var parentID = (string)Session["ParentID"];
+            Main_Rate MR = db.Main_Rate.Where(s => s.admin_id == parentID).FirstOrDefault<Main_Rate>();
+            Main_Discount MD = db.Main_Discount.Where(s => s.admin_id == parentID).FirstOrDefault<Main_Discount>();
             if (MR != null && MD != null)
             {
                 MR.update_date = DateTime.Now;
@@ -1189,7 +1250,38 @@ namespace Lotto.Controllers
             }
             else
             {
-                return Json("fail");
+                Main_Rate R = new Main_Rate();
+                R.update_date = DateTime.Now;
+                R.admin_id = parentID;
+                R.three_up = RateDiscountArr.ThreeUP;
+                R.three_ood = RateDiscountArr.ThreeOod;
+                R.three_down = RateDiscountArr.ThreeDown;
+                R.two_up = RateDiscountArr.TwoUp;
+                R.two_ood = RateDiscountArr.TwoOod;
+                R.two_down = RateDiscountArr.TwoDown;
+                R.up = RateDiscountArr.Up;
+                R.down = RateDiscountArr.Down;
+                R.first_three = RateDiscountArr.FirstThree;
+                R.first_three_ood = RateDiscountArr.FirstThreeOod;
+                db.Main_Rate.Add(R);
+                db.SaveChanges();
+
+                Main_Discount D = new Main_Discount();
+                D.update_date = DateTime.Now;
+                D.admin_id = parentID;
+                D.three_up = RateDiscountArr.ThreeUP_discount;
+                D.three_ood = RateDiscountArr.ThreeOod_discount;
+                D.three_down = RateDiscountArr.ThreeDown_discount;
+                D.two_up = RateDiscountArr.TwoUp_discount;
+                D.two_ood = RateDiscountArr.TwoOod_discount;
+                D.two_down = RateDiscountArr.TwoDown_discount;
+                D.up = RateDiscountArr.Up_discount;
+                D.down = RateDiscountArr.Down_discount;
+                D.first_three = RateDiscountArr.FirstThree_discount;
+                D.first_three_ood = RateDiscountArr.FirstThreeOod_discount;
+                db.Main_Discount.Add(D);
+                db.SaveChanges();
+                return Json("ss");
             }
         }
         //-------------------------------------update user rate and discount--------------------------------//
@@ -1445,13 +1537,22 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult GetCurrentPeriod()
         {
-            Period current = db.Period.Where(s => s.Status == "1").SingleOrDefault();
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            Period current = db.Period.Where(s => s.Status == "1").Where(x=>x.UID==parentID).SingleOrDefault();
             if (current != null)
             {
                 return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy"), Status = current.Status });
             }
-            int id = db.Period.Max(p => p.ID);
-            current = db.Period.Where(s => s.ID == id).First();
+            try
+            {
+                int id = db.Period.Where(y => y.UID == parentID).Max(p => p.ID);
+                current = db.Period.Where(s => s.ID == id).First();
+            }
+            catch
+            {
+                return Json(new { Date = "--/--/----", Status = 0 });
+            }
+            
             return Json(new { Date = current.Date.Value.ToString("dd/MM/yyyy"), Status = current.Status });
         }
 
@@ -1459,7 +1560,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult GetSetting()
         {
-            return Json(new { Setting = db.Setting }, JsonRequestBehavior.AllowGet);
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            return Json(new { Setting = db.Setting.Where(x=>x.UID== parentID) }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

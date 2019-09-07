@@ -16,5 +16,6 @@ namespace Lotto.Models
         public string Last_Login{ get; set; }
         public string Role { get; set; }
         public bool Remember { get; set; }
+        public string ParentID { get; set; }
     }
 }
