@@ -17,5 +17,6 @@ namespace Lotto.Models
         public string Create_By_UID { get; set; }
         public string Last_Login { get; set; }
         public string Role { get; set; }
+        public string Descript { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Lotto.Controllers
         // GET: Admin
         public ActionResult Index() //หน้าแรก
         {
-            if ((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator" || (string)Session["Role"] == "SuperAdmin")
             {
                 return View();
             }
@@ -706,7 +706,7 @@ namespace Lotto.Controllers
         }
         public ActionResult Member() //สมาชิก
         {
-            if ((string)Session["Role"] == "Administrator")
+            if ((string)Session["Role"] == "Administrator" || (string)Session["Role"] == "SuperAdmin")
             {
                 string connetionString = null;
                 var user = new List<User_Role>();
@@ -715,7 +715,13 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where a.Status = '1' and a.Delete_Status = '0'";
+                    string query = null; 
+                    if((string)Session["Role"] == "Administrator"){
+                        query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role,r.Descript FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT [ID], [Role], [Descript] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where a.Status = '1' and a.Delete_Status = '0'";
+                    }
+                    if((string)Session["Role"] == "SuperAdmin"){
+                        query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role,r.Descript FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT [ID], [Role], [Descript] FROM [dbo].[Role]) r on ar.Role_ID=r.ID";
+                    }
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     SqlDataReader Reader = cmd.ExecuteReader();
                     Console.Write(Reader);
@@ -734,7 +740,8 @@ namespace Lotto.Controllers
                                 update_date = Reader["update_date"].ToString(),
                                 Create_By_UID = Reader["Create_By_UID"].ToString(),
                                 Last_Login = Reader["Last_Login"].ToString(),
-                                Role = Reader["Role"].ToString()
+                                Role = Reader["Role"].ToString(),
+                                Descript = Reader["Descript"].ToString()
                             });
                         }
                         cnn.Close();
@@ -750,12 +757,14 @@ namespace Lotto.Controllers
                 }
                 if (user.Count > 0)
                 {
-                    for (int i = 0; i < user.Count; i++)
-                    {
-                        bool role = Check_Role("user", user[i].Role);
-                        if (!role)
+                    if((string)Session["Role"] == "Administrator"){
+                        for (int i = 0; i < user.Count; i++)
                         {
-                            user.RemoveAt(i);
+                            bool role = Check_Role("user", user[i].Role);
+                            if (!role)
+                            {
+                                user.RemoveAt(i);
+                            }
                         }
                     }
                 }
@@ -1461,13 +1470,22 @@ namespace Lotto.Controllers
         {
             Account A = db.Account.Where(s => s.ID == User.ID).FirstOrDefault<Account>();
             if (A != null)
-            {
-                A.update_date = DateTime.Now;
-                A.Status = "0";
-                A.Delete_Status = "1";
-                db.Entry(A).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Json("ss");
+            {   
+                if((string)Session["Role"] == "SuperAdmin"){
+                    Account_Role AR = db.Account_Role.Where(s => s.UID == A.ID).FirstOrDefault<Account_Role>();
+                    db.Account_Role.Remove(AR);
+                    db.Account.Remove(A);
+                    db.SaveChanges();
+                    return Json("ss");
+                }
+                else{
+                    A.update_date = DateTime.Now;
+                    A.Status = "0";
+                    A.Delete_Status = "1";
+                    db.Entry(A).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return Json("ss");
+                }
             }
             else
             {

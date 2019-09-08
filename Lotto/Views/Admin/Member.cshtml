@@ -21,6 +21,10 @@
                                 <th>สถานะ</th>
                                 <th>หมายเหตุ</th>
                                 <th>สร้างเมื่อ</th>
+                                @if (Session["Role"] == "SuperAdmin"){
+                                    <th>สร้างโดย</th>
+                                    <th>บทบาท</th>
+                                }
                                 <th><button type="button" class="btn btn-dark add-member" data-toggle="modal" data-target="#editMemberModal" data-backdrop="static" data-keyboard="false">เพิ่มสมาชิก</button></th>
                             </tr>
                         </thead>
@@ -40,6 +44,10 @@
                                     }
                                     <td>@item.Description</td>
                                     <td>@item.create_date</td>
+                                    @if (Session["Role"] == "SuperAdmin"){
+                                        <td>@item.Create_By_UID</td>
+                                        <td>@item.Descript</td>
+                                    }
                                     <td>
                                         <button type="button" class="btn btn-primary edit" data-id="@item.ID" data-toggle="modal" data-target="#editMemberModal" data-backdrop="static" data-keyboard="false">แก้ไข</button>
                                         <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-username="@item.Username" data-toggle="modal" data-target="#deleteMemberModal" data-backdrop="static" data-keyboard="false">ลบ</button>
