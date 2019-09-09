@@ -78,6 +78,7 @@ namespace Lotto.Controllers
                     if (verify)
                     {                      
                         bool role = Check_Role("admin", user[0].Role);
+                        bool super = Check_Role("superadmin", user[0].Role);
                         if (role)
                         {
                             Session["ID"] = user[0].ID;
@@ -88,6 +89,15 @@ namespace Lotto.Controllers
                             Session["SelectPeriod"] = 0;
                             Session["ParentID"] = user[0].ID;
                             return RedirectToAction("Index", "Admin");                            
+                        }
+                        else if(super){
+                            Session["ID"] = user[0].ID;
+                            Session["Username"] = user[0].Username;
+                            Session["Role"] = "SuperAdmin";
+                            Session["Last_Login"] = user[0].Last_Login;
+                            //Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
+                            Session["SelectPeriod"] = 0;
+                            return RedirectToAction("Index", "Admin");         
                         }
                         else
                         {

@@ -325,39 +325,49 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="">
-                        <a href="@Url.Action("Index", "Admin")"><i class="menu-icon fa fa-home"></i>หน้าแรก</a>
-                    </li>
-                    <li id="bet_info_area"></li>
-                    <li class="menu-title">Admin</li><!-- /.menu-title -->
-                    <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-list-ul"></i>ดูเลขทั้งหมด</a></li>
-                    <li class=""><a href="@Url.Action("Close", "Admin")"><i class="menu-icon fa fa-times-circle-o"></i>เปิด-ปิดหวย</a></li>
-                    <li class=""><a href="@Url.Action("List", "Admin")"><i class="menu-icon fa fa-copy"></i>ดูโพย</a></li>
-                    <li class=""><a href="@Url.Action("Bet", "Admin")"><i class="menu-icon fa fa-edit"></i>แทงโพย</a></li>
-                    <li class=""><a href="@Url.Action("BetTotal", "Admin")"><i class="menu-icon fa fa-file-o"></i>ยอดสรุปเป็นใบ</a></li>
-                    @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-star-half-o"></i>เลขเต็ม/อั้น</a></li>*@
-                    @*<li class=""><a href="@Url.Action("Out", "Admin")"><i class="menu-icon fa fa-sign-out"></i>แทงออก</a></li>*@
-                    <li class=""><a href="@Url.Action("Cut", "Admin")"><i class="menu-icon fa fa-scissors"></i>ตัดเลข</a></li>
-                    @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-chevron-circle-up"></i>สู้บน</a></li>
-                        <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-chevron-circle-down"></i>สู้ล่าง</a></li>*@
-                    @*<li class=""><a href="@Url.Action("OutTotal", "Admin")"><i class="menu-icon fa fa-tasks"></i>ยอดแทงออก</a></li>*@
+                    @if (Session["Role"] == "SuperAdmin")
+                    {
+                        <li class="">
+                            <a href="@Url.Action("Index", "Admin")"><i class="menu-icon fa fa-home"></i>หน้าแรก</a>
+                        </li>
+                        <li class=""><a href="@Url.Action("Member", "Admin")"><i class="menu-icon fa fa-users"></i>จัดการสมาชิก</a></li>
+                    }
+                    else
+                    {
+                        <li class="">
+                            <a href="@Url.Action("Index", "Admin")"><i class="menu-icon fa fa-home"></i>หน้าแรก</a>
+                        </li>
+                        <li id="bet_info_area"></li>
+                        <li class="menu-title">Admin</li><!-- /.menu-title -->
+                        <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-list-ul"></i>ดูเลขทั้งหมด</a></li>
+                        <li class=""><a href="@Url.Action("Close", "Admin")"><i class="menu-icon fa fa-times-circle-o"></i>เปิด-ปิดหวย</a></li>
+                        <li class=""><a href="@Url.Action("List", "Admin")"><i class="menu-icon fa fa-copy"></i>ดูโพย</a></li>
+                        <li class=""><a href="@Url.Action("Bet", "Admin")"><i class="menu-icon fa fa-edit"></i>แทงโพย</a></li>
+                        <li class=""><a href="@Url.Action("BetTotal", "Admin")"><i class="menu-icon fa fa-file-o"></i>ยอดสรุปเป็นใบ</a></li>
+                        @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-star-half-o"></i>เลขเต็ม/อั้น</a></li>*@
+                        @*<li class=""><a href="@Url.Action("Out", "Admin")"><i class="menu-icon fa fa-sign-out"></i>แทงออก</a></li>*@
+                        <li class=""><a href="@Url.Action("Cut", "Admin")"><i class="menu-icon fa fa-scissors"></i>ตัดเลข</a></li>
+                        @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-chevron-circle-up"></i>สู้บน</a></li>
+                            <li class=""><a href="@Url.Action("AllBet", "Admin")"><i class="menu-icon fa fa-chevron-circle-down"></i>สู้ล่าง</a></li>*@
+                        @*<li class=""><a href="@Url.Action("OutTotal", "Admin")"><i class="menu-icon fa fa-tasks"></i>ยอดแทงออก</a></li>*@
 
-                    <li class="menu-title">รายงาน</li><!-- /.menu-title -->
-                    <li class=""><a href="@Url.Action("ListBackward", "Admin")"><i class="menu-icon fa fa-clock-o"></i>ดูโพยย้อนหลัง</a></li>
-                    <li class=""><a href="@Url.Action("LottoBackward", "Admin")"><i class="menu-icon fa fa-spinner"></i>ดูสรุปหวยย้อนหลัง</a></li>
-                    <li class=""><a href="@Url.Action("Result", "Admin")"><i class="menu-icon fa fa-star-o"></i>ดูผลหวยย้อนหลัง</a></li>
-                    @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-bar-chart-o"></i>รายงาน</a></li>*@
+                        <li class="menu-title">รายงาน</li><!-- /.menu-title -->
+                        <li class=""><a href="@Url.Action("ListBackward", "Admin")"><i class="menu-icon fa fa-clock-o"></i>ดูโพยย้อนหลัง</a></li>
+                        <li class=""><a href="@Url.Action("LottoBackward", "Admin")"><i class="menu-icon fa fa-spinner"></i>ดูสรุปหวยย้อนหลัง</a></li>
+                        <li class=""><a href="@Url.Action("Result", "Admin")"><i class="menu-icon fa fa-star-o"></i>ดูผลหวยย้อนหลัง</a></li>
+                        @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-bar-chart-o"></i>รายงาน</a></li>*@
 
-                    <li class="menu-title">ตั้งค่า</li><!-- /.menu-title -->
-                    @*<li class=""><a href="@Url.Action("Setting", "Admin")"><i class="menu-icon fa fa-cogs"></i>ตั้งค่า</a></li>*@
-                    <li class=""><a href="@Url.Action("Member", "Admin")"><i class="menu-icon fa fa-users"></i>สมาชิก</a></li>
-                    <li class=""><a href="@Url.Action("MemberPrice", "Admin")"><i class="menu-icon fa fa-money"></i>ราคาสมาชิก</a></li>
-                    @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-btc"></i>ราคาตั้งสู้</a></li>*@
-                    @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-pencil-square"></i>เจ้ามือแทงออก</a></li>*@
-                    @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-unlock-alt"></i>ตั้งยอดอั้น</a></li>*@
+                        <li class="menu-title">ตั้งค่า</li><!-- /.menu-title -->
+                        @*<li class=""><a href="@Url.Action("Setting", "Admin")"><i class="menu-icon fa fa-cogs"></i>ตั้งค่า</a></li>*@
+                        <li class=""><a href="@Url.Action("Member", "Admin")"><i class="menu-icon fa fa-users"></i>สมาชิก</a></li>
+                        <li class=""><a href="@Url.Action("MemberPrice", "Admin")"><i class="menu-icon fa fa-money"></i>ราคาสมาชิก</a></li>
+                        @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-btc"></i>ราคาตั้งสู้</a></li>*@
+                        @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-pencil-square"></i>เจ้ามือแทงออก</a></li>*@
+                        @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-unlock-alt"></i>ตั้งยอดอั้น</a></li>*@
 
-                    <li class="menu-title">ทั่วไป</li><!-- /.menu-title -->
-                    <li class=""><a href="@Url.Action("DealerInfo", "Admin")"><i class="menu-icon fa fa-user"></i>ข้อมูลเจ้ามือ</a></li>
+                        <li class="menu-title">ทั่วไป</li><!-- /.menu-title -->
+                        <li class=""><a href="@Url.Action("DealerInfo", "Admin")"><i class="menu-icon fa fa-user"></i>ข้อมูลเจ้ามือ</a></li>
+                    }
                     <li class="">&nbsp;</li>
                     <li class="">&nbsp;</li>
                 </ul>
@@ -384,11 +394,17 @@
                             <div class="digital-clock">00:00:00</div>
                         </div>
 
-                        <div class="dropdown for-price">
-                            <button class="btn btn-sm btn-outline-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal" data-backdrop="static" data-keyboard="false">
-                                ราคาจ่าย
-                            </button>
-                        </div>
+                        @if (Session["Role"] == "SuperAdmin")
+                        {
+                        }
+                        else
+                        {
+                            <div class="dropdown for-price">
+                                <button class="btn btn-sm btn-outline-warning" type="button" id="btnRate" data-toggle="modal" data-target="#priceModal" data-backdrop="static" data-keyboard="false">
+                                    ราคาจ่าย
+                                </button>
+                            </div>
+                        }
 
                         <div class="dropdown for-username">
                             <b id="profile"></b>
@@ -418,81 +434,87 @@
         <div class="content">
             <!-- Animated -->
             <div class="animated fadeIn">
-                <!-- Widgets  -->
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-3">
-                                        <i class="pe-7s-date"></i>
+                @if (Session["Role"] == "SuperAdmin")
+                {
+                }
+                else
+                {
+                    <!-- Widgets  -->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-icon dib flat-color-3">
+                                            <i class="pe-7s-date"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <div class="text-left dib">
+                                                <div class="stat-text"><span class="" id="todayDate" style="font-size:1.2vw;"></span></div>
+                                                <div class="stat-heading">หวยรัฐบาล</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text"><span class="" id="todayDate" style="font-size:1.2vw;"></span></div>
-                                            <div class="stat-heading">หวยรัฐบาล</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="col-lg-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-icon dib flat-color-2">
+                                            <i class="pe-7s-cash"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <div class="text-left dib">
+                                                <div class="stat-text"><span class="" id="totalBetCount" style="font-size:1.2vw;"></span></div>
+                                                <div class="stat-heading">ยอดแทง</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-icon dib" id="lottoStatusIcon">
+                                            <i class="pe-7s-power"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <div class="text-left dib">
+                                                <div class="stat-text"><span class="" id="lottoStatus" style="font-size:1.2vw;"></span></div>
+                                                <div class="stat-heading">สถานะ</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-icon dib flat-color-6">
+                                            <i class="pe-7s-clock"></i>
+                                        </div>
+                                        <div class="stat-content">
+                                            <div class="text-left dib">
+                                                <div class="stat-text"><span class="" id="closeTime" style="font-size:1.2vw;"></span></div>
+                                                <div class="stat-heading">ปิดเวลา</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    @*<div class="col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-2">
-                                        <i class="pe-7s-cash"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text"><span class="" id="totalBetCount" style="font-size:1.2vw;"></span></div>
-                                            <div class="stat-heading">ยอดแทง</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
-
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib" id="lottoStatusIcon">
-                                        <i class="pe-7s-power"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text"><span class="" id="lottoStatus" style="font-size:1.2vw;"></span></div>
-                                            <div class="stat-heading">สถานะ</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-6">
-                                        <i class="pe-7s-clock"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-text"><span class="" id="closeTime" style="font-size:1.2vw;"></span></div>
-                                            <div class="stat-heading">ปิดเวลา</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Widgets -->
+                    <!-- /Widgets -->
+                }
                 <div class="row">
                     <div class="col-md-12">
                         @RenderBody()
@@ -631,6 +653,8 @@
 
     <script type="text/javascript">
 
+        var role = '@Session["Role"]';
+
         (function ($) {
             clock();
             var user = '@Session["Username"]';
@@ -660,55 +684,58 @@
             setTimeout(function () { clock() }, 500);
         }
 
-        $.ajax({
-            url: getPeriod,
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
-                //alert(JSON.stringify(data));
-                $("#todayDate").html(data.Date);
-                if (data.Status == 1) {
-                    $("#lottoStatusIcon").addClass('flat-color-1');
-                    $("#lottoStatus").html("เปิด");
-                }
-                else {
-                    $("#lottoStatusIcon").addClass('flat-color-4');
-                    $("#lottoStatus").html("ปิด");
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert("error");
-            }
-        });
+        if(role != "SuperAdmin"){
 
-        $.ajax({
-            url: getSetting,
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
-                globalSetting = data['Setting'];
-                //alert(JSON.stringify(globalSetting));
-                //console.log(globalSetting);
-                for (i = 0; i < globalSetting.length; i++) {
-                    if (globalSetting[i].Name == "auto_poll_accept") {
-                        $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
+            $.ajax({
+                url: getPeriod,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    //alert(JSON.stringify(data));
+                    $("#todayDate").html(data.Date);
+                    if (data.Status == 1) {
+                        $("#lottoStatusIcon").addClass('flat-color-1');
+                        $("#lottoStatus").html("เปิด");
                     }
-                    if (globalSetting[i].Name == "auto_close_time") {
-                        $('#closeTime').html(globalSetting[i].Value);
-                        $('#settingAutoCloseTime').val(globalSetting[i].Value);
+                    else {
+                        $("#lottoStatusIcon").addClass('flat-color-4');
+                        $("#lottoStatus").html("ปิด");
                     }
-                    if (globalSetting[i].Name == "dealer_phone") {
-                        $('#dealerPhone').val(globalSetting[i].Value);
-                    }
-                    if (globalSetting[i].Name == "dealer_line") {
-                        $('#dealerLine').val(globalSetting[i].Value);
-                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
                 }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert("error");
-            }
-        });
+            });
+
+            $.ajax({
+                url: getSetting,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    globalSetting = data['Setting'];
+                    //alert(JSON.stringify(globalSetting));
+                    //console.log(globalSetting);
+                    for (i = 0; i < globalSetting.length; i++) {
+                        if (globalSetting[i].Name == "auto_poll_accept") {
+                            $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
+                        }
+                        if (globalSetting[i].Name == "auto_close_time") {
+                            $('#closeTime').html(globalSetting[i].Value);
+                            $('#settingAutoCloseTime').val(globalSetting[i].Value);
+                        }
+                        if (globalSetting[i].Name == "dealer_phone") {
+                            $('#dealerPhone').val(globalSetting[i].Value);
+                        }
+                        if (globalSetting[i].Name == "dealer_line") {
+                            $('#dealerLine').val(globalSetting[i].Value);
+                        }
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
+        }
 
         //$.ajax({
         //    url: getTotalBet,
