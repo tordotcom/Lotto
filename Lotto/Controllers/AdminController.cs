@@ -1,4 +1,5 @@
 ﻿using Lotto.Models;
+using MaxMind.Db;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -759,25 +760,26 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator" || (string)Session["Role"] == "SuperAdmin")
             {
-                var parentID = Int32.Parse((string)Session["ParentID"]);
                 string connetionString = null;
                 var user = new List<User_Role>();
                 connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                 try
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
+                    SqlDataReader Reader = null;
                     cnn.Open();
                     string query = null; 
                     if((string)Session["Role"] == "Administrator"){
+                        var parentID = Int32.Parse((string)Session["ParentID"]);
                         query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where a.Status = '1' and a.Delete_Status = '0' and a.Create_By_UID=@ParentID";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
-                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Reader = cmd.ExecuteReader();
                     }
                     if((string)Session["Role"] == "SuperAdmin"){
-                        query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role,r.Descript FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT [ID], [Role], [Descript] FROM [dbo].[Role]) r on ar.Role_ID=r.ID";
+                        query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role,r.Descript FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT [ID], [Role], [Descript] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where r.Descript = 'admin'";
                         SqlCommand cmd = new SqlCommand(query, cnn);
-                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Reader = cmd.ExecuteReader();
                     }
                     //SqlCommand cmd = new SqlCommand(query, cnn);
                     //cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
@@ -1482,7 +1484,12 @@ namespace Lotto.Controllers
                     var R = new Account_Role();
                     //int lastAccount = db.Account.Max(item => item.ID);
                     R.UID = AID;
-                    R.Role_ID = 2;
+                    if ((string)Session["Role"] == "SuperAdmin"){
+                        R.Role_ID = 1;
+                    }
+                    else {
+                        R.Role_ID = 2;
+                    }
                     R.create_date = DateTime.Now;
                     R.update_date = DateTime.Now;
                     db.Account_Role.Add(R);
@@ -1533,21 +1540,12 @@ namespace Lotto.Controllers
             Account A = db.Account.Where(s => s.ID == User.ID).FirstOrDefault<Account>();
             if (A != null)
             {   
-                if((string)Session["Role"] == "SuperAdmin"){
-                    Account_Role AR = db.Account_Role.Where(s => s.UID == A.ID).FirstOrDefault<Account_Role>();
-                    db.Account_Role.Remove(AR);
-                    db.Account.Remove(A);
-                    db.SaveChanges();
-                    return Json("ss");
-                }
-                else{
-                    A.update_date = DateTime.Now;
-                    A.Status = "0";
-                    A.Delete_Status = "1";
-                    db.Entry(A).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    return Json("ss");
-                }
+                A.update_date = DateTime.Now;
+                A.Status = "0";
+                A.Delete_Status = "1";
+                db.Entry(A).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json("ss");
             }
             else
             {
