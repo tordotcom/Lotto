@@ -37,7 +37,8 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                int id = db.Period.Max(p => p.ID);
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                int id = db.Period.Where(x=>x.UID==parentID).Max(p => p.ID);
                 if (id != 0)
                 {
                     string connetionString = null;
@@ -96,7 +97,8 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                Period P = db.Period.Where(y=>y.UID== parentID).Where(x => x.Status == "1").FirstOrDefault<Period>();
                 var pid = 0;
                 if (P != null)
                 {
@@ -104,7 +106,7 @@ namespace Lotto.Controllers
                 }
                 else
                 {
-                    int id = db.Period.Max(p => p.ID);
+                    int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                     pid = id;
                 }
                 string connetionString = null;
@@ -254,7 +256,8 @@ namespace Lotto.Controllers
                 {
                     param = "";
                 }
-                int id = db.Period.Max(p => p.ID);
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                 if (id != 0)
                 {
                     string connetionString = null;
@@ -342,14 +345,16 @@ namespace Lotto.Controllers
             if ((string)Session["Role"] == "Administrator")
             {
                 string connetionString = null;
+                var parentID = Int32.Parse((string)Session["ParentID"]);
                 var data = new List<admin_bet>();
                 connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                 try
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID],a.[Name],a.[Description],a.[Status],count(p.Period_ID) as poll_count FROM [dbo].[Account] a left join(SELECT [ID],[UID],[Period_ID] FROM [dbo].[Poll]) p on a.ID=p.UID where a.Name !='administrator' and a.Status = '1' and a.Delete_Status = '0' group by a.[ID],a.[Name],a.[Description],a.[Status] order by count(p.Period_ID) desc";
+                    string query = "SELECT a.[ID],a.[Name],a.[Description],a.[Status],count(p.Period_ID) as poll_count FROM [dbo].[Account] a left join(SELECT [ID],[UID],[Period_ID] FROM [dbo].[Poll]) p on a.ID=p.UID where a.Name !='administrator' and a.Status = '1' and a.Delete_Status = '0' and a.Create_By_UID=@ParentID group by a.[ID],a.[Name],a.[Description],a.[Status] order by count(p.Period_ID) desc";
                     SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
                     Console.Write(Reader);
                     try
@@ -466,7 +471,8 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                int id = db.Period.Max(p => p.ID);
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                 if (id != 0)
                 {
                     string connetionString = null;
@@ -511,7 +517,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr join(SELECT[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on 1 = 1";
+                        string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr left join(SELECT admin_id,[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on md.admin_id = mr.admin_id where mr.admin_id = '1' ";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         SqlDataReader Reader = cmd.ExecuteReader();
                         Console.Write(Reader);
@@ -587,6 +593,7 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
+                var parentID = Int32.Parse((string)Session["ParentID"]);
                 List<Period> pr;
                 if(PID != 0)
                 {
@@ -597,7 +604,7 @@ namespace Lotto.Controllers
                 else
                 {
                     Session["SelectPeriod"] = 0;
-                    pr = db.Period.ToList<Period>();
+                    pr = db.Period.Where(x=>x.UID== parentID).ToList<Period>();
                 }
                 string connetionString = null;
                 var pollDetail = new List<Poll_Detail>();
@@ -663,7 +670,8 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                return View(db.Period.OrderByDescending(x => x.ID).ToList());
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                return View(db.Period.Where(y=>y.UID== parentID).OrderByDescending(x => x.ID).ToList());
             }
             else if ((string)Session["Role"] == "User")
             {
@@ -678,7 +686,50 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                return View(db.Result.ToList());
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                string connetionString = null;
+                var r = new List<Result>();
+                connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    var user_id = Session["ID"].ToString();
+                    SqlConnection cnn = new SqlConnection(connetionString);
+                    cnn.Open();
+                    string query = "SELECT p.[ID],p.[UID],p.[Date] ,r.[Name] ,r.[Lotto_day],r.[two_down],r.[first_three],r.[last_three],r.[three_down_1],r.[three_down_2],r.[three_down_3],r.[three_down_4] FROM[dbo].[Period] p left join(SELECT[ID], [Period_ID], [Name], [Lotto_day] , [two_down] , [first_three], [last_three],[three_down_1] , [three_down_2] , [three_down_3], [three_down_4] FROM [dbo].[Result]) r on p.ID=r.Period_ID where r.Name is not null and p.[UID]=@ParentID order by r.Lotto_day desc";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@ParentID", parentID);
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            r.Add(new Result
+                            {
+                                ID = Int32.Parse(Reader["ID"].ToString()),
+                                Name = Reader["Name"].ToString(),
+                                Lotto_day = DateTime.Parse(Reader["Lotto_day"].ToString()),
+                                two_down = Reader["two_down"].ToString(),
+                                first_three = Reader["first_three"].ToString(),
+                                last_three = Reader["last_three"].ToString(),
+                                three_down_1 = Reader["three_down_1"].ToString(),
+                                three_down_2 = Reader["three_down_2"].ToString(),
+                                three_down_3 = Reader["three_down_3"].ToString(),
+                                three_down_4 = Reader["three_down_4"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
+                return View(r);
             }
             else if ((string)Session["Role"] == "User")
             {
@@ -708,6 +759,7 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
+                var parentID = Int32.Parse((string)Session["ParentID"]);
                 string connetionString = null;
                 var user = new List<User_Role>();
                 connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
@@ -715,8 +767,9 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where a.Status = '1' and a.Delete_Status = '0'";
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where a.Status = '1' and a.Delete_Status = '0' and a.Create_By_UID=@ParentID";
                     SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
                     Console.Write(Reader);
                     try
@@ -774,6 +827,7 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
+                var parentID = Int32.Parse((string)Session["ParentID"]);
                 string connetionString = null;
                 var user = new List<User_Rate_Discount>();
                 connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
@@ -781,8 +835,9 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.[first_three_ood],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.[first_three_ood] as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Discount]) d on a.ID = d.UID where a.Status = '1' and a.Delete_Status = '0' and ra.UID is not null";
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[ID] as rateID,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.[first_three_ood],d.[ID] as discountID,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.[first_three_ood] as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Rate]) ra on a.ID = ra.UID left join(SELECT [ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Discount]) d on a.ID = d.UID where a.Status = '1' and a.Delete_Status = '0' and ra.UID is not null and a.[Create_By_UID]=@ParentID";
                     SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
                     //Console.Write(Reader);
                     try
@@ -834,8 +889,9 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where a.Status = '1' and a.Delete_Status = '0' and rate.UID is null";
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where a.Status = '1' and a.Delete_Status = '0' and rate.UID is null and a.[Create_By_UID]=@ParentID";
                     SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
                     //Console.Write(Reader);
                     try
@@ -922,7 +978,8 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                int maxpid = db.Period.Max(p => p.ID);
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                int maxpid = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                 Period P = db.Period.Where(x => x.ID == maxpid).Where(y => y.Check_Result == "0").FirstOrDefault<Period>();
                 if (P != null)
                 {
@@ -1407,10 +1464,10 @@ namespace Lotto.Controllers
                     A.update_date = DateTime.Now;
                     db.Account.Add(A);
                     db.SaveChanges();
-
+                    int AID = A.ID;
                     var R = new Account_Role();
-                    int lastAccount = db.Account.Max(item => item.ID);
-                    R.UID = lastAccount;
+                    //int lastAccount = db.Account.Max(item => item.ID);
+                    R.UID = AID;
                     R.Role_ID = 2;
                     R.create_date = DateTime.Now;
                     R.update_date = DateTime.Now;
@@ -1582,14 +1639,16 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult GetAllPeriod()
         {
+            var parentID = Int32.Parse((string)Session["ParentID"]);
             System.Collections.ArrayList period = new System.Collections.ArrayList();
             string connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
             try
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "SELECT ID, Date FROM [dbo].[Period]";
+                string query = "SELECT ID, Date FROM [dbo].[Period] where UID=@ParentID";
                 SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                 SqlDataReader Reader = cmd.ExecuteReader();
                 Console.Write(Reader);
                 try
@@ -1622,9 +1681,10 @@ namespace Lotto.Controllers
         {
             if (S != null)
             {
+                var parentID = Int32.Parse((string)Session["ParentID"]);
                 foreach (var setting in S)
                 {
-                    Setting x = db.Setting.Where(r => r.Name == setting.Name).First();
+                    Setting x = db.Setting.Where(y=>y.UID== parentID).Where(r => r.Name == setting.Name).First();
                     if (x != null)
                     {
                         x.Value = setting.Value;
@@ -1651,7 +1711,8 @@ namespace Lotto.Controllers
             }
             else
             {
-                id = db.Period.Max(p => p.ID);
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
             }            
             if (id != 0)
             {
@@ -1747,7 +1808,9 @@ namespace Lotto.Controllers
             var user_id = Session["ID"].ToString();
             var id = Int32.Parse(user_id);
             var returnPollID = 0;
-            Period P = db.Period.Where(s => s.Status == "1").FirstOrDefault<Period>();
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            var strparentID = (string)Session["ParentID"];
+            Period P = db.Period.Where(x=>x.UID== parentID).Where(s => s.Status == "1").FirstOrDefault<Period>();
             Discount D = db.Discount.Where(x => x.Account.ID == id).FirstOrDefault<Discount>(); //-----user-----id//
             if (D != null)
             {
@@ -1755,7 +1818,7 @@ namespace Lotto.Controllers
             }
             else
             {
-                Main_Discount MD = db.Main_Discount.Where(x => 1 == 1).FirstOrDefault<Main_Discount>();
+                Main_Discount MD = db.Main_Discount.Where(y=>y.admin_id== strparentID).Where(x => 1 == 1).FirstOrDefault<Main_Discount>();
                 discount_rate = MD;
             }
 
@@ -1788,14 +1851,15 @@ namespace Lotto.Controllers
             }
             else
             {
-                Period Last = db.Period.OrderByDescending(u => u.ID).FirstOrDefault();
+                //Period Last = db.Period.OrderByDescending(u => u.ID).FirstOrDefault();
                 var poll = new Poll();
                 poll.UID = uid; //----------- user id-----------//
                 poll.Poll_Name = PollName;
-                poll.Period_ID = Last.ID;
+                poll.Period_ID = P.ID;
                 poll.Receive = "1";
                 poll.Create_By = "Admin"; //--------- Admin --------//
                 poll.IP = IPAddress;
+                poll.Check_Status = "0";
                 poll.create_date = DateTime.Now;
                 poll.update_date = DateTime.Now;
                 db.Poll.Add(poll);
@@ -2932,9 +2996,9 @@ namespace Lotto.Controllers
             //oldPeroid.ForEach(a => a.Status = "0");
             //db.Entry(oldPeroid).State = System.Data.Entity.EntityState.Modified;
             //db.SaveChanges();
-
+            var ID = Int32.Parse((string)Session["ID"]);
             var p = new Period();
-            p.UID = 1; //----------- user id-----------//
+            p.UID = ID; //----------- admin id-----------//
             p.Date = Date;
             p.Status = "1";
             p.BetStatus = "0";
@@ -3041,14 +3105,16 @@ namespace Lotto.Controllers
             }
             string connetionString = null;
             var data = new List<Poll_Result>();
+            var parentID = Int32.Parse((string)Session["ParentID"]);
             connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
             try
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "SELECT ls.[ID],ls.Type,ls.NumLen,ls.Number,ls.Amount,ls.AmountDiscount,isnull(r.[three_up],mr.three_up) as three_up,isnull(r.[three_ood],mr.[three_ood]) as three_ood,isnull(r.[three_down],mr.[three_down]) as three_down,isnull(r.[two_up],mr.[two_up]) as two_up,isnull(r.[two_ood],mr.[two_ood]) as two_ood,isnull(r.[two_down],mr.[two_down]) as two_down,isnull(r.[up],mr.[up]) as up,isnull(r.[down],mr.[down]) as down,isnull(r.[first_three],mr.[first_three]) as first_three,isnull(r.[first_three_ood],mr.[first_three_ood]) as first_three_ood FROM [dbo].[Period] pe left join(SELECT [ID],UID,[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],NumLen,[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[UID],[three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood] FROM [dbo].[Rate]) r on po.UID=r.UID left join(SELECT [ID],[three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood] FROM [dbo].[Main_Rate]) mr on 1=1 where pe.ID=@period";
+                string query = "SELECT ls.[ID],ls.Type,ls.NumLen,ls.Number,ls.Amount,ls.AmountDiscount,isnull(r.[three_up],mr.three_up) as three_up,isnull(r.[three_ood],mr.[three_ood]) as three_ood,isnull(r.[three_down],mr.[three_down]) as three_down,isnull(r.[two_up],mr.[two_up]) as two_up,isnull(r.[two_ood],mr.[two_ood]) as two_ood,isnull(r.[two_down],mr.[two_down]) as two_down,isnull(r.[up],mr.[up]) as up,isnull(r.[down],mr.[down]) as down,isnull(r.[first_three],mr.[first_three]) as first_three,isnull(r.[first_three_ood],mr.[first_three_ood]) as first_three_ood FROM [dbo].[Period] pe left join(SELECT [ID],UID,[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],NumLen,[Number],[Amount],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID left join(SELECT [ID],[UID],[three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood] FROM [dbo].[Rate]) r on po.UID=r.UID left join(SELECT [ID],admin_id,[three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood] FROM [dbo].[Main_Rate]) mr on mr.admin_id=@ParentID where pe.ID=@period";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 cmd.Parameters.AddWithValue("@period", PID.ToString());
+                cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                 SqlDataReader Reader = cmd.ExecuteReader();
                 Console.Write(Reader);
                 try
@@ -3335,7 +3401,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult GetUserTotalBalance(string uID)
         {
-            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            Period P = db.Period.Where(y=>y.UID== parentID).Where(x => x.Status == "1").FirstOrDefault<Period>();
             var pid = 0;
             if (P != null)
             {
@@ -3343,7 +3410,7 @@ namespace Lotto.Controllers
             }
             else
             {
-                int id = db.Period.Max(p => p.ID);
+                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                 pid = id;
             }
             string connetionString = null;
@@ -3389,7 +3456,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult GetUserBetResult(string uID)
         {
-            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            Period P = db.Period.Where(y=>y.UID== parentID).Where(x => x.Status == "1").FirstOrDefault<Period>();
             var pid = 0;
             if (P != null)
             {
@@ -3397,7 +3465,7 @@ namespace Lotto.Controllers
             }
             else
             {
-                int id = db.Period.Max(p => p.ID);
+                int id = db.Period.Where(x=>x.UID==parentID).Max(p => p.ID);
                 pid = id;
             }
             string connetionString = null;
@@ -3643,7 +3711,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult getUserPoll(string Number, string Type, string NumLen)
         {
-            int id = db.Period.Max(p => p.ID);
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            int id = db.Period.Where(x=>x.UID==parentID).Max(p => p.ID);
 
             string connetionString = null;
             var data = new List<UserAllBet>();
@@ -3652,7 +3721,7 @@ namespace Lotto.Controllers
             {
                 SqlConnection cnn = new SqlConnection(connetionString);
                 cnn.Open();
-                string query = "select a.ID, a.Username,a.Name,sum(CAST(ls.Amount as int)) as Amount,COUNT(*) as CPoll from(SELECT [ID],[UID],[Period_ID],[Receive] FROM[dbo].[Poll] where Period_ID = @period and Receive = '1') t1 left join(SELECT[ID],[Username],[Name] FROM[dbo].[Account]) a on t1.UID = a.ID left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on t1.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[LottoSub] where Number=@number and Type = @type and NumLen = @nlen) ls on lm.ID = ls.Lotto_ID where ls.Number is not null group by a.ID,a.Username,a.Name";
+                string query = "select a.ID, a.Username,a.Name,sum(CAST(ls.Amount as int)) as Amount,COUNT(DISTINCT t1.ID) as CPoll from(SELECT [ID],[UID],[Period_ID],[Receive] FROM[dbo].[Poll] where Period_ID = @period and Receive = '1') t1 left join(SELECT[ID],[Username],[Name] FROM[dbo].[Account]) a on t1.UID = a.ID left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on t1.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[LottoSub] where Number=@number and Type = @type and NumLen = @nlen) ls on lm.ID = ls.Lotto_ID where ls.Number is not null group by a.ID,a.Username,a.Name";
                 SqlCommand cmd = new SqlCommand(query, cnn);
                 cmd.Parameters.AddWithValue("@period", id.ToString());
                 cmd.Parameters.AddWithValue("@number", Number);
@@ -3694,7 +3763,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult getUserPollDetail(string UID,string Number, string Type, string NumLen)
         {
-            int id = db.Period.Max(p => p.ID);
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
 
             string connetionString = null;
             var data = new List<Poll_Detail>();
@@ -3758,7 +3828,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult getUserPoll2(string uid)
         {
-            int id = db.Period.Max(p => p.ID);
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
 
             string connetionString = null;
             var data = new List<Poll_Detail>();

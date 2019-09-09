@@ -129,8 +129,9 @@ namespace Lotto.Controllers
                 }
                 else
                 {
+                    var parentID = Int32.Parse((string)Session["ParentID"]);
                     //Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
-                    int id = db.Period.Max(p => p.ID);
+                    int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                     var user_id = Session["ID"].ToString();
                     if (id != 0)
                     {
@@ -238,7 +239,8 @@ namespace Lotto.Controllers
                 }
                 else
                 {
-                    int id = db.Period.Max(p => p.ID);
+                    var parentID = Int32.Parse((string)Session["ParentID"]);
+                    int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                     if (id != 0)
                     {
                         string connetionString = null;
@@ -309,7 +311,50 @@ namespace Lotto.Controllers
                 }
                 else
                 {
-                    List<Result> r = db.Result.OrderByDescending(x => x.ID).ToList();
+                    //List<Result> r = db.Result.OrderByDescending(x => x.ID).ToList();
+                    var parentID = Int32.Parse((string)Session["ParentID"]);
+                    string connetionString = null;
+                    var r = new List<Result>();
+                    connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                    try
+                    {
+                        var user_id = Session["ID"].ToString();
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "SELECT p.[ID],p.[UID],p.[Date] ,r.[Name] ,r.[Lotto_day],r.[two_down],r.[first_three],r.[last_three],r.[three_down_1],r.[three_down_2],r.[three_down_3],r.[three_down_4] FROM[dbo].[Period] p left join(SELECT[ID], [Period_ID], [Name], [Lotto_day] , [two_down] , [first_three], [last_three],[three_down_1] , [three_down_2] , [three_down_3], [three_down_4] FROM [dbo].[Result]) r on p.ID=r.Period_ID where r.Name is not null and p.[UID]=@ParentID order by r.Lotto_day desc";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@ParentID", parentID); 
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                r.Add(new Result
+                                {
+                                    ID = Int32.Parse(Reader["ID"].ToString()),
+                                    Name = Reader["Name"].ToString(),
+                                    Lotto_day = DateTime.Parse(Reader["Lotto_day"].ToString()),
+                                    two_down = Reader["two_down"].ToString(),
+                                    first_three = Reader["first_three"].ToString(),
+                                    last_three = Reader["last_three"].ToString(),
+                                    three_down_1 = Reader["three_down_1"].ToString(),
+                                    three_down_2 = Reader["three_down_2"].ToString(),
+                                    three_down_3 = Reader["three_down_3"].ToString(),
+                                    three_down_4 = Reader["three_down_4"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
                     return View(r);
                 }
             }
@@ -476,6 +521,7 @@ namespace Lotto.Controllers
                 poll.Receive = "1";
                 poll.Create_By = username; //--------- username --------//
                 poll.IP = IPAddress;
+                poll.Check_Status = "0";
                 poll.create_date = DateTime.Now;
                 poll.update_date = DateTime.Now;
                 db.Poll.Add(poll);
