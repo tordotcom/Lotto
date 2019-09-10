@@ -776,7 +776,7 @@ namespace Lotto.Controllers
                         query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role FROM[dbo].[Account] a left join(SELECT [ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT[ID], [Role] FROM [dbo].[Role]) r on ar.Role_ID=r.ID where a.Status = '1' and a.Delete_Status = '0' and a.Create_By_UID=@ParentID";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
-                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Reader = cmd.ExecuteReader();
                         try
                         {
                             while (Reader.Read())
@@ -808,9 +808,6 @@ namespace Lotto.Controllers
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         Reader = cmd.ExecuteReader();
                     }
-                    //SqlCommand cmd = new SqlCommand(query, cnn);
-                    //cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
-                    //SqlDataReader Reader = cmd.ExecuteReader();
                     Console.Write(Reader);
                     try
                     {
@@ -836,13 +833,7 @@ namespace Lotto.Controllers
                     catch
                     {
 
-                        }
-                    }
-                    //SqlCommand cmd = new SqlCommand(query, cnn);
-                    //cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
-                    //SqlDataReader Reader = cmd.ExecuteReader();
-                    //Console.Write(Reader);
-                    
+                    }     
                 }
                 catch
                 {
