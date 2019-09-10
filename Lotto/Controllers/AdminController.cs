@@ -108,8 +108,16 @@ namespace Lotto.Controllers
                 }
                 else
                 {
-                    int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
-                    pid = id;
+                    var max = db.Period.Where(y => y.UID == parentID).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();
+                    if (max != 0)
+                    {
+                        int id = db.Period.Where(x => x.UID == parentID).Max(p => p.ID);
+                        pid = id;
+                    }
+                    else
+                    {
+                        pid = 0;
+                    }
                 }
                 string connetionString = null;
                 var all = new List<Close>();
@@ -189,50 +197,72 @@ namespace Lotto.Controllers
                 {
 
                 }
-                if (all[0].CheckResult == "1")
+                if (all.Count > 0)
                 {
-                    List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
-                    ViewData["TAR"] = TAR;
-                    ViewData["UBET"] = user_bet;
-                }
-                else if (all[0].CheckResult == "0")
-                {
-                    var total_type_bet = new List<Total_Amount_Result>();
-                    try
+                    if (all[0].CheckResult == "1")
                     {
-                        SqlConnection cnn = new SqlConnection(connetionString);
-                        cnn.Open();
-                        string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
-                        SqlCommand cmd = new SqlCommand(query, cnn);
-                        cmd.Parameters.AddWithValue("@period", pid.ToString());
-                        SqlDataReader Reader = cmd.ExecuteReader();
-                        Console.Write(Reader);
+                        List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
+                        ViewData["TAR"] = TAR;
+                        ViewData["UBET"] = user_bet;
+                    }
+                    else if (all[0].CheckResult == "0")
+                    {
+                        var total_type_bet = new List<Total_Amount_Result>();
                         try
                         {
-                            while (Reader.Read())
+                            SqlConnection cnn = new SqlConnection(connetionString);
+                            cnn.Open();
+                            string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
+                            SqlCommand cmd = new SqlCommand(query, cnn);
+                            cmd.Parameters.AddWithValue("@period", pid.ToString());
+                            SqlDataReader Reader = cmd.ExecuteReader();
+                            Console.Write(Reader);
+                            try
                             {
-                                total_type_bet.Add(new Total_Amount_Result
+                                while (Reader.Read())
                                 {
-                                    Type = Reader["Type"].ToString(),
-                                    Amount_Discount = Reader["AmountDiscount"].ToString(),
-                                    Amount_Win = Reader["Win"].ToString(),
-                                });
+                                    total_type_bet.Add(new Total_Amount_Result
+                                    {
+                                        Type = Reader["Type"].ToString(),
+                                        Amount_Discount = Reader["AmountDiscount"].ToString(),
+                                        Amount_Win = Reader["Win"].ToString(),
+                                    });
+                                }
+                                cnn.Close();
                             }
-                            cnn.Close();
+                            catch
+                            {
+
+                            }
                         }
                         catch
                         {
 
                         }
+                        ViewData["TAR"] = total_type_bet;
+                        ViewData["UBET"] = user_bet;
                     }
-                    catch
-                    {
-
-                    }
-                    ViewData["TAR"] = total_type_bet;
-                    ViewData["UBET"] = user_bet;
+                    else { }
                 }
-                else { }
+                else
+                {
+                    all.Add(new Close
+                    {
+                        PID = pid.ToString(),
+                        Date = DateTime.Now,
+                        Amount = "0",
+                        CountReceive = "0",
+                        CountUser = "0",
+                        CloseBy = "Admin",
+                        CreateDate = DateTime.Now.ToString(),
+                        CloseDate = DateTime.Now.ToString(),
+                        BetStatus = "0",
+                        CheckResult = "1"
+                    });
+                    List<Total_Amount_Result> TAR = new List<Total_Amount_Result>();
+                    ViewData["TAR"] = TAR;
+                    ViewData["UBET"] = user_bet;
+                }                
                 return View(all);
             }
             else if ((string)Session["Role"] == "User")
@@ -259,11 +289,13 @@ namespace Lotto.Controllers
                     param = "";
                 }
                 var parentID = Int32.Parse((string)Session["ParentID"]);
-                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
-                if (id != 0)
+                var pollDetail = new List<Poll_Detail>();
+                var max = db.Period.Where(y => y.UID == parentID).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();
+                if (max != 0)
                 {
+                    int id = db.Period.Where(x => x.UID == parentID).Max(p => p.ID);
                     string connetionString = null;
-                    var pollDetail = new List<Poll_Detail>();
+                    
                     connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                     try
                     {
@@ -331,7 +363,7 @@ namespace Lotto.Controllers
                         return View(pollDetail);
                     }
                 }
-                return View();
+                return View(pollDetail);
             }
             else if ((string)Session["Role"] == "User")
             {
@@ -399,11 +431,13 @@ namespace Lotto.Controllers
             if ((string)Session["Role"] == "Administrator")
             {
                 var parentID = Int32.Parse((string)Session["ParentID"]);
-                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
-                if (id != 0)
+                var all = new List<total_bet>();
+                var max = db.Period.Where(y => y.UID == parentID).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();
+                if (max != 0)
                 {
+                    int id = db.Period.Where(x => x.UID == parentID).Max(p => p.ID);
                     string connetionString = null;
-                    var all = new List<total_bet>();
+                    
                     connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                     try
                     {
@@ -444,7 +478,7 @@ namespace Lotto.Controllers
                     }
                     return View(all);
                 }
-                return View();
+                return View(all);
             }
             else if ((string)Session["Role"] == "User")
             {
@@ -475,11 +509,14 @@ namespace Lotto.Controllers
             if ((string)Session["Role"] == "Administrator")
             {
                 var parentID = Int32.Parse((string)Session["ParentID"]);
-                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
-                if (id != 0)
+                var data = new List<Rate_Discount>();
+                var all = new List<All_Number>();
+                var max = db.Period.Where(y => y.UID == parentID).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();
+                if (max != 0)
                 {
+                    int id = db.Period.Where(x => x.UID == parentID).Max(p => p.ID);
                     string connetionString = null;
-                    var all = new List<All_Number>();
+                    
                     connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                     try
                     {
@@ -515,7 +552,7 @@ namespace Lotto.Controllers
                     {
 
                     }
-                    var data = new List<Rate_Discount>();
+                    
                     try
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
@@ -567,7 +604,8 @@ namespace Lotto.Controllers
                     ViewBag.Rate = data;
                     return View(all);
                 }
-                return View();
+                ViewBag.Rate = data;
+                return View(all);
             }
             else if ((string)Session["Role"] == "User")
             {
