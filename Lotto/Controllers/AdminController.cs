@@ -396,7 +396,8 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                int id = db.Period.Max(p => p.ID);
+                var parentID = Int32.Parse((string)Session["ParentID"]);
+                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                 if (id != 0)
                 {
                     string connetionString = null;
@@ -517,8 +518,9 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr left join(SELECT admin_id,[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on md.admin_id = mr.admin_id where mr.admin_id = '1' ";
+                        string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr left join(SELECT admin_id,[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on md.admin_id = mr.admin_id where mr.admin_id = @ParentID ";
                         SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
                         Console.Write(Reader);
                         try
@@ -773,41 +775,67 @@ namespace Lotto.Controllers
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                         SqlDataReader Reader = cmd.ExecuteReader();
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                user.Add(new User_Role
+                                {
+                                    ID = Reader["ID"].ToString(),
+                                    Username = Reader["Username"].ToString(),
+                                    Name = Reader["Name"].ToString(),
+                                    Description = Reader["Description"].ToString(),
+                                    Status = Reader["Status"].ToString(),
+                                    create_date = Reader["create_date"].ToString(),
+                                    update_date = Reader["update_date"].ToString(),
+                                    Create_By_UID = Reader["Create_By_UID"].ToString(),
+                                    Last_Login = Reader["Last_Login"].ToString(),
+                                    Role = Reader["Role"].ToString(),
+                                    //Descript = Reader["Descript"].ToString()
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
                     }
                     if((string)Session["Role"] == "SuperAdmin"){
                         query = "SELECT a.[ID], a.[Username],a.[Name],a.[Description],a.[Status],a.[create_date],a.Create_By_UID, a.Last_Login,a.update_date,r.Role,r.Descript FROM[dbo].[Account] a left join(SELECT TOP (1000) [ID],[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on a.ID=ar.UID left join(SELECT [ID], [Role], [Descript] FROM [dbo].[Role]) r on ar.Role_ID=r.ID";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         SqlDataReader Reader = cmd.ExecuteReader();
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                user.Add(new User_Role
+                                {
+                                    ID = Reader["ID"].ToString(),
+                                    Username = Reader["Username"].ToString(),
+                                    Name = Reader["Name"].ToString(),
+                                    Description = Reader["Description"].ToString(),
+                                    Status = Reader["Status"].ToString(),
+                                    create_date = Reader["create_date"].ToString(),
+                                    update_date = Reader["update_date"].ToString(),
+                                    Create_By_UID = Reader["Create_By_UID"].ToString(),
+                                    Last_Login = Reader["Last_Login"].ToString(),
+                                    Role = Reader["Role"].ToString(),
+                                    Descript = Reader["Descript"].ToString()
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
                     }
                     //SqlCommand cmd = new SqlCommand(query, cnn);
                     //cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                     //SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
-                    try
-                    {
-                        while (Reader.Read())
-                        {
-                            user.Add(new User_Role
-                            {
-                                ID = Reader["ID"].ToString(),
-                                Username = Reader["Username"].ToString(),
-                                Name = Reader["Name"].ToString(),
-                                Description = Reader["Description"].ToString(),
-                                Status = Reader["Status"].ToString(),
-                                create_date = Reader["create_date"].ToString(),
-                                update_date = Reader["update_date"].ToString(),
-                                Create_By_UID = Reader["Create_By_UID"].ToString(),
-                                Last_Login = Reader["Last_Login"].ToString(),
-                                Role = Reader["Role"].ToString(),
-                                Descript = Reader["Descript"].ToString()
-                            });
-                        }
-                        cnn.Close();
-                    }
-                    catch
-                    {
-
-                    }
+                    //Console.Write(Reader);
+                    
                 }
                 catch
                 {
@@ -903,7 +931,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on 1 = 1 left join(SELECT[ID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on 1 = 1 left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where a.Status = '1' and a.Delete_Status = '0' and rate.UID is null and a.[Create_By_UID]=@ParentID";
+                    string query = "SELECT a.[ID], a.[Username],a.[Name],r.Role ,ra.[three_up],ra.[three_ood],ra.[three_down],ra.[two_up],ra.[two_ood],ra.[two_down],ra.[up],ra.[down],ra.[first_three],ra.first_three_ood,d.[three_up] as three_up_d,d.[three_ood] as three_ood_d,d.[three_down] as three_down_d,d.[two_up] as two_up_d,d.[two_ood] as two_ood_d,d.[two_down] as two_down_d,d.[up] as up_d,d.[down] as down_d,d.[first_three] as first_three_d,d.first_three_ood as first_three_ood_d FROM[dbo].[Account] a left join(SELECT[ID],[UID],[Role_ID] FROM[dbo].[Account_Role]) ar on a.ID = ar.UID left join(SELECT[ID], [Role] FROM[dbo].[Role]) r on ar.Role_ID = r.ID left join(SELECT[ID],admin_id, [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Rate]) ra on ra.admin_id = @ParentID left join(SELECT[ID],admin_id, [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three],[first_three_ood] FROM[dbo].[Main_Discount]) d on ra.admin_id = d.admin_id left join(SELECT[ID], [UID], [three_up], [three_ood], [three_down], [two_up], [two_ood], [two_down], [up], [down], [first_three] FROM[dbo].[Rate]) rate on a.ID = rate.UID where a.Status = '1' and a.Delete_Status = '0' and rate.UID is null and a.[Create_By_UID]=@ParentID";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
@@ -1248,7 +1276,7 @@ namespace Lotto.Controllers
                 {
                     SqlConnection cnn = new SqlConnection(connetionString);
                     cnn.Open();
-                    string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr join(SELECT[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on 1 = 1 where mr.admin_id=@ParentID";
+                    string query = "SELECT [three_up],[three_ood],[three_down],[two_up],[two_ood],[two_down],[up],[down],[first_three],[first_three_ood], md.three_up_discount,md.three_ood_discount,md.three_down_discount,md.two_up_discount,md.two_ood_discount,md.two_down_discount,md.up_discount,md.down_discount,md.first_three_discount,md.first_three_ood_discount FROM[dbo].[Main_Rate] mr join(SELECT admin_id,[three_up] as three_up_discount,[three_ood] as three_ood_discount,[three_down] as three_down_discount,[two_up] as two_up_discount,[two_ood] as two_ood_discount,[two_down] as two_down_discount,[up] as up_discount,[down] as down_discount,[first_three] as first_three_discount,[first_three_ood] as first_three_ood_discount FROM[dbo].[Main_Discount]) md on md.admin_id = mr.admin_id where mr.admin_id=@ParentID";
                     SqlCommand cmd = new SqlCommand(query, cnn);
                     cmd.Parameters.AddWithValue("@ParentID", parentID.ToString());
                     SqlDataReader Reader = cmd.ExecuteReader();
@@ -3555,7 +3583,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult GetTotalBet()
         {
-            Period P = db.Period.Where(x => x.Status == "1").FirstOrDefault<Period>();
+            var parentID = Int32.Parse((string)Session["ParentID"]);
+            Period P = db.Period.Where(y=>y.UID== parentID).Where(x => x.Status == "1").FirstOrDefault<Period>();
             var pid = 0;
             var totalbet = 0;
             if (P != null)
@@ -3564,7 +3593,7 @@ namespace Lotto.Controllers
             }
             else
             {
-                int id = db.Period.Max(p => p.ID);
+                int id = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
                 pid = id;
             }
             string connetionString = null;

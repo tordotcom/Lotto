@@ -97,6 +97,7 @@ namespace Lotto.Controllers
                             Session["Last_Login"] = user[0].Last_Login;
                             //Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
                             Session["SelectPeriod"] = 0;
+                            Session["ParentID"] = user[0].ID;
                             return RedirectToAction("Index", "Admin");         
                         }
                         else
