@@ -39,11 +39,12 @@ namespace Lotto.Controllers
             if ((string)Session["Role"] == "Administrator")
             {
                 var parentID = Int32.Parse((string)Session["ParentID"]);
-                int id = db.Period.Where(x=>x.UID==parentID).Max(p => p.ID);
-                if (id != 0)
+                var all = new List<All_Number>();
+                var max = db.Period.Where(y=>y.UID== parentID).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();                
+                if (max != 0)
                 {
-                    string connetionString = null;
-                    var all = new List<All_Number>();
+                    int id = db.Period.Where(x => x.UID == parentID).Max(p => p.ID);
+                    string connetionString = null;                    
                     connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
                     try
                     {
@@ -82,7 +83,7 @@ namespace Lotto.Controllers
                     }
                     return View(all);
                 }
-                return View();
+                return View(all);
             }
             else if ((string)Session["Role"] == "User")
             {
