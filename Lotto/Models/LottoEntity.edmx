@@ -38,16 +38,16 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UID" Type="int" />
-          <Property Name="three_up" Type="nvarchar" MaxLength="3" />
-          <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
-          <Property Name="three_down" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_up" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_ood" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_down" Type="nvarchar" MaxLength="3" />
-          <Property Name="up" Type="nvarchar" MaxLength="3" />
-          <Property Name="down" Type="nvarchar" MaxLength="3" />
-          <Property Name="first_three" Type="nvarchar" MaxLength="3" />
-          <Property Name="first_three_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_up" Type="nvarchar" MaxLength="50" />
+          <Property Name="three_ood" Type="nvarchar" MaxLength="50" />
+          <Property Name="three_down" Type="nvarchar" MaxLength="50" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="50" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="50" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="50" />
+          <Property Name="up" Type="nvarchar" MaxLength="50" />
+          <Property Name="down" Type="nvarchar" MaxLength="50" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="50" />
+          <Property Name="first_three_ood" Type="nvarchar" MaxLength="50" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -162,16 +162,16 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UID" Type="int" />
-          <Property Name="three_up" Type="nvarchar" MaxLength="3" />
-          <Property Name="three_ood" Type="nvarchar" MaxLength="3" />
-          <Property Name="three_down" Type="nvarchar" MaxLength="3" />
-          <Property Name="two_up" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_ood" Type="nvarchar" MaxLength="2" />
-          <Property Name="two_down" Type="nvarchar" MaxLength="3" />
-          <Property Name="up" Type="nvarchar" MaxLength="3" />
-          <Property Name="down" Type="nvarchar" MaxLength="3" />
-          <Property Name="first_three" Type="nvarchar" MaxLength="3" />
-          <Property Name="first_three_ood" Type="nvarchar" MaxLength="3" />
+          <Property Name="three_up" Type="nvarchar" MaxLength="50" />
+          <Property Name="three_ood" Type="nvarchar" MaxLength="50" />
+          <Property Name="three_down" Type="nvarchar" MaxLength="50" />
+          <Property Name="two_up" Type="nvarchar" MaxLength="50" />
+          <Property Name="two_ood" Type="nvarchar" MaxLength="50" />
+          <Property Name="two_down" Type="nvarchar" MaxLength="50" />
+          <Property Name="up" Type="nvarchar" MaxLength="50" />
+          <Property Name="down" Type="nvarchar" MaxLength="50" />
+          <Property Name="first_three" Type="nvarchar" MaxLength="50" />
+          <Property Name="first_three_ood" Type="nvarchar" MaxLength="50" />
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
@@ -404,16 +404,16 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UID" Type="Int32" />
-          <Property Name="three_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_up" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="three_ood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="three_down" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="first_three" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Discount_Account" FromRole="Discount" ToRole="Account" />
@@ -526,16 +526,16 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UID" Type="Int32" />
-          <Property Name="three_up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="three_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="two_up" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_ood" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="two_down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="up" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="down" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_three" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="first_three_ood" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="three_up" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="three_ood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="three_down" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="two_up" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="two_ood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="two_down" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="up" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="down" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="first_three" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="first_three_ood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Rate_Account" FromRole="Rate" ToRole="Account" />
