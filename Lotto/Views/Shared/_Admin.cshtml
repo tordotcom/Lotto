@@ -358,9 +358,9 @@
                         @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-bar-chart-o"></i>รายงาน</a></li>*@
 
                         <li class="menu-title">ตั้งค่า</li><!-- /.menu-title -->
-                        @*<li class=""><a href="@Url.Action("Setting", "Admin")"><i class="menu-icon fa fa-cogs"></i>ตั้งค่า</a></li>*@
                         <li class=""><a href="@Url.Action("Member", "Admin")"><i class="menu-icon fa fa-users"></i>สมาชิก</a></li>
                         <li class=""><a href="@Url.Action("MemberPrice", "Admin")"><i class="menu-icon fa fa-money"></i>ราคาสมาชิก</a></li>
+                        <li class=""><a href="@Url.Action("Setting", "Admin")"><i class="menu-icon fa fa-cogs"></i>ระบบ</a></li>
                         @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-btc"></i>ราคาตั้งสู้</a></li>*@
                         @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-pencil-square"></i>เจ้ามือแทงออก</a></li>*@
                         @*<li class=""><a href="@Url.Action("", "Admin")"><i class="menu-icon fa fa-unlock-alt"></i>ตั้งยอดอั้น</a></li>*@
@@ -504,7 +504,7 @@
                                         </div>
                                         <div class="stat-content">
                                             <div class="text-left dib">
-                                                <div class="stat-text"><span class="" id="closeTime" style="font-size:1.2vw;"></span></div>
+                                                <div class="stat-text"><span class="" style="font-size:1.2vw;">@Session["auto_close_time"]</span></div>
                                                 <div class="stat-heading">ปิดเวลา</div>
                                             </div>
                                         </div>
@@ -707,34 +707,10 @@
                 }
             });
 
-            $.ajax({
-                url: getSetting,
-                type: "POST",
-                dataType: "json",
-                success: function (data) {
-                    globalSetting = data['Setting'];
-                    //alert(JSON.stringify(globalSetting));
-                    //console.log(globalSetting);
-                    for (i = 0; i < globalSetting.length; i++) {
-                        if (globalSetting[i].Name == "auto_poll_accept") {
-                            $("input[name=auto_poll_accept][value=" + globalSetting[i].Value + "]").attr('checked', 'checked');
-                        }
-                        if (globalSetting[i].Name == "auto_close_time") {
-                            $('#closeTime').html(globalSetting[i].Value);
-                            $('#settingAutoCloseTime').val(globalSetting[i].Value);
-                        }
-                        if (globalSetting[i].Name == "dealer_phone") {
-                            $('#dealerPhone').val(globalSetting[i].Value);
-                        }
-                        if (globalSetting[i].Name == "dealer_line") {
-                            $('#dealerLine').val(globalSetting[i].Value);
-                        }
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert("error");
-                }
-            });
+            $("input[name=auto_poll_accept][value="+'@Session["auto_poll_accept"]'+"]").attr('checked', 'checked');
+            $("#settingAutoCloseTime").val('@Session["auto_close_time"]');
+            $("#dealerPhone").val('@Session["dealer_phone"]');
+            $("#dealerLine").val('@Session["dealer_line_id"]');
         }
 
         //$.ajax({

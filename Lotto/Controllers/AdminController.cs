@@ -1549,6 +1549,14 @@ namespace Lotto.Controllers
                     R.UID = AID;
                     if ((string)Session["Role"] == "SuperAdmin"){
                         R.Role_ID = 1;
+                        var s = new Setting();
+                        s.UID = AID;
+                        s.auto_poll_accept = 0;
+                        s.auto_close_time = "15:00";
+                        s.create_date = DateTime.Now;
+                        s.update_date = DateTime.Now;
+                        db.Setting.Add(s);
+                        db.SaveChanges();
                     }
                     else {
                         R.Role_ID = 2;
@@ -1726,7 +1734,7 @@ namespace Lotto.Controllers
         public ActionResult GetSetting()
         {
             var parentID = Int32.Parse((string)Session["ParentID"]);
-            return Json(new { Setting = db.Setting.Where(x=>x.UID== parentID) }, JsonRequestBehavior.AllowGet);
+            return Json(db.Setting.Where(x=>x.UID== parentID), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -1770,22 +1778,41 @@ namespace Lotto.Controllers
 
         //-------------------------------------Update Setting --------------------------------//
         [HttpPost]
-        public ActionResult UpdateSetting(List<Setting> S)
+        public ActionResult UpdateSetting(int Accept, string Close)
         {
-            if (S != null)
+            int u = Int32.Parse((string)Session["ID"]);
+            Setting s = db.Setting.Where(x => x.UID == u).First();
+            if (s != null)
+            {   
+                s.auto_poll_accept = Accept;
+                s.auto_close_time = Close;
+                s.update_date = DateTime.Now;
+                db.Entry(s).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                Session["auto_poll_accept"] = s.auto_poll_accept;
+                Session["auto_close_time"] = s.auto_close_time;
+                return Json("ss");
+            }
+            else
             {
-                var parentID = Int32.Parse((string)Session["ParentID"]);
-                foreach (var setting in S)
-                {
-                    Setting x = db.Setting.Where(y=>y.UID== parentID).Where(r => r.Name == setting.Name).First();
-                    if (x != null)
-                    {
-                        x.Value = setting.Value;
-                        x.update_date = DateTime.Now;
-                        db.Entry(x).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
-                    }
-                }
+                return Json("fail");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateInfo(string Tel, string Line)
+        {
+            int u = Int32.Parse((string)Session["ID"]);
+            Setting s = db.Setting.Where(x => x.UID == u).First();
+            if (s != null)
+            {  
+                s.dealer_phone = Tel;
+                s.dealer_line_id = Line;
+                s.update_date = DateTime.Now;
+                db.Entry(s).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                Session["dealer_phone"] = s.dealer_phone;
+                Session["dealer_line_id"] = s.dealer_line_id;
                 return Json("ss");
             }
             else
@@ -2039,8 +2066,6 @@ namespace Lotto.Controllers
                     var iamt = 0.00;
                     var d = 0.00;
                     var typ = item.bType;
-                    var sort = "";
-                    var temp = 'l';
                     //----------------------2 ตัว-------------------------//
                     if (NumLen == 2)
                     {

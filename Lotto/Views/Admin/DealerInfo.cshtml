@@ -37,28 +37,18 @@
 
 <script>
     (function ($) {
-        updateSetting = '@Url.Action("UpdateSetting", "Admin")';
+        updateInfo = '@Url.Action("UpdateInfo", "Admin")';
 
         $("#btnUpdateDealer").click(function () {
-
-            var setting = [
-                {
-                    Name: "dealer_phone",
-                    Value: $("#dealerPhone").val()
-                },
-                {
-                    Name: "dealer_line",
-                    Value: $("#dealerLine").val()
-                }
-            ];
-
-            //alert(JSON.stringify(setting));
 
             $.ajax({
                 dataType: 'json',
                 type: 'POST',
-                url: updateSetting,
-                data: { S: setting },
+                url: updateInfo,
+                data: { 
+                    Tel: $("#dealerPhone").val(),
+                    Line: $("#dealerLine").val()
+                },
                 success: function (data) {  
                     if (data == "ss") {
 					    Swal.fire({

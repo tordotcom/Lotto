@@ -615,8 +615,6 @@ namespace Lotto.Controllers
                         var iamt = 0.00;
                         var d = 0.00;
                         var typ = item.bType;
-                        var sort = "";
-                        var temp = 'l';
                         //----------------------2 ตัว-------------------------//
                         if (NumLen == 2)
                         {
