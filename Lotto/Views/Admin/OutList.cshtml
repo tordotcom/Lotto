@@ -7,63 +7,36 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <i class="mr-2 fa fa-play"></i>
-                <strong class="card-title">ดูโพยทั้งหมด</strong>
+                <i class="mr-2 fa fa-list"></i>
+                <strong class="card-title">ดูโพยแทงออกทั้งหมด</strong>
             </div>
             <div class="card-body">
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>ชื่อเจ้ามือ</th>
-                            <th>User</th>
-                            <th>Password</th>
-                            <th><button type="button" class="btn btn-sm btn-dark add-dealer" data-toggle="modal" data-target="#editDealerModal" data-backdrop="static" data-keyboard="false">เพิ่มเจ้ามือ</button></th>
+                            <th>ใบที่</th>
+                            <th>ยอดแทง</th>
+                            <th>สถานะโพย</th>
+                            <th>วิธีส่ง</th>
+                            <th>วันที่ส่ง</th>
+                            <th>หมายเหตุ</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Test</td>
-                            <td>User</td>
-                            <td>Password</td>
-                            <td><a href="@Url.Action("Out", "Admin")" class="btn btn-sm btn-danger">แทงออก</a></td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td><button type="button" class="btn btn-sm btn-danger">ดูโพย</button></td>
                         </tr>
                     </tbody>
                     <tfoot>
                     </tfoot>
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editDealerModal" tabindex="-1" role="dialog" aria-labelledby="editDealerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editDealerModalLabel">เพิ่มข้อมูลเจ้ามือ</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal" id="editUserForm">
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label class="form-control-label">ชื่อเจ้ามือ</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtDealer" name="txtDealerName" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label class="form-control-label">รหัสสมาชิก</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUsername" name="txtUsernameName" class="form-control form-control-sm"></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-5"><label class="form-control-label">รหัสผ่าน</label></div>
-                        <div class="col col-md-7"><input type="password" id="txtPassword" name="txtPasswordName" class="form-control form-control-sm"></div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-id="0">ยืนยัน</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
             </div>
         </div>
     </div>
