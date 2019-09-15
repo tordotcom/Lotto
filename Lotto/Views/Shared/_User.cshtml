@@ -636,19 +636,11 @@
 			type: "POST",
 			dataType: "json",
             success: function (data) {
-                globalSetting = data['Setting'];
+                //alert(JSON.stringify(data));
+                $('#closeTime').html(data[0].auto_close_time);
+                $('#dealerPhone').val(data[0].dealer_phone);
+                $('#dealerLine').val(data[0].dealer_line_id);
 
-                for (var i = 0; i < globalSetting.length ; i++){
-                    if (globalSetting[i].Name == "auto_close_time") {
-                         $('#closeTime').html(globalSetting[i].Value);
-                    }
-                    if (globalSetting[i].Name == "dealer_phone") {
-                        $('#dealerPhone').val(globalSetting[i].Value);
-                    }
-                    if (globalSetting[i].Name == "dealer_line") {
-                         $('#dealerLine').val(globalSetting[i].Value);
-                    }
-                }
             },
 			error: function (xhr, ajaxOptions, thrownError) {
 				alert("error");

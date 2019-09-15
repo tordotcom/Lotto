@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <i class="mr-2 fa fa-cogs"></i>
@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="row form-group">
+<!--                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เปิดให้สมาชิกใช้งาน</label></div>
                         <div class="col-12 col-md-7">
                             <div class="form-check-inline form-check">
@@ -39,9 +39,9 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row form-group">
-                        <div class="col col-md-5"><label for="text-input" class="form-control-label">รับโพยอัตโนมัติ<br />(ถ้าเลือก "ไม่ใช่" จะดูจากสมาชิก)</label></div>
+                        <div class="col col-md-5"><label for="text-input" class="form-control-label">รับโพยอัตโนมัติ (ถ้าเลือก "ไม่ใช่" จะดูจากสมาชิก)</label></div>
                         <div class="col-12 col-md-7">
                             <div class="form-check-inline form-check">
                                 <label for="" class="form-check-label ">
@@ -56,9 +56,9 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">เวลาปิดอัตโนมัติ</label></div>
-                        <div class="col-12 col-md-7"><input class="form-control form-control-sm" type="text" id="settingAutoCloseTime" placeholder="00:00" /></div>
+                        <div class="col-12 col-md-7"><input class="form-control form-control-sm" type="text" id="settingAutoCloseTime" /></div>
                     </div>
-                    <div class="row form-group">
+                    <!-- <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">ตัวนำหน้ารหัสสมาชิก</label></div>
                         <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
                     </div>
@@ -85,7 +85,7 @@
                     <div class="row form-group">
                         <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนช่องแทงโพย</label></div>
                         <div class="col-12 col-md-7"><input type="text" id="text-input" name="text-input" class="form-control form-control-sm"></div>
-                    </div>
+                    </div> -->
                     <div class="row form-group">
                         <div class="col-12">
                             <center>
@@ -106,23 +106,15 @@
 <script>
 
     $("#saveSetting").click(function () {
-        var setting = [
-            {
-                Name: "auto_poll_accept",
-                Value: $('input[name=auto_poll_accept]:checked').val()
-            },
-            {
-                Name: "auto_close_time",
-                Value: $('#settingAutoCloseTime').val()
-            }
-        ];
 
-        //alert(JSON.stringify(setting));
         $.ajax({
             dataType: 'json',
             type: 'POST',
             url: updateSetting,
-            data: { S: setting },
+            data: { 
+                Accept: $('input[name=auto_poll_accept]:checked').val(),
+                Close: $('#settingAutoCloseTime').val()
+            },
             success: function (data) {          
                 if (data == "ss") {
 					Swal.fire({

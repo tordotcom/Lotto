@@ -15,10 +15,12 @@ namespace Lotto.Models
     public partial class Setting
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Value { get; set; }
+        public Nullable<int> UID { get; set; }
+        public Nullable<int> auto_poll_accept { get; set; }
+        public string auto_close_time { get; set; }
+        public string dealer_phone { get; set; }
+        public string dealer_line_id { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
         public Nullable<System.DateTime> update_date { get; set; }
-        public Nullable<int> UID { get; set; }
     }
 }
