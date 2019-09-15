@@ -3,366 +3,495 @@
     ViewBag.Title = "Out";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
-
-<h2>แทงออก</h2>
-<hr />
-
 <div class="row">
     <div class="col-md-12">
-        <div class="card" style="overflow-x:auto;width:200%;">
+        <div class="card">
             <div class="card-header">
-                <strong class="card-title">โพยแทงออกใบที่1</strong>
+                <strong class="card-title">แทงออก</strong>
             </div>
             <div class="card-body table-bordered table-sm">
                 <table class="table" style="text-align:center;">
                     <thead>
                         <tr>
-                            <th style="color:white;background-color:red;">2 บน</th>
-                            <th style="color:white;background-color:black;">3 บน</th>
-                            <th style="color:white;background-color:red;">3 โต๊ด</th>
-                            <th style="color:white;background-color:black;">2 โต๊ด</th>
-                            <th style="color:white;background-color:red;">วิ่ง บน</th>
-                            <th style="color:white;background-color:black;">วื่ง ล่าง</th>
-                            <th style="color:white;background-color:red;">2 ล่าง</th>
-                            <th style="color:white;background-color:black;">3 ล่าง</th>
+                            <th style="border: 0;color:white;background-color:red;">2 บน</th>
+                            <th style="border: 0;color:white;background-color:black;">3 บน</th>
+                            <th style="border: 0;color:white;background-color:red;">3 โต๊ด</th>
+                            <th style="border: 0;color:white;background-color:black;">3 หน้า</th>
+                            <th style="border: 0;color:white;background-color:red;">3 หน้าโต๊ด</th>
+                            <th style="border: 0;color:white;background-color:black;">วิ่ง บน</th>
+                            <th style="border: 0;color:white;background-color:red;">วื่ง ล่าง</th>
+                            <th style="border: 0;color:white;background-color:black;">2 ล่าง</th>
+                            <th style="border: 0;color:white;background-color:red;">3 ล่าง</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
-                                </div>
-                            </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
                             </td>
                             <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
                             </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
                             </td>
                             <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
                             </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
                             </td>
                             <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
                             </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-5"><input id="" type="text" class="form-control form-control-sm" placeholder="เลข"></div>
-                                    <div class="col-7"><input id="" type="text" class="form-control form-control-sm" placeholder="ราคา"></div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                            </td>
+                            <td style="background-color:rgba(255, 0, 0, 0.1);">
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                            </td>
+                            <td style="background-color:rgba(255, 255, 255, 0.1);">
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                </div>
+                                <div class="form-group">
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                    <div style="float:left;width:10%;">=</div>
+                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
                                 </div>
                             </td>
                         </tr>
@@ -374,8 +503,64 @@
     </div>
 </div>
 
+<script id="bet_info_template" type="text/html">
+    <li class="menu-title">แทงออก</li>
+    <li class="">&nbsp;</li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
+            <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm right" value="" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
+            <div class="col col-md-7"><input type="text" id="poll_name" name="text-input" class="form-control form-control-sm" value="" placeholder="ชื่อโพย"></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
+            <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm right" disabled value="0 ฿" style="text-align:right"></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
+            <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm right" value=" ใบ" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
+            <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm right" value=" ใบ" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืน</label></div>
+            <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm right" value=" ฿" style="text-align:right" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทง</label></div>
+            <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm right" value=" ฿" style="text-align:right" disabled></div>
+        </div>
+    </li>
+    <li class="">
+        <div class="row form-group">
+            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่าย</label></div>
+            <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm right" value=" ฿" style="text-align:right" disabled></div>
+        </div>
+    </li>
+</script>
+
 <script>
     (function ($) {
+        var value;
+
+        $('#bet_info_template').tmpl(value).appendTo('#bet_info_area');
 
     })(jQuery);
 </script>

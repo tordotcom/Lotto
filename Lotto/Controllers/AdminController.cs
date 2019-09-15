@@ -489,6 +489,21 @@ namespace Lotto.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
+        public ActionResult OutList() //แทงออก
+        {
+            if ((string)Session["Role"] == "Administrator")
+            {
+                return View();
+            }
+            else if ((string)Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
         public ActionResult Out() //แทงออก
         {
             if ((string)Session["Role"] == "Administrator")
