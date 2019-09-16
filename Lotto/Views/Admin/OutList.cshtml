@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IList<Lotto.Models.Poll_Out>
+@{
     ViewBag.Title = "OutList";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
@@ -14,26 +15,48 @@
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>ใบที่</th>
+                            <th>จำนวนโพย</th>
                             <th>ยอดแทง</th>
+                            <th>ยอดหัก %</th>
+                            <th>ยอดถูก</th>
                             <th>สถานะโพย</th>
                             <th>วิธีส่ง</th>
-                            <th>วันที่ส่ง</th>
-                            <th>หมายเหตุ</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in Model)
+                        {
                         <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
+                            <td>@item.Count</td>
+                            <td>@item.Amount</td>
+                            <td>@item.AmountDiscount</td>
+                            <td>@item.AmountWin</td>
+                            @if (item.Send_To_UID == "")
+                            {
+                                <td>ใหม่</td>
+                            }
+                            else
+                            {
+                                <td>ส่งแล้ว</td>
+                            }
+                            @if (item.Status == "0")
+                            {
+                                <td>ยังไม่ได้ส่ง</td>
+                            }
+                            else if (item.Status == "1")
+                            {
+                                <td>พิมพ์ส่ง</td>
+                            }
+                            else if(item.Status == "2")
+                            {
+                                <td>ส่งผ่านเว็บไปที่ - @item.Name</td>
+                            }
+                            else { }
                             <td><button type="button" class="btn btn-sm btn-danger">ดูโพย</button></td>
                         </tr>
-                    </tbody>
+                        }
+                        </tbody>
                     <tfoot>
                     </tfoot>
                 </table>

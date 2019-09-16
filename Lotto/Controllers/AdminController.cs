@@ -510,7 +510,55 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                return View();
+                var user_id = Int32.Parse( Session["ID"].ToString());
+                var max = db.Period.Where(y => y.UID == user_id).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();
+                var data = new List<Poll_Out>();
+                if (max != 0)
+                {
+                    int id = db.Period.Where(x => x.UID == user_id).Max(p => p.ID);
+                    
+                    string connetionString = null;
+
+                    connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "SELECT pbo.[UID], pbo.[Send_To_UID],pbo.[Period_ID],pbo.[Status],sum(CAST(lbo.Amount as int)) as Amount,ROUND(sum(CAST(lbo.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(lbo.[AmountWin]as int)) as AmountWin,count(*) as count,abo.Name FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[Poll_Out_ID],sum(CAST( [Amount]as int)) as Amount, ROUND(sum(CAST([AmountDiscount]as float)),0) as AmountDiscount, sum(CAST([AmountWin] as int)) as AmountWin FROM [dbo].[Lotto_Bet_Out] group by [Poll_Out_ID]) lbo on pbo.ID=lbo.Poll_Out_ID left join(SELECT [ID],[UID],[Name] FROM[dbo].[Account_Bet_Out]) abo on pbo.Send_To_UID = abo.ID where pbo.[Period_ID]=@period group by pbo.[UID],pbo.[Send_To_UID],pbo.[Period_ID],pbo.[Status],abo.Name";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", id.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                data.Add(new Poll_Out
+                                {
+                                    UID = Reader["UID"].ToString(),
+                                    Send_To_UID = Reader["Send_To_UID"].ToString(),
+                                    Period_ID = Reader["Period_ID"].ToString(),
+                                    Status = Reader["Status"].ToString(),
+                                    Count = Reader["count"].ToString(),
+                                    Amount= Reader["Amount"].ToString(),
+                                    AmountDiscount = Reader["AmountDiscount"].ToString(),
+                                    AmountWin = Reader["AmountWin"].ToString(),
+                                    Name = Reader["Name"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                    return View(data);
             }
             else if ((string)Session["Role"] == "User")
             {

@@ -287,6 +287,7 @@
     <Compile Include="Models\Poll_Image.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Poll_Out.cs" />
     <Compile Include="Models\Poll_Result.cs" />
     <Compile Include="Models\Rate.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
@@ -439,6 +440,7 @@
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.zh-TW.min.js" />
     <Content Include="Assets\js\bootstrap.min.js" />
     <Content Include="Assets\js\close.js" />
+    <Content Include="Assets\js\codealer.js" />
     <Content Include="Assets\js\dashboard.js" />
     <Content Include="Assets\js\dateformat.js" />
     <Content Include="Assets\js\init\chartjs-init.js" />
@@ -669,6 +671,8 @@
     <Content Include="Views\User\Contact.cshtml" />
     <Content Include="Views\Admin\Result.cshtml" />
     <Content Include="Views\Admin\AdminBet.cshtml" />
+    <Content Include="Views\Admin\OutList.cshtml" />
+    <Content Include="Views\Admin\CoDealer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
