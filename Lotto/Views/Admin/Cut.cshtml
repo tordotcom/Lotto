@@ -356,8 +356,10 @@
             </div>
         </div>
     </div>
+    <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
     getRate = '@Url.Action("getRate", "Admin")';
+    addPollBetout= '@Url.Action("addPollBetOut", "Admin")';
     var rate;
     var model = @Html.Raw(Json.Encode(Model));
     var modelRate = @Html.Raw(Json.Encode(ViewBag.Rate));
@@ -371,6 +373,8 @@
     var down = @Html.Raw(down);
     var twodown = @Html.Raw(twodown);
     var threedown = @Html.Raw(threedown);
+    var betOut = [];
+    var betReceive = [];
     $("#save").hide();
     var chart = { 
         "two_up" : [],
@@ -837,17 +841,25 @@
                     $("#ct2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t",
-                        NumLen: "2",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "2"
                     });
                     betReceive.push({
                         bType: "t",
-                        NumLen: "2",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "2"
                     });
-                }               
+                }
+                else {
+                    betReceive.push({
+                        bType: "t",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "2"
+                    });
+                }
             }
             else if (model[i].nLen == "3" && model[i].Type == "t") {
                 var amount = parseInt(model[i].Amount);
@@ -856,17 +868,25 @@
                     $("#ct3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "3"
                     });
                     betReceive.push({
                         bType: "t",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "3"
                     });
-                }        
+                }
+                else {
+                    betReceive.push({
+                        bType: "t",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "3"
+                    });
+                }
             }
             else if (model[i].nLen == "3" && model[i].Type == "t_") {
                 var amount = parseInt(model[i].Amount);
@@ -875,15 +895,23 @@
                     $("#ct3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t_",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "3"
                     });
                     betReceive.push({
                         bType: "t_",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "3"
+                    });
+                }
+                else {
+                    betReceive.push({
+                        bType: "t_",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "3"
                     });
                 }
             }
@@ -901,15 +929,23 @@
                     $("#ct3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "f",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "3"
                     });
                     betReceive.push({
                         bType: "f",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "3"
+                    });
+                }
+                else {
+                    betReceive.push({
+                        bType: "f",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "3"
                     });
                 }
             }
@@ -920,15 +956,23 @@
                     $("#ct3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "f_",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "3"
                     });
                     betReceive.push({
                         bType: "f_",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "3"
+                    });
+                }
+                else {
+                    betReceive.push({
+                        bType: "f_",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "3"
                     });
                 }
             }
@@ -939,15 +983,23 @@
                     $("#ct1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t",
-                        NumLen: "1",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "1"
                     });
                     betReceive.push({
                         bType: "t",
-                        NumLen: "1",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "1"
+                    });
+                }
+                else {
+                    betReceive.push({
+                        bType: "t",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "1"
                     });
                 }
             }
@@ -958,15 +1010,23 @@
                     $("#ct1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "b",
-                        NumLen: "1",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "1"
                     });
                     betReceive.push({
                         bType: "b",
-                        NumLen: "1",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "1"
+                    });
+                }
+                else {
+                    betReceive.push({
+                        bType: "b",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "1"
                     });
                 }
             }
@@ -977,15 +1037,23 @@
                     $("#ct2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "b",
-                        NumLen: "2",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "2"
                     });
                     betReceive.push({
                         bType: "b",
-                        NumLen: "2",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "2"
+                    });
+                }
+                else {
+                    betReceive.push({
+                        bType: "b",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "2"
                     });
                 }
             }
@@ -996,15 +1064,23 @@
                     $("#ct3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "b",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: (amount - receiveAmount)
+                        Amount: (amount - receiveAmount).toString(),
+                        NumLen: "3"
                     });
                     betReceive.push({
                         bType: "b",
-                        NumLen: "3",
                         Number: model[i].Number,
-                        Amount: receiveAmount
+                        Amount: receiveAmount.toString(),
+                        NumLen: "3"
+                    });
+                }
+                else {
+                    betReceive.push({
+                        bType: "b",
+                        Number: model[i].Number,
+                        Amount: model[i].Amount,
+                        NumLen: "3"
                     });
                 }
             }
@@ -1058,6 +1134,29 @@
             setTimeout(function(){newWin.close();},10);
     });
     $("#save").click(function () {
-
+        console.log(betOut);
+        console.log(betReceive);
+        $.ajax({
+            url: addPollBetout,
+            data: { poll: betOut, pollReceive: betReceive},
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'บันทึกเรียบร้อย',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onAfterClose: () => {
+                            location.reload();
+                        }
+                    });
+                }               
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
     });
 </script>

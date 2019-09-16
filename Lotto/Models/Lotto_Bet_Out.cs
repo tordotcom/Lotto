@@ -23,7 +23,7 @@ namespace Lotto.Models
         public string AmountDiscount { get; set; }
         public string AmountWin { get; set; }
         public string Result_Status { get; set; }
-        public string create_date { get; set; }
-        public string update_date { get; set; }
+        public Nullable<System.DateTime> create_date { get; set; }
+        public Nullable<System.DateTime> update_date { get; set; }
     }
 }

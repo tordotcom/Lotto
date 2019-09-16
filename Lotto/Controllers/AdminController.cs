@@ -4063,9 +4063,54 @@ namespace Lotto.Controllers
         }
         //--------------------------------บันทึกข้อมูลลงตาราแทงออก และรับไว้------------------------------------------///
         [HttpPost]
-        public ActionResult addPollBetOut(PollData Out, PollData Receive)
+        public ActionResult addPollBetOut(PollData Data)
         {
-            return Json("");
+            var pOut = new Poll_Bet_Out();
+            
+            int user_id = Int32.Parse( Session["ID"].ToString());
+            int pid = db.Period.Where(x => x.UID == user_id).Max(p => p.ID);
+
+            pOut.UID = user_id;
+            pOut.Period_ID = pid;
+            pOut.Status = "0";
+            pOut.create_date = DateTime.Now;
+            db.Poll_Bet_Out.Add(pOut);
+            db.SaveChanges();
+            int pollOut_id = pOut.ID;
+            foreach (var item in Data.poll)
+            {
+                var lOut = new Lotto_Bet_Out();
+                lOut.Poll_Out_ID = pollOut_id;
+                lOut.Type = item.bType;
+                lOut.NumLen = item.NumLen;
+                lOut.Number = item.Number;
+                lOut.Amount = item.Amount;
+                lOut.AmountWin = "0";
+                lOut.AmountDiscount = "0";
+                lOut.Result_Status = "0";
+                lOut.create_date = DateTime.Now;
+                lOut.update_date = DateTime.Now;
+                db.Lotto_Bet_Out.Add(lOut);
+            }
+            foreach(var item in Data.pollReceive)
+            {
+                var lReceive = new Lotto_Bet_Receive();
+                lReceive.UID = user_id;
+                lReceive.Period_ID = pid;
+                lReceive.Type = item.bType;
+                lReceive.NumLen = item.NumLen;
+                lReceive.Number = item.Number;
+                lReceive.Amount = item.Amount;
+                lReceive.AmountWin = "0";
+                lReceive.AmountDiscount = "0";
+                lReceive.Result_Status = "0";
+                lReceive.Status = "0";
+                lReceive.create_date = DateTime.Now;
+                lReceive.update_date = DateTime.Now;
+                db.Lotto_Bet_Receive.Add(lReceive);
+            }
+            db.SaveChanges();
+            return Json(pollOut_id);
         }
     }
 }

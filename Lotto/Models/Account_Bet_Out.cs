@@ -12,7 +12,7 @@ namespace Lotto.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Acount_Bet_Out
+    public partial class Account_Bet_Out
     {
         public int ID { get; set; }
         public Nullable<int> UID { get; set; }
