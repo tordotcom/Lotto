@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Lotto.Models.Account_Bet_Out>
+@{
     ViewBag.Title = "CoDealer";
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
@@ -7,7 +8,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <i class="mr-2 fa fa-users"></i>
+                <i class="mr-2 fa fa-user-secret"></i>
                 <strong class="card-title">เจ้ามือ</strong>
             </div>
             <div class="card-body">
@@ -15,69 +16,137 @@
                     <thead>
                         <tr>
                             <th>ชื่อเจ้ามือ</th>
+                            <th>User เจ้ามือ</th>
                             <th>User</th>
                             <th>Password</th>
-                            <th><button type="button" class="btn btn-sm btn-dark add-dealer" data-toggle="modal" data-target="#editDealerModal" data-backdrop="static" data-keyboard="false">เพิ่มเจ้ามือ</button></th>
+                            <th><button type="button" class="btn btn-sm btn-dark add-dealer add-codealer" data-toggle="modal" data-target="#editCoDealerModal" data-backdrop="static" data-keyboard="false">เพิ่มเจ้ามือ</button></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Test</td>
-                            <td>User</td>
-                            <td>Password</td>
-                            <td><a href="@Url.Action("Out", "Admin")" class="btn btn-sm btn-danger">แทงออก</a></td>
-                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.SendToUsername</td>
+                                <td>@item.Username</td>
+                                <td>@item.Password</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning edit" data-id="@item.ID" data-toggle="modal" data-target="#editCoDealerModal" data-backdrop="static" data-keyboard="false">แก้ไข</button>
+                                    <button type="button" class="btn btn-danger delete" data-id="@item.ID" data-name="@item.Name" data-toggle="modal" data-target="#deleteCoDealerModal" data-backdrop="static" data-keyboard="false">ลบ</button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
-                    <tfoot>
-                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="editDealerModal" tabindex="-1" role="dialog" aria-labelledby="editDealerModalLabel" aria-hidden="true">
+<div class="modal fade" id="editCoDealerModal" tabindex="-1" role="dialog" aria-labelledby="editCoDealerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editDealerModalLabel">เพิ่มข้อมูลเจ้ามือ</h5>
+                <h5 class="modal-title" id="editCoDealerModalLabel">เพิ่มข้อมูลเจ้ามือ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal" id="editUserForm">
+                <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal" id="editCoDealerForm">
+                    <input type="hidden" id="txtUID" name="txtUIDName" class="form-control form-control-sm" value="<%=Session['ID']%>">
                     <div class="row form-group">
                         <div class="col col-md-5"><label class="form-control-label">ชื่อเจ้ามือ</label></div>
                         <div class="col col-md-7"><input type="text" id="txtDealer" name="txtDealerName" class="form-control form-control-sm"></div>
                     </div>
                     <div class="row form-group">
+                        <div class="col col-md-5"><label class="form-control-label">รหัสสมาชิกเจ้ามือ</label></div>
+                        <div class="col col-md-7"><input type="text" id="txtUsernameDealer" name="txtUsernameDealerName" class="form-control form-control-sm" disabled=""></div>
+                    </div>
+                    <div class="row form-group">
                         <div class="col col-md-5"><label class="form-control-label">รหัสสมาชิก</label></div>
-                        <div class="col col-md-7"><input type="text" id="txtUsername" name="txtUsernameName" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="text" id="txtBetUsername" name="txtBetUsernameName" class="form-control form-control-sm"></div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-5"><label class="form-control-label">รหัสผ่าน</label></div>
-                        <div class="col col-md-7"><input type="password" id="txtPassword" name="txtPasswordName" class="form-control form-control-sm"></div>
+                        <div class="col col-md-7"><input type="password" id="txtBetPassword" name="txtBetPasswordName" class="form-control form-control-sm"></div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">ยืนยัน</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" data-id="0" id="btnEdit">ยืนยัน</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancelEdit">ยกเลิก</button>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="deleteCoDealerModal" tabindex="-1" role="dialog" aria-labelledby="deleteCoDealerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCoDealerModalLabel">ลบข้อมูล</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ต้องการลบข้อมูลเจ้ามือ "<b id="deleteName"></b>" ใช้หรือไม่?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-id="0" id="btnDelete">ยืนยัน</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/js/codealer.js"></script>
+<script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
-    (function ($) {
-        $('#bootstrap-data-table').DataTable({
-            lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
-            fixedHeader: {
-                footer: true
-            }
-        });
+    addCoDealer = '@Url.Action("AddCoDealer", "Admin")';
+    updateCoDealer = '@Url.Action("UpdateCoDealer", "Admin")';
+    deleteCoDealer = '@Url.Action("DeleteCoDealer", "Admin")';
 
-    })(jQuery);
+    var o = new Object();
+    o = @Html.Raw(Json.Encode(Model));
+
+    var adminID = '@Session["ID"]';
+
+    $('#bootstrap-data-table').DataTable({
+        lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]]
+    });
+
+    $(".add-codealer").click(function () {
+        $("#btnEdit").val(0);
+        $("#editCoDealerModalLabel").html("เพิ่มข้อมูลเจ้ามือ");
+        $("#txtDealer").val('');
+        $("#txtUsernameDealer").prop("disabled", false);
+        $("#txtUsernameDealer").val('');
+        $("#txtBetUsername").val('');
+        $("#txtBetPassword").val('');
+    });
+
+    $(".edit").click(function () {
+        $("#btnEdit").val(1);
+        $("#editCoDealerModalLabel").html("แก้ไขข้อมูลเจ้ามือ");
+        $("#txtUsernameDealer").prop("disabled", true);
+
+        var id = $(this).attr("data-id");
+        for (var i = 0; i < o.length;i++) {
+            if (id == o[i].ID) {
+                document.getElementById('btnEdit').setAttribute('data-id', o[i].ID);
+                $("#txtDealer").val(o[i].Name);
+                $("#txtUsernameDealer").val(o[i].SendToUsername);
+                $("#txtBetUsername").val(o[i].Username);
+                $("#txtBetPassword").val(o[i].Password);
+            }
+        }
+    });
+
+    $(".delete").click(function () {
+        var id = $(this).attr("data-id");
+        document.getElementById('btnDelete').setAttribute('data-id', id);
+        $('#deleteName').html($(this).attr("data-name"));
+    });
 </script>
 

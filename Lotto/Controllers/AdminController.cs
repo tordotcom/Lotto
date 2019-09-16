@@ -493,7 +493,9 @@ namespace Lotto.Controllers
         {
             if ((string)Session["Role"] == "Administrator")
             {
-                return View();
+                var adminID = Int32.Parse((string)Session["ID"]);
+                List<Account_Bet_Out> abo = db.Account_Bet_Out.Where(x => x.UID == adminID).ToList();
+                return View(abo);
             }
             else if ((string)Session["Role"] == "User")
             {
@@ -1662,6 +1664,68 @@ namespace Lotto.Controllers
                 return Json("fail");
             }
         }
+
+        //-------------------------------------Add CoDealer data --------------------------------//
+        [HttpPost]
+        public ActionResult AddCoDealer(Account_Bet_Out CoDealer)
+        {           
+            if (CoDealer != null)
+            {
+                Account_Bet_Out A = new Account_Bet_Out();
+                A.UID = CoDealer.UID;
+                A.Name = CoDealer.Name;
+                A.SendToUsername = CoDealer.SendToUsername;
+                A.Username = CoDealer.Username;
+                A.Password = CoDealer.Password;
+                db. Account_Bet_Out.Add(A);
+                db.SaveChanges();
+
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+
+        //-------------------------------------Update CoDealer data --------------------------------//
+        [HttpPost]
+        public ActionResult UpdateCoDealer(Account_Bet_Out CoDealer)
+        {
+            Account_Bet_Out A = db.Account_Bet_Out.Where(s => s.ID == CoDealer.ID).FirstOrDefault<Account_Bet_Out>();
+            if (A != null)
+            {
+                A.Name = CoDealer.Name;
+                A.SendToUsername = CoDealer.SendToUsername;
+                A.Username = CoDealer.Username;
+                A.Password = CoDealer.Password;
+                db.Entry(A).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+
+        //-------------------------------------Delete CoDealer data --------------------------------//
+        [HttpPost]
+        public ActionResult DeleteCoDealer(Account_Bet_Out CoDealer)
+        {
+            Account_Bet_Out A = db.Account_Bet_Out.Where(s => s.ID == CoDealer.ID).FirstOrDefault<Account_Bet_Out>();
+            if (A != null)
+            {   
+                db.Account_Bet_Out.Remove(A);
+                db.SaveChanges();
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+
 
         //-------------------------------------Add Result data --------------------------------//
         [HttpPost]

@@ -225,6 +225,9 @@
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Account_Bet_Out.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Account_Role.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
@@ -256,6 +259,12 @@
     <Compile Include="Models\LottoSub.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Lotto_Bet_Out.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Lotto_Bet_Receive.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Lotto_Detail.cs" />
     <Compile Include="Models\Main_Discount.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
@@ -271,6 +280,9 @@
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PollData.cs" />
+    <Compile Include="Models\Poll_Bet_Out.cs">
+      <DependentUpon>LottoEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Poll_Detail.cs" />
     <Compile Include="Models\Poll_Image.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>

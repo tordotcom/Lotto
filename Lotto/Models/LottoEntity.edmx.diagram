@@ -26,6 +26,10 @@
         <EntityTypeShape EntityType="ltfomModel.Total_Amount_Result" Width="1.5" PointX="12.375" PointY="0.75" />
         <EntityTypeShape EntityType="ltfomModel.Poll_Image" Width="1.5" PointX="12.375" PointY="4.75" />
         <EntityTypeShape EntityType="ltfomModel.Setting" Width="1.5" PointX="10.375" PointY="10.75" />
+        <EntityTypeShape EntityType="ltfomModel.Lotto_Bet_Out" Width="1.5" PointX="12.375" PointY="7.75" />
+        <EntityTypeShape EntityType="ltfomModel.Poll_Bet_Out" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="ltfomModel.Account_Bet_Out" Width="1.5" PointX="12.375" PointY="11.75" />
+        <EntityTypeShape EntityType="ltfomModel.Lotto_Bet_Receive" Width="1.5" PointX="14.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
