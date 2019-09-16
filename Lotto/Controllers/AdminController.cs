@@ -1088,10 +1088,12 @@ namespace Lotto.Controllers
             if ((string)Session["Role"] == "Administrator")
             {
                 var parentID = Int32.Parse((string)Session["ParentID"]);
-                int maxpid = db.Period.Where(x=>x.UID== parentID).Max(p => p.ID);
-                Period P = db.Period.Where(x => x.ID == maxpid).Where(y => y.Check_Result == "0").FirstOrDefault<Period>();
-                if (P != null)
+                var max = db.Period.Where(y => y.UID == parentID).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();
+                
+                if (max != 0)
                 {
+                    int maxpid = db.Period.Where(x => x.UID == parentID).Max(p => p.ID);
+                    Period P = db.Period.Where(x => x.ID == maxpid).Where(y => y.Check_Result == "0").FirstOrDefault<Period>();
                     string connetionString = null;
                     var pollDetail = new List<Poll_Detail>();
                     connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
@@ -1575,6 +1577,8 @@ namespace Lotto.Controllers
                     db.SaveChanges();
                     int AID = A.ID;
                     var R = new Account_Role();
+                    var mr = new Main_Rate();
+                    var md = new Main_Discount();
                     //int lastAccount = db.Account.Max(item => item.ID);
                     R.UID = AID;
                     if ((string)Session["Role"] == "SuperAdmin"){
@@ -1586,6 +1590,36 @@ namespace Lotto.Controllers
                         s.create_date = DateTime.Now;
                         s.update_date = DateTime.Now;
                         db.Setting.Add(s);
+
+                        mr.admin_id = AID.ToString();
+                        mr.three_up = "550";
+                        mr.three_ood = "100";
+                        mr.three_down = "100";
+                        mr.two_up = "65";
+                        mr.two_ood = "65";
+                        mr.two_down = "65";
+                        mr.up = "3";
+                        mr.down = "4";
+                        mr.first_three = "550";
+                        mr.first_three_ood = "100";
+                        mr.create_date= DateTime.Now;
+                        mr.update_date= DateTime.Now;
+                        db.Main_Rate.Add(mr);
+
+                        md.admin_id = AID.ToString();
+                        md.three_up = "33";
+                        md.three_ood = "33";
+                        md.three_down = "33";
+                        md.two_up = "33";
+                        md.two_ood = "0";
+                        md.two_down = "33";
+                        md.up = "10";
+                        md.down = "10";
+                        md.first_three = "33";
+                        md.first_three_ood = "33";
+                        md.create_date= DateTime.Now;
+                        md.update_date= DateTime.Now;
+                        db.Main_Discount.Add(md);
                         db.SaveChanges();
                     }
                     else {
@@ -4026,6 +4060,12 @@ namespace Lotto.Controllers
             }
 
             return Json(data);
+        }
+        //--------------------------------บันทึกข้อมูลลงตาราแทงออก และรับไว้------------------------------------------///
+        [HttpPost]
+        public ActionResult addPollBetOut(PollData Out, PollData Receive)
+        {
+            return Json("");
         }
     }
 }

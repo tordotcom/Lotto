@@ -78,7 +78,7 @@
                                                         <table id="ct2up"></table>
                                                     </td>
                                                     <td style="vertical-align: top;">
-                                                        <table id="cct3up"></table>
+                                                        <table id="ct3up"></table>
                                                     </td>
                                                     <td style="vertical-align: top;">
                                                         <table id="ct3_"></table>
@@ -117,6 +117,7 @@
                         <div class="col-md-12 form-group">
                             <div class="col-md-2 offset-5">
                                 <button type="button" class="btn btn-block btn-sm btn-success" id="cut">ตัด</button>
+                                <button type="button" class="btn btn-block btn-sm btn-primary" id="save">บันทึก</button>
                             </div>
                         </div>
                         <div class="col-md-12 right">
@@ -370,7 +371,7 @@
     var down = @Html.Raw(down);
     var twodown = @Html.Raw(twodown);
     var threedown = @Html.Raw(threedown);
-
+    $("#save").hide();
     var chart = { 
         "two_up" : [],
         "three_up" : [],
@@ -640,7 +641,6 @@
         $("#t1down").html("");
         $("#t2down").html("");
         $("#t3down").html("");
-
         if (this.value == 0) {
             model.sort(function (a, b) {
                 if (parseInt(a.nLen) == parseInt(b.nLen)) {
@@ -803,6 +803,9 @@
         }
     });
     $("#cut").click(function () {
+        betOut = [];
+        betReceive = [];
+        //alert("adsa");
         $("#ct2up").html("");
         $("#ct3up").html("");
         $("#ct3_").html("");
@@ -826,19 +829,43 @@
                 return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
             }
         });
-        for (var i = 0; i < Object.keys(model).length; i++) {
+        for (var i = 0; i < Object.keys(model).length; i++) {          
             if (model[i].Type == "t" && model[i].nLen == "2") {
                 var amount = parseInt(model[i].Amount);
                 var receiveAmount = parseInt($("#two_up").val());  
                 if (amount > receiveAmount) {
                     $("#ct2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "t",
+                        NumLen: "2",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "t",
+                        NumLen: "2",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }               
             }
             else if (model[i].nLen == "3" && model[i].Type == "t") {
                 var amount = parseInt(model[i].Amount);
-                var receiveAmount = parseInt($("#three_up").val());
+                var receiveAmount = parseInt($("#three_up").val());                
                 if (amount > receiveAmount) {
                     $("#ct3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "t",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "t",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }        
             }
             else if (model[i].nLen == "3" && model[i].Type == "t_") {
@@ -846,6 +873,18 @@
                 var receiveAmount = parseInt($("#three_ood").val());
                 if (amount > receiveAmount) {
                     $("#ct3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "t_",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "t_",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }
             }
             //else if (model[i].nLen == "2" && model[i].Type == "t_") {
@@ -860,6 +899,18 @@
                 var receiveAmount = parseInt($("#first_three").val());
                 if (amount > receiveAmount) {
                     $("#ct3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "f",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "f",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }
             }
             else if (model[i].nLen == "3" && model[i].Type == "f_") {
@@ -867,6 +918,18 @@
                 var receiveAmount = parseInt($("#first_three_ood").val());
                 if (amount > receiveAmount) {
                     $("#ct3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "f_",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "f_",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }
             }
             else if (model[i].nLen == "1" && model[i].Type == "t") {
@@ -874,6 +937,18 @@
                 var receiveAmount = parseInt($("#up").val());
                 if (amount > receiveAmount) {
                     $("#ct1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "t",
+                        NumLen: "1",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "t",
+                        NumLen: "1",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }
             }
             else if (model[i].nLen == "1" && model[i].Type == "b") {
@@ -881,6 +956,18 @@
                 var receiveAmount = parseInt($("#down").val());
                 if (amount > receiveAmount) {
                     $("#ct1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "b",
+                        NumLen: "1",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "b",
+                        NumLen: "1",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }
             }
             else if (model[i].nLen == "2" && model[i].Type == "b") {
@@ -888,6 +975,18 @@
                 var receiveAmount = parseInt($("#two_down").val());
                 if (amount > receiveAmount) {
                     $("#ct2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "b",
+                        NumLen: "2",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "b",
+                        NumLen: "2",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }
             }
             else if (model[i].nLen == "3" && model[i].Type == "b") {
@@ -895,11 +994,30 @@
                 var receiveAmount = parseInt($("#three_down").val());
                 if (amount > receiveAmount) {
                     $("#ct3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    betOut.push({
+                        bType: "b",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: (amount - receiveAmount)
+                    });
+                    betReceive.push({
+                        bType: "b",
+                        NumLen: "3",
+                        Number: model[i].Number,
+                        Amount: receiveAmount
+                    });
                 }
             }
             else {
 
             }
+        }
+        if (betOut.length > 0) {
+            $("#save").show();
+            
+        }
+        else {
+            $("#save").hide();
         }
     });
     function keyPress(obj, evt) {
@@ -938,5 +1056,8 @@
             newWin.document.close();
 
             setTimeout(function(){newWin.close();},10);
-        });
+    });
+    $("#save").click(function () {
+
+    });
 </script>
