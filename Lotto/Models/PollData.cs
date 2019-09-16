@@ -14,6 +14,7 @@ namespace Lotto.Models
     public class Poll_Data
     {
         public string bType { get; set; }
+        public string nLen { get; set; }
         public string Number { get; set; }
         public string Amount { get; set; }
     }
