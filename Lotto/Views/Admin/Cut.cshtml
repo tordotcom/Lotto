@@ -358,10 +358,17 @@
     </div>
     <script src="~/Assets/js/sweetalert2.all.min.js"></script>
 <script>
+    $(document)
+        .ajaxStart(function () {
+            $('#AjaxLoader').show();
+        })
+        .ajaxStop(function () {
+            $('#AjaxLoader').hide();
+        });
     getRate = '@Url.Action("getRate", "Admin")';
     addPollBetout= '@Url.Action("addPollBetOut", "Admin")';
     var rate;
-    var model = @Html.Raw(Json.Encode(Model));
+    var model = @Html.Raw(Json.Encode(Model));    
     var modelRate = @Html.Raw(Json.Encode(ViewBag.Rate));
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);
@@ -845,20 +852,6 @@
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "2"
                     });
-                    betReceive.push({
-                        bType: "t",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "2"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "t",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
-                        NumLen: "2"
-                    });
                 }
             }
             else if (model[i].nLen == "3" && model[i].Type == "t") {
@@ -872,20 +865,6 @@
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "3"
                     });
-                    betReceive.push({
-                        bType: "t",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "3"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "t",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
-                        NumLen: "3"
-                    });
                 }
             }
             else if (model[i].nLen == "3" && model[i].Type == "t_") {
@@ -897,20 +876,6 @@
                         bType: "t_",
                         Number: model[i].Number,
                         Amount: (amount - receiveAmount).toString(),
-                        NumLen: "3"
-                    });
-                    betReceive.push({
-                        bType: "t_",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "3"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "t_",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
                         NumLen: "3"
                     });
                 }
@@ -933,20 +898,6 @@
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "3"
                     });
-                    betReceive.push({
-                        bType: "f",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "3"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "f",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
-                        NumLen: "3"
-                    });
                 }
             }
             else if (model[i].nLen == "3" && model[i].Type == "f_") {
@@ -958,20 +909,6 @@
                         bType: "f_",
                         Number: model[i].Number,
                         Amount: (amount - receiveAmount).toString(),
-                        NumLen: "3"
-                    });
-                    betReceive.push({
-                        bType: "f_",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "3"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "f_",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
                         NumLen: "3"
                     });
                 }
@@ -987,20 +924,6 @@
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "1"
                     });
-                    betReceive.push({
-                        bType: "t",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "1"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "t",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
-                        NumLen: "1"
-                    });
                 }
             }
             else if (model[i].nLen == "1" && model[i].Type == "b") {
@@ -1012,20 +935,6 @@
                         bType: "b",
                         Number: model[i].Number,
                         Amount: (amount - receiveAmount).toString(),
-                        NumLen: "1"
-                    });
-                    betReceive.push({
-                        bType: "b",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "1"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "b",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
                         NumLen: "1"
                     });
                 }
@@ -1041,20 +950,6 @@
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "2"
                     });
-                    betReceive.push({
-                        bType: "b",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "2"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "b",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
-                        NumLen: "2"
-                    });
                 }
             }
             else if (model[i].nLen == "3" && model[i].Type == "b") {
@@ -1066,20 +961,6 @@
                         bType: "b",
                         Number: model[i].Number,
                         Amount: (amount - receiveAmount).toString(),
-                        NumLen: "3"
-                    });
-                    betReceive.push({
-                        bType: "b",
-                        Number: model[i].Number,
-                        Amount: receiveAmount.toString(),
-                        NumLen: "3"
-                    });
-                }
-                else {
-                    betReceive.push({
-                        bType: "b",
-                        Number: model[i].Number,
-                        Amount: model[i].Amount,
                         NumLen: "3"
                     });
                 }
@@ -1138,7 +1019,7 @@
         console.log(betReceive);
         $.ajax({
             url: addPollBetout,
-            data: { poll: betOut, pollReceive: betReceive},
+            data: { poll: betOut},
             type: "POST",
             dataType: "json",
             success: function (data) {

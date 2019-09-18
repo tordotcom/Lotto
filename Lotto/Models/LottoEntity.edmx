@@ -78,24 +78,6 @@
           <Property Name="create_date" Type="datetime" />
           <Property Name="update_date" Type="datetime" />
         </EntityType>
-        <EntityType Name="Lotto_Bet_Receive">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UID" Type="int" />
-          <Property Name="Period_ID" Type="int" />
-          <Property Name="Type" Type="nvarchar" MaxLength="2" />
-          <Property Name="NumLen" Type="nvarchar" MaxLength="50" />
-          <Property Name="Number" Type="nvarchar" MaxLength="50" />
-          <Property Name="Amount" Type="nvarchar" MaxLength="50" />
-          <Property Name="AmountDiscount" Type="nvarchar" MaxLength="50" />
-          <Property Name="AmountWin" Type="nvarchar" MaxLength="50" />
-          <Property Name="Result_Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="create_date" Type="datetime" />
-          <Property Name="update_date" Type="datetime" />
-        </EntityType>
         <EntityType Name="LottoMain">
           <Key>
             <PropertyRef Name="ID" />
@@ -390,7 +372,6 @@
           <EntitySet Name="Account_Role" EntityType="Self.Account_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lotto_Bet_Out" EntityType="Self.Lotto_Bet_Out" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Lotto_Bet_Receive" EntityType="Self.Lotto_Bet_Receive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LottoMain" EntityType="Self.LottoMain" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LottoSub" EntityType="Self.LottoSub" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Main_Discount" EntityType="Self.Main_Discount" Schema="dbo" store:Type="Tables" />
@@ -772,7 +753,6 @@
           <EntitySet Name="Setting" EntityType="ltfomModel.Setting" />
           <EntitySet Name="Poll_Bet_Out" EntityType="ltfomModel.Poll_Bet_Out" />
           <EntitySet Name="Lotto_Bet_Out" EntityType="ltfomModel.Lotto_Bet_Out" />
-          <EntitySet Name="Lotto_Bet_Receive" EntityType="ltfomModel.Lotto_Bet_Receive" />
           <EntitySet Name="Account_Bet_Out" EntityType="ltfomModel.Account_Bet_Out" />
         </EntityContainer>
         <EntityType Name="Total_Amount_Result">
@@ -837,24 +817,6 @@
           <Property Name="AmountDiscount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AmountWin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Result_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="create_date" Type="DateTime" Precision="3" />
-          <Property Name="update_date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Lotto_Bet_Receive">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UID" Type="Int32" />
-          <Property Name="Period_ID" Type="Int32" />
-          <Property Name="Type" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="NumLen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AmountDiscount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AmountWin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Result_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="create_date" Type="DateTime" Precision="3" />
           <Property Name="update_date" Type="DateTime" Precision="3" />
         </EntityType>
@@ -1156,25 +1118,6 @@
                 <ScalarProperty Name="NumLen" ColumnName="NumLen" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Poll_Out_ID" ColumnName="Poll_Out_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Lotto_Bet_Receive">
-            <EntityTypeMapping TypeName="ltfomModel.Lotto_Bet_Receive">
-              <MappingFragment StoreEntitySet="Lotto_Bet_Receive">
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Result_Status" ColumnName="Result_Status" />
-                <ScalarProperty Name="AmountWin" ColumnName="AmountWin" />
-                <ScalarProperty Name="AmountDiscount" ColumnName="AmountDiscount" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="NumLen" ColumnName="NumLen" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Period_ID" ColumnName="Period_ID" />
-                <ScalarProperty Name="UID" ColumnName="UID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

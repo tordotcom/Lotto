@@ -262,9 +262,6 @@
     <Compile Include="Models\Lotto_Bet_Out.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Lotto_Bet_Receive.cs">
-      <DependentUpon>LottoEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Lotto_Detail.cs" />
     <Compile Include="Models\Main_Discount.cs">
       <DependentUpon>LottoEntity.tt</DependentUpon>
@@ -483,6 +480,7 @@
     <Content Include="Assets\js\member.js" />
     <Content Include="Assets\js\member_price.js" />
     <Content Include="Assets\js\moment.min.js" />
+    <Content Include="Assets\js\Outlist.js" />
     <Content Include="Assets\js\password.js" />
     <Content Include="Assets\js\popper.min.js" />
     <Content Include="Assets\js\rate.js" />

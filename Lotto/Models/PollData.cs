@@ -9,7 +9,6 @@ namespace Lotto.Models
     {
         //public string Name { get; set; }
         public IList<Poll_Data> poll { get; set; }
-        public IList<Poll_Data> pollReceive { get; set; }
 
     }
     public class Poll_Data

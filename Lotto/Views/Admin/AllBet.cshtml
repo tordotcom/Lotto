@@ -43,16 +43,15 @@
                                 <option value="1">ยอดแทง</option>
                             </select>
                         </div>
-                        @*<div class="col-md-1"><label for="select" class="form-control-label">แสดง</label></div>
+                        <div class="col-md-1"><label for="select2" class="form-control-label">แสดง</label></div>
                             <div class="col-md-4">
-                                <select name="select" id="select" class="form-control-sm form-control">
-                                    <option value="0">Please select</option>
-                                    <option value="1">Option #1</option>
-                                    <option value="2">Option #2</option>
-                                    <option value="3">Option #3</option>
+                                <select name="select" id="select2" class="form-control-sm form-control">
+                                    <option value="1" selected>รับไว้</option>
+                                    <option value="2">แทงเข้า</option>
+                                    <option value="3">แทงออก</option>
                                 </select>
                             </div>
-                            <div class="col-md-2">
+                            @*<div class="col-md-2">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>*@
                     </div>
@@ -102,7 +101,7 @@
                                 <td>
                                     @if (Model.Count > 0)
                                     {
-                                        <table>
+                                        <table id="maxrow">
                                             @for (int i = 1; i <= Int32.Parse(Model[0].Max); i++)
                                             {
                                                 <tr><td>@i</td></tr>
@@ -522,7 +521,9 @@
     getUserBetResult = '@Url.Action("GetUserBetResult", "Admin")';
     getUserTotalBalance = '@Url.Action("GetUserTotalBalance", "Admin")';
     getImg = '@Url.Action("getImage", "User")';
-    var model = @Html.Raw(Json.Encode(Model));
+    var receive = @Html.Raw(Json.Encode(Model));
+    var betoutmodel = @Html.Raw(Json.Encode(ViewBag.betout));
+    var all = @Html.Raw(Json.Encode(ViewBag.allbet));
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);
     var three_ = @Html.Raw(three_);
@@ -533,7 +534,8 @@
     var down = @Html.Raw(down);
     var twodown = @Html.Raw(twodown);
     var threedown = @Html.Raw(threedown);
-    //console.log(threedown);
+    var model = receive;
+    console.log(all);
     $("#twoup").html(nwc(twoup));
     $("#threeup").html(nwc(threeup));
     $("#threedown").html(nwc(threedown));
@@ -922,5 +924,167 @@
         setTimeout(function () {
             $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
         }, 0);
+    });
+    $("#select2").change(function () {
+        $("#t2up").html("");
+        $("#t3up").html("");
+        $("#t3_").html("");
+        $("#t2_").html("");
+        $("#t3f").html("");
+        $("#t3f_").html("");
+        $("#t1up").html("");
+        $("#t1down").html("");
+        $("#t2down").html("");
+        $("#t3down").html("");
+        $("#select").val(0);
+        twoup = 0;
+        threeup = 0;
+        three_ = 0;
+        two_ = 0;
+        fthree = 0;
+        fthree_ = 0;
+        up = 0;
+        down = 0;
+        twodown = 0;
+        threedown = 0;
+        if (this.value == 1) {
+            model = receive;
+        }
+        else if (this.value == 2) {
+            model = all;
+        }
+        else if (this.value == 3) {
+            model = betoutmodel;
+        }
+        else { }
+        if (model.length > 0) {
+            $("#maxrow").html("");
+            for (var i = 1; i <= parseInt(model[0].Max); i++) {
+                $("#maxrow").append("<tr><td>" + i + "</td></tr>");
+            }
+        }
+        else {
+            $("#maxrow").html("");
+        }
+        model.sort(function (a, b) {
+            if (parseInt(a.nLen) == parseInt(b.nLen)) {
+                if (a.Type == b.Type) {
+                    return (parseInt(a.Number) < parseInt(b.Number)) ? -1 : (parseInt(a.Number) > parseInt(b.Number)) ? 1 : 0;
+                }
+                else {
+                    return (a.Type < b.Type) ? -1 : 1;
+                }
+            }
+            else {
+                return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
+            }
+
+            //return a.Number.localeCompare(b.Number);
+        });
+        for (var i = 0; i < Object.keys(model).length; i++) {
+            if (model[i].Type == "t" && model[i].nLen == "2") {
+                if (model[i].Result == "1") {
+                    $("#t2up").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'2 บน\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t2up").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'2 บน\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                twoup += parseInt( model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "t") {
+                if (model[i].Result == "1") {
+                    $("#t3up").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'3 บน\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t3up").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'3 บน\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                threeup += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "t_") {
+                if (model[i].Result == "1") {
+                    $("#t3_").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'3 โต๊ด\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t3_").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'3 โต๊ด\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                three_ += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "2" && model[i].Type == "t_") {
+                if (model[i].Result == "1") {
+                    $("#t2_").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'2 โต๊ด\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t2_").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'2 โต๊ด\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                two_ += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "f") {
+                if (model[i].Result == "1") {
+                    $("#t3f").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'3 หน้า\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t3f").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'3 หน้า\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                fthree += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "f_") {
+                if (model[i].Result == "1") {
+                    $("#t3f_").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'3 หน้าโต๊ด\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t3f_").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'3 หน้าโต๊ด\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                fthree_ += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "1" && model[i].Type == "t") {
+                if (model[i].Result == "1") {
+                    $("#t1up").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'วิ่งบน\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t1up").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'วิ่งบน\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                up += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "1" && model[i].Type == "b") {
+                if (model[i].Result == "1") {
+                    $("#t1down").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'วิ่งล่าง\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t1down").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'วิ่งล่าง\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                down += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "2" && model[i].Type == "b") {
+                if (model[i].Result == "1") {
+                    $("#t2down").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'2 ล่าง\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t2down").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'2 ล่าง\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                twodown += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "b") {
+                if (model[i].Result == "1") {
+                    $("#t3down").append('<tr class="gn" onclick="UserPoll(\'' + model[i].Number + '\',\'3 ล่าง\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap style="background:#00FF00">' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                else {
+                    $("#t3down").append('<tr class="gy" onclick="UserPoll(\'' + model[i].Number + '\',\'3 ล่าง\',\'' + model[i].Type + '\',' + model[i].nLen + ')" data-toggle="modal" data-target="#checkPollModal" data-backdrop="static" data-keyboard="false"><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + '</td></tr>');
+                }
+                threedown += parseInt(model[i].Amount);
+            }
+            else {
+
+            }
+            $("#twoup").html(nwc(twoup));
+            $("#threeup").html(nwc(threeup));
+            $("#threedown").html(nwc(threedown));
+            $("#three_").html(nwc(three_));
+            $("#two_").html(nwc(two_));
+            $("#fthree").html(nwc(fthree));
+            $("#fthree_").html(nwc(fthree_));
+            $("#up").html(nwc(up));
+            $("#down").html(nwc(down));
+            $("#twodown").html(nwc(twodown));
+        }        
     });
 </script>

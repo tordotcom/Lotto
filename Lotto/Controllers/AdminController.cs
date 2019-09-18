@@ -40,12 +40,49 @@ namespace Lotto.Controllers
             {
                 var parentID = Int32.Parse((string)Session["ParentID"]);
                 var all = new List<All_Number>();
+                var receive = new List<All_Number>();
+                var betout = new List<All_Number>();
                 var max = db.Period.Where(y=>y.UID== parentID).Select(x => (int)x.ID).DefaultIfEmpty(0).Max();                
                 if (max != 0)
                 {
                     int id = db.Period.Where(x => x.UID == parentID).Max(p => p.ID);
                     string connetionString = null;                    
                     connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "select [Type],[NumLen],[Number], ISNULL(Amount - Amount2, Amount ) as Amount,[Result_Status],t3.max from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 left join(select Max(c) as max from(select[Type],[NumLen], count(*) as c from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 where ISNULL(Amount-Amount2, Amount )>0 group by[Type],[NumLen]) t3) t3 on 1=1 where ISNULL(Amount-Amount2, Amount )>0";
+                        
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", id.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                receive.Add(new All_Number
+                                {
+                                    Type = Reader["Type"].ToString(),
+                                    Number = Reader["Number"].ToString(),
+                                    Amount = Reader["Amount"].ToString(),
+                                    nLen = Reader["NumLen"].ToString(),
+                                    Max = Reader["max"].ToString(),
+                                    Result = Reader["Result_Status"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
                     try
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
@@ -81,7 +118,44 @@ namespace Lotto.Controllers
                     {
 
                     }
-                    return View(all);
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "SELECT [Type],[NumLen],[Number], sum(CAST([Amount] as int)) as Amount,Result_Status,Max(c.c) as max FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID],[Poll_Out_ID],[Type],[NumLen],[Number],[Amount], Result_Status FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID left join(SELECT[Type] as Type2,[NumLen] as NumLen2,count(*) as c FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount], Result_Status FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID='34' and Status !='0' group by[Type],[NumLen]) c on 1=1 where pbo.Period_ID=@period and Status !='0' group by[Period_ID], [Type], [NumLen], [Number], [Status], Result_Status";
+                        //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", id.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                betout.Add(new All_Number
+                                {
+                                    Type = Reader["Type"].ToString(),
+                                    Number = Reader["Number"].ToString(),
+                                    Amount = Reader["Amount"].ToString(),
+                                    nLen = Reader["NumLen"].ToString(),
+                                    Max = Reader["max"].ToString(),
+                                    Result = Reader["Result_Status"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    ViewBag.allbet = all;
+                    ViewBag.betout = betout;
+                    return View(receive);
                 }
                 return View(all);
             }
@@ -4203,23 +4277,6 @@ namespace Lotto.Controllers
                 lOut.create_date = DateTime.Now;
                 lOut.update_date = DateTime.Now;
                 db.Lotto_Bet_Out.Add(lOut);
-            }
-            foreach(var item in Data.pollReceive)
-            {
-                var lReceive = new Lotto_Bet_Receive();
-                lReceive.UID = user_id;
-                lReceive.Period_ID = pid;
-                lReceive.Type = item.bType;
-                lReceive.NumLen = item.NumLen;
-                lReceive.Number = item.Number;
-                lReceive.Amount = item.Amount;
-                lReceive.AmountWin = "0";
-                lReceive.AmountDiscount = "0";
-                lReceive.Result_Status = "0";
-                lReceive.Status = "0";
-                lReceive.create_date = DateTime.Now;
-                lReceive.update_date = DateTime.Now;
-                db.Lotto_Bet_Receive.Add(lReceive);
             }
             db.SaveChanges();
             return Json(pollOut_id);

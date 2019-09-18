@@ -42,7 +42,6 @@ namespace Lotto.Models
         public virtual DbSet<Setting> Setting { get; set; }
         public virtual DbSet<Poll_Bet_Out> Poll_Bet_Out { get; set; }
         public virtual DbSet<Lotto_Bet_Out> Lotto_Bet_Out { get; set; }
-        public virtual DbSet<Lotto_Bet_Receive> Lotto_Bet_Receive { get; set; }
         public virtual DbSet<Account_Bet_Out> Account_Bet_Out { get; set; }
     }
 }
