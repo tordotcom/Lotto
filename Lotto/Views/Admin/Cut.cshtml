@@ -33,6 +33,14 @@
                                             <option value="1">ยอดแทง</option>
                                         </select>
                                     </div>
+                                    <div class="col-md-1"><label for="select2" class="form-control-label">แสดง</label></div>
+                                    <div class="col-md-4">
+                                        <select name="select" id="select2" class="form-control-sm form-control">
+                                            <option value="1" selected>รับไว้</option>
+                                            <option value="2">แทงเข้า</option>
+                                            <option value="3">แทงออก</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -116,12 +124,25 @@
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <div class="col-md-2 offset-5">
-                                <button type="button" class="btn btn-block btn-sm btn-success" id="cut">ตัด</button>
-                                <button type="button" class="btn btn-block btn-sm btn-primary" id="save">บันทึก</button>
+                                <button type="button" class="btn btn-block btn-sm btn-success" id="cut">ตัด</button>                               
                             </div>
-                        </div>
-                        <div class="col-md-12 right">
+                        </div>                       
+                        @*<div class="col-md-12 right">
                             <button type="button" class="btn btn-sm btn-default" id="printCut">พิมพ์</button>
+                        </div>*@
+                    </div>
+                    <div class="row" id="show" style="display:none">
+                        <div class="col-md-1 offset-3" style="padding-top:5px;text-align:right;font-size:14px">
+                            แบ่งเป็น
+                        </div>
+                        <div class="col-md-1">                            
+                            <input type="text" id="pollnum" value="1" class="form-control form-control-sm" onkeypress="return keyPress(this, event);" />
+                        </div>
+                        <div class="col-md-1" style="padding-top:5px;text-align:left;font-size:14px">
+                            โพย
+                        </div>
+                        <div class="col-md-1" style="text-align:left">
+                            <button type="button" class="btn btn-block btn-sm btn-primary" id="save">บันทึก</button>
                         </div>
                     </div>
                     <br/>
@@ -171,7 +192,7 @@
                                             <td>
                                                 @if (Model.Count > 0)
                                                 {
-                                                    <table>
+                                                    <table id="maxrow">
                                                         @for (int i = 1; i <= Int32.Parse(Model[0].Max); i++)
                                                         {
                                                             <tr><td>@i</td></tr>
@@ -382,7 +403,10 @@
     var threedown = @Html.Raw(threedown);
     var betOut = [];
     var betReceive = [];
-    $("#save").hide();
+    var receive = @Html.Raw(Json.Encode(Model));
+    var betoutmodel = @Html.Raw(Json.Encode(ViewBag.betout));
+    var all = @Html.Raw(Json.Encode(ViewBag.allbet));
+    //$("#show").hide();
     var chart = { 
         "two_up" : [],
         "three_up" : [],
@@ -827,7 +851,7 @@
         $("#ct1down").html("");
         $("#ct2down").html("");
         $("#ct3down").html("");
-        model.sort(function (a, b) {
+        receive.sort(function (a, b) {
             if (parseInt(a.nLen) == parseInt(b.nLen)) {
                 if (a.Type == b.Type) {
                     return (parseInt(a.Number) < parseInt(b.Number)) ? -1 : (parseInt(a.Number) > parseInt(b.Number)) ? 1 : 0;
@@ -840,41 +864,41 @@
                 return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
             }
         });
-        for (var i = 0; i < Object.keys(model).length; i++) {          
-            if (model[i].Type == "t" && model[i].nLen == "2") {
-                var amount = parseInt(model[i].Amount);
+        for (var i = 0; i < Object.keys(receive).length; i++) {          
+            if (receive[i].Type == "t" && receive[i].nLen == "2") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#two_up").val());  
                 if (amount > receiveAmount) {
-                    $("#ct2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct2up").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "2"
                     });
                 }
             }
-            else if (model[i].nLen == "3" && model[i].Type == "t") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "3" && receive[i].Type == "t") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#three_up").val());                
                 if (amount > receiveAmount) {
-                    $("#ct3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct3up").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "3"
                     });
                 }
             }
-            else if (model[i].nLen == "3" && model[i].Type == "t_") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "3" && receive[i].Type == "t_") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#three_ood").val());
                 if (amount > receiveAmount) {
-                    $("#ct3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct3_").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t_",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "3"
                     });
@@ -887,79 +911,79 @@
             //        $("#ct2_").append('<tr><td nowrap>' + model[i].Number + ' = ' +(amount - receiveAmount) + '</td></tr>');
             //    }
             //}
-            else if (model[i].nLen == "3" && model[i].Type == "f") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "3" && receive[i].Type == "f") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#first_three").val());
                 if (amount > receiveAmount) {
-                    $("#ct3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct3f").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "f",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "3"
                     });
                 }
             }
-            else if (model[i].nLen == "3" && model[i].Type == "f_") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "3" && receive[i].Type == "f_") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#first_three_ood").val());
                 if (amount > receiveAmount) {
-                    $("#ct3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct3f_").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "f_",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "3"
                     });
                 }
             }
-            else if (model[i].nLen == "1" && model[i].Type == "t") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "1" && receive[i].Type == "t") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#up").val());
                 if (amount > receiveAmount) {
-                    $("#ct1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct1up").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "t",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "1"
                     });
                 }
             }
-            else if (model[i].nLen == "1" && model[i].Type == "b") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "1" && receive[i].Type == "b") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#down").val());
                 if (amount > receiveAmount) {
-                    $("#ct1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct1down").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "b",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "1"
                     });
                 }
             }
-            else if (model[i].nLen == "2" && model[i].Type == "b") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "2" && receive[i].Type == "b") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#two_down").val());
                 if (amount > receiveAmount) {
-                    $("#ct2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct2down").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "b",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "2"
                     });
                 }
             }
-            else if (model[i].nLen == "3" && model[i].Type == "b") {
-                var amount = parseInt(model[i].Amount);
+            else if (receive[i].nLen == "3" && receive[i].Type == "b") {
+                var amount = parseInt(receive[i].Amount);
                 var receiveAmount = parseInt($("#three_down").val());
                 if (amount > receiveAmount) {
-                    $("#ct3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
+                    $("#ct3down").append('<tr><td nowrap>' + receive[i].Number + ' = ' + (amount - receiveAmount) + '</td></tr>');
                     betOut.push({
                         bType: "b",
-                        Number: model[i].Number,
+                        Number: receive[i].Number,
                         Amount: (amount - receiveAmount).toString(),
                         NumLen: "3"
                     });
@@ -970,11 +994,11 @@
             }
         }
         if (betOut.length > 0) {
-            $("#save").show();
+            $("#show").show();
             
         }
         else {
-            $("#save").hide();
+            $("#show").hide();
         }
     });
     function keyPress(obj, evt) {
@@ -1015,29 +1039,167 @@
             setTimeout(function(){newWin.close();},10);
     });
     $("#save").click(function () {
-        console.log(betOut);
-        console.log(betReceive);
-        $.ajax({
-            url: addPollBetout,
-            data: { poll: betOut},
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
-                if (data != null) {
-                    Swal.fire({
-                        type: 'success',
-                        title: 'บันทึกเรียบร้อย',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        onAfterClose: () => {
-                            location.reload();
-                        }
-                    });
-                }               
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert("error");
+        if ($("#pollnum").val()=="0") {
+            Swal.fire({
+                type: 'warning',
+                title: 'จำนวนโพยต้องมากกว่า 0',
+                showConfirmButton: true,
+            });
+        }
+        else {
+            $.ajax({
+                url: addPollBetout,
+                data: { poll: betOut, pollnum: $("#pollnum").val() },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data != null) {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'บันทึกเรียบร้อย',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            onAfterClose: () => {
+                                location.reload();
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
+        }        
+    });
+    $("#select2").change(function () {
+        $("#t2up").html("");
+        $("#t3up").html("");
+        $("#t3_").html("");
+        $("#t2_").html("");
+        $("#t3f").html("");
+        $("#t3f_").html("");
+        $("#t1up").html("");
+        $("#t1down").html("");
+        $("#t2down").html("");
+        $("#t3down").html("");
+        $("#select").val(0);
+        twoup = 0;
+        threeup = 0;
+        three_ = 0;
+        two_ = 0;
+        fthree = 0;
+        fthree_ = 0;
+        up = 0;
+        down = 0;
+        twodown = 0;
+        threedown = 0;
+        if (this.value == 1) {
+            model = receive;
+        }
+        else if (this.value == 2) {
+            model = all;
+        }
+        else if (this.value == 3) {
+            model = betoutmodel;
+        }
+        else { }
+        if (model.length > 0) {
+            $("#maxrow").html("");
+            for (var i = 1; i <= parseInt(model[0].Max); i++) {
+                $("#maxrow").append("<tr><td>" + i + "</td></tr>");
             }
+        }
+        else {
+            $("#maxrow").html("");
+        }
+        model.sort(function (a, b) {
+            if (parseInt(a.nLen) == parseInt(b.nLen)) {
+                if (a.Type == b.Type) {
+                    return (parseInt(a.Number) < parseInt(b.Number)) ? -1 : (parseInt(a.Number) > parseInt(b.Number)) ? 1 : 0;
+                }
+                else {
+                    return (a.Type < b.Type) ? -1 : 1;
+                }
+            }
+            else {
+                return (parseInt(a.nLen) < parseInt(b.nLen)) ? -1 : 1;
+            }
+
+            //return a.Number.localeCompare(b.Number);
         });
+        for (var i = 0; i < Object.keys(model).length; i++) {
+            if (model[i].Type == "t" && model[i].nLen == "2") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].TwoUp)) - ((parseInt(model[i].Amount) * modelRate[0].TwoUp_discount) / 100);
+                $("#t2up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                twoup += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "t") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeUP)) - ((parseInt(model[i].Amount) * modelRate[0].ThreeUP_discount) / 100);
+                $("#t3up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                threeup += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "t_") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeOod)) - ((parseInt(model[i].Amount) * modelRate[0].ThreeOod_discount) / 100);
+                $("#t3_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                three_ += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "f") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].FirstThree)) - ((parseInt(model[i].Amount) * modelRate[0].FirstThree_discount) / 100);
+                $("#t3f").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                fthree += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "f_") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].FirstThreeOod)) - ((parseInt(model[i].Amount) * modelRate[0].FirstThreeOod_discount) / 100);
+                $("#t3f_").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                fthree_ += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "1" && model[i].Type == "t") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].Up)) - ((parseInt(model[i].Amount) * modelRate[0].Up_discount) / 100);
+                $("#t1up").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                up += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "1" && model[i].Type == "b") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].Down)) - ((parseInt(model[i].Amount) * modelRate[0].Down_discount) / 100);
+                $("#t1down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');               
+                down += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "2" && model[i].Type == "b") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].TwoDown)) - ((parseInt(model[i].Amount) * modelRate[0].TwoDown_discount) / 100);
+                $("#t2down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                twodown += parseInt(model[i].Amount);
+            }
+            else if (model[i].nLen == "3" && model[i].Type == "b") {
+                var sum = (parseInt(model[i].Amount) * parseInt(modelRate[0].ThreeDown)) - ((parseInt(model[i].Amount) * modelRate[0].ThreeDown_discount) / 100);
+                $("#t3down").append('<tr><td nowrap>' + model[i].Number + ' = ' + model[i].Amount + ' <span style="color:red">(' + nwc(Math.round(sum)) + ')</span>'+ '</td></tr>');
+                threedown += parseInt(model[i].Amount);
+            }
+            else {
+
+            }
+        }
+        if (model.length == 0) {
+            $("#twoup").html(0);
+            $("#threeup").html(0);
+            $("#threedown").html(0);
+            $("#three_").html(0);
+            $("#two_").html(0);
+            $("#fthree").html(0);
+            $("#fthree_").html(0);
+            $("#up").html(0);
+            $("#down").html(0);
+            $("#twodown").html(0);
+        }
+        else {
+            $("#twoup").html(nwc(twoup));
+            $("#threeup").html(nwc(threeup));
+            $("#threedown").html(nwc(threedown));
+            $("#three_").html(nwc(three_));
+            $("#two_").html(nwc(two_));
+            $("#fthree").html(nwc(fthree));
+            $("#fthree_").html(nwc(fthree_));
+            $("#up").html(nwc(up));
+            $("#down").html(nwc(down));
+            $("#twodown").html(nwc(twodown));
+        }
     });
 </script>

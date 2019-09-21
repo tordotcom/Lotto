@@ -28,10 +28,10 @@
                         @foreach (var item in Model)
                         {
                         <tr>
-                            <td>@item.Count</td>
-                            <td>@item.Amount</td>
-                            <td>@item.AmountDiscount</td>
-                            <td>@item.AmountWin</td>
+                            <td>@String.Format("{0:n0}", Int32.Parse(item.Count))</td>
+                            <td>@String.Format("{0:n0}", Int32.Parse(item.Amount))</td>
+                            <td>@String.Format("{0:n0}", Int32.Parse(item.AmountDiscount))</td>
+                            <td>@String.Format("{0:n0}", Int32.Parse(item.AmountWin))</td>
                             @if (item.Send_To_UID == "")
                             {
                                 <td>ใหม่</td>
@@ -68,7 +68,7 @@
     <div class="modal-dialog modal-lg" role="document" style="max-width:50%;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" style="display:inline-block" id="OutPollModalLabel">รายการแทงเลข <span id="headernumber"></span> - <span id="headertype"></span></h5>
+                <h5 class="modal-title" style="display:inline-block" id="OutPollModalLabel">รายการแทงออก <span id="headernumber"></span> <span id="headertype"></span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -103,7 +103,7 @@
         </div>
     </div>
 </div>
-<script src="~/Assets/js/Outlist.js"></script>
+@*<script src="~/Assets/js/Outlist.js"></script>*@
 <script>
     getOutPoll = '@Url.Action("getOutPoll", "Admin")';
     (function ($) {
@@ -115,5 +115,102 @@
         });
 
     })(jQuery);
+    function OutPoll (ToUid,PeriodID){
+    $.ajax({
+        url: getOutPoll,
+        data: { SendToUID: ToUid, PeriodID: PeriodID },
+        type: "POST",
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            var total_amount = 0;
+            OutTable.clear();
+            $.each(data, function (index, value) {
+                //total_amount += parseInt(value.Amount);
+                console.log(value.Status);
+                if (value.Status = "0") {
+                    value.Status = "ยังไม่ได้ส่ง";
+                    value.Name = "ใหม่";
+                }
+                else if (value.Status = "1")
+                {
+                    value.Name = "พิมพ์ส่ง";
+                    value.Status = "ส่งแล้ว";
+                }
+                else {
+                    value.Name = "ส่งไปที่ " + value.Name;
+                    value.Status = "ส่งแล้ว";
+                }
+                OutTable.row.add(value);
+            });
+            OutTable.draw();
+            //$('#total_amount').html(nwc(total_amount));
+            //initialPoll2();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("error");
+        }
+    });
+}
+
+var OutTable = $('.out-poll-data-table').DataTable({
+    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]],
+    "order": [[0, "desc"]],
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": true,
+    "data": [],
+    "columns": [
+        {
+            "title": "ลำดับ",
+            "data": null,
+            "render": function (data, type, row, meta) {
+                return nwc(row.Row);
+            }
+        },
+        {
+            "title": "ยอดแทง",
+            "data": null,
+            "render": function (data, type, row, meta) {
+                return nwc(row.Amount);
+            }
+        },
+        {
+            "title": "ยอดหัก %",
+            "data": null,
+            "render": function (data, type, row, meta) {
+                return nwc(row.AmountDiscount);
+            }
+        },
+        {
+            "title": "ยอดถูก",
+            "data": null,
+            "render": function (data, type, row, meta) {
+                return nwc(row.AmountWin);
+            }
+        },
+        {
+            "title": "สถานะโพย",
+            "data": "Status"
+        },
+        {
+            "title": "วิธีส่ง",
+            "data": "Name"
+        },
+        {
+            "title": "",
+            "data": null,
+            "render": function (data, type, row, meta) {
+                var Url = '@Url.Action("OutListDetail", "Admin")/' + row.ID;
+                return '<a type="button" class="btn btn-sm btn-primary" ' +
+                    'target="_blank" href="' + Url+'"' +
+                    '>ดูโพย</a>';
+            }
+        }
+    ]
+});
 </script>
 

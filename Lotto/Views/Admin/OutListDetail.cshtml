@@ -1,0 +1,362 @@
+﻿@model IList<Lotto.Models.PollOutDetail>
+@{
+    ViewBag.Title = "OutListDetail";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    var twoup = 0;
+    var threeup = 0;
+    var three_ = 0;
+    var fthree = 0;
+    var fthree_ = 0;
+    var up = 0;
+    var down = 0;
+    var twodown = 0;
+    var threedown = 0;
+}
+<style>
+    .gy {
+        background: #D6EAF8;
+    }
+
+    .gn {
+        background: #008000 !important;
+    }
+    .tb {
+        background-color: white;
+        padding-left: 3px;
+        padding-right:5px;
+    }
+    .modal {
+        overflow-y: auto;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="mr-2 fa fa-cut"></i>
+                <strong class="card-title">โพยแทงออก</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12" >
+                        <div class="row form-group" style="background-color:#ffc107;padding-top:5px;padding-bottom:5px;font-size:14px">
+                            <div class="col-md-2" style="text-align:center;padding-top:5px;">
+                                <strong>
+                                    ยอดรวม:
+                                    @if (Model.Count > 0)
+                                    {
+                                        <span class="tb">@String.Format("{0:n0}", Int32.Parse(Model[0].TotalAmount))</span>
+                                    }
+                                </strong>
+                            </div>
+                            <div class="col-md-2" style="text-align:left;padding-top:5px;padding-left:0px;padding-right:0px">
+                                <strong>
+                                    สถานะ:
+                                    @if (Model.Count > 0)
+                                    {
+                                        if (Model[0].Status == "0")
+                                        {
+                                            <span class="tb">ใหม่</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="tb">ส่งแล้ว</span>
+                                        }
+                                    }
+                                </strong>
+                            </div>
+                            <div class="col-md-2" style="text-align:left;padding-top:5px;padding-left:0px;padding-right:0px">
+                                <strong>
+                                    ส่งที่:
+                                    @if (Model.Count > 0)
+                                    {
+                                        if (Model[0].Name == "")
+                                        {
+                                            <span class="tb">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="tb">@Model[0].Name</span>
+                                        }
+                                    }
+                                </strong>
+                            </div>
+                            <div class="col-md-2" style="text-align:left;padding-top:5px;padding-left:0px;padding-right:0px">
+                                <strong>
+                                    วิธีส่ง:
+                                    @if (Model.Count > 0)
+                                    {
+                                        if (Model[0].Status == "0")
+                                        {
+                                            <span class="tb">ยังไม่ได้ส่ง</span>
+                                        }
+                                        else if (Model[0].Status == "1")
+                                        {
+                                            <span class="tb">พิมพ์ส่ง</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="tb">ส่งผ่านเว็บ</span>
+                                        }
+                                    }
+                                </strong>
+                            </div>
+                            <div class="col-md-3" style="text-align:left;padding-top:5px">
+                                <strong>
+                                    วันเวลาที่ส่ง:
+                                    @if (Model.Count > 0)
+                                    {
+                                        if (Model[0].SendDate == "")
+                                        {
+                                            <span class="tb">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="tb">@Model[0].SendDate</span>
+                                        }
+                                    }
+                                </strong>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-block btn-sm btn-primary" id="save">ส่งโพย</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="printCutArea">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table table-stats" style="text-align:center;">
+                                    <table class="table-fixed" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="border: 0;color:white;background-color:red;">2 บน</th>
+                                                <th style="border: 0;color:white;background-color:black;">3 บน</th>
+                                                <th style="border: 0;color:white;background-color:red;">3 โต๊ด</th>
+                                                <th style="border: 0;color:white;background-color:black;">3 หน้า</th>
+                                                <th style="border: 0;color:white;background-color:red;">3 หน้าโต๊ด</th>
+                                                <th style="border: 0;color:white;background-color:black;">วิ่ง บน</th>
+                                                <th style="border: 0;color:white;background-color:red;">วื่ง ล่าง</th>
+                                                <th style="border: 0;color:white;background-color:black;">2 ล่าง</th>
+                                                <th style="border: 0;color:white;background-color:red;">3 ล่าง</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color:white;" id="twoup">0</th>
+                                                <th style="background-color:white;" id="threeup">0</th>
+                                                <th style="background-color:white;" id="three_">0</th>
+                                                <th style="background-color:white;" id="fthree">0</th>
+                                                <th style="background-color:white;" id="fthree_">0</th>
+                                                <th style="background-color:white;" id="s_up">0</th>
+                                                <th style="background-color:white;" id="s_down">0</th>
+                                                <th style="background-color:white;" id="twodown">0</th>
+                                                <th style="background-color:white;" id="threedown">0</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="text-align:left;">
+                                            <tr>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t2up">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "2" && item.Type == "t")
+                                                            {
+                                                                twoup += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn" ><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t3up">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "3" && item.Type == "t")
+                                                            {
+                                                                threeup += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t3_">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "3" && item.Type == "t_")
+                                                            {
+                                                                three_ += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t3f">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "3" && item.Type == "f")
+                                                            {
+                                                                fthree += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t3f_">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "3" && item.Type == "f_")
+                                                            {
+                                                                fthree_ += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t1up">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "1" && item.Type == "t")
+                                                            {
+                                                                up += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr ><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t1down">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "1" && item.Type == "b")
+                                                            {
+                                                                down += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr ><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t2down">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "2" && item.Type == "b")
+                                                            {
+                                                                twodown += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr ><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <table id="t3down">
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.NumLen == "3" && item.Type == "b")
+                                                            {
+                                                                threedown += Int32.Parse(item.Amount);
+                                                                if (item.ResultStatus == "1")
+                                                                {
+                                                                    <tr class="gn"><td nowrap style="background:#00FF00">@item.Number = @String.Format("{0:n0}", item.Amount)</td></tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr ><td nowrap><span class="gy">@item.Number</span> = <span class="gy">@String.Format("{0:n0}", item.Amount)</span></td></tr>
+                                                                }
+                                                            }
+                                                        }
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />              
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var twoup = @Html.Raw(twoup);
+    var threeup = @Html.Raw(threeup);
+    var three_ = @Html.Raw(three_);
+    var fthree = @Html.Raw(fthree);
+    var fthree_ = @Html.Raw(fthree_);
+    var up = @Html.Raw(up);
+    var down = @Html.Raw(down);
+    var twodown = @Html.Raw(twodown);
+    var threedown = @Html.Raw(threedown);
+    $("#twoup").html(nwc(twoup));
+    $("#threeup").html(nwc(threeup));
+    $("#threedown").html(nwc(threedown));
+    $("#three_").html(nwc(three_));
+    $("#fthree").html(nwc(fthree));
+    $("#fthree_").html(nwc(fthree_));
+    $("#up").html(nwc(up));
+    $("#down").html(nwc(down));
+    $("#twodown").html(nwc(twodown));
+</script>

@@ -18,6 +18,14 @@ namespace Lotto
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
             );
+            /*------------------------------------------ polloutdetail ------------------------------------------------*/
+
+            routes.MapRoute(
+                name: "PollOutDetail",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Admin", action = "OutListDetail", id = UrlParameter.Optional }
+            );
         }
+
     }
 }

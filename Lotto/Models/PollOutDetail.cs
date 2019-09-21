@@ -5,19 +5,19 @@ using System.Web;
 
 namespace Lotto.Models
 {
-    public class Poll_Out
+    public class PollOutDetail
     {
-        public string ID { get; set; } 
+        public string ID { get; set; }
         public string UID { get; set; }
         public string Send_To_UID { get; set; }
-        public string Period_ID { get; set; }
         public string Status { get; set; }
-        public string Count { get; set; }
+        public string SendDate { get; set; }
+        public string Type { get; set; }
+        public string NumLen { get; set; }
+        public string Number { get; set; }
         public string Amount { get; set; }
-        public string AmountDiscount { get; set; }
-        public string AmountWin { get; set; }
+        public string ResultStatus { get; set; }
+        public string TotalAmount { get; set; }
         public string Name { get; set; }
-        public string Row { get; set; }
-        public string SendToStatus { get; set; }
     }
 }

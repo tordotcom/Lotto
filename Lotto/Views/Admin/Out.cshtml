@@ -497,71 +497,65 @@
                         </tr>
                     </tbody>
                 </table>
-                <center><button type="button" class="btn btn-primary btn-sm" id="confirm-bet">บันทึก</button></center>
+                <div class="row">
+                    <div class="col-md-1 offset-3" style="padding-top:5px;text-align:right;font-size:14px">
+                        แบ่งเป็น
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" id="pollnum" value="1" class="form-control form-control-sm" onkeypress="return keyPress(this, event);" />
+                    </div>
+                    <div class="col-md-1" style="padding-top:5px;text-align:left;font-size:14px">
+                        โพย
+                    </div>
+                    <div class="col-md-1" style="text-align:left">
+                        <button type="button" class="btn btn-block btn-sm btn-primary" id="save">บันทึก</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<script id="bet_info_template" type="text/html">
-    <li class="menu-title">แทงออก</li>
-    <li class="">&nbsp;</li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">โพยใบที่</label></div>
-            <div class="col col-md-7"><input type="text" id="betNo" name="text-input" class="form-control form-control-sm right" value="" disabled></div>
-        </div>
-    </li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">ชื่อโพย</label></div>
-            <div class="col col-md-7"><input type="text" id="poll_name" name="text-input" class="form-control form-control-sm" value="" placeholder="ชื่อโพย"></div>
-        </div>
-    </li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดใบนี้</label></div>
-            <div class="col col-md-7"><input type="text" id="thisTotal" name="text-input" class="form-control form-control-sm right" disabled value="0 ฿" style="text-align:right"></div>
-        </div>
-    </li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">จำนวนโพย</label></div>
-            <div class="col col-md-7"><input type="text" id="listCount" name="text-input" class="form-control form-control-sm right" value=" ใบ" disabled></div>
-        </div>
-    </li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">รับแล้ว</label></div>
-            <div class="col col-md-7"><input type="text" id="received" name="text-input" class="form-control form-control-sm right" value=" ใบ" disabled></div>
-        </div>
-    </li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดคืน</label></div>
-            <div class="col col-md-7"><input type="text" id="returnTotal" name="text-input" class="form-control form-control-sm right" value=" ฿" style="text-align:right" disabled></div>
-        </div>
-    </li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดแทง</label></div>
-            <div class="col col-md-7"><input type="text" id="betTotal" name="text-input" class="form-control form-control-sm right" value=" ฿" style="text-align:right" disabled></div>
-        </div>
-    </li>
-    <li class="">
-        <div class="row form-group">
-            <div class="col col-md-5"><label for="text-input" class="form-control-label">ยอดจ่าย</label></div>
-            <div class="col col-md-7"><input type="text" id="betPrice" name="text-input" class="form-control form-control-sm right" value=" ฿" style="text-align:right" disabled></div>
-        </div>
-    </li>
-</script>
-
 <script>
+     addPollBetout= '@Url.Action("addPollBetOut", "Admin")';
     (function ($) {
         var value;
 
         $('#bet_info_template').tmpl(value).appendTo('#bet_info_area');
 
     })(jQuery);
+    $("#save").click(function () {
+        if ($("#pollnum").val() == "0") {
+            Swal.fire({
+                type: 'warning',
+                title: 'จำนวนโพยต้องมากกว่า 0',
+                showConfirmButton: true,
+            });
+        }
+        else {
+            $.ajax({
+                url: addPollBetout,
+                data: { poll: betOut, pollnum: $("#pollnum").val() },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data != null) {
+                        Swal.fire({
+                            type: 'success',
+                            title: 'บันทึกเรียบร้อย',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            onAfterClose: () => {
+                                location.reload();
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("error");
+                }
+            });
+        }
+    });
 </script>
 

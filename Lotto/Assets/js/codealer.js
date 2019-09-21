@@ -58,10 +58,9 @@ $("#btnEdit").click(function () {
 
         if ($("#txtDealer").val() == "" || $("#txtUsernameDealer").val() == "" || $("#txtBetUsername").val() == "" || $("#txtBetPassword").val() == "") {
             Swal.fire({
-                type: 'error',
+                type: 'warning',
                 title: 'กรุณากรอกข้อมูลให้ครบ',
-                showConfirmButton: false,
-                timer: 1500
+                showConfirmButton: true
             });
         }
         else {

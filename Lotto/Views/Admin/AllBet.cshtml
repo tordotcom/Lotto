@@ -1074,7 +1074,21 @@
             }
             else {
 
-            }
+            }                   
+        } 
+        if (model.length == 0) {
+            $("#twoup").html(0);
+            $("#threeup").html(0);
+            $("#threedown").html(0);
+            $("#three_").html(0);
+            $("#two_").html(0);
+            $("#fthree").html(0);
+            $("#fthree_").html(0);
+            $("#up").html(0);
+            $("#down").html(0);
+            $("#twodown").html(0);
+        }
+        else {
             $("#twoup").html(nwc(twoup));
             $("#threeup").html(nwc(threeup));
             $("#threedown").html(nwc(threedown));
@@ -1085,6 +1099,6 @@
             $("#up").html(nwc(up));
             $("#down").html(nwc(down));
             $("#twodown").html(nwc(twodown));
-        }        
+        }
     });
 </script>
