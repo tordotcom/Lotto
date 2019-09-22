@@ -86,7 +86,7 @@ namespace Lotto.Controllers
                             Session["Username"] = user[0].Username;
                             Session["Role"] = "Administrator";
                             Session["Last_Login"] = user[0].Last_Login;
-                            //Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
+                            Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
                             Session["SelectPeriod"] = 0;
                             Session["ParentID"] = user[0].ID;
                             int u = Int32.Parse((string)Session["ID"]);
@@ -105,7 +105,7 @@ namespace Lotto.Controllers
                             Session["Username"] = user[0].Username;
                             Session["Role"] = "SuperAdmin";
                             Session["Last_Login"] = user[0].Last_Login;
-                            //Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
+                            Session["sessionid"] = System.Web.HttpContext.Current.Session.SessionID;
                             Session["SelectPeriod"] = 0;
                             Session["ParentID"] = user[0].ID;
                             return RedirectToAction("Index", "Admin");         
