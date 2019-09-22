@@ -482,6 +482,7 @@
     <Content Include="Assets\js\member_price.js" />
     <Content Include="Assets\js\moment.min.js" />
     <Content Include="Assets\js\Outlist.js" />
+    <Content Include="Assets\js\out_list_detail.js" />
     <Content Include="Assets\js\password.js" />
     <Content Include="Assets\js\popper.min.js" />
     <Content Include="Assets\js\rate.js" />
