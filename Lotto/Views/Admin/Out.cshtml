@@ -27,472 +27,113 @@
                     <tbody>
                         <tr>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i=1;i<=10;i++)
+                                {
+                                    var number_id = "ntwoup" + i.ToString();
+                                    var price_id = "btwoup" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="2" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
+
                             </td>
                             <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "nthreeup" + i.ToString();
+                                    var price_id = "bthreeup" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="3" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "nthreeood" + i.ToString();
+                                    var price_id = "bthreeood" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="3" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                             <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "nfthree" + i.ToString();
+                                    var price_id = "bfthree" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="3" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "nfthreeood" + i.ToString();
+                                    var price_id = "bfthreeood" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="3" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                             <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "nup" + i.ToString();
+                                    var price_id = "bup" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="1" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "ndown" + i.ToString();
+                                    var price_id = "bdown" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="1" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                             <td style="background-color:rgba(255, 0, 0, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "ntwodown" + i.ToString();
+                                    var price_id = "btwodown" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="2" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                             <td style="background-color:rgba(255, 255, 255, 0.1);">
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
-                                <div class="form-group">
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
-                                    <div style="float:left;width:10%;">=</div>
-                                    <input id="" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
-                                </div>
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    var number_id = "nthreedown" + i.ToString();
+                                    var price_id = "bthreedown" + i.ToString();
+                                    <div class="form-group">
+                                        <input id="@number_id"onkeypress="return keyPress(this, event);" maxlength="3" type="text" class="form-control form-control-sm-custom" placeholder="เลข" style="float:left;width:40%;">
+                                        <div style="float:left;width:10%;">=</div>
+                                        <input id="@price_id"onkeypress="return keyPress(this, event);" maxlength="7" type="text" class="form-control form-control-sm-custom" placeholder="ราคา" style="width:50%">
+                                    </div>
+                                }
                             </td>
                         </tr>
                     </tbody>
@@ -518,13 +159,23 @@
 
 <script>
      addPollBetout= '@Url.Action("addPollBetOut", "Admin")';
-    (function ($) {
-        var value;
 
-        $('#bet_info_template').tmpl(value).appendTo('#bet_info_area');
+    function keyPress(obj, evt) {
 
-    })(jQuery);
+        evt = evt || window.event;
+        var code = evt.keyCode || evt.which;
+        // enter = 13, tab = 9
+        // space = 32,  + = 43
+
+        if (code >= 48 && code <= 57) {
+            return true;  // Number 0-9
+        }
+        else if (code == 42 || code == 8 || code == 46 || code == 9 || code == 88 || code == 120) return true; // 42 = *, 8 = back, 46 = del, 9 = tab, 47 = slash, 88 = x, 120 = X
+        else if (code >= 37 && code <= 40) return true;  // left, up, right, down
+        else return false;
+    }
     $("#save").click(function () {
+        betOut = [];
         if ($("#pollnum").val() == "0") {
             Swal.fire({
                 type: 'warning',
@@ -532,30 +183,356 @@
                 showConfirmButton: true,
             });
         }
-        else {
-            $.ajax({
-                url: addPollBetout,
-                data: { poll: betOut, pollnum: $("#pollnum").val() },
-                type: "POST",
-                dataType: "json",
-                success: function (data) {
-                    if (data != null) {
-                        Swal.fire({
-                            type: 'success',
-                            title: 'บันทึกเรียบร้อย',
-                            showConfirmButton: false,
-                            timer: 1500,
-                            onAfterClose: () => {
-                                location.reload();
-                            }
-                        });
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert("error");
+        for (var i = 1; i <= 10;i++) {
+            var ntwoup = $('#ntwoup' + i).val();
+            var btwoup = $('#btwoup' + i).val();
+            var nthreeup = $('#nthreeup' + i).val();
+            var bthreeup = $('#bthreeup' + i).val();
+            var nthreeood = $('#nthreeood' + i).val();
+            var bthreeood = $('#bthreeood' + i).val();
+            var nfthree = $('#nfthree' + i).val();
+            var bfthree = $('#bfthree' + i).val();
+            var nfthreeood = $('#nfthreeood' + i).val();
+            var bfthreeood = $('#bfthreeood' + i).val();
+            var nup = $('#nup' + i).val();
+            var bup = $('#bup' + i).val();
+            var ndown = $('#ndown' + i).val();
+            var bdown = $('#bdown' + i).val();
+            var ntwodown = $('#ntwodown' + i).val();
+            var btwodown = $('#btwodown' + i).val();
+            var nthreedown = $('#nthreedown' + i).val();
+            var bthreedown = $('#bthreedown' + i).val();
+
+            if (ntwoup.length > 0 && btwoup.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 2 บน กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (btwoup.length > 0 && ntwoup.length != 2) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 2 บน กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (btwoup == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 2 บน จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (btwoup.length != 0 && ntwoup.length==2)
+            {
+                btwoup = parseInt(btwoup);
+                betOut.push({
+                    bType: "t",
+                    Number: ntwoup,
+                    Amount: btwoup.toString(),
+                    NumLen: "2"
+                });
+            }
+            else {
+                
+            }
+
+            if (nthreeup.length > 0 && bthreeup.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 บน กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreeup.length > 0 && nthreeup.length != 3) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 บน กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreeup == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 บน จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreeup.length != 0 && nthreeup.length == 3) {
+                bthreeup = parseInt(bthreeup);
+                betOut.push({
+                    bType: "t",
+                    Number: nthreeup,
+                    Amount: bthreeup.toString(),
+                    NumLen: "3"
+                });
+            }
+            else {
+
+            }
+
+            if (nthreeood.length > 0 && bthreeood.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 โต๊ด กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreeood.length > 0 && nthreeood.length != 3) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 โต๊ด กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreeood == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 โต๊ด จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreeood.length != 0 && nthreeood.length == 3) {
+                bthreeood = parseInt(bthreeood);
+                betOut.push({
+                    bType: "t_",
+                    Number: nthreeood,
+                    Amount: bthreeood.toString(),
+                    NumLen: "3"
+                });
+            }
+            else {
+
+            }
+
+            if (nfthree.length > 0 && bfthree.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 หน้า กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bfthree.length > 0 && nfthree.length != 3) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 หน้า กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bfthree == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 หน้า จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bfthree.length != 0 && nfthree.length == 3) {
+                bfthree = parseInt(bfthree);
+                betOut.push({
+                    bType: "f",
+                    Number: nfthree,
+                    Amount: bfthree.toString(),
+                    NumLen: "3"
+                });
+            }
+            else {
+
+            }
+
+            if (nfthreeood.length > 0 && bfthreeood.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 หน้าโต๊ด กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bfthreeood.length > 0 && nfthreeood.length != 3) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 หน้าโต๊ด กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bfthreeood == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 หน้าโต๊ด จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bfthreeood.length != 0 && nfthreeood.length == 3) {
+                bfthreeood = parseInt(bfthreeood);
+                betOut.push({
+                    bType: "f_",
+                    Number: nfthreeood,
+                    Amount: bfthreeood.toString(),
+                    NumLen: "3"
+                });
+            }
+            else {
+
+            }
+
+            if (nup.length > 0 && bup.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง วิ่งบน กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bup.length > 0 && nup.length != 1) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง วิ่งบน กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bup == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง วิ่งบน จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bup.length != 0 && nup.length == 1) {
+                bup = parseInt(bup);
+                betOut.push({
+                    bType: "t",
+                    Number: nup,
+                    Amount: bup.toString(),
+                    NumLen: "1"
+                });
+            }
+            else {
+
+            }
+
+            if (ndown.length > 0 && bdown.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง วิ่งล่าง กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bdown.length > 0 && ndown.length != 1) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง วิ่งล่าง กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bdown == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง วิ่งล่าง จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bdown.length != 0 && ndown.length == 1) {
+                bdown = parseInt(bdown);
+                betOut.push({
+                    bType: "b",
+                    Number: ndown,
+                    Amount: bdown.toString(),
+                    NumLen: "1"
+                });
+            }
+            else {
+
+            }
+
+            if (ntwodown.length > 0 && btwodown.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 2 ล่าง กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (btwodown.length > 0 && ntwodown.length != 2) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 2 ล่าง กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (btwodown == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 2 ล่าง จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (btwodown.length != 0 && ntwodown.length == 2) {
+                btwodown = parseInt(btwodown);
+                betOut.push({
+                    bType: "b",
+                    Number: ntwodown,
+                    Amount: btwodown.toString(),
+                    NumLen: "2"
+                });
+            }
+            else {
+
+            }
+
+            if (nthreedown.length > 0 && bthreedown.length == 0) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 ล่าง กรุณากรอกจำนวนเงินให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreedown.length > 0 && nthreedown.length != 3) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 ล่าง กรุณากรอกเลขที่จะแทงให้ถูกต้อง',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreedown == "0") {
+                Swal.fire({
+                    type: 'error',
+                    title: 'ช่อง 3 ล่าง จำนวนเงินต้องมากกว่า 0',
+                    showConfirmButton: true,
+                });
+            }
+            else if (bthreedown.length != 0 && nthreedown.length == 3) {
+                bthreedown = parseInt(bthreedown);
+                betOut.push({
+                    bType: "b",
+                    Number: nthreedown,
+                    Amount: bthreedown.toString(),
+                    NumLen: "3"
+                });
+            }
+            else {
+
+            }
+        } 
+        console.log(betOut);
+        $.ajax({
+            url: addPollBetout,
+            data: { poll: betOut, pollnum: $("#pollnum").val() },
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'บันทึกเรียบร้อย',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        onAfterClose: () => {
+                            location.reload();
+                        }
+                    });
                 }
-            });
-        }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("error");
+            }
+        });
     });
 </script>
 
