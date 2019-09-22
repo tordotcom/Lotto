@@ -1268,6 +1268,58 @@ namespace Lotto.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
+
+        public ActionResult Password() //รหัสผ่าน
+        {
+            if ((string)Session["Role"] == "Administrator")
+            {
+                var UID = Int32.Parse(Session["ID"].ToString());
+                Account A = db.Account.Where(s => s.ID == UID).FirstOrDefault<Account>();
+                if (A == null)
+                {
+                    return RedirectToAction("Logout", "Login");
+                }
+                else
+                {
+                    Account a = db.Account.Where(x => x.ID == UID).FirstOrDefault<Account>();
+                    return View(a);
+                }
+            }
+            else if ((string)Session["Role"] == "User")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+
+        //---------------------------------------- เปลี่ยนรหัสผ่าน ---------------------------------------------------//
+        [HttpPost]
+        public ActionResult ChangePassword(string OldPass, string NewPass)
+        {
+            var id = Int32.Parse(Session["ID"].ToString());
+            Account a = db.Account.Where(x => x.ID == id).FirstOrDefault<Account>();
+            bool verify = VerifyHash(OldPass, a.Password);
+            if (verify)
+            {
+                Account ac = db.Account.Where(r => r.ID == id).First();
+                if (ac != null)
+                {
+                    ac.Password = ComputeHash(NewPass, null);
+                    ac.update_date = DateTime.Now;
+                    db.Entry(ac).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return Json("ss");
+            }
+            else
+            {
+                return Json("fail");
+            }
+        }
+        
         public ActionResult DealerInfo() //ข้อมูลเจ้ามือ
         {
             if ((string)Session["Role"] == "Administrator")
