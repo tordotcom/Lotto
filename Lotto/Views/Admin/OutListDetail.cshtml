@@ -15,10 +15,16 @@
 <style>
     .gy {
         background: #D6EAF8;
+        border-radius: 3px;
+        padding-right: 2px;
+        padding-left: 2px;
     }
 
     .gn {
         background: #008000 !important;
+        border-radius: 3px;
+        padding-right: 2px;
+        padding-left: 2px;
     }
     .tb {
         background-color: white;
@@ -28,6 +34,13 @@
     .modal {
         overflow-y: auto;
     }
+
+    .card .custom {
+        border: 1px solid #C0C0C0;
+    }
+    .stat-heading-custom {
+        color: blue;
+    }
 </style>
 <div class="row">
     <div class="col-md-12">
@@ -35,107 +48,172 @@
             <div class="card-header">
                 <i class="mr-2 fa fa-cut"></i>
                 <strong class="card-title">โพยแทงออก</strong>
+                <span style="float:right;">
+                    @if (Model.Count > 0)
+                    {
+                        if (Model[0].Status == "1")
+                        {
+                            <button type="button" class="btn btn-sm btn-success" id="print" data-status="1">พิมพ์โพย</button>
+                        }
+
+                        if (Model[0].Status == "0")
+                        {
+                            <button type="button" data-toggle="modal" data-target="#PollOutModal" data-backdrop="static" data-keyboard="false" class="btn btn-sm btn-primary" id="save">ส่งโพย</button>
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                </span>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12" >
-                        <div class="row form-group" style="background-color:#ffc107;padding-top:5px;padding-bottom:5px;font-size:14px">
-                            <div class="col-md-2" style="text-align:center;padding-top:5px;">
-                                <strong>
-                                    ยอดรวม:
-                                    @if (Model.Count > 0)
-                                    {
-                                        <span class="tb">@String.Format("{0:n0}", Int32.Parse(Model[0].TotalAmount))</span>
-                                    }
-                                </strong>
+                        <div class="row form-group" style="padding-top:5px;font-size:14px">
+                            <div class="col-sm-2">
+                                <div class="card custom">
+                                    <div class="card-body">
+                                        <div class="stat-widget-five">
+                                            <div class="text-left dib">
+                                                <div class="stat-text">
+                                                    <span class="" id="todayDate" style="font-size:1.2vw;">
+                                                       ยอดรวม
+                                                    </span>
+                                                </div>
+                                                <div class="stat-heading-custom">
+                                                    @if (Model.Count > 0)
+                                                    {
+                                                        <span id="bet-total">@String.Format("{0:n0}", Int32.Parse(Model[0].TotalAmount))</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2" style="text-align:left;padding-top:5px;padding-left:0px;padding-right:0px">
-                                <strong>
-                                    สถานะ:
-                                    @if (Model.Count > 0)
-                                    {
-                                        if (Model[0].Status == "0")
-                                        {
-                                            <span class="tb">ใหม่</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="tb">ส่งแล้ว</span>
-                                        }
-                                    }
-                                </strong>
+                            <div class="col-sm-2">
+                                <div class="card custom">
+                                    <div class="card-body">
+                                        <div class="stat-widget-five">
+                                            <div class="text-left dib">
+                                                <div class="stat-text">
+                                                    <span class="" id="todayDate" style="font-size:1.2vw;">
+                                                       สถานะ
+                                                    </span>
+                                                </div>
+                                                <div class="stat-heading-custom">
+                                                    @if (Model.Count > 0)
+                                                    {
+                                                        if (Model[0].Status == "0")
+                                                        {
+                                                            <span>ใหม่</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span style="color:#00ff00;">ส่งแล้ว</span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2" style="text-align:left;padding-top:5px;padding-left:0px;padding-right:0px">
-                                <strong>
-                                    ส่งที่:
-                                    @if (Model.Count > 0)
-                                    {
-                                        if (Model[0].Name == "")
-                                        {
-                                            <span class="tb">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="tb">@Model[0].Name</span>
-                                        }
-                                    }
-                                </strong>
+                            <div class="col-sm-2">
+                                <div class="card custom">
+                                    <div class="card-body">
+                                        <div class="stat-widget-five">
+                                            <div class="text-left dib">
+                                                <div class="stat-text">
+                                                    <span class="" id="todayDate" style="font-size:1.2vw;">
+                                                       ส่งที่
+                                                    </span>
+                                                </div>
+                                                <div class="stat-heading-custom">
+                                                    @if (Model.Count > 0)
+                                                        {
+                                                            if (Model[0].Name == "")
+                                                            {
+                                                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>@Model[0].Name</span>
+                                                            }
+                                                        }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2" style="text-align:left;padding-top:5px;padding-left:0px;padding-right:0px">
-                                <strong>
-                                    วิธีส่ง:
-                                    @if (Model.Count > 0)
-                                    {
-                                        if (Model[0].Status == "0")
-                                        {
-                                            <span class="tb">ยังไม่ได้ส่ง</span>
-                                        }
-                                        else if (Model[0].Status == "1")
-                                        {
-                                            <span class="tb">พิมพ์ส่ง</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="tb">ส่งผ่านเว็บ</span>
-                                        }
-                                    }
-                                </strong>
+                            <div class="col-sm-2">
+                                <div class="card custom">
+                                    <div class="card-body">
+                                        <div class="stat-widget-five">
+                                            <div class="text-left dib">
+                                                <div class="stat-text">
+                                                    <span class="" id="todayDate" style="font-size:1.2vw;">
+                                                       วิธีส่ง
+                                                    </span>
+                                                </div>
+                                                <div class="stat-heading-custom">
+                                                    @if (Model.Count > 0)
+                                                    {
+                                                        if (Model[0].Status == "0")
+                                                        {
+                                                            <span style="color:orange;">ยังไม่ได้ส่ง</span>
+                                                        }
+                                                        else if (Model[0].Status == "1")
+                                                        {
+                                                            <span style="color:purple;">พิมพ์ส่ง</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span style="color:#00ff00;">ส่งผ่านเว็บ</span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3" style="text-align:left;padding-top:5px">
-                                <strong>
-                                    วันเวลาที่ส่ง:
-                                    @if (Model.Count > 0)
-                                    {
-                                        if (Model[0].SendDate == "")
-                                        {
-                                            <span class="tb">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="tb">@Model[0].SendDate</span>
-                                        }
-                                    }
-                                </strong>
-                            </div>
-                            <div class="col-md-1">
-                                @if (Model.Count > 0)
-                                {
-                                    if (Model[0].Status != "2")
-                                    {
-                                        <button type="button" data-toggle="modal" data-target="#PollOutModal" data-backdrop="static" data-keyboard="false" class="btn btn-block btn-sm btn-primary" id="save">ส่งโพย</button>
-                                    }
-                                    else
-                                    {
-
-                                    }
-                                }
+                            <div class="col-sm-4">
+                                <div class="card custom">
+                                    <div class="card-body">
+                                        <div class="stat-widget-five">
+                                            <div class="text-left dib">
+                                                <div class="stat-text">
+                                                    <span class="" id="todayDate" style="font-size:1.2vw;">
+                                                       วันเวลาที่ส่ง
+                                                    </span>
+                                                </div>
+                                                <div class="stat-heading-custom">
+                                                   @if (Model.Count > 0)
+                                                    {
+                                                        if (Model[0].SendDate == "")
+                                                        {
+                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>@Model[0].SendDate</span>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12" id="printCutArea">
-                        <div class="card">
+                        <div class="card custom">
                             <div class="card-body">
                                 <div class="table table-stats" style="text-align:center;">
                                     <table class="table-fixed" width="100%">
@@ -166,7 +244,7 @@
                                         <tbody style="text-align:left;">
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t2up">
+                                                    <table class="get-bet-number" id="t2up" data-name="2 บน">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "2" && item.Type == "t")
@@ -185,7 +263,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t3up">
+                                                    <table class="get-bet-number" id="t3up" data-name="3 บน">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "3" && item.Type == "t")
@@ -204,7 +282,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t3_">
+                                                    <table class="get-bet-number" id="t3_" data-name="3 โต๊ด">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "3" && item.Type == "t_")
@@ -223,7 +301,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t3f">
+                                                    <table class="get-bet-number" id="t3f" data-name="3 หน้า">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "3" && item.Type == "f")
@@ -242,7 +320,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t3f_">
+                                                    <table class="get-bet-number" id="t3f_" data-name="3 หน้าโต๊ด">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "3" && item.Type == "f_")
@@ -261,7 +339,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t1up">
+                                                    <table class="get-bet-number" id="t1up" data-name="วิ่ง บน">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "1" && item.Type == "t")
@@ -280,7 +358,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t1down">
+                                                    <table class="get-bet-number" id="t1down" data-name="วื่ง ล่าง">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "1" && item.Type == "b")
@@ -299,7 +377,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t2down">
+                                                    <table class="get-bet-number" id="t2down" data-name="2 ล่าง">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "2" && item.Type == "b")
@@ -318,7 +396,7 @@
                                                     </table>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <table id="t3down">
+                                                    <table class="get-bet-number" id="t3down" data-name="3 ล่าง">
                                                         @foreach (var item in Model)
                                                         {
                                                             if (item.NumLen == "3" && item.Type == "b")
@@ -363,7 +441,7 @@
                     @if (Model.Count > 0)
                     {
                         <div class="col-md-11 offset-1" style="font-size:18px">
-                            <strong>โพยแทงออก ยอดรวม : @String.Format("{0:n0}", Int32.Parse(Model[0].TotalAmount))</strong>
+                            <strong>โพยแทงออก ยอดรวม : <span>@String.Format("{0:n0}", Int32.Parse(Model[0].TotalAmount))</span></strong>
                         </div>
                     }
                     else
@@ -379,7 +457,7 @@
                 <div class="row form-group">
                     <div class="col-md-3 offset-1" style="font-size:14px;padding-top:5px;text-align:right"><label for="select" class="form-control-label">พิมพ์ส่ง : </label></div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-block btn-sm btn-success" id="print">พิมพ์โพย</button>
+                        <button type="button" class="btn btn-block btn-sm btn-success" id="print" data-status="0" data-dismiss="modal">พิมพ์โพย</button>
                     </div>
                 </div>
                 @if(Model[0].Status !="1")
