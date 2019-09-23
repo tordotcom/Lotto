@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "OutList";
     Layout = "~/Views/Shared/_Admin.cshtml";
+    var totalAmount = 0;
+    var totalAmountDiscount = 0;
+    var totalAmountWin = 0;
 }
 
 <div class="row">
@@ -32,13 +35,16 @@
                             <td>@String.Format("{0:n0}", Int32.Parse(item.Amount))</td>
                             <td>@String.Format("{0:n0}", Int32.Parse(item.AmountDiscount))</td>
                             <td>@String.Format("{0:n0}", Int32.Parse(item.AmountWin))</td>
-                            @if (item.Send_To_UID == "")
+                            @if (item.Status == "0")
                             {
                                 <td>ใหม่</td>
                             }
                             else
                             {
                                 <td>ส่งแล้ว</td>
+                                totalAmount += Int32.Parse(item.Amount);
+                                totalAmountDiscount += Int32.Parse(item.AmountDiscount);
+                                totalAmountWin += Int32.Parse(item.AmountWin);                                 
                             }
                             @if (item.Status == "0")
                             {
@@ -56,8 +62,17 @@
                             <td><button type="button" onclick="OutPoll('@item.Send_To_UID','@item.Period_ID')" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#OutPollModal" data-backdrop="static" data-keyboard="false">ดูโพย</button></td>
                         </tr>
                         }
-                        </tbody>
+                    </tbody>
                     <tfoot>
+                        <tr>
+                            <th>รวมส่งแล้ว</th>
+                            <th>@String.Format("{0:n}", totalAmount)</th>
+                            <th>@String.Format("{0:n}", totalAmountDiscount)</th>
+                            <th>@String.Format("{0:n}", totalAmountWin)</th>
+                            <th></th>
+                            <th>สรุป</th>
+                            <th>@String.Format("{0:n}", (totalAmountDiscount - totalAmountWin))</th>
+                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -90,12 +105,12 @@
                     <tfoot>
                         <tr>
                             <th>รวม</th>
+                            <th id="amount"></th>
+                            <th id="amountdis"></th>
+                            <th id="amountwin"></th>
                             <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th><span id="total_amount"></span></th>
-                            <th></th>
+                            <th>สรุป</th>
+                            <th id="total"></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -123,16 +138,17 @@
         dataType: "json",
         success: function (data) {
             //console.log(data);
-            var total_amount = 0;
+            var amount = 0;
+            var amount_discount = 0;
+            var amount_win = 0;
             OutTable.clear();
             $.each(data, function (index, value) {
-                //total_amount += parseInt(value.Amount);
-                console.log(value.Status);
-                if (value.Status = "0") {
-                    value.Status = "ยังไม่ได้ส่ง";
-                    value.Name = "ใหม่";
+                //total_amount += parseInt(value.Amount);                
+                if (value.Status == "0") {
+                    value.Name = "ยังไม่ได้ส่ง";
+                    value.Status = "ใหม่";
                 }
-                else if (value.Status = "1")
+                else if (value.Status == "1")
                 {
                     value.Name = "พิมพ์ส่ง";
                     value.Status = "ส่งแล้ว";
@@ -140,9 +156,17 @@
                 else {
                     value.Name = "ส่งไปที่ " + value.Name;
                     value.Status = "ส่งแล้ว";
+                    
                 }
+                amount += parseInt(value.Amount);
+                amount_discount += parseInt(value.AmountDiscount);
+                amount_win += parseInt(value.AmountWin);
                 OutTable.row.add(value);
             });
+            $("#amount").html(nwc(amount));
+            $("#amountdis").html(nwc(amount_discount));
+            $("#amountwin").html(nwc(amount_win));
+            $("#total").html(nwc(amount_discount - amount_win));
             OutTable.draw();
             //$('#total_amount').html(nwc(total_amount));
             //initialPoll2();

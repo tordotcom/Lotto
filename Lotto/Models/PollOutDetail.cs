@@ -8,6 +8,7 @@ namespace Lotto.Models
     public class PollOutDetail
     {
         public string ID { get; set; }
+        public string LottoID { get; set; }
         public string UID { get; set; }
         public string Send_To_UID { get; set; }
         public string Status { get; set; }
