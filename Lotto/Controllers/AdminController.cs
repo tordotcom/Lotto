@@ -122,7 +122,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT [Type],[NumLen],[Number], sum(CAST([Amount] as int)) as Amount,Result_Status,c.c as max FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount], Result_Status FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID left join(select max(tt.c) as c from(select count(*) as c from(SELECT lbo.Type, lbo.NumLen, lbo.Number FROM[dbo].[Poll_Bet_Out]pbo left join(SELECT[Poll_Out_ID],[Type],[NumLen],[Number] FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID where pbo.Period_ID = @period and Status != '0' group by lbo.Type, lbo.NumLen, lbo.Number) t group by[Type],[NumLen])tt) c on 1 = 1 where pbo.Period_ID = @period and Status != '0' group by[Period_ID], [Type], [NumLen], [Number], [Status], Result_Status, c.c";
+                        string query = "SELECT [Type],[NumLen],CASe when Status=2 then 1 else Status end as Status,[Number], sum(CAST([Amount] as int)) as Amount,Result_Status,c.c as max FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount], Result_Status FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID left join(select max(tt.c) as c from(select count(*) as c from(SELECT lbo.Type, lbo.NumLen, lbo.Number FROM[dbo].[Poll_Bet_Out]pbo left join(SELECT[Poll_Out_ID],[Type],[NumLen],[Number] FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID where pbo.Period_ID = @period and Status != '0' group by lbo.Type, lbo.NumLen, lbo.Number) t group by[Type],[NumLen])tt) c on 1 = 1 where pbo.Period_ID = @period and Status != '0' group by[Period_ID], [Type], [NumLen], [Number] ,CASE when Status=2 then 1 else Status end, Result_Status, c.c";
                         //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -749,7 +749,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "SELECT [Type],[NumLen],[Number], sum(CAST([Amount] as int)) as Amount,Result_Status,c.c as max FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount], Result_Status FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID left join(select max(tt.c) as c from(select count(*) as c from(SELECT lbo.Type, lbo.NumLen, lbo.Number FROM[dbo].[Poll_Bet_Out]pbo left join(SELECT[Poll_Out_ID],[Type],[NumLen],[Number] FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID where pbo.Period_ID = @period and Status != '0' group by lbo.Type, lbo.NumLen, lbo.Number) t group by[Type],[NumLen])tt) c on 1 = 1 where pbo.Period_ID = @period and Status != '0' group by[Period_ID], [Type], [NumLen], [Number], [Status], Result_Status, c.c";
+                        string query = "SELECT [Type],[NumLen],CASe when Status=2 then 1 else Status end as Status,[Number], sum(CAST([Amount] as int)) as Amount,Result_Status,c.c as max FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount], Result_Status FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID left join(select max(tt.c) as c from(select count(*) as c from(SELECT lbo.Type, lbo.NumLen, lbo.Number FROM[dbo].[Poll_Bet_Out]pbo left join(SELECT[Poll_Out_ID],[Type],[NumLen],[Number] FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.Poll_Out_ID where pbo.Period_ID = @period and Status != '0' group by lbo.Type, lbo.NumLen, lbo.Number) t group by[Type],[NumLen])tt) c on 1 = 1 where pbo.Period_ID = @period and Status != '0' group by[Period_ID], [Type], [NumLen], [Number] ,CASE when Status=2 then 1 else Status end, Result_Status, c.c";
                         //string query = "SELECT ls.Type, ls.Number,sum(CAST(LS.Amount as int)) as Amount,LEN(ls.Number) as nLen FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [Number], [Amount] FROM [dbo].[LottoSub]) ls on lm.ID = ls.Lotto_ID where p.Receive = '1' and p.Period_ID = @Period group by ls.Type,ls.Number order by ls.type , ls.Number";
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -4618,39 +4618,39 @@ namespace Lotto.Controllers
                     int discount = 0;
                     if(item.Type=="t" && item.NumLen=="2")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.two_up)) / 100);
+                        discount = Int32.Parse(item.Amount)-((Int32.Parse(item.Amount) * Int32.Parse(MD.two_up)) / 100);
                     }
                     else if(item.Type == "t" && item.NumLen == "3")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.three_up)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.three_up)) / 100);
                     }
                     else if (item.Type == "t_" && item.NumLen == "3")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.three_ood)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.three_ood)) / 100);
                     }
                     else if (item.Type == "f" && item.NumLen == "3")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.first_three)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.first_three)) / 100);
                     }
                     else if (item.Type == "f_" && item.NumLen == "3")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.first_three_ood)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.first_three_ood)) / 100);
                     }
                     else if (item.Type == "t" && item.NumLen == "1")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.up)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.up)) / 100);
                     }
                     else if (item.Type == "b" && item.NumLen == "1")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.down)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.down)) / 100);
                     }
                     else if (item.Type == "b" && item.NumLen == "2")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.two_down)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.two_down)) / 100);
                     }
                     else if (item.Type == "b" && item.NumLen == "3")
                     {
-                        discount = ((Int32.Parse(item.Amount) * Int32.Parse(MD.three_down)) / 100);
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(MD.three_down)) / 100);
                     }
                     else { }
                     var lOut = db.Lotto_Bet_Out.Where(s => s.ID == lid).FirstOrDefault<Lotto_Bet_Out>();
@@ -4661,6 +4661,224 @@ namespace Lotto.Controllers
 
             db.SaveChanges();
             return Json("ss");
+        }
+        //--------------------------------ส่งหวยไปเจ้ามืออื่น------------------------------------------///
+        [HttpPost]
+        public ActionResult SendLotto(List<PollOutDetail> Data,string ID,string IPAddress)
+        {
+            int aboID = Int32.Parse(ID);
+            Account_Bet_Out abo = db.Account_Bet_Out.Where(x => x.ID == aboID).FirstOrDefault<Account_Bet_Out>();
+            if(abo!=null)
+            {
+                string Status=validUserPollOut(abo, IPAddress, Data);
+                if (Status=="OK")
+                {
+                    
+                }
+                else
+                {
+                    return Json(Status);
+                }
+            }
+            return Json("ss");
+        }
+        //--------------------------------funcion เช็คเจ้ามมือแทงออก------------------------------------------///
+        public string validUserPollOut(Account_Bet_Out abo,string IPAddress, List<PollOutDetail> Data)
+        {
+            string returnValue = "";
+            string connetionString = null;
+            var user = new List<UserLogin>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT u.ID,u.Username,u.Password,u.Last_Login,r.Role,u.Create_By_UID FROM[dbo].[Account] u left join(SELECT[UID],[Role_ID] FROM [dbo].[Account_Role]) ar on u.ID=ar.UID left join(select ID, Role from [dbo].[Role]) r on ar.Role_ID=r.ID where u.Username=@username and u.Status=1 and Delete_Status=0";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@username", abo.Username.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        user.Add(new UserLogin
+                        {
+                            ID = Reader["ID"].ToString(),
+                            Username = Reader["Username"].ToString(),
+                            Password = Reader["Password"].ToString(),
+                            Last_Login = Reader["Last_Login"].ToString(),
+                            Role = Reader["Role"].ToString(),
+                            ParentID = Reader["Create_By_UID"].ToString()
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            if (user.Count > 0)
+            {
+                bool verify = VerifyHash(abo.Password, user[0].Password);
+                if (verify)
+                {
+
+                    bool role = Check_Role("user", user[0].Role);
+                    if (role)
+                    {
+                        int parentID = Int32.Parse(user[0].ParentID);
+                        Account ac = db.Account.Where(x => x.ID == parentID).FirstOrDefault<Account>();
+                        if (ac != null)
+                        {
+                            if (ac.Username == abo.SendToUsername)
+                            {
+                                returnValue=AddPollOut(abo, user, IPAddress, Data);
+                            }
+                            else
+                            {
+                                returnValue= "admin not valid";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        returnValue= "not user";
+                    }
+                }
+                else
+                {
+                    returnValue= "login fail";
+                }
+            }
+            else
+            {
+                returnValue= "login fail";
+            }
+            return returnValue;
+        }
+        //--------------------------------funcion เแทงออก------------------------------------------///
+        public string AddPollOut(Account_Bet_Out abo,List< UserLogin> user,string IPAddress, List<PollOutDetail> Data)
+        {
+            var parentID = Int32.Parse(user[0].ParentID);
+            var id = Int32.Parse(user[0].ID);
+            dynamic discount_rate;
+            var status = "";
+            Period P = db.Period.Where(s => s.Status == "1").Where(x => x.BetStatus == "1").Where(y => y.UID == parentID).FirstOrDefault<Period>();
+            Discount D = db.Discount.Where(x => x.Account.ID == id).FirstOrDefault<Discount>(); //-----user-----id//
+            if (D != null)
+            {
+                discount_rate = D;
+            }
+            else
+            {
+                var adminID = user[0].ParentID;
+                Main_Discount MD = db.Main_Discount.Where(x => x.admin_id == adminID).FirstOrDefault<Main_Discount>();
+                discount_rate = MD;
+            }
+            if (P != null)
+            {
+                var poll = new Poll();
+                poll.UID = id; //----------- user id-----------//
+                poll.Period_ID = P.ID;
+                poll.Receive = "1";
+                poll.Create_By = user[0].Username; //--------- username --------//
+                poll.IP = IPAddress;
+                poll.Check_Status = "0";
+                poll.create_date = DateTime.Now;
+                poll.update_date = DateTime.Now;
+                db.Poll.Add(poll);
+                db.SaveChanges();
+                int pID = poll.ID;
+                int lID = 0;
+                foreach (var item in Data)
+                {
+                    var lotto = new LottoMain();
+                    lotto.Poll_ID = pID;
+                    lotto.Type = item.Type;
+                    lotto.Number = item.Number;
+                    lotto.Amount = item.Amount;
+                    lotto.create_date = DateTime.Now;
+                    lotto.update_date = DateTime.Now;
+                    db.LottoMain.Add(lotto);
+                    db.SaveChanges();
+                    lID = lotto.ID;
+
+                    var discount = 0.00;
+                    if (item.Type == "t" && item.NumLen == "2")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.two_up)) / 100);
+                    }
+                    else if (item.Type == "t" && item.NumLen == "3")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.three_up)) / 100);
+                    }
+                    else if (item.Type == "t_" && item.NumLen == "3")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.three_ood)) / 100);
+                    }
+                    else if (item.Type == "f" && item.NumLen == "3")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.first_three)) / 100);
+                    }
+                    else if (item.Type == "f_" && item.NumLen == "3")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.first_three_ood)) / 100);
+                    }
+                    else if (item.Type == "t" && item.NumLen == "1")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.up)) / 100);
+                    }
+                    else if (item.Type == "b" && item.NumLen == "1")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.down)) / 100);
+                    }
+                    else if (item.Type == "b" && item.NumLen == "2")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.two_down)) / 100);
+                    }
+                    else if (item.Type == "b" && item.NumLen == "3")
+                    {
+                        discount = Int32.Parse(item.Amount) - ((Int32.Parse(item.Amount) * Int32.Parse(discount_rate.three_down)) / 100);
+                    }
+                    else { }
+                    var lottosub = new LottoSub();
+                    lottosub.Lotto_ID = lID;
+                    lottosub.Type = item.Type;
+                    lottosub.NumLen = item.NumLen;
+                    lottosub.Number = item.Number;
+                    lottosub.Amount = item.Amount;
+                    lottosub.AmountWin = "0";
+                    lottosub.Result_Status = "0";
+                    lottosub.AmountDiscount = discount.ToString();
+                    lottosub.create_date = DateTime.Now;
+                    lottosub.update_date = DateTime.Now;
+                    db.LottoSub.Add(lottosub);
+
+                    int lottoid = Int32.Parse(item.LottoID);
+                    var lOut = db.Lotto_Bet_Out.Where(s => s.ID == lottoid).FirstOrDefault<Lotto_Bet_Out>();
+                    lOut.AmountDiscount = discount.ToString();
+                    db.Entry(lOut).State = System.Data.Entity.EntityState.Modified;
+                }
+                int pollOutID = Int32.Parse(Data[0].ID);
+                var pOut = db.Poll_Bet_Out.Where(s => s.ID == pollOutID).FirstOrDefault<Poll_Bet_Out>();
+                pOut.Send_To_UID = abo.ID;
+                pOut.Status = "2";
+                pOut.update_date = DateTime.Now;
+                db.Entry(pOut).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return "ss";
+            }
+            else
+            {
+                status = "close period";
+            }
+            return status;
         }
     }
 }

@@ -120,9 +120,13 @@
                             <div class="col-md-1">
                                 @if (Model.Count > 0)
                                 {
-                                    if (Model[0].Status == "0")
+                                    if (Model[0].Status != "2")
                                     {
                                         <button type="button" data-toggle="modal" data-target="#PollOutModal" data-backdrop="static" data-keyboard="false" class="btn btn-block btn-sm btn-primary" id="save">ส่งโพย</button>
+                                    }
+                                    else
+                                    {
+
                                     }
                                 }
                             </div>
@@ -378,22 +382,24 @@
                         <button type="button" class="btn btn-block btn-sm btn-success" id="print">พิมพ์โพย</button>
                     </div>
                 </div>
-                <div class="row form-group">
-                    <div class="col-md-3 offset-1" style="font-size:14px;padding-top:5px;text-align:right"><label for="select" class="form-control-label">เรียกเจ้ามือแทงออก : </label></div>
-                    <div class="col-md-4">
-                        <select name="select" id="select" class="form-control-sm form-control">
-                            <option value="0" selected></option>
-                            @foreach (var item in ViewBag.ABO)
-                            {
-                                <option value="@item.ID">@item.Name</option>
-                            }
-                        </select>
+                @if(Model[0].Status !="1")
+                {                
+                    <div class="row form-group">
+                        <div class="col-md-3 offset-1" style="font-size:14px;padding-top:5px;text-align:right"><label for="select" class="form-control-label">เรียกเจ้ามือแทงออก : </label></div>
+                        <div class="col-md-4">
+                            <select name="select" id="select" class="form-control-sm form-control">
+                                <option value="0" selected></option>
+                                @foreach (var item in ViewBag.ABO)
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-block btn-sm btn-primary" id="SendLotto">ส่งโพย</button>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-block btn-sm btn-primary" id="SendLotto">ส่งโพย</button>
-                    </div>
-                </div>
-
+                }
             </div>
         </div>
     </div>
@@ -401,6 +407,7 @@
 <script src="~/Assets/js/out_list_detail.js"></script>
 <script type="text/javascript">
     printOutList = '@Url.Action("printOutList", "Admin")';
+    SendLotto = '@Url.Action("SendLotto", "Admin")';
 
     var twoup = @Html.Raw(twoup);
     var threeup = @Html.Raw(threeup);
