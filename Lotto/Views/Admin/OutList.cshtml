@@ -71,7 +71,7 @@
                             <th>@String.Format("{0:n}", totalAmountWin)</th>
                             <th></th>
                             <th>สรุป</th>
-                            <th>@String.Format("{0:n}", (totalAmountDiscount - totalAmountWin))</th>
+                            <th>@String.Format("{0:n}", (totalAmountWin-totalAmountDiscount))</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -166,7 +166,7 @@
             $("#amount").html(nwc(amount));
             $("#amountdis").html(nwc(amount_discount));
             $("#amountwin").html(nwc(amount_win));
-            $("#total").html(nwc(amount_discount - amount_win));
+            $("#total").html(nwc(amount_win-amount_discount));
             OutTable.draw();
             //$('#total_amount').html(nwc(total_amount));
             //initialPoll2();

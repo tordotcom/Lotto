@@ -52,7 +52,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select [Type],[NumLen],[Number], ISNULL(Amount - Amount2, Amount ) as Amount,[Result_Status],t3.max from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 left join(select Max(c) as max from(select[Type],[NumLen], count(*) as c from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 where ISNULL(Amount-Amount2, Amount )>0 group by[Type],[NumLen]) t3) t3 on 1=1 where ISNULL(Amount-Amount2, Amount )>0";
+                        string query = "select [Type],[NumLen],[Number], ISNULL(Amount - Amount2, Amount ) as Amount,[Result_Status],t3.max from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,CASE when Status=2 then 1 else Status end as [Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],CASE when Status=2 then 1 else Status end) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 left join(select Max(c) as max from(select[Type],[NumLen], count(*) as c from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 where ISNULL(Amount-Amount2, Amount )>0 group by[Type],[NumLen]) t3) t3 on 1=1 where ISNULL(Amount-Amount2, Amount )>0";
                         
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -679,7 +679,7 @@ namespace Lotto.Controllers
                     {
                         SqlConnection cnn = new SqlConnection(connetionString);
                         cnn.Open();
-                        string query = "select [Type],[NumLen],[Number], ISNULL(Amount - Amount2, Amount ) as Amount,[Result_Status],t3.max from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 left join(select Max(c) as max from(select[Type],[NumLen], count(*) as c from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 where ISNULL(Amount-Amount2, Amount )>0 group by[Type],[NumLen]) t3) t3 on 1=1 where ISNULL(Amount-Amount2, Amount )>0";
+                        string query = "select [Type],[NumLen],[Number], ISNULL(Amount - Amount2, Amount ) as Amount,[Result_Status],t3.max from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,CASE when Status=2 then 1 else Status end as [Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],CASE when Status=2 then 1 else Status end) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 left join(select Max(c) as max from(select[Type],[NumLen], count(*) as c from(SELECT ls.[Type], ls.[NumLen], ls.[Number], sum(CAST(ls.Amount as int)) as Amount,ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID], [Poll_ID] FROM [dbo].[LottoMain]) lm on p.ID=lm.Poll_ID left join(SELECT[ID], [Lotto_ID], [Type], [NumLen], [Number], [Amount], [Result_Status] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where p.Receive='1' and p.Period_ID=@period group by ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(select[Type] as Type2, [NumLen] as NumLen2, [Number] as Number2, [Amount] as Amount2 from(SELECT[Period_ID],[Type],[NumLen],[Number], sum(CAST([Amount]as int)) as Amount,[Status] FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], [Type], [NumLen], [Number], [Amount] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and Status !='0' group by[Period_ID],[Type],[NumLen],[Number],[Status]) t2) t2 on t1.Type=t2.Type2 and t1.NumLen=t2.NumLen2 and t1.Number=t2.Number2 where ISNULL(Amount-Amount2, Amount )>0 group by[Type],[NumLen]) t3) t3 on 1=1 where ISNULL(Amount-Amount2, Amount )>0";
 
                         SqlCommand cmd = new SqlCommand(query, cnn);
                         cmd.Parameters.AddWithValue("@period", id.ToString());
@@ -3694,14 +3694,53 @@ namespace Lotto.Controllers
                 {
 
                 }
+                var pbo = new List<PollOutDetail>();
+                connetionString1 = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+                try
+                {
+                    SqlConnection cnn = new SqlConnection(connetionString1);
+                    cnn.Open();
+                    string query = "SELECT pbo.[ID], pbo.[Period_ID],pbo.[Status],lbo.ID as LottoID FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where Period_ID='34' and Status!=0";
+                    SqlCommand cmd = new SqlCommand(query, cnn);
+                    cmd.Parameters.AddWithValue("@period", PID.ToString());
+                    SqlDataReader Reader = cmd.ExecuteReader();
+                    Console.Write(Reader);
+                    try
+                    {
+                        while (Reader.Read())
+                        {
+                            pbo.Add(new PollOutDetail
+                            {
+                                LottoID = Reader["LottoID"].ToString(),
+                            });
+                        }
+                        cnn.Close();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                catch
+                {
+
+                }
                 foreach (var item in update)
                 {
                     LottoSub ls = db.LottoSub.Where(s => s.ID == item.ID).FirstOrDefault<LottoSub>();
                     ls.AmountWin = "0";
                     ls.Result_Status = "0";
                     ls.update_date = DateTime.Now;
-                    db.Entry(ls).State = System.Data.Entity.EntityState.Modified;
-                    
+                    db.Entry(ls).State = System.Data.Entity.EntityState.Modified;                    
+                }
+                foreach (var item in pbo)
+                {
+                    int lboID = Int32.Parse(item.LottoID);
+                    Lotto_Bet_Out lbo = db.Lotto_Bet_Out.Where(s => s.ID == lboID).FirstOrDefault<Lotto_Bet_Out>();
+                    lbo.AmountWin = "0";
+                    lbo.Result_Status = "0";
+                    lbo.update_date = DateTime.Now;
+                    db.Entry(lbo).State = System.Data.Entity.EntityState.Modified;
                 }
                 db.SaveChanges();
                 var tar = db.Total_Amount_Result.Where(q => q.Period_ID == PID).ToList();
@@ -3993,6 +4032,188 @@ namespace Lotto.Controllers
                 
             }
             db.SaveChanges();
+            //-----------------------ตรวจเลขแทงออก---------------------//
+            string uid = Session["ID"].ToString();
+            Main_Rate mr = db.Main_Rate.Where(y => y.admin_id == uid).FirstOrDefault<Main_Rate>();
+            dynamic rateOut;
+            var pod = new List<PollOutDetail>();
+            connetionString = WebConfigurationManager.ConnectionStrings["LottoDB"].ConnectionString;
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT pbo.[ID], pbo.[Period_ID],pbo.[Status],lbo.ID as LottoID,lbo.Type,lbo.NumLen,lbo.Number,lbo.Amount,lbo.AmountDiscount,lbo.AmountWin,lbo.Result_Status,abo.Username,abo.SendToUsername FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID], Type , NumLen, Number, Amount, AmountDiscount, AmountWin, Result_Status FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID left join(SELECT [ID],[SendToUsername],[Username] FROM [dbo].[Account_Bet_Out]) abo on pbo.Send_To_UID=abo.ID where Period_ID=@period and Status!=0";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", PID.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        pod.Add(new PollOutDetail
+                        {
+                            LottoID = Reader["LottoID"].ToString(),
+                            Type= Reader["Type"].ToString(),
+                            NumLen = Reader["NumLen"].ToString(),
+                            Number = Reader["Number"].ToString(),
+                            Amount = Reader["Amount"].ToString(),
+                            ResultStatus = Reader["Result_Status"].ToString(),
+                            AmountWin = Reader["AmountWin"].ToString(),
+                            SendToUsername = Reader["SendToUsername"].ToString(),
+                            Username = Reader["Username"].ToString(),
+                            Status = Reader["Status"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            foreach(var item in pod)
+            {
+                if(item.Status=="1")
+                {
+                    if (item.NumLen == "1")
+                    {
+                        if (item.Type == "t" && item.Number == UP)
+                        {
+                            UpdateLottoOut(item.Amount, mr.up, item.LottoID);
+                        }
+                        else if (item.Type == "b" && item.Number == DOWN)
+                        {
+                            UpdateLottoOut(item.Amount, mr.down, item.LottoID);
+                        }
+                        else { }
+                    }
+                    else if (item.NumLen == "2")
+                    {
+                        if (item.Type == "t" && item.Number == TwUP)
+                        {
+                            UpdateLottoOut(item.Amount, mr.two_up, item.LottoID);
+                        }
+                        else if (item.Type == "b" && item.Number == TD)
+                        {
+                            UpdateLottoOut(item.Amount, mr.two_down, item.LottoID);
+                        }
+                        else if (item.Type == "t_" && (item.Number == Tw_up_ood || item.Number == TwUP))
+                        {
+                            UpdateLottoOut(item.Amount, mr.two_ood, item.LottoID);
+                        }
+                        else if (item.Type == "b_" && (item.Number == TDO1 || item.Number == TD))
+                        {
+                            UpdateLottoOut(item.Amount, mr.two_ood, item.LottoID);
+                        }
+                        else { }
+                    }
+                    else if (item.NumLen == "3")
+                    {
+                        if (item.Type == "t" && item.Number == TU)
+                        {
+                            UpdateLottoOut(item.Amount, mr.three_up, item.LottoID);
+                        }
+                        else if (item.Type == "b" && (item.Number == ThDown1 || item.Number == ThDown2 || item.Number == ThDown3 || item.Number == ThDown4))
+                        {
+                            UpdateLottoOut(item.Amount, mr.three_down, item.LottoID);
+                        }
+                        else if (item.Type == "t_" && (item.Number == TU || item.Number == TUO1 || item.Number == TUO2 || item.Number == TUO3 || item.Number == TUO4 || item.Number == TUO5))
+                        {
+                            UpdateLottoOut(item.Amount, mr.three_ood, item.LottoID);
+                        }
+                        else if (item.Type == "f" && item.Number == FT)
+                        {
+                            UpdateLottoOut(item.Amount, mr.first_three, item.LottoID);
+                        }
+                        else if (item.Type == "f_" && (item.Number == FT || item.Number == FTO1 || item.Number == FTO2 || item.Number == FTO3 || item.Number == FTO4 || item.Number == FTO5))
+                        {
+                            UpdateLottoOut(item.Amount, mr.first_three_ood, item.LottoID);
+                        }
+                        else { }
+                    }
+                    else { }
+                }
+                else if(item.Status == "2")
+                {
+                    Account ac= db.Account.Where(y => y.Username == item.Username).FirstOrDefault<Account>();
+                    Account acadmin = db.Account.Where(y => y.Username == item.SendToUsername).FirstOrDefault<Account>();
+                    Rate uRate = db.Rate.Where(y => y.UID == ac.ID).FirstOrDefault<Rate>();
+                    if(uRate!=null)
+                    {
+                        rateOut = uRate;
+                    }
+                    else
+                    {
+                        string admin_ID = acadmin.ID.ToString();
+                        Main_Rate mrOut = db.Main_Rate.Where(y => y.admin_id == admin_ID).FirstOrDefault<Main_Rate>();
+                        rateOut = mrOut;
+                    }
+                    if (item.NumLen == "1")
+                    {
+                        if (item.Type == "t" && item.Number == UP)
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.up, item.LottoID);
+                        }
+                        else if (item.Type == "b" && item.Number == DOWN)
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.down, item.LottoID);
+                        }
+                        else { }
+                    }
+                    else if (item.NumLen == "2")
+                    {
+                        if (item.Type == "t" && item.Number == TwUP)
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.two_up, item.LottoID);
+                        }
+                        else if (item.Type == "b" && item.Number == TD)
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.two_down, item.LottoID);
+                        }
+                        else if (item.Type == "t_" && (item.Number == Tw_up_ood || item.Number == TwUP))
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.two_ood, item.LottoID);
+                        }
+                        else if (item.Type == "b_" && (item.Number == TDO1 || item.Number == TD))
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.two_ood, item.LottoID);
+                        }
+                        else { }
+                    }
+                    else if (item.NumLen == "3")
+                    {
+                        if (item.Type == "t" && item.Number == TU)
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.three_up, item.LottoID);
+                        }
+                        else if (item.Type == "b" && (item.Number == ThDown1 || item.Number == ThDown2 || item.Number == ThDown3 || item.Number == ThDown4))
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.three_down, item.LottoID);
+                        }
+                        else if (item.Type == "t_" && (item.Number == TU || item.Number == TUO1 || item.Number == TUO2 || item.Number == TUO3 || item.Number == TUO4 || item.Number == TUO5))
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.three_ood, item.LottoID);
+                        }
+                        else if (item.Type == "f" && item.Number == FT)
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.first_three, item.LottoID);
+                        }
+                        else if (item.Type == "f_" && (item.Number == FT || item.Number == FTO1 || item.Number == FTO2 || item.Number == FTO3 || item.Number == FTO4 || item.Number == FTO5))
+                        {
+                            UpdateLottoOut(item.Amount, rateOut.first_three_ood, item.LottoID);
+                        }
+                        else { }
+                    }
+                    else { }
+                }
+                else { }
+            }
+            
             return Json("ss");
         }
 
@@ -4007,6 +4228,19 @@ namespace Lotto.Controllers
             ls.AmountWin = win.ToString();
             ls.Result_Status = "1";
             db.Entry(ls).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+        }
+        public void UpdateLottoOut(string Amount, string Rate, string ID)
+        {
+            int id = Int32.Parse(ID);
+            var amount = Int32.Parse(Amount);
+            var rate = Int32.Parse(Rate);
+            var win = amount * rate;
+            Lotto_Bet_Out lbo = db.Lotto_Bet_Out.Where(s => s.ID == id).FirstOrDefault<Lotto_Bet_Out>();
+            lbo.update_date = DateTime.Now;
+            lbo.AmountWin = win.ToString();
+            lbo.Result_Status = "1";
+            db.Entry(lbo).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
         }
 
@@ -4795,7 +5029,7 @@ namespace Lotto.Controllers
                 db.Poll.Add(poll);
                 db.SaveChanges();
                 int pID = poll.ID;
-                int lID = 0;
+                
                 foreach (var item in Data)
                 {
                     var lotto = new LottoMain();
@@ -4807,7 +5041,7 @@ namespace Lotto.Controllers
                     lotto.update_date = DateTime.Now;
                     db.LottoMain.Add(lotto);
                     db.SaveChanges();
-                    lID = lotto.ID;
+                    int lID = lotto.ID;
 
                     var discount = 0.00;
                     if (item.Type == "t" && item.NumLen == "2")
@@ -4868,6 +5102,7 @@ namespace Lotto.Controllers
                 int pollOutID = Int32.Parse(Data[0].ID);
                 var pOut = db.Poll_Bet_Out.Where(s => s.ID == pollOutID).FirstOrDefault<Poll_Bet_Out>();
                 pOut.Send_To_UID = abo.ID;
+                pOut.Poll_ID = pID ;
                 pOut.Status = "2";
                 pOut.update_date = DateTime.Now;
                 db.Entry(pOut).State = System.Data.Entity.EntityState.Modified;
