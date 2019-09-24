@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace Lotto.Controllers
@@ -12,16 +13,16 @@ namespace Lotto.Controllers
     public class AutoCloseAPIController : ApiController
     {
         ltfomEntities db = new ltfomEntities();
-        [HttpGet]
-        public void CheckTime()
-        {
+        [HttpPost]
+        public void CheckTime(int id)
+        {            
             var time = DateTime.Now.ToString("HH:mm:ss", CultureInfo.InvariantCulture);
             DateTime t = DateTime.ParseExact(time, "HH:mm:ss", CultureInfo.InvariantCulture);
             DateTime dt = DateTime.ParseExact("15:00:00", "HH:mm:ss", CultureInfo.InvariantCulture);
             if (t.TimeOfDay >= dt.TimeOfDay)
             {
                 int maxpid = db.Period.Max(p => p.ID);
-                Period P = db.Period.Where(x => x.ID == maxpid).FirstOrDefault<Period>();
+                Period P = db.Period.Where(x => x.ID == maxpid).Where(y=>y.UID==id).FirstOrDefault<Period>();
                 if (P != null && P.Status=="1")
                 {
                     if (P.Date == t.Date)
