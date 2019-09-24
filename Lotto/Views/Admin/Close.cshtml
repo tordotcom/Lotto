@@ -281,7 +281,7 @@
 </div>
 
 <div class="modal fade" id="totalBalance" tabindex="-1" role="dialog" aria-labelledby="totalBalanceLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="width:90%">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:90% !important;">
         <div class="modal-content">
            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -290,25 +290,25 @@
             </div>
             <div class="modal-body" id="printBalanceArea">
                 <br />
-                <h4 class="center">ใบสรุปยอดเงิน งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</h4><hr/>
+                <h4><center>ใบสรุปยอดเงิน งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</center></h4><br/>
                 <table class="table table-bordered" style="text-align:center;">
-                    <thead style="color:white;background-color:blue;">
+                    <thead>
                         <tr>
-                            <th rowspan="2">ชนิด</th>
-                            <th colspan="3">รับไว้</th>
-                            <th colspan="3">แทงออก</th>
-                            <th colspan="3">ยอดทั้งหมด</th>
+                            <th rowspan="2" class="bg-warning-5" style="vertical-align : middle;text-align:center;">ชนิด</th>
+                            <th colspan="3" class="bg-success">รับไว้</th>
+                            <th colspan="3" class="bg-danger">แทงออก</th>
+                            <th colspan="3" class="bg-info">ยอดทั้งหมด</th>
                         </tr>
                         <tr>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
+                            <th class="bg-success-5">แทงหัก %</th>
+                            <th class="bg-success-5">ถูก</th>
+                            <th class="bg-success-5">สุทธิ</th>
+                            <th class="bg-danger-5">แทงหัก %</th>
+                            <th class="bg-danger-5">ถูก</th>
+                            <th class="bg-danger-5">สุทธิ</th>
+                            <th class="bg-info-5">แทงหัก %</th>
+                            <th class="bg-info-5">ถูก</th>
+                            <th class="bg-info-5">สุทธิ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -556,137 +556,137 @@
                         }
                         <tr>
                             <td>วิ่ง บน</td>
-                            <td id="udis">@String.Format("{0:n}", Convert.ToInt32(up))</td>
-                            <td id="uwin">@String.Format("{0:n}", wup)</td>
-                            <td id="utotal">@String.Format("{0:n}", tup)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(oup))</td>
-                            <td id="">@String.Format("{0:n}", owup)</td>
-                            <td id="">@String.Format("{0:n}", otup)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(up)+ Convert.ToInt32(oup))</td>
-                            <td id="">@String.Format("{0:n}", wup+ owup)</td>
-                            <td id="">@String.Format("{0:n}", tup+ otup)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(up))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wup)</td>
+                            <td style="color: green;">@String.Format("{0:n}", tup)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(oup))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owup)</td>
+                            <td style="color: red;">@String.Format("{0:n}", otup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(up)+ Convert.ToInt32(oup))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wup+ owup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tup+ otup)</td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
-                            <td id="ddis">@String.Format("{0:n}", Convert.ToInt32(down))</td>
-                            <td id="dwin">@String.Format("{0:n}", wdown)</td>
-                            <td id="dtotal">@String.Format("{0:n}", tdown)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(odown))</td>
-                            <td id="">@String.Format("{0:n}", owdown)</td>
-                            <td id="">@String.Format("{0:n}", otdown)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(down)+ Convert.ToInt32(odown))</td>
-                            <td id="">@String.Format("{0:n}", wdown+ owdown)</td>
-                            <td id="">@String.Format("{0:n}", tdown+ otdown)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(down))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wdown)</td>
+                            <td style="color: green;">@String.Format("{0:n}", tdown)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(odown))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owdown)</td>
+                            <td style="color: red;">@String.Format("{0:n}", otdown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(down)+ Convert.ToInt32(odown))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wdown+ owdown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tdown+ otdown)</td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
-                            <td id="f3dis">@String.Format("{0:n}", Convert.ToInt32(fthree))</td>
-                            <td id="f3win">@String.Format("{0:n}", wfthree)</td>
-                            <td id="f3total">@String.Format("{0:n}", tfthree)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(ofthree))</td>
-                            <td id="">@String.Format("{0:n}", owfthree)</td>
-                            <td id="">@String.Format("{0:n}", otfthree)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(fthree)+ Convert.ToInt32(ofthree))</td>
-                            <td id="">@String.Format("{0:n}", wfthree+ owfthree)</td>
-                            <td id="">@String.Format("{0:n}", tfthree+ otfthree)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(fthree))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wfthree)</td>
+                            <td style="color: green;">@String.Format("{0:n}", tfthree)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(ofthree))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owfthree)</td>
+                            <td style="color: red;">@String.Format("{0:n}", otfthree)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(fthree)+ Convert.ToInt32(ofthree))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wfthree+ owfthree)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tfthree+ otfthree)</td>
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
-                            <td id="f3odis">@String.Format("{0:n}", Convert.ToInt32(fthreeood))</td>
-                            <td id="f3owin">@String.Format("{0:n}", wfthreeood)</td>
-                            <td id="f3ototal">@String.Format("{0:n}", tfthreeood)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(ofthreeood))</td>
-                            <td id="">@String.Format("{0:n}", owfthreeood)</td>
-                            <td id="">@String.Format("{0:n}", otfthreeood)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(fthreeood)+ Convert.ToInt32(ofthreeood))</td>
-                            <td id="">@String.Format("{0:n}", wfthreeood+ owfthreeood)</td>
-                            <td id="">@String.Format("{0:n}", tfthreeood+ otfthreeood)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(fthreeood))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wfthreeood)</td>
+                            <td style="color: green;">@String.Format("{0:n}", tfthreeood)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(ofthreeood))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owfthreeood)</td>
+                            <td style="color: red;">@String.Format("{0:n}", otfthreeood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(fthreeood)+ Convert.ToInt32(ofthreeood))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wfthreeood+ owfthreeood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tfthreeood+ otfthreeood)</td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
-                            <td id="u3dis">@String.Format("{0:n}", Convert.ToInt32(threeup))</td>
-                            <td id="u3win">@String.Format("{0:n}", wthreeup)</td>
-                            <td id="u3total">@String.Format("{0:n}", tthreeup)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(othreeup))</td>
-                            <td id="">@String.Format("{0:n}", owthreeup)</td>
-                            <td id="">@String.Format("{0:n}", otthreeup)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(threeup)+ Convert.ToInt32(othreeup))</td>
-                            <td id="">@String.Format("{0:n}", wthreeup+ owthreeup)</td>
-                            <td id="">@String.Format("{0:n}", tthreeup+ otthreeup)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(threeup))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wthreeup)</td>
+                            <td style="color: green;">@String.Format("{0:n}", tthreeup)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(othreeup))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owthreeup)</td>
+                            <td style="color: red;">@String.Format("{0:n}", otthreeup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threeup)+ Convert.ToInt32(othreeup))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wthreeup+ owthreeup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tthreeup+ otthreeup)</td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
-                            <td id="u3odis">@String.Format("{0:n}", Convert.ToInt32(threeupood))</td>
-                            <td id="u3owin">@String.Format("{0:n}", wthreeupood)</td>
-                            <td id="u3ototal">@String.Format("{0:n}", tthreeupood)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(othreeupood))</td>
-                            <td id="">@String.Format("{0:n}", owthreeupood)</td>
-                            <td id="">@String.Format("{0:n}", otthreeupood)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(threeupood)+ Convert.ToInt32(othreeupood))</td>
-                            <td id="">@String.Format("{0:n}", wthreeupood+ owthreeupood)</td>
-                            <td id="">@String.Format("{0:n}", tthreeupood+ otthreeupood)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(threeupood))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wthreeupood)</td>
+                            <td style="color: green;">@String.Format("{0:n}", tthreeupood)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(othreeupood))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owthreeupood)</td>
+                            <td style="color: red;">@String.Format("{0:n}", otthreeupood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threeupood)+ Convert.ToInt32(othreeupood))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wthreeupood+ owthreeupood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tthreeupood+ otthreeupood)</td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td id="d3dis">@String.Format("{0:n}", Convert.ToInt32(threedown))</td>
-                            <td id="d3win">@String.Format("{0:n}", wthreedown)</td>
-                            <td id="d3total">@String.Format("{0:n}", tthreedown)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(othreedown))</td>
-                            <td id="">@String.Format("{0:n}", owthreedown)</td>
-                            <td id="">@String.Format("{0:n}", otthreedown)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(threedown)+ Convert.ToInt32(othreedown))</td>
-                            <td id="">@String.Format("{0:n}", wthreedown+ owthreedown)</td>
-                            <td id="">@String.Format("{0:n}", tthreedown+ otthreedown)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(threedown))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wthreedown)</td>
+                            <td style="color: green;">@String.Format("{0:n}", tthreedown)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(othreedown))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owthreedown)</td>
+                            <td style="color: red;">@String.Format("{0:n}", otthreedown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threedown)+ Convert.ToInt32(othreedown))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wthreedown+ owthreedown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tthreedown+ otthreedown)</td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
-                            <td id="u2dis">@String.Format("{0:n}", Convert.ToInt32(twoup))</td>
-                            <td id="u2win">@String.Format("{0:n}", wtwoup)</td>
-                            <td id="u2total">@String.Format("{0:n}", ttwoup)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(otwoup))</td>
-                            <td id="">@String.Format("{0:n}", owtwoup)</td>
-                            <td id="">@String.Format("{0:n}", ottwoup)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(twoup)+ Convert.ToInt32(otwoup))</td>
-                            <td id="">@String.Format("{0:n}", wtwoup+ owtwoup)</td>
-                            <td id="">@String.Format("{0:n}", ttwoup+ ottwoup)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(twoup))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wtwoup)</td>
+                            <td style="color: green;">@String.Format("{0:n}", ttwoup)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(otwoup))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owtwoup)</td>
+                            <td style="color: red;">@String.Format("{0:n}", ottwoup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twoup)+ Convert.ToInt32(otwoup))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wtwoup+ owtwoup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", ttwoup+ ottwoup)</td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td id="d2dis">@String.Format("{0:n}", Convert.ToInt32(twodown))</td>
-                            <td id="d2win">@String.Format("{0:n}", wtwodown)</td>
-                            <td id="d2total">@String.Format("{0:n}", ttwodown)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(otwodown))</td>
-                            <td id="">@String.Format("{0:n}", owtwodown)</td>
-                            <td id="">@String.Format("{0:n}", ottwodown)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(twodown)+ Convert.ToInt32(otwodown))</td>
-                            <td id="">@String.Format("{0:n}", wtwodown+ owtwodown)</td>
-                            <td id="">@String.Format("{0:n}", ttwodown+ ottwodown)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(twodown))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wtwodown)</td>
+                            <td style="color: green;">@String.Format("{0:n}", ttwodown)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(otwodown))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owtwodown)</td>
+                            <td style="color: red;">@String.Format("{0:n}", ottwodown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twodown)+ Convert.ToInt32(otwodown))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wtwodown+ owtwodown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", ttwodown+ ottwodown)</td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
-                            <td id="o2dis">@String.Format("{0:n}", Convert.ToInt32(twoood))</td>
-                            <td id="o2win">@String.Format("{0:n}", wtwoood)</td>
-                            <td id="o2total">@String.Format("{0:n}", ttwoood)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(otwoood))</td>
-                            <td id="">@String.Format("{0:n}", owtwoood)</td>
-                            <td id="">@String.Format("{0:n}", ottwoood)</td>
-                            <td id="">@String.Format("{0:n}", Convert.ToInt32(twoood)+ Convert.ToInt32(otwoood))</td>
-                            <td id="">@String.Format("{0:n}", wtwoood+ owtwoood)</td>
-                            <td id="">@String.Format("{0:n}", ttwoood+ ottwoood)</td>
+                            <td style="color: green;">@String.Format("{0:n}", Convert.ToInt32(twoood))</td>
+                            <td style="color: green;">@String.Format("{0:n}", wtwoood)</td>
+                            <td style="color: green;">@String.Format("{0:n}", ttwoood)</td>
+                            <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(otwoood))</td>
+                            <td style="color: red;">@String.Format("{0:n}", owtwoood)</td>
+                            <td style="color: red;">@String.Format("{0:n}", ottwoood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twoood)+ Convert.ToInt32(otwoood))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wtwoood+ owtwoood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", ttwoood+ ottwoood)</td>
                         </tr>
                     </tbody>
-                    <tfoot style="color:white;background-color:blue;">
+                    <tfoot>
                         <tr>
-                            <td>รวม</td>
-                            <td id="tdis">@String.Format("{0:n}", totaldis)</td>
-                            <td id="twin">@String.Format("{0:n}", toralwin)</td>
-                            <td id="ttotal">@String.Format("{0:n}", (totaldis - toralwin))</td>
-                            <td id="">@String.Format("{0:n}", ototaldis)</td>
-                            <td id="">@String.Format("{0:n}", otoralwin)</td>
-                            <td id="">@String.Format("{0:n}", (ototaldis-otoralwin))</td>
-                            <td id="">@String.Format("{0:n}", totaldis+ ototaldis)</td>
-                            <td id="">@String.Format("{0:n}", toralwin+ otoralwin)</td>
-                            <td id="">@String.Format("{0:n}", (totaldis - toralwin)+ (ototaldis-otoralwin))</td>
+                            <td class="bg-warning-5">รวม</td>
+                            <td class="bg-success-5">@String.Format("{0:n}", totaldis)</td>
+                            <td class="bg-success-5">@String.Format("{0:n}", toralwin)</td>
+                            <td class="bg-success-5">@String.Format("{0:n}", (totaldis - toralwin))</td>
+                            <td class="bg-danger-5">@String.Format("{0:n}", ototaldis)</td>
+                            <td class="bg-danger-5">@String.Format("{0:n}", otoralwin)</td>
+                            <td class="bg-danger-5">@String.Format("{0:n}", (ototaldis-otoralwin))</td>
+                            <td class="bg-info-5">@String.Format("{0:n}", totaldis+ ototaldis)</td>
+                            <td class="bg-info-5">@String.Format("{0:n}", toralwin+ otoralwin)</td>
+                            <td class="bg-info-5">@String.Format("{0:n}", (totaldis - toralwin)+ (ototaldis-otoralwin))</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -709,7 +709,7 @@
             </div>
             <div class="modal-body" id="printKeepArea">
                 <br />
-                <h4 class="center">ใบสรุปยอดเก็บ งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</h4><hr />
+                <h4><center>ใบสรุปยอดเก็บ งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</center></h4><br/>
                 @{
                     var sum = 0.00;
                     var sumw = 0;
@@ -725,35 +725,23 @@
                     }
                 }
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         หวยรัฐบาล
                     </div>
-                    <div class="col-md-1">
-                        -
+                    <div class="col-md-4">
+                        ยอด @String.Format("{0:n}", Convert.ToInt32(sum)) บาท
                     </div>
-                    <div class="col-md-2">
-                        @String.Format("{0:n}", Convert.ToInt32(sum))
-                    </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        @countu
-                    </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        คน
+                    <div class="col-md-4">
+                        จำนวน @countu คน
                     </div>
                     <div class="col-md-12">
-                        <hr />
+                        <br/>
                         <table class="table table-bordered" style="text-align:center;">
                             <thead style="color:white;background-color:blue;">
                                 <tr>
+                                    <th>ชื่อ</th>
                                     <th>ยอดเก็บ</th>
                                     <th>ยอดจ่าย</th>
-                                    <th>หมายเลข - ชื่อ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -763,18 +751,22 @@
                                     if (item.Discount!="")
                                     {
                                     <tr>
+                                        <td>@item.Name</td>
                                         <td>@String.Format("{0:n}", Int32.Parse(item.Discount))</td>
                                         <td>@String.Format("{0:n}", Int32.Parse(item.Win))</td>
-                                        <td>@item.Name</td>
                                     </tr>
                                     }
                                 }
                             </tbody>
-                            <tfoot style="color:white;background-color:blue;">
-                                <tr>
+                            <tfoot>
+                                <tr style="color:white;background-color:blue;">
+                                    <td>รวม</td>
                                     <td>@String.Format("{0:n}", sum)</td>
                                     <td>@String.Format("{0:n}", sumw)</td>
-                                    <td>@String.Format("{0:n}", (sum- sumw))</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:white;background-color:blue;">หักลบ</td>
+                                    <td colspan="2">@String.Format("{0:n}", (sum- sumw))</td>
                                 </tr>
                             </tfoot>
                         </table>

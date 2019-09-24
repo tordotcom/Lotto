@@ -38,11 +38,11 @@
                             else { }
                             <tr>
                                 <td>รัฐบาล</td>
-                                <td>@String.Format("{0:d}", item.Date)</td>
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.Date)</td>
                                 <td>@status</td>
-                                <td>@item.update_date</td>
+                                <td>@String.Format("{0:dd/MM/yyyy HH:mm:ss}", @item.update_date)</td>
                                 <td>
-                                  <button type="button" class="btn btn-primary lottoDetail" data-toggle="modal" data-pid="@item.ID" data-target="#showLottoModal">สรุปยอด</button>
+                                  <button type="button" class="btn btn-primary lottoDetail" data-toggle="modal" data-pid="@item.ID" data-date="@String.Format("{0:dd/MM/yyyy}", item.Date)" data-target="#showLottoModal">สรุปยอด</button>
                                 </td>
                             </tr>
                         }
@@ -118,10 +118,10 @@
                     </div>
                     <div class="col-md-12 row">
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-block btn-sm btn-primary get-balance" data-uid="#"data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเงิน</button>
+                            <button type="button" class="btn btn-block btn-sm btn-primary get-balance" data-uid="#" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเงิน</button>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-block btn-sm btn-warning get-keep" data-uid="#"  data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
+                            <button type="button" class="btn btn-block btn-sm btn-warning get-keep" data-uid="#" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@
 </div>
 
 <div class="modal fade" id="totalBalance" tabindex="-1" role="dialog" aria-labelledby="totalBalanceLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg" role="document" style="max-width:90% !important;">
         <div class="modal-content">
            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -140,161 +140,161 @@
             </div>
             <div class="modal-body" id="printBalanceArea">
                 <br />
-                <h4 class="center">ใบสรุปยอดเงิน งวดวันที่ <span id="balancePeriod"></span></h4><hr/>
+                <h4 class="center">ใบสรุปยอดเงิน งวดวันที่ <span id="balancePeriod"></span></h4><br/>
                 <table class="table table-bordered" style="text-align:center;">
-                    <thead style="color:white;background-color:blue;">
+                    <thead>
                         <tr>
-                            <th rowspan="2">ชนิด</th>
-                            <th colspan="3">รับไว้</th>
-                            <th colspan="3">แทงออก</th>
-                            <th colspan="3">ยอดทั้งหมด</th>
+                            <th rowspan="2" class="bg-warning-5" style="vertical-align : middle;text-align:center;">ชนิด</th>
+                            <th colspan="3" class="bg-success">รับไว้</th>
+                            <th colspan="3" class="bg-danger">แทงออก</th>
+                            <th colspan="3" class="bg-info">ยอดทั้งหมด</th>
                         </tr>
                         <tr>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
-                            <th>แทงหัก %</th>
-                            <th>ถูก</th>
-                            <th>สุทธิ</th>
+                            <th class="bg-success-5">แทงหัก %</th>
+                            <th class="bg-success-5">ถูก</th>
+                            <th class="bg-success-5">สุทธิ</th>
+                            <th class="bg-danger-5">แทงหัก %</th>
+                            <th class="bg-danger-5">ถูก</th>
+                            <th class="bg-danger-5">สุทธิ</th>
+                            <th class="bg-info-5">แทงหัก %</th>
+                            <th class="bg-info-5">ถูก</th>
+                            <th class="bg-info-5">สุทธิ</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>วิ่ง บน</td>
-                            <td id="rudis">0</td>
-                            <td id="ruwin">0</td>
-                            <td id="rutotal">0</td>
-                            <td id="oudis">0</td>
-                            <td id="ouwin">0</td>
-                            <td id="outotal">0</td>
-                            <td id="tudis">0</td>
-                            <td id="tuwin">0</td>
-                            <td id="tutotal">0</td>
+                            <td style="color:green;" id="rudis">0</td>
+                            <td style="color:green;" id="ruwin">0</td>
+                            <td style="color:green;" id="rutotal">0</td>
+                            <td style="color:red;" id="oudis">0</td>
+                            <td style="color:red;" id="ouwin">0</td>
+                            <td style="color:red;" id="outotal">0</td>
+                            <td style="color:blue;" id="tudis">0</td>
+                            <td style="color:blue;" id="tuwin">0</td>
+                            <td style="color:blue;" id="tutotal">0</td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
-                            <td id="rddis">0</td>
-                            <td id="rdwin">0</td>
-                            <td id="rdtotal">0</td>
-                            <td id="oddis">0</td>
-                            <td id="odwin">0</td>
-                            <td id="odtotal">0</td>
-                            <td id="tddis">0</td>
-                            <td id="tdwin">0</td>
-                            <td id="tdtotal">0</td>
+                            <td style="color:green;" id="rddis">0</td>
+                            <td style="color:green;" id="rdwin">0</td>
+                            <td style="color:green;" id="rdtotal">0</td>
+                            <td style="color:red;" id="oddis">0</td>
+                            <td style="color:red;" id="odwin">0</td>
+                            <td style="color:red;" id="odtotal">0</td>
+                            <td style="color:blue;" id="tddis">0</td>
+                            <td style="color:blue;" id="tdwin">0</td>
+                            <td style="color:blue;" id="tdtotal">0</td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
-                            <td id="rf3dis">0</td>
-                            <td id="rf3win">0</td>
-                            <td id="rf3total">0</td>
-                            <td id="of3dis">0</td>
-                            <td id="of3win">0</td>
-                            <td id="of3total">0</td>
-                            <td id="tf3dis">0</td>
-                            <td id="tf3win">0</td>
-                            <td id="tf3total">0</td>
+                            <td style="color:green;" id="rf3dis">0</td>
+                            <td style="color:green;" id="rf3win">0</td>
+                            <td style="color:green;" id="rf3total">0</td>
+                            <td style="color:red;" id="of3dis">0</td>
+                            <td style="color:red;" id="of3win">0</td>
+                            <td style="color:red;" id="of3total">0</td>
+                            <td style="color:blue;" id="tf3dis">0</td>
+                            <td style="color:blue;" id="tf3win">0</td>
+                            <td style="color:blue;" id="tf3total">0</td>
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
-                            <td id="rf3odis">0</td>
-                            <td id="rf3owin">0</td>
-                            <td id="rf3ototal">0</td>
-                            <td id="of3odis">0</td>
-                            <td id="of3owin">0</td>
-                            <td id="of3ototal">0</td>
-                            <td id="tf3odis">0</td>
-                            <td id="tf3owin">0</td>
-                            <td id="tf3ototal">0</td>
+                            <td style="color:green;" id="rf3odis">0</td>
+                            <td style="color:green;" id="rf3owin">0</td>
+                            <td style="color:green;" id="rf3ototal">0</td>
+                            <td style="color:red;" id="of3odis">0</td>
+                            <td style="color:red;" id="of3owin">0</td>
+                            <td style="color:red;" id="of3ototal">0</td>
+                            <td style="color:blue;" id="tf3odis">0</td>
+                            <td style="color:blue;" id="tf3owin">0</td>
+                            <td style="color:blue;" id="tf3ototal">0</td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
-                            <td id="ru3dis">0</td>
-                            <td id="ru3win">0</td>
-                            <td id="ru3total">0</td>
-                            <td id="ou3dis">0</td>
-                            <td id="ou3win">0</td>
-                            <td id="ou3total">0</td>
-                            <td id="tu3dis">0</td>
-                            <td id="tu3win">0</td>
-                            <td id="tu3total">0</td>
+                            <td style="color:green;" id="ru3dis">0</td>
+                            <td style="color:green;" id="ru3win">0</td>
+                            <td style="color:green;" id="ru3total">0</td>
+                            <td style="color:red;" id="ou3dis">0</td>
+                            <td style="color:red;" id="ou3win">0</td>
+                            <td style="color:red;" id="ou3total">0</td>
+                            <td style="color:blue;" id="tu3dis">0</td>
+                            <td style="color:blue;" id="tu3win">0</td>
+                            <td style="color:blue;" id="tu3total">0</td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
-                            <td id="ru3odis">0</td>
-                            <td id="ru3owin">0</td>
-                            <td id="ru3ototal">0</td>
-                            <td id="ou3odis">0</td>
-                            <td id="ou3owin">0</td>
-                            <td id="ou3ototal">0</td>
-                            <td id="tu3odis">0</td>
-                            <td id="tu3owin">0</td>
-                            <td id="tu3ototal">0</td>
+                            <td style="color:green;" id="ru3odis">0</td>
+                            <td style="color:green;" id="ru3owin">0</td>
+                            <td style="color:green;" id="ru3ototal">0</td>
+                            <td style="color:red;" id="ou3odis">0</td>
+                            <td style="color:red;" id="ou3owin">0</td>
+                            <td style="color:red;" id="ou3ototal">0</td>
+                            <td style="color:blue;" id="tu3odis">0</td>
+                            <td style="color:blue;" id="tu3owin">0</td>
+                            <td style="color:blue;" id="tu3ototal">0</td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td id="rd3dis">0</td>
-                            <td id="rd3win">0</td>
-                            <td id="rd3total">0</td>
-                            <td id="od3dis">0</td>
-                            <td id="od3win">0</td>
-                            <td id="od3total">0</td>
-                            <td id="td3dis">0</td>
-                            <td id="td3win">0</td>
-                            <td id="td3total">0</td>
+                            <td style="color:green;" id="rd3dis">0</td>
+                            <td style="color:green;" id="rd3win">0</td>
+                            <td style="color:green;" id="rd3total">0</td>
+                            <td style="color:red;" id="od3dis">0</td>
+                            <td style="color:red;" id="od3win">0</td>
+                            <td style="color:red;" id="od3total">0</td>
+                            <td style="color:blue;" id="td3dis">0</td>
+                            <td style="color:blue;" id="td3win">0</td>
+                            <td style="color:blue;" id="td3total">0</td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
-                            <td id="ru2dis">0</td>
-                            <td id="ru2win">0</td>
-                            <td id="ru2total">0</td>
-                            <td id="ou2dis">0</td>
-                            <td id="ou2win">0</td>
-                            <td id="ou2total">0</td>
-                            <td id="tu2dis">0</td>
-                            <td id="tu2win">0</td>
-                            <td id="tu2total">0</td>
+                            <td style="color:green;" id="ru2dis">0</td>
+                            <td style="color:green;" id="ru2win">0</td>
+                            <td style="color:green;" id="ru2total">0</td>
+                            <td style="color:red;" id="ou2dis">0</td>
+                            <td style="color:red;" id="ou2win">0</td>
+                            <td style="color:red;" id="ou2total">0</td>
+                            <td style="color:blue;" id="tu2dis">0</td>
+                            <td style="color:blue;" id="tu2win">0</td>
+                            <td style="color:blue;" id="tu2total">0</td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td id="rd2dis">0</td>
-                            <td id="rd2win">0</td>
-                            <td id="rd2total">0</td>
-                            <td id="od2dis">0</td>
-                            <td id="od2win">0</td>
-                            <td id="od2total">0</td>
-                            <td id="td2dis">0</td>
-                            <td id="td2win">0</td>
-                            <td id="td2total">0</td>
+                            <td style="color:green;" id="rd2dis">0</td>
+                            <td style="color:green;" id="rd2win">0</td>
+                            <td style="color:green;" id="rd2total">0</td>
+                            <td style="color:red;" id="od2dis">0</td>
+                            <td style="color:red;" id="od2win">0</td>
+                            <td style="color:red;" id="od2total">0</td>
+                            <td style="color:blue;" id="td2dis">0</td>
+                            <td style="color:blue;" id="td2win">0</td>
+                            <td style="color:blue;" id="td2total">0</td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
-                            <td id="ro2dis">0</td>
-                            <td id="ro2win">0</td>
-                            <td id="ro2total">0</td>
-                            <td id="oo2dis">0</td>
-                            <td id="oo2win">0</td>
-                            <td id="oo2total">0</td>
-                            <td id="to2dis">0</td>
-                            <td id="to2win">0</td>
-                            <td id="to2total">0</td>
+                            <td style="color:green;" id="ro2dis">0</td>
+                            <td style="color:green;" id="ro2win">0</td>
+                            <td style="color:green;" id="ro2total">0</td>
+                            <td style="color:red;" id="oo2dis">0</td>
+                            <td style="color:red;" id="oo2win">0</td>
+                            <td style="color:red;" id="oo2total">0</td>
+                            <td style="color:blue;" id="to2dis">0</td>
+                            <td style="color:blue;" id="to2win">0</td>
+                            <td style="color:blue;" id="to2total">0</td>
                         </tr>
                     </tbody>
-                    <tfoot style="color:white;background-color:blue;">
+                    <tfoot>
                         <tr>
-                            <td>รวม</td>
-                            <td id="rtdis">0</td>
-                            <td id="rtwin">0</td>
-                            <td id="rttotal">0</td>
-                            <td id="otdis">0</td>
-                            <td id="otwin">0</td>
-                            <td id="ottotal">0</td>
-                            <td id="ttdis">0</td>
-                            <td id="ttwin">0</td>
-                            <td id="tttotal">0</td>
+                            <td class="bg-warning-5">รวม</td>
+                            <td class="bg-success-5" id="rtdis">0</td>
+                            <td class="bg-success-5" id="rtwin">0</td>
+                            <td class="bg-success-5" id="rttotal">0</td>
+                            <td class="bg-danger-5" id="otdis">0</td>
+                            <td class="bg-danger-5" id="otwin">0</td>
+                            <td class="bg-danger-5" id="ottotal">0</td>
+                            <td class="bg-info-5" id="ttdis">0</td>
+                            <td class="bg-info-5" id="ttwin">0</td>
+                            <td class="bg-info-5" id="tttotal">0</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -317,48 +317,41 @@
             </div>
             <div class="modal-body" id="printKeepArea">
                 <br />
-                <h4 class="center">ใบสรุปยอดเก็บ งวดวันที่ <span id="keepPeriod"></span></h4><hr />
+                <h4><center>ใบสรุปยอดเก็บ งวดวันที่ <span id="keepPeriod"></span></center></h4><br/>
 
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         หวยรัฐบาล
                     </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2" id="amount">
+                    <div class="col-md-4">
+                        ยอด <span id="amount"></span> บาท
                         
                     </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2" id="count">
-                        
-                    </div>
-                    <div class="col-md-1">
-                        -
-                    </div>
-                    <div class="col-md-2">
-                        คน
+                    <div class="col-md-4">
+                        จำนวน <span id="count"> </span> คน
                     </div>
                     <div class="col-md-12">
-                        <hr />
+                        <br/>
                         <table class="table table-bordered" style="text-align:center;">
                             <thead style="color:white;background-color:blue;">
                                 <tr>
+                                    <th>ชื่อ</th>
                                     <th>ยอดเก็บ</th>
                                     <th>ยอดจ่าย</th>
-                                    <th>หมายเลข - ชื่อ</th>
                                 </tr>
                             </thead>
                             <tbody id="detail">
                                 
                             </tbody>
-                            <tfoot style="color:white;background-color:blue;">
-                                <tr>
+                            <tfoot>
+                                <tr style="color:white;background-color:blue;">
+                                    <td>รวม</td>
                                     <td id="usertotal"></td>
                                     <td id="totalwin"></td>
-                                    <td id="sum"></td>
+                                </tr>
+                                <tr>
+                                    <td style="color:white;background-color:blue;">หักลบ</td>
+                                    <td colspan="2" id="sum"></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -380,6 +373,14 @@
 
         $('#bootstrap-data-table').DataTable({
             lengthMenu: [[10, 20, 50, -1], [10, 20, 50, "All"]],
+        });
+
+        $('.get-balance').click(function () {
+            $('#balancePeriod').html($(this).attr("data-date"));
+        });
+
+        $('.get-keep').click(function () {
+            $('#keepPeriod').html($(this).attr("data-date"));
         });
 
         $('#printBalance').click(function () {

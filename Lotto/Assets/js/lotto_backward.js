@@ -1,5 +1,8 @@
 ﻿$(".lottoDetail").click(function () {
     var pid = $(this).attr("data-pid");
+    var date = $(this).attr("data-date");
+    $('.get-balance').attr("data-date", date);
+    $('.get-keep').attr("data-date", date);
     $.ajax({
         url: getDetail,
         data: { PID: pid },
@@ -348,7 +351,7 @@
                 count += 1;
                 dis += parseInt(data.UBET[i].Discount);
                 win += parseInt(data.UBET[i].Win);
-                str += "<tr><td>" + nwc(data.UBET[i].Discount) + "</td><td>" + nwc(data.UBET[i].Win) + "</td ><td>" + data.UBET[i].Name +"</td></tr>";
+                str += "<tr><td>" + data.UBET[i].Name +"</td><td>" + nwc(data.UBET[i].Discount) + "</td><td>" + nwc(data.UBET[i].Win) + "</td ></tr>";
             }
             $("#amount").html(nwc(dis));
             $("#count").html(nwc(count));
