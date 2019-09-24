@@ -145,10 +145,18 @@
                     <thead style="color:white;background-color:blue;">
                         <tr>
                             <th rowspan="2">ชนิด</th>
+                            <th colspan="3">รับไว้</th>
+                            <th colspan="3">แทงออก</th>
                             <th colspan="3">ยอดทั้งหมด</th>
                         </tr>
                         <tr>
-                            <th>ยอดแทงหัก %</th>
+                            <th>แทงหัก %</th>
+                            <th>ถูก</th>
+                            <th>สุทธิ</th>
+                            <th>แทงหัก %</th>
+                            <th>ถูก</th>
+                            <th>สุทธิ</th>
+                            <th>แทงหัก %</th>
                             <th>ถูก</th>
                             <th>สุทธิ</th>
                         </tr>
@@ -156,71 +164,137 @@
                     <tbody>
                         <tr>
                             <td>วิ่ง บน</td>
-                            <td id="udis">0</td>
-                            <td id="uwin">0</td>
-                            <td id="utotal">0</td>
+                            <td id="rudis">0</td>
+                            <td id="ruwin">0</td>
+                            <td id="rutotal">0</td>
+                            <td id="oudis">0</td>
+                            <td id="ouwin">0</td>
+                            <td id="outotal">0</td>
+                            <td id="tudis">0</td>
+                            <td id="tuwin">0</td>
+                            <td id="tutotal">0</td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
-                            <td id="ddis">0</td>
-                            <td id="dwin">0</td>
-                            <td id="dtotal">0</td>
+                            <td id="rddis">0</td>
+                            <td id="rdwin">0</td>
+                            <td id="rdtotal">0</td>
+                            <td id="oddis">0</td>
+                            <td id="odwin">0</td>
+                            <td id="odtotal">0</td>
+                            <td id="tddis">0</td>
+                            <td id="tdwin">0</td>
+                            <td id="tdtotal">0</td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
-                            <td id="f3dis">0</td>
-                            <td id="f3win">0</td>
-                            <td id="f3total">0</td>
+                            <td id="rf3dis">0</td>
+                            <td id="rf3win">0</td>
+                            <td id="rf3total">0</td>
+                            <td id="of3dis">0</td>
+                            <td id="of3win">0</td>
+                            <td id="of3total">0</td>
+                            <td id="tf3dis">0</td>
+                            <td id="tf3win">0</td>
+                            <td id="tf3total">0</td>
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
-                            <td id="f3odis">0</td>
-                            <td id="f3owin">0</td>
-                            <td id="f3ototal">0</td>
+                            <td id="rf3odis">0</td>
+                            <td id="rf3owin">0</td>
+                            <td id="rf3ototal">0</td>
+                            <td id="of3odis">0</td>
+                            <td id="of3owin">0</td>
+                            <td id="of3ototal">0</td>
+                            <td id="tf3odis">0</td>
+                            <td id="tf3owin">0</td>
+                            <td id="tf3ototal">0</td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
-                            <td id="u3dis">0</td>
-                            <td id="u3win">0</td>
-                            <td id="u3total">0</td>
+                            <td id="ru3dis">0</td>
+                            <td id="ru3win">0</td>
+                            <td id="ru3total">0</td>
+                            <td id="ou3dis">0</td>
+                            <td id="ou3win">0</td>
+                            <td id="ou3total">0</td>
+                            <td id="tu3dis">0</td>
+                            <td id="tu3win">0</td>
+                            <td id="tu3total">0</td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
-                            <td id="u3odis">0</td>
-                            <td id="u3owin">0</td>
-                            <td id="u3ototal">0</td>
+                            <td id="ru3odis">0</td>
+                            <td id="ru3owin">0</td>
+                            <td id="ru3ototal">0</td>
+                            <td id="ou3odis">0</td>
+                            <td id="ou3owin">0</td>
+                            <td id="ou3ototal">0</td>
+                            <td id="tu3odis">0</td>
+                            <td id="tu3owin">0</td>
+                            <td id="tu3ototal">0</td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
-                            <td id="d3dis">0</td>
-                            <td id="d3win">0</td>
-                            <td id="d3total">0</td>
+                            <td id="rd3dis">0</td>
+                            <td id="rd3win">0</td>
+                            <td id="rd3total">0</td>
+                            <td id="od3dis">0</td>
+                            <td id="od3win">0</td>
+                            <td id="od3total">0</td>
+                            <td id="td3dis">0</td>
+                            <td id="td3win">0</td>
+                            <td id="td3total">0</td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
-                            <td id="u2dis">0</td>
-                            <td id="u2win">0</td>
-                            <td id="u2total">0</td>
+                            <td id="ru2dis">0</td>
+                            <td id="ru2win">0</td>
+                            <td id="ru2total">0</td>
+                            <td id="ou2dis">0</td>
+                            <td id="ou2win">0</td>
+                            <td id="ou2total">0</td>
+                            <td id="tu2dis">0</td>
+                            <td id="tu2win">0</td>
+                            <td id="tu2total">0</td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
-                            <td id="d2dis">0</td>
-                            <td id="d2win">0</td>
-                            <td id="d2total">0</td>
+                            <td id="rd2dis">0</td>
+                            <td id="rd2win">0</td>
+                            <td id="rd2total">0</td>
+                            <td id="od2dis">0</td>
+                            <td id="od2win">0</td>
+                            <td id="od2total">0</td>
+                            <td id="td2dis">0</td>
+                            <td id="td2win">0</td>
+                            <td id="td2total">0</td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
-                            <td id="o2dis">0</td>
-                            <td id="o2win">0</td>
-                            <td id="o2total">0</td>
+                            <td id="ro2dis">0</td>
+                            <td id="ro2win">0</td>
+                            <td id="ro2total">0</td>
+                            <td id="oo2dis">0</td>
+                            <td id="oo2win">0</td>
+                            <td id="oo2total">0</td>
+                            <td id="to2dis">0</td>
+                            <td id="to2win">0</td>
+                            <td id="to2total">0</td>
                         </tr>
                     </tbody>
                     <tfoot style="color:white;background-color:blue;">
                         <tr>
                             <td>รวม</td>
-                            <td id="tdis">0</td>
-                            <td id="twin">0</td>
-                            <td id="ttotal">0</td>
+                            <td id="rtdis">0</td>
+                            <td id="rtwin">0</td>
+                            <td id="rttotal">0</td>
+                            <td id="otdis">0</td>
+                            <td id="otwin">0</td>
+                            <td id="ottotal">0</td>
+                            <td id="ttdis">0</td>
+                            <td id="ttwin">0</td>
+                            <td id="tttotal">0</td>
                         </tr>
                     </tfoot>
                 </table>

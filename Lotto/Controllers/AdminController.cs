@@ -174,6 +174,8 @@ namespace Lotto.Controllers
             if ((string)Session["Role"] == "Administrator")
             {
                 var parentID = Int32.Parse((string)Session["ParentID"]);
+                var betout = new List<PollOutDetail>();
+                var receive = new List<PollOutDetail>();
                 Period P = db.Period.Where(y=>y.UID== parentID).Where(x => x.Status == "1").FirstOrDefault<Period>();
                 var pid = 0;
                 if (P != null)
@@ -273,50 +275,119 @@ namespace Lotto.Controllers
                 }
                 if (all.Count > 0)
                 {
-                    if (all[0].CheckResult == "1")
+                    //if (all[0].CheckResult == "1")
+                    //{
+                    //    List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
+                    //    ViewData["TAR"] = TAR;
+                    //    ViewData["UBET"] = user_bet;
+                    //}
+                    //else if (all[0].CheckResult == "0")
+                    //{
+                    //    var total_type_bet = new List<Total_Amount_Result>();
+                    //    try
+                    //    {
+                    //        SqlConnection cnn = new SqlConnection(connetionString);
+                    //        cnn.Open();
+                    //        string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
+                    //        SqlCommand cmd = new SqlCommand(query, cnn);
+                    //        cmd.Parameters.AddWithValue("@period", pid.ToString());
+                    //        SqlDataReader Reader = cmd.ExecuteReader();
+                    //        Console.Write(Reader);
+                    //        try
+                    //        {
+                    //            while (Reader.Read())
+                    //            {
+                    //                total_type_bet.Add(new Total_Amount_Result
+                    //                {
+                    //                    Type = Reader["Type"].ToString(),
+                    //                    Amount_Discount = Reader["AmountDiscount"].ToString(),
+                    //                    Amount_Win = Reader["Win"].ToString(),
+                    //                });
+                    //            }
+                    //            cnn.Close();
+                    //        }
+                    //        catch
+                    //        {
+
+                    //        }
+                    //    }
+                    //    catch
+                    //    {
+
+                    //    }
+                    //    ViewData["TAR"] = total_type_bet;
+                    //    ViewData["UBET"] = user_bet;
+                    //}
+                    //else { }
+                    //----------------สรุปยอดแทงออก---------------//
+                    try
                     {
-                        List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == pid.ToString()).ToList();
-                        ViewData["TAR"] = TAR;
-                        ViewData["UBET"] = user_bet;
-                    }
-                    else if (all[0].CheckResult == "0")
-                    {
-                        var total_type_bet = new List<Total_Amount_Result>();
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "SELECT pbo.[Period_ID], ROUND(sum(CAST(lbo.AmountDiscount as float)), 0) as AmountDiscount,sum(CAST(lbo.AmountWin as int)) as Win,lbo.Type,lbo.NumLen FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID] , [Type], [NumLen], [Number], [Amount], [AmountDiscount], [AmountWin], [Result_Status] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and pbo.Status!=0 group by lbo.Type , lbo.NumLen, pbo.[Period_ID]";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", pid.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
                         try
                         {
-                            SqlConnection cnn = new SqlConnection(connetionString);
-                            cnn.Open();
-                            string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
-                            SqlCommand cmd = new SqlCommand(query, cnn);
-                            cmd.Parameters.AddWithValue("@period", pid.ToString());
-                            SqlDataReader Reader = cmd.ExecuteReader();
-                            Console.Write(Reader);
-                            try
+                            while (Reader.Read())
                             {
-                                while (Reader.Read())
+                                betout.Add(new PollOutDetail
                                 {
-                                    total_type_bet.Add(new Total_Amount_Result
-                                    {
-                                        Type = Reader["Type"].ToString(),
-                                        Amount_Discount = Reader["AmountDiscount"].ToString(),
-                                        Amount_Win = Reader["Win"].ToString(),
-                                    });
-                                }
-                                cnn.Close();
+                                    Type = Reader["Type"].ToString(),
+                                    AmountDiscount = Reader["AmountDiscount"].ToString(),
+                                    AmountWin = Reader["Win"].ToString(),
+                                    NumLen = Reader["NumLen"].ToString(),
+                                });
                             }
-                            catch
-                            {
-
-                            }
+                            cnn.Close();
                         }
                         catch
                         {
 
                         }
-                        ViewData["TAR"] = total_type_bet;
-                        ViewData["UBET"] = user_bet;
                     }
-                    else { }
+                    catch
+                    {
+
+                    }
+                    ViewData["BOut"] = betout;
+                    //----------------สรุปยอดรับไว้---------------//
+                    try
+                    {
+                        SqlConnection cnn = new SqlConnection(connetionString);
+                        cnn.Open();
+                        string query = "select t1.Type,t1.NumLen,ROUND(sum(CAST(ISNULL(t1.AmountDiscount,0)-ISNULL(t2.AmountDiscount,0) as float)), 0) as AmountDiscount,sum(CAST(ISNULL(t1.Win,0)-ISNULL(t2.Win,0) as int)) as Win from(SELECT p.[Period_ID], ls.[Type], ls.[NumLen], ls.[Number], ROUND(sum(CAST(ls.[AmountDiscount] as float)), 0) as AmountDiscount, sum(CAST(ls.[AmountWin] as int)) as Win, ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[Lotto_ID],[Type],[NumLen],[Number],[AmountDiscount],[AmountWin],[Result_Status] FROM[dbo].[LottoSub]) ls on lm.ID = ls.[Lotto_ID] where p.Period_ID = @period and p.Receive = '1' group by p.[Period_ID], ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(SELECT pbo.[Period_ID], lbo.[Type], lbo.[NumLen], lbo.[Number], ROUND(sum(CAST(lbo.AmountDiscount as float)), 0) as AmountDiscount , sum(CAST(lbo.AmountWin as int)) as Win FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID],[Poll_Out_ID],[Type],[NumLen],[Number],[Amount],[AmountDiscount],[AmountWin],[Result_Status] FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.[Poll_Out_ID] where pbo.Period_ID = @period and pbo.Status != 0 group by pbo.[Period_ID], lbo.[Type], lbo.[NumLen], lbo.[Number]) t2 on t1.Type = t2.Type and t1.NumLen = t2.NumLen and t1.Number = t2.Number group by t1.Type,t1.NumLen";
+                        SqlCommand cmd = new SqlCommand(query, cnn);
+                        cmd.Parameters.AddWithValue("@period", pid.ToString());
+                        SqlDataReader Reader = cmd.ExecuteReader();
+                        Console.Write(Reader);
+                        try
+                        {
+                            while (Reader.Read())
+                            {
+                                receive.Add(new PollOutDetail
+                                {
+                                    Type = Reader["Type"].ToString(),
+                                    AmountDiscount = Reader["AmountDiscount"].ToString(),
+                                    AmountWin = Reader["Win"].ToString(),
+                                    NumLen = Reader["NumLen"].ToString(),
+                                });
+                            }
+                            cnn.Close();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    ViewData["Receive"] = receive;
+                    ViewData["UBET"] = user_bet;
                 }
                 else
                 {
@@ -333,9 +404,11 @@ namespace Lotto.Controllers
                         BetStatus = "0",
                         CheckResult = "1"
                     });
-                    List<Total_Amount_Result> TAR = new List<Total_Amount_Result>();
-                    ViewData["TAR"] = TAR;
+                    //List<Total_Amount_Result> TAR = new List<Total_Amount_Result>();
+                    //ViewData["TAR"] = TAR;
                     ViewData["UBET"] = user_bet;
+                    ViewData["BOut"] = betout;
+                    ViewData["Receive"] = receive;
                 }                
                 return View(all);
             }
@@ -4426,7 +4499,9 @@ namespace Lotto.Controllers
         public JsonResult LottoBackwardTotalBalance(string PID)
         {
             int id = Int32.Parse(PID);
-            var tar = new List<Total_Amount_Result>();
+            //var tar = new List<Total_Amount_Result>();
+            var betout = new List<PollOutDetail>();
+            var receive = new List<PollOutDetail>();
             Period P = db.Period.Where(x => x.ID == id).FirstOrDefault<Period>();
             string connetionString = null;
             var all = new List<Close>();
@@ -4506,53 +4581,75 @@ namespace Lotto.Controllers
             {
 
             }
-            if (all[0].CheckResult=="1")
+            //----------------สรุปยอดแทงออก---------------//
+            try
             {
-                List<Total_Amount_Result> TAR = db.Total_Amount_Result.Where(x => x.Period_ID == id.ToString()).ToList();
-                ViewData["TAR"] = TAR;
-                ViewData["UBET"] = user_bet;
-                tar = TAR;
-            }
-            else if(all[0].CheckResult == "0")
-            {
-                var total_type_bet = new List<Total_Amount_Result>();
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "SELECT pbo.[Period_ID], ROUND(sum(CAST(lbo.AmountDiscount as float)), 0) as AmountDiscount,sum(CAST(lbo.AmountWin as int)) as Win,lbo.Type,lbo.NumLen FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID], [Poll_Out_ID] , [Type], [NumLen], [Number], [Amount], [AmountDiscount], [AmountWin], [Result_Status] FROM [dbo].[Lotto_Bet_Out]) lbo on pbo.ID=lbo.Poll_Out_ID where pbo.Period_ID=@period and pbo.Status!=0 group by lbo.Type , lbo.NumLen, pbo.[Period_ID]";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", id.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
                 try
                 {
-                    SqlConnection cnn = new SqlConnection(connetionString);
-                    cnn.Open();
-                    string query = "select t.Type,ROUND(sum(CAST(t.AmountDiscount as float)),0) as AmountDiscount,sum(CAST(t.Win as int)) as Win from(SELECT CASE WHEN ls.Type='t' and ls.NumLen='1' THEN 'Up' WHEN ls.Type='b' and ls.NumLen='1' THEN 'Down' WHEN ls.Type='f' and ls.NumLen='3' THEN 'FirstThree' WHEN ls.Type='f_' and ls.NumLen='3' THEN 'FirstThreeOod' WHEN ls.Type='t' and ls.NumLen='3' THEN 'ThreeUp' WHEN ls.Type='t_' and ls.NumLen='3' THEN 'ThreeUPOod' WHEN ls.Type='b' and ls.NumLen='3' THEN 'ThreeDown' WHEN ls.Type='t' and ls.NumLen='2' THEN 'TwoUp' WHEN ls.Type='b' and ls.NumLen='2' THEN 'TwoDown' WHEN (ls.Type='t_' or ls.Type='b_') and ls.NumLen='2' THEN 'TwoOod' ELSE null END as Type ,ls.AmountDiscount,'0' as Win FROM [dbo].[Period] pe left join(SELECT [ID],[Period_ID],[Receive] FROM [dbo].[Poll] where Receive='1') po on pe.ID=po.Period_ID left join(SELECT [ID],[Poll_ID] FROM [dbo].[LottoMain]) lm on po.ID=lm.Poll_ID left join(SELECT [ID],[Lotto_ID],[Type],[NumLen],[AmountDiscount] FROM [dbo].[LottoSub]) ls on lm.ID=ls.Lotto_ID where pe.ID=@period)t group by t.Type";
-                    SqlCommand cmd = new SqlCommand(query, cnn);
-                    cmd.Parameters.AddWithValue("@period", id.ToString());
-                    SqlDataReader Reader = cmd.ExecuteReader();
-                    Console.Write(Reader);
-                    try
+                    while (Reader.Read())
                     {
-                        while (Reader.Read())
+                        betout.Add(new PollOutDetail
                         {
-                            total_type_bet.Add(new Total_Amount_Result
-                            {
-                                Type = Reader["Type"].ToString(),
-                                Amount_Discount = Reader["AmountDiscount"].ToString(),
-                                Amount_Win = Reader["Win"].ToString(),
-                            });
-                        }
-                        cnn.Close();
+                            Type = Reader["Type"].ToString(),
+                            AmountDiscount = Reader["AmountDiscount"].ToString(),
+                            AmountWin = Reader["Win"].ToString(),
+                            NumLen = Reader["NumLen"].ToString(),
+                        });
                     }
-                    catch
-                    {
-
-                    }
+                    cnn.Close();
                 }
                 catch
                 {
 
                 }
-                ViewData["TAR"] = total_type_bet;
-                ViewData["UBET"] = user_bet;
-                tar = total_type_bet;
             }
-            else { }
-            return Json(new { all, TAR = tar, UBET = user_bet });
+            catch
+            {
+
+            }
+            //ViewData["BOut"] = betout;
+            //----------------สรุปยอดรับไว้---------------//
+            try
+            {
+                SqlConnection cnn = new SqlConnection(connetionString);
+                cnn.Open();
+                string query = "select t1.Type,t1.NumLen,ROUND(sum(CAST(ISNULL(t1.AmountDiscount,0)-ISNULL(t2.AmountDiscount,0) as float)), 0) as AmountDiscount,sum(CAST(ISNULL(t1.Win,0)-ISNULL(t2.Win,0) as int)) as Win from(SELECT p.[Period_ID], ls.[Type], ls.[NumLen], ls.[Number], ROUND(sum(CAST(ls.[AmountDiscount] as float)), 0) as AmountDiscount, sum(CAST(ls.[AmountWin] as int)) as Win, ls.[Result_Status] FROM[dbo].[Poll] p left join(SELECT[ID],[Poll_ID] FROM[dbo].[LottoMain]) lm on p.ID = lm.Poll_ID left join(SELECT[Lotto_ID],[Type],[NumLen],[Number],[AmountDiscount],[AmountWin],[Result_Status] FROM[dbo].[LottoSub]) ls on lm.ID = ls.[Lotto_ID] where p.Period_ID = @period and p.Receive = '1' group by p.[Period_ID], ls.[Type], ls.[NumLen], ls.[Number], ls.[Result_Status]) t1 left join(SELECT pbo.[Period_ID], lbo.[Type], lbo.[NumLen], lbo.[Number], ROUND(sum(CAST(lbo.AmountDiscount as float)), 0) as AmountDiscount , sum(CAST(lbo.AmountWin as int)) as Win FROM[dbo].[Poll_Bet_Out] pbo left join(SELECT[ID],[Poll_Out_ID],[Type],[NumLen],[Number],[Amount],[AmountDiscount],[AmountWin],[Result_Status] FROM[dbo].[Lotto_Bet_Out]) lbo on pbo.ID = lbo.[Poll_Out_ID] where pbo.Period_ID = @period and pbo.Status != 0 group by pbo.[Period_ID], lbo.[Type], lbo.[NumLen], lbo.[Number]) t2 on t1.Type = t2.Type and t1.NumLen = t2.NumLen and t1.Number = t2.Number group by t1.Type,t1.NumLen";
+                SqlCommand cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@period", id.ToString());
+                SqlDataReader Reader = cmd.ExecuteReader();
+                Console.Write(Reader);
+                try
+                {
+                    while (Reader.Read())
+                    {
+                        receive.Add(new PollOutDetail
+                        {
+                            Type = Reader["Type"].ToString(),
+                            AmountDiscount = Reader["AmountDiscount"].ToString(),
+                            AmountWin = Reader["Win"].ToString(),
+                            NumLen = Reader["NumLen"].ToString(),
+                        });
+                    }
+                    cnn.Close();
+                }
+                catch
+                {
+
+                }
+            }
+            catch
+            {
+
+            }
+            //ViewData["Receive"] = receive;
+            return Json(new {all,RECEIVE= receive, BetOut = betout, UBET = user_bet });
         }
         //--------------------------------ดึงข้อมูลไปแสดงใน moddal หน้า ดูเลขทั้งหมด------------------------------------------///
         [HttpPost]

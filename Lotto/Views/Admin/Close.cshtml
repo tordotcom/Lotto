@@ -295,12 +295,12 @@
                     <thead style="color:white;background-color:blue;">
                         <tr>
                             <th rowspan="2">ชนิด</th>
-                            <th colspan="3">ยอดทั้งหมด</th>
+                            <th colspan="3">รับไว้</th>
                             <th colspan="3">แทงออก</th>
-                                <th colspan="3">รับไว้</th>
+                            <th colspan="3">ยอดทั้งหมด</th>
                         </tr>
                         <tr>
-                            <th>ยอดแทงหัก %</th>
+                            <th>แทงหัก %</th>
                             <th>ถูก</th>
                             <th>สุทธิ</th>
                             <th>แทงหัก %</th>
@@ -349,88 +349,208 @@
                             var totaldis = 0;
                             var toralwin = 0;
                             //var total = 0;
+
+                            var oup = 0.00;
+                            var odown = 0.00;
+                            var ofthree = 0.00;
+                            var ofthreeood = 0.00;
+                            var othreeup = 0.00;
+                            var othreeupood = 0.00;
+                            var othreedown = 0.00;
+                            var otwoup = 0.00;
+                            var otwodown = 0.00;
+                            var otwoood = 0.00;
+
+                            var owup = 0;
+                            var owdown = 0;
+                            var owfthree = 0;
+                            var owfthreeood = 0;
+                            var owthreeup = 0;
+                            var owthreeupood = 0;
+                            var owthreedown = 0;
+                            var owtwoup = 0;
+                            var owtwodown = 0;
+                            var owtwoood = 0;
+
+                            var otup = 0;
+                            var otdown = 0;
+                            var otfthree = 0;
+                            var otfthreeood = 0;
+                            var otthreeup = 0;
+                            var otthreeupood = 0;
+                            var otthreedown = 0;
+                            var ottwoup = 0;
+                            var ottwodown = 0;
+                            var ottwoood = 0;
+
+                            var ototaldis = 0;
+                            var otoralwin = 0;
                         }
-                        @foreach (var item in (List<Total_Amount_Result>)ViewData["TAR"])
+                        @foreach (var item in (List<PollOutDetail>)ViewData["Receive"])
                         {
-                            if (item.Type == "Up")
+                            if (item.Type == "t" && item.NumLen == "1")
                             {
-                                up = float.Parse(item.Amount_Discount);
-                                wup = Int32.Parse(item.Amount_Win);
+                                up = float.Parse(item.AmountDiscount);
+                                wup = Int32.Parse(item.AmountWin);
                                 tup = Convert.ToInt32(up) - wup;
-                                totaldis = totaldis+ Convert.ToInt32(up);
-                                toralwin= toralwin + Int32.Parse(item.Amount_Win);
+                                totaldis = totaldis + Convert.ToInt32(up);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "Down")
+                            else if (item.Type == "b" && item.NumLen == "1")
                             {
-                                down = float.Parse(item.Amount_Discount);
-                                wdown = Int32.Parse(item.Amount_Win);
+                                down = float.Parse(item.AmountDiscount);
+                                wdown = Int32.Parse(item.AmountWin);
                                 tdown = Convert.ToInt32(down) - wdown;
                                 totaldis = totaldis + Convert.ToInt32(down);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "FirstThree")
+                            else if (item.Type == "f" && item.NumLen == "3")
                             {
-                                fthree = float.Parse(item.Amount_Discount);
-                                wfthree = Int32.Parse(item.Amount_Win);
+                                fthree = float.Parse(item.AmountDiscount);
+                                wfthree = Int32.Parse(item.AmountWin);
                                 tfthree = Convert.ToInt32(fthree) - wfthree;
                                 totaldis = totaldis + Convert.ToInt32(fthree);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "FirstThreeOod")
+                            else if (item.Type == "f_" && item.NumLen == "3")
                             {
-                                fthreeood = float.Parse(item.Amount_Discount);
-                                wfthreeood = Int32.Parse(item.Amount_Win);
+                                fthreeood = float.Parse(item.AmountDiscount);
+                                wfthreeood = Int32.Parse(item.AmountWin);
                                 tfthreeood = Convert.ToInt32(fthreeood) - wfthreeood;
                                 totaldis = totaldis + Convert.ToInt32(fthreeood);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "ThreeUp")
+                            else if (item.Type == "t" && item.NumLen == "3")
                             {
-                                threeup = float.Parse(item.Amount_Discount);
-                                wthreeup = Int32.Parse(item.Amount_Win);
+                                threeup = float.Parse(item.AmountDiscount);
+                                wthreeup = Int32.Parse(item.AmountWin);
                                 tthreeup = Convert.ToInt32(threeup) - wthreeup;
                                 totaldis = totaldis + Convert.ToInt32(threeup);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "ThreeUPOod")
+                            else if (item.Type == "t_" && item.NumLen == "3")
                             {
-                                threeupood = float.Parse(item.Amount_Discount);
-                                wthreeupood = Int32.Parse(item.Amount_Win);
+                                threeupood = float.Parse(item.AmountDiscount);
+                                wthreeupood = Int32.Parse(item.AmountWin);
                                 tthreeupood = Convert.ToInt32(threeupood) - wthreeupood;
                                 totaldis = totaldis + Convert.ToInt32(threeupood);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "ThreeDown")
+                            else if (item.Type == "b" && item.NumLen == "3")
                             {
-                                threedown = float.Parse(item.Amount_Discount);
-                                wthreedown = Int32.Parse(item.Amount_Win);
+                                threedown = float.Parse(item.AmountDiscount);
+                                wthreedown = Int32.Parse(item.AmountWin);
                                 tthreedown = Convert.ToInt32(threedown) - wthreedown;
                                 totaldis = totaldis + Convert.ToInt32(threedown);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "TwoUp")
+                            else if (item.Type == "t" && item.NumLen == "2")
                             {
-                                twoup = float.Parse(item.Amount_Discount);
-                                wtwoup = Int32.Parse(item.Amount_Win);
+                                twoup = float.Parse(item.AmountDiscount);
+                                wtwoup = Int32.Parse(item.AmountWin);
                                 ttwoup = Convert.ToInt32(twoup) - wtwoup;
                                 totaldis = totaldis + Convert.ToInt32(twoup);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "TwoDown")
+                            else if (item.Type == "b" && item.NumLen == "2")
                             {
-                                twodown = float.Parse(item.Amount_Discount);
-                                wtwodown = Int32.Parse(item.Amount_Win);
+                                twodown = float.Parse(item.AmountDiscount);
+                                wtwodown = Int32.Parse(item.AmountWin);
                                 ttwodown = Convert.ToInt32(twodown) - wtwodown;
                                 totaldis = totaldis + Convert.ToInt32(twodown);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
                             }
-                            else if (item.Type == "TwoOod")
+                            else if (item.Type == "t_" && item.NumLen == "2")
                             {
-                                twoood = float.Parse(item.Amount_Discount);
-                                wtwoood = Int32.Parse(item.Amount_Win);
+                                twoood = float.Parse(item.AmountDiscount);
+                                wtwoood = Int32.Parse(item.AmountWin);
                                 ttwoood = Convert.ToInt32(twoood) - wtwoood;
                                 totaldis = totaldis + Convert.ToInt32(twoood);
-                                toralwin = toralwin + Int32.Parse(item.Amount_Win);
+                                toralwin = toralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else { }
+                        }
+                        @foreach (var item in (List<PollOutDetail>)ViewData["BOut"])
+                        {
+                            if (item.Type == "t" && item.NumLen=="1")
+                            {
+                                oup = float.Parse(item.AmountDiscount);
+                                owup = Int32.Parse(item.AmountWin);
+                                otup = Convert.ToInt32(oup)- owup;
+                                ototaldis = ototaldis + Convert.ToInt32(oup);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "b" && item.NumLen == "1")
+                            {
+                                odown = float.Parse(item.AmountDiscount);
+                                owdown = Int32.Parse(item.AmountWin);
+                                otdown = Convert.ToInt32(odown)- owdown;
+                                ototaldis = ototaldis + Convert.ToInt32(odown);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "f" && item.NumLen == "3")
+                            {
+                                ofthree = float.Parse(item.AmountDiscount);
+                                owfthree = Int32.Parse(item.AmountWin);
+                                otfthree = Convert.ToInt32(ofthree)- owfthree;
+                                ototaldis = ototaldis + Convert.ToInt32(ofthree);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "f_" && item.NumLen == "3")
+                            {
+                                ofthreeood = float.Parse(item.AmountDiscount);
+                                owfthreeood = Int32.Parse(item.AmountWin);
+                                otfthreeood = Convert.ToInt32(ofthreeood)- owfthreeood;
+                                ototaldis = ototaldis + Convert.ToInt32(ofthreeood);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "t" && item.NumLen == "3")
+                            {
+                                othreeup = float.Parse(item.AmountDiscount);
+                                owthreeup = Int32.Parse(item.AmountWin);
+                                otthreeup = Convert.ToInt32(othreeup)-owthreeup;
+                                ototaldis = ototaldis + Convert.ToInt32(othreeup);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "t_" && item.NumLen == "3")
+                            {
+                                othreeupood = float.Parse(item.AmountDiscount);
+                                owthreeupood = Int32.Parse(item.AmountWin);
+                                otthreeupood = Convert.ToInt32(othreeupood)- owthreeupood;
+                                ototaldis = ototaldis + Convert.ToInt32(othreeupood);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "b" && item.NumLen == "3")
+                            {
+                                othreedown = float.Parse(item.AmountDiscount);
+                                owthreedown = Int32.Parse(item.AmountWin);
+                                otthreedown = Convert.ToInt32(othreedown)- owthreedown;
+                                ototaldis = ototaldis + Convert.ToInt32(othreedown);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "t" && item.NumLen == "2")
+                            {
+                                otwoup = float.Parse(item.AmountDiscount);
+                                owtwoup = Int32.Parse(item.AmountWin);
+                                ottwoup = Convert.ToInt32(otwoup)- owtwoup;
+                                ototaldis = ototaldis + Convert.ToInt32(otwoup);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "b" && item.NumLen == "2")
+                            {
+                                otwodown = float.Parse(item.AmountDiscount);
+                                owtwodown = Int32.Parse(item.AmountWin);
+                                ottwodown = Convert.ToInt32(otwodown)- owtwodown;
+                                ototaldis = ototaldis + Convert.ToInt32(otwodown);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
+                            }
+                            else if (item.Type == "t_" && item.NumLen == "2")
+                            {
+                                otwoood = float.Parse(item.AmountDiscount);
+                                owtwoood = Int32.Parse(item.AmountWin);
+                                ottwoood = Convert.ToInt32(otwoood)- owtwoood;
+                                ototaldis = ototaldis + Convert.ToInt32(otwoood);
+                                otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
                             else { }
                         }
@@ -439,120 +559,120 @@
                             <td id="udis">@String.Format("{0:n}", Convert.ToInt32(up))</td>
                             <td id="uwin">@String.Format("{0:n}", wup)</td>
                             <td id="utotal">@String.Format("{0:n}", tup)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(oup))</td>
+                            <td id="">@String.Format("{0:n}", owup)</td>
+                            <td id="">@String.Format("{0:n}", otup)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(up)+ Convert.ToInt32(oup))</td>
+                            <td id="">@String.Format("{0:n}", wup+ owup)</td>
+                            <td id="">@String.Format("{0:n}", tup+ otup)</td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
                             <td id="ddis">@String.Format("{0:n}", Convert.ToInt32(down))</td>
                             <td id="dwin">@String.Format("{0:n}", wdown)</td>
                             <td id="dtotal">@String.Format("{0:n}", tdown)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(odown))</td>
+                            <td id="">@String.Format("{0:n}", owdown)</td>
+                            <td id="">@String.Format("{0:n}", otdown)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(down)+ Convert.ToInt32(odown))</td>
+                            <td id="">@String.Format("{0:n}", wdown+ owdown)</td>
+                            <td id="">@String.Format("{0:n}", tdown+ otdown)</td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
                             <td id="f3dis">@String.Format("{0:n}", Convert.ToInt32(fthree))</td>
                             <td id="f3win">@String.Format("{0:n}", wfthree)</td>
                             <td id="f3total">@String.Format("{0:n}", tfthree)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(ofthree))</td>
+                            <td id="">@String.Format("{0:n}", owfthree)</td>
+                            <td id="">@String.Format("{0:n}", otfthree)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(fthree)+ Convert.ToInt32(ofthree))</td>
+                            <td id="">@String.Format("{0:n}", wfthree+ owfthree)</td>
+                            <td id="">@String.Format("{0:n}", tfthree+ otfthree)</td>
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
                             <td id="f3odis">@String.Format("{0:n}", Convert.ToInt32(fthreeood))</td>
                             <td id="f3owin">@String.Format("{0:n}", wfthreeood)</td>
                             <td id="f3ototal">@String.Format("{0:n}", tfthreeood)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(ofthreeood))</td>
+                            <td id="">@String.Format("{0:n}", owfthreeood)</td>
+                            <td id="">@String.Format("{0:n}", otfthreeood)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(fthreeood)+ Convert.ToInt32(ofthreeood))</td>
+                            <td id="">@String.Format("{0:n}", wfthreeood+ owfthreeood)</td>
+                            <td id="">@String.Format("{0:n}", tfthreeood+ otfthreeood)</td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
                             <td id="u3dis">@String.Format("{0:n}", Convert.ToInt32(threeup))</td>
                             <td id="u3win">@String.Format("{0:n}", wthreeup)</td>
                             <td id="u3total">@String.Format("{0:n}", tthreeup)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(othreeup))</td>
+                            <td id="">@String.Format("{0:n}", owthreeup)</td>
+                            <td id="">@String.Format("{0:n}", otthreeup)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(threeup)+ Convert.ToInt32(othreeup))</td>
+                            <td id="">@String.Format("{0:n}", wthreeup+ owthreeup)</td>
+                            <td id="">@String.Format("{0:n}", tthreeup+ otthreeup)</td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
                             <td id="u3odis">@String.Format("{0:n}", Convert.ToInt32(threeupood))</td>
                             <td id="u3owin">@String.Format("{0:n}", wthreeupood)</td>
                             <td id="u3ototal">@String.Format("{0:n}", tthreeupood)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(othreeupood))</td>
+                            <td id="">@String.Format("{0:n}", owthreeupood)</td>
+                            <td id="">@String.Format("{0:n}", otthreeupood)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(threeupood)+ Convert.ToInt32(othreeupood))</td>
+                            <td id="">@String.Format("{0:n}", wthreeupood+ owthreeupood)</td>
+                            <td id="">@String.Format("{0:n}", tthreeupood+ otthreeupood)</td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
                             <td id="d3dis">@String.Format("{0:n}", Convert.ToInt32(threedown))</td>
                             <td id="d3win">@String.Format("{0:n}", wthreedown)</td>
                             <td id="d3total">@String.Format("{0:n}", tthreedown)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(othreedown))</td>
+                            <td id="">@String.Format("{0:n}", owthreedown)</td>
+                            <td id="">@String.Format("{0:n}", otthreedown)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(threedown)+ Convert.ToInt32(othreedown))</td>
+                            <td id="">@String.Format("{0:n}", wthreedown+ owthreedown)</td>
+                            <td id="">@String.Format("{0:n}", tthreedown+ otthreedown)</td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
                             <td id="u2dis">@String.Format("{0:n}", Convert.ToInt32(twoup))</td>
                             <td id="u2win">@String.Format("{0:n}", wtwoup)</td>
                             <td id="u2total">@String.Format("{0:n}", ttwoup)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(otwoup))</td>
+                            <td id="">@String.Format("{0:n}", owtwoup)</td>
+                            <td id="">@String.Format("{0:n}", ottwoup)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(twoup)+ Convert.ToInt32(otwoup))</td>
+                            <td id="">@String.Format("{0:n}", wtwoup+ owtwoup)</td>
+                            <td id="">@String.Format("{0:n}", ttwoup+ ottwoup)</td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
                             <td id="d2dis">@String.Format("{0:n}", Convert.ToInt32(twodown))</td>
                             <td id="d2win">@String.Format("{0:n}", wtwodown)</td>
                             <td id="d2total">@String.Format("{0:n}", ttwodown)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(otwodown))</td>
+                            <td id="">@String.Format("{0:n}", owtwodown)</td>
+                            <td id="">@String.Format("{0:n}", ottwodown)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(twodown)+ Convert.ToInt32(otwodown))</td>
+                            <td id="">@String.Format("{0:n}", wtwodown+ owtwodown)</td>
+                            <td id="">@String.Format("{0:n}", ttwodown+ ottwodown)</td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
                             <td id="o2dis">@String.Format("{0:n}", Convert.ToInt32(twoood))</td>
                             <td id="o2win">@String.Format("{0:n}", wtwoood)</td>
                             <td id="o2total">@String.Format("{0:n}", ttwoood)</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(otwoood))</td>
+                            <td id="">@String.Format("{0:n}", owtwoood)</td>
+                            <td id="">@String.Format("{0:n}", ottwoood)</td>
+                            <td id="">@String.Format("{0:n}", Convert.ToInt32(twoood)+ Convert.ToInt32(otwoood))</td>
+                            <td id="">@String.Format("{0:n}", wtwoood+ owtwoood)</td>
+                            <td id="">@String.Format("{0:n}", ttwoood+ ottwoood)</td>
                         </tr>
                     </tbody>
                     <tfoot style="color:white;background-color:blue;">
@@ -561,12 +681,12 @@
                             <td id="tdis">@String.Format("{0:n}", totaldis)</td>
                             <td id="twin">@String.Format("{0:n}", toralwin)</td>
                             <td id="ttotal">@String.Format("{0:n}", (totaldis - toralwin))</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
-                            <td id="">0</td>
+                            <td id="">@String.Format("{0:n}", ototaldis)</td>
+                            <td id="">@String.Format("{0:n}", otoralwin)</td>
+                            <td id="">@String.Format("{0:n}", (ototaldis-otoralwin))</td>
+                            <td id="">@String.Format("{0:n}", totaldis+ ototaldis)</td>
+                            <td id="">@String.Format("{0:n}", toralwin+ otoralwin)</td>
+                            <td id="">@String.Format("{0:n}", (totaldis - toralwin)+ (ototaldis-otoralwin))</td>
                         </tr>
                     </tfoot>
                 </table>

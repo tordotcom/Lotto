@@ -23,5 +23,6 @@ namespace Lotto.Models
         public string Name { get; set; }
         public string SendToUsername { get; set; }
         public string Username { get; set; }
+        public string AmountDiscount { get; set; }
     }
 }
