@@ -32,6 +32,7 @@
                             <th>ยอดหัก%</th>
                             <th>ถูก</th>
                             <th>ยอดถูก</th>
+                            <th>รวม</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -57,6 +58,7 @@
                                         <td class="gn" onclick="WinPoll('@item.UID')" data-toggle="modal" data-target="#checkModal2" data-backdrop="static" data-keyboard="false" style="background:#00FF00;cursor:pointer;">@String.Format("{0:n}", Int32.Parse(item.AmountBetWin))</td>
                                     }      
                                     <td>@String.Format("{0:n}", Int32.Parse(item.AmountWin))</td>
+                                    <td>@String.Format("{0:n}", (Int32.Parse(item.AmountWin)-Int32.Parse(item.AmountDiscount)))</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary get-balance" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" data-keyboard="false">สรุปยอด</button>
                                         <button type="button" class="btn btn-sm btn-success get-keep" data-uid="@item.UID" data-uname="@item.Name" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบแจ้งยอด</button>

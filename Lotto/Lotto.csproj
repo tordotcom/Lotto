@@ -436,6 +436,9 @@
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.vi.min.js" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.zh-CN.min.js" />
     <Content Include="Assets\js\bootstrap-datepicker-1.9.0\locales\bootstrap-datepicker.zh-TW.min.js" />
+    <Content Include="Assets\js\bootstrap-datetimepicker\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Assets\js\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Assets\js\bootstrap-datetimepicker\js\bootstrap-datetimepicker.th.js" />
     <Content Include="Assets\js\bootstrap.min.js" />
     <Content Include="Assets\js\close.js" />
     <Content Include="Assets\js\codealer.js" />

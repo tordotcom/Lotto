@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="~/Assets/css/style.css">
     <link rel="stylesheet" href="~/Assets/css/lib/datatable/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="~/Assets/js/main.js"></script>
@@ -47,6 +48,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    <script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js"></script>
 
     <style>
         body {
@@ -127,7 +130,9 @@
             background-color: rgba(0, 0, 255, 0.05);
         }
 
-        input[type="text"]:disabled{background-color:rgba(255, 255, 0, 0.3);}
+        input[type="text"]:disabled {
+            background-color: rgba(255, 255, 0, 0.3);
+        }
 
         .digital-clock {
             padding-right: 5px;
@@ -300,8 +305,8 @@
             }
         }
 
-        @@media (max-width: 768px){
-           .right-panel header.header .top-right {
+        @@media (max-width: 768px) {
+            .right-panel header.header .top-right {
                 padding: 0 0px;
             }
         }

@@ -3676,7 +3676,8 @@ namespace Lotto.Controllers
         [HttpPost]
         public ActionResult addPeroid(DateTime Date)
         {
-            var pDate = Date.ToString("yyyy-MM-dd");
+            var pDate = Date.ToString("dd/MM/yyyy HH:mm:ss");
+            DateTime dt = DateTime.ParseExact(pDate, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
             //List<Period> oldPeroid = db.Period.Where(s => s.Status == "1").ToList();
             //oldPeroid.ForEach(a => a.Status = "0");
             //db.Entry(oldPeroid).State = System.Data.Entity.EntityState.Modified;
@@ -3684,7 +3685,7 @@ namespace Lotto.Controllers
             var ID = Int32.Parse((string)Session["ID"]);
             var p = new Period();
             p.UID = ID; //----------- admin id-----------//
-            p.Date = Date;
+            p.Date = dt;
             p.Status = "1";
             p.BetStatus = "0";
             p.Check_Result = "0";

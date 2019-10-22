@@ -6,115 +6,115 @@
 }
 
 <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="mr-2 fa fa-clock-o"></i>
-                    <strong class="card-title">ปิดหวย</strong>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="mr-2 fa fa-clock-o"></i>
+                <strong class="card-title">ปิดหวย</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-block primary btn-sm" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" id="total" data-keyboard="false">ใบสรุปยอดเงิน</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-block warning btn-sm" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-block primary btn-sm" data-toggle="modal" data-target="#totalBalance" data-backdrop="static" id="total" data-keyboard="false">ใบสรุปยอดเงิน</button>
-                        </div>
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-block warning btn-sm" data-toggle="modal" data-target="#totalKeep" data-backdrop="static" data-keyboard="false">ใบสรุปยอดเก็บ</button>
-                        </div>
-                   </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">งวดวันที่</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Date.ToString("dd/MM/yyyy") </div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@String.Format("{0:n}", Double.Parse(Model[0].Amount))</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountReceive</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountUser</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">15:00:00</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิด</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">ปิดอัตโนมัติ</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาหวยออก</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">16:00:00</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].BetStatus</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CreateDate</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">Admin</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseDate</div></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
-                        <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseBy</div></div>
-                    </div>
-                    <div class="row">
-                        @if (Model[0].CloseBy == "")
-                        {
-                            @*<div class="col-md-3">
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">งวดวันที่</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Date.ToString("dd/MM/yyyy") </div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ยอดรวม</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@String.Format("{0:n}", Double.Parse(Model[0].Amount))</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">โพยที่รับแล้ว</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountReceive</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">จำนวนผู้เล่น</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CountUser</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].Date.TimeOfDay</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิด</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">ปิดอัตโนมัติ</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาหวยออก</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">16:00:00</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">พนักงานแทง</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].BetStatus</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดเมื่อ</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CreateDate</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">เปิดโดย</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">Admin</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดเมื่อ</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseDate</div></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
+                    <div class="col-12 col-md-9"><div class="form-control-label bold">@Model[0].CloseBy</div></div>
+                </div>
+                <div class="row">
+                    @if (Model[0].CloseBy == "")
+                    {
+                        @*<div class="col-md-3">
                                 <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
                             </div>*@
 
-                            if (Model[0].BetStatus == "ปิดรับ")
-                            {
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="open" data-id="@Model[0].PID" id="user_oc">เปิดรับพนักงานแทง</button>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="close" data-id="@Model[0].PID" id="user_oc">ปิดรับพนักงานแทง</button>
-                                </div>
-                            }
-                            <div class="col-md-3 offset-md-3">
-                                <button type="button" class="btn btn-block btn-danger btn-sm" data-id="@Model[0].PID" id="closeLotto">ปิดหวย</button>
+                        if (Model[0].BetStatus == "ปิดรับ")
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="open" data-id="@Model[0].PID" id="user_oc">เปิดรับพนักงานแทง</button>
                             </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
-                                </div>
-                                if (Model[0].CheckResult == "1")
-                                {
-                                    <div class="col-md-3">
-                                        <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#lottoOpen">เปิดหวยใหม่</button>
-                                    </div>
-                                }
-                            }
+                        }
+                        else
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-secondary btn-sm" data-status="close" data-id="@Model[0].PID" id="user_oc">ปิดรับพนักงานแทง</button>
+                            </div>
+                        }
+                        <div class="col-md-3 offset-md-3">
+                            <button type="button" class="btn btn-block btn-danger btn-sm" data-id="@Model[0].PID" id="closeLotto">ปิดหวย</button>
                         </div>
-                </div>
-                <div class="card-footer">
-
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-block btn-success btn-sm" data-toggle="modal" data-target="#checkModal">ตรวจเลข</button>
+                        </div>
+                        if (Model[0].CheckResult == "1")
+                        {
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-block btn-primary btn-sm" data-toggle="modal" data-target="#lottoOpen">เปิดหวยใหม่</button>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
+            <div class="card-footer">
+
+            </div>
         </div>
-        <div class="col-md-6">
-            @*<div class="col-md-12/">
+    </div>
+    <div class="col-md-6">
+        @*<div class="col-md-12/">
                 <div class="card">
                     <div class="card-header">
                         เลขเต็ม
@@ -147,8 +147,8 @@
                     </div>
                 </div>
             </div>*@
-        </div>
     </div>
+</div>
 
 <div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="checkModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
@@ -263,7 +263,16 @@
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class="form-control-label">เวลาปิด</label></div>
-                            <div class="col-12 col-md-9"><div class="form-control-label bold">15:00:00</div></div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" id="datetimepicker3" data-format="hh:mm" value="15:00" name="text-input" class="form-control form-control-sm">
+                                @*<div id="datetimepicker3" class="input-append">
+                                    <input data-format="hh:mm" type="text" value="15:00" />
+                                    <span class="add-on">
+                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+                                        </i>
+                                    </span>
+                                </div>*@
+                            </div>
                         </div>
                         <div class="row form-group">
                             <div class="col col-md-3"><label for="text-input" class="form-control-label">ปิดโดย</label></div>
@@ -283,14 +292,14 @@
 <div class="modal fade" id="totalBalance" tabindex="-1" role="dialog" aria-labelledby="totalBalanceLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="max-width:90% !important;">
         <div class="modal-content">
-           <div class="modal-header">
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="printBalanceArea">
                 <br />
-                <h4><center>ใบสรุปยอดเงิน งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</center></h4><br/>
+                <h4><center>ใบสรุปยอดเงิน งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</center></h4><br />
                 <table class="table table-bordered" style="text-align:center;">
                     <thead>
                         <tr>
@@ -472,11 +481,11 @@
                         }
                         @foreach (var item in (List<PollOutDetail>)ViewData["BOut"])
                         {
-                            if (item.Type == "t" && item.NumLen=="1")
+                            if (item.Type == "t" && item.NumLen == "1")
                             {
                                 oup = float.Parse(item.AmountDiscount);
                                 owup = Int32.Parse(item.AmountWin);
-                                otup = Convert.ToInt32(oup)- owup;
+                                otup = Convert.ToInt32(oup) - owup;
                                 ototaldis = ototaldis + Convert.ToInt32(oup);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -484,7 +493,7 @@
                             {
                                 odown = float.Parse(item.AmountDiscount);
                                 owdown = Int32.Parse(item.AmountWin);
-                                otdown = Convert.ToInt32(odown)- owdown;
+                                otdown = Convert.ToInt32(odown) - owdown;
                                 ototaldis = ototaldis + Convert.ToInt32(odown);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -492,7 +501,7 @@
                             {
                                 ofthree = float.Parse(item.AmountDiscount);
                                 owfthree = Int32.Parse(item.AmountWin);
-                                otfthree = Convert.ToInt32(ofthree)- owfthree;
+                                otfthree = Convert.ToInt32(ofthree) - owfthree;
                                 ototaldis = ototaldis + Convert.ToInt32(ofthree);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -500,7 +509,7 @@
                             {
                                 ofthreeood = float.Parse(item.AmountDiscount);
                                 owfthreeood = Int32.Parse(item.AmountWin);
-                                otfthreeood = Convert.ToInt32(ofthreeood)- owfthreeood;
+                                otfthreeood = Convert.ToInt32(ofthreeood) - owfthreeood;
                                 ototaldis = ototaldis + Convert.ToInt32(ofthreeood);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -508,7 +517,7 @@
                             {
                                 othreeup = float.Parse(item.AmountDiscount);
                                 owthreeup = Int32.Parse(item.AmountWin);
-                                otthreeup = Convert.ToInt32(othreeup)-owthreeup;
+                                otthreeup = Convert.ToInt32(othreeup) - owthreeup;
                                 ototaldis = ototaldis + Convert.ToInt32(othreeup);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -516,7 +525,7 @@
                             {
                                 othreeupood = float.Parse(item.AmountDiscount);
                                 owthreeupood = Int32.Parse(item.AmountWin);
-                                otthreeupood = Convert.ToInt32(othreeupood)- owthreeupood;
+                                otthreeupood = Convert.ToInt32(othreeupood) - owthreeupood;
                                 ototaldis = ototaldis + Convert.ToInt32(othreeupood);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -524,7 +533,7 @@
                             {
                                 othreedown = float.Parse(item.AmountDiscount);
                                 owthreedown = Int32.Parse(item.AmountWin);
-                                otthreedown = Convert.ToInt32(othreedown)- owthreedown;
+                                otthreedown = Convert.ToInt32(othreedown) - owthreedown;
                                 ototaldis = ototaldis + Convert.ToInt32(othreedown);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -532,7 +541,7 @@
                             {
                                 otwoup = float.Parse(item.AmountDiscount);
                                 owtwoup = Int32.Parse(item.AmountWin);
-                                ottwoup = Convert.ToInt32(otwoup)- owtwoup;
+                                ottwoup = Convert.ToInt32(otwoup) - owtwoup;
                                 ototaldis = ototaldis + Convert.ToInt32(otwoup);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -540,7 +549,7 @@
                             {
                                 otwodown = float.Parse(item.AmountDiscount);
                                 owtwodown = Int32.Parse(item.AmountWin);
-                                ottwodown = Convert.ToInt32(otwodown)- owtwodown;
+                                ottwodown = Convert.ToInt32(otwodown) - owtwodown;
                                 ototaldis = ototaldis + Convert.ToInt32(otwodown);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -548,7 +557,7 @@
                             {
                                 otwoood = float.Parse(item.AmountDiscount);
                                 owtwoood = Int32.Parse(item.AmountWin);
-                                ottwoood = Convert.ToInt32(otwoood)- owtwoood;
+                                ottwoood = Convert.ToInt32(otwoood) - owtwoood;
                                 ototaldis = ototaldis + Convert.ToInt32(otwoood);
                                 otoralwin = otoralwin + Int32.Parse(item.AmountWin);
                             }
@@ -562,9 +571,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(oup))</td>
                             <td style="color: red;">@String.Format("{0:n}", owup)</td>
                             <td style="color: red;">@String.Format("{0:n}", otup)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(up)+ Convert.ToInt32(oup))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wup+ owup)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", tup+ otup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(up) + Convert.ToInt32(oup))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wup + owup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tup + otup)</td>
                         </tr>
                         <tr>
                             <td>วื่ง ล่าง</td>
@@ -574,9 +583,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(odown))</td>
                             <td style="color: red;">@String.Format("{0:n}", owdown)</td>
                             <td style="color: red;">@String.Format("{0:n}", otdown)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(down)+ Convert.ToInt32(odown))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wdown+ owdown)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", tdown+ otdown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(down) + Convert.ToInt32(odown))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wdown + owdown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tdown + otdown)</td>
                         </tr>
                         <tr>
                             <td>3 หน้า</td>
@@ -586,9 +595,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(ofthree))</td>
                             <td style="color: red;">@String.Format("{0:n}", owfthree)</td>
                             <td style="color: red;">@String.Format("{0:n}", otfthree)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(fthree)+ Convert.ToInt32(ofthree))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wfthree+ owfthree)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", tfthree+ otfthree)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(fthree) + Convert.ToInt32(ofthree))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wfthree + owfthree)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tfthree + otfthree)</td>
                         </tr>
                         <tr>
                             <td>3 หน้าโต๊ด</td>
@@ -598,9 +607,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(ofthreeood))</td>
                             <td style="color: red;">@String.Format("{0:n}", owfthreeood)</td>
                             <td style="color: red;">@String.Format("{0:n}", otfthreeood)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(fthreeood)+ Convert.ToInt32(ofthreeood))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wfthreeood+ owfthreeood)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", tfthreeood+ otfthreeood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(fthreeood) + Convert.ToInt32(ofthreeood))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wfthreeood + owfthreeood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tfthreeood + otfthreeood)</td>
                         </tr>
                         <tr>
                             <td>3 บน</td>
@@ -610,9 +619,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(othreeup))</td>
                             <td style="color: red;">@String.Format("{0:n}", owthreeup)</td>
                             <td style="color: red;">@String.Format("{0:n}", otthreeup)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threeup)+ Convert.ToInt32(othreeup))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wthreeup+ owthreeup)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", tthreeup+ otthreeup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threeup) + Convert.ToInt32(othreeup))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wthreeup + owthreeup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tthreeup + otthreeup)</td>
                         </tr>
                         <tr>
                             <td>3 โต๊ด</td>
@@ -622,9 +631,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(othreeupood))</td>
                             <td style="color: red;">@String.Format("{0:n}", owthreeupood)</td>
                             <td style="color: red;">@String.Format("{0:n}", otthreeupood)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threeupood)+ Convert.ToInt32(othreeupood))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wthreeupood+ owthreeupood)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", tthreeupood+ otthreeupood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threeupood) + Convert.ToInt32(othreeupood))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wthreeupood + owthreeupood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tthreeupood + otthreeupood)</td>
                         </tr>
                         <tr>
                             <td>3 ล่าง</td>
@@ -634,9 +643,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(othreedown))</td>
                             <td style="color: red;">@String.Format("{0:n}", owthreedown)</td>
                             <td style="color: red;">@String.Format("{0:n}", otthreedown)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threedown)+ Convert.ToInt32(othreedown))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wthreedown+ owthreedown)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", tthreedown+ otthreedown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(threedown) + Convert.ToInt32(othreedown))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wthreedown + owthreedown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", tthreedown + otthreedown)</td>
                         </tr>
                         <tr>
                             <td>2 บน</td>
@@ -646,9 +655,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(otwoup))</td>
                             <td style="color: red;">@String.Format("{0:n}", owtwoup)</td>
                             <td style="color: red;">@String.Format("{0:n}", ottwoup)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twoup)+ Convert.ToInt32(otwoup))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wtwoup+ owtwoup)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", ttwoup+ ottwoup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twoup) + Convert.ToInt32(otwoup))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wtwoup + owtwoup)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", ttwoup + ottwoup)</td>
                         </tr>
                         <tr>
                             <td>2 ล่าง</td>
@@ -658,9 +667,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(otwodown))</td>
                             <td style="color: red;">@String.Format("{0:n}", owtwodown)</td>
                             <td style="color: red;">@String.Format("{0:n}", ottwodown)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twodown)+ Convert.ToInt32(otwodown))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wtwodown+ owtwodown)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", ttwodown+ ottwodown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twodown) + Convert.ToInt32(otwodown))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wtwodown + owtwodown)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", ttwodown + ottwodown)</td>
                         </tr>
                         <tr>
                             <td>2 โต๊ด</td>
@@ -670,9 +679,9 @@
                             <td style="color: red;">@String.Format("{0:n}", Convert.ToInt32(otwoood))</td>
                             <td style="color: red;">@String.Format("{0:n}", owtwoood)</td>
                             <td style="color: red;">@String.Format("{0:n}", ottwoood)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twoood)+ Convert.ToInt32(otwoood))</td>
-                            <td style="color: blue;">@String.Format("{0:n}", wtwoood+ owtwoood)</td>
-                            <td style="color: blue;">@String.Format("{0:n}", ttwoood+ ottwoood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", Convert.ToInt32(twoood) + Convert.ToInt32(otwoood))</td>
+                            <td style="color: blue;">@String.Format("{0:n}", wtwoood + owtwoood)</td>
+                            <td style="color: blue;">@String.Format("{0:n}", ttwoood + ottwoood)</td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -683,10 +692,10 @@
                             <td class="bg-success-5">@String.Format("{0:n}", (totaldis - toralwin))</td>
                             <td class="bg-danger-5">@String.Format("{0:n}", ototaldis)</td>
                             <td class="bg-danger-5">@String.Format("{0:n}", otoralwin)</td>
-                            <td class="bg-danger-5">@String.Format("{0:n}", (ototaldis-otoralwin))</td>
-                            <td class="bg-info-5">@String.Format("{0:n}", totaldis+ ototaldis)</td>
-                            <td class="bg-info-5">@String.Format("{0:n}", toralwin+ otoralwin)</td>
-                            <td class="bg-info-5">@String.Format("{0:n}", (totaldis - toralwin)+ (ototaldis-otoralwin))</td>
+                            <td class="bg-danger-5">@String.Format("{0:n}", (ototaldis - otoralwin))</td>
+                            <td class="bg-info-5">@String.Format("{0:n}", totaldis + ototaldis)</td>
+                            <td class="bg-info-5">@String.Format("{0:n}", toralwin + otoralwin)</td>
+                            <td class="bg-info-5">@String.Format("{0:n}", (totaldis - toralwin) + (ototaldis - otoralwin))</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -702,14 +711,14 @@
 <div class="modal fade" id="totalKeep" tabindex="-1" role="dialog" aria-labelledby="totalKeepLabel" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
-           <div class="modal-header">
+            <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="printKeepArea">
                 <br />
-                <h4><center>ใบสรุปยอดเก็บ งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</center></h4><br/>
+                <h4><center>ใบสรุปยอดเก็บ งวดวันที่ @Model[0].Date.ToString("dd/MM/yyyy")</center></h4><br />
                 @{
                     var sum = 0.00;
                     var sumw = 0;
@@ -717,7 +726,7 @@
                 }
                 @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
                 {
-                    if(item.Discount!="")
+                    if (item.Discount != "")
                     {
                         sum = sum + float.Parse(item.Discount);
                         sumw = sumw + Int32.Parse(item.Win);
@@ -735,39 +744,42 @@
                         จำนวน @countu คน
                     </div>
                     <div class="col-md-12">
-                        <br/>
+                        <br />
                         <table class="table table-bordered" style="text-align:center;">
                             <thead style="color:white;background-color:blue;">
                                 <tr>
                                     <th>ชื่อ</th>
                                     <th>ยอดเก็บ</th>
                                     <th>ยอดจ่าย</th>
+                                    <th>รวม</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 @foreach (var item in (List<User_Bet_Result>)ViewData["UBET"])
                                 {
-                                    if (item.Discount!="")
+                                    if (item.Discount != "")
                                     {
-                                    <tr>
-                                        <td>@item.Name</td>
-                                        <td>@String.Format("{0:n}", Int32.Parse(item.Discount))</td>
-                                        <td>@String.Format("{0:n}", Int32.Parse(item.Win))</td>
-                                    </tr>
+                                        <tr>
+                                            <td>@item.Name</td>
+                                            <td>@String.Format("{0:n}", Int32.Parse(item.Discount))</td>
+                                            <td>@String.Format("{0:n}", Int32.Parse(item.Win))</td>
+                                            <td>@String.Format("{0:n}", (Int32.Parse(item.Win) - Int32.Parse(item.Discount)))</td>
+                                        </tr>
                                     }
                                 }
                             </tbody>
                             <tfoot>
                                 <tr style="color:white;background-color:blue;">
-                                    <td>รวม</td>
+                                    <td>รวมทั้งหมด</td>
                                     <td>@String.Format("{0:n}", sum)</td>
                                     <td>@String.Format("{0:n}", sumw)</td>
+                                    <td>@String.Format("{0:n}", (sumw - sum))</td>
                                 </tr>
-                                <tr>
-                                    <td style="color:white;background-color:blue;">หักลบ</td>
-                                    <td colspan="2">@String.Format("{0:n}", (sum- sumw))</td>
-                                </tr>
+                                @*<tr>
+                                        <td style="color:white;background-color:blue;">หักลบ</td>
+                                        <td colspan="2">@String.Format("{0:n}", (sum- sumw))</td>
+                                    </tr>*@
                             </tfoot>
                         </table>
                     </div>
@@ -780,12 +792,19 @@
         </div>
     </div>
 </div>
+
 <script src="~/Assets/js/close.js"></script>
 <script>
     addPeroid = '@Url.Action("addPeroid", "Admin")';
     betStatus = '@Url.Action("UpdateBetStatus", "Admin")';
     closeLotto = '@Url.Action("CloseLotto", "Admin")';
-    CheckResult= '@Url.Action("CheckResult", "Admin")';
+    CheckResult = '@Url.Action("CheckResult", "Admin")';
+    $(function() {
+        $('#datetimepicker3').datetimepicker({
+            format: 'hh:mm',
+            pickDate: false
+        });
+      });
     (function ($) {
 
     })(jQuery);

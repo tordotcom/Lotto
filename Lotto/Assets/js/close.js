@@ -10,10 +10,12 @@ $("#start_datepicker").datepicker(
 ).datepicker("setDate", new Date());
 
 $("#openLotto").click(function () {
+    var date = $("#start_datepicker").val() + " " + $("#datetimepicker3").val();
     console.log($("#start_datepicker").val());
+    console.log($("#datetimepicker3").val());
     $.ajax({
         url: addPeroid,
-        data: { Date: $("#start_datepicker").val() },
+        data: { Date: date},
         type: "POST",
         dataType: "json",
         success: function (data) {
